@@ -1751,6 +1751,17 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/columns/{colum
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Specify pagination parameters includeAll
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// Get cell history with pagination
+PagedResult<CellHistory> cellHistory= smartsheet.sheetResources().rowResources().cellResources().getCellHistory(sheetId, rowId, columnId, parameters);
+
+// Get cell history without pagination
+PagedResult<CellHistory> cellHistory= smartsheet.sheetResources().rowResources().cellResources().getCellHistory(sheetId, rowId, columnId, null);
+```
+
 > Example Response:
 
 ```json
@@ -1895,6 +1906,18 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns \
 -d '[{"title": "New Picklist Column 1", "type": "PICKLIST", "options": ["First", "Second", "Third"], "index": 4} , {"title":"New Date Column", "type":"DATE", "index":5}, {"title": "New Picklist Column 2", "type": "PICKLIST", "options": ["1", "2", "3"], "index": 6}]'
 ```
 
+```java
+
+// Create columns
+Column column1 = new Column.AddColumnToSheetBuilder().setTitle("New Picklist Column 1").setType(ColumnType.PICKLIST).setIndex(4).setOptions(Arrays.asList("First", "Second", "Third")).build();
+
+Column column2 = new Column.AddColumnToSheetBuilder().setTitle("New Date Column").setType(ColumnType.DATE).setIndex(4).build();
+
+Column column3 = new Column.AddColumnToSheetBuilder().setTitle("New Picklist Column 2").setType(ColumnType.PICKLIST).setIndex(4).setOptions(Arrays.asList("1", "2", "3")).build();
+
+// Add columns to sheet
+smartsheet.sheetResources().columnResources().addColumns(sheetId(), Arrays.asList(column1, column2, column3));
+```
 > Example Response:
 
 ```json
@@ -1960,6 +1983,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
 -X DELETE
 ```
 
+```java
+smartsheet.sheetResources().columnResources().deleteColumn(sheetId(), columnId());
+```
+
 > Example Response:
 
 ```json
@@ -1986,6 +2013,14 @@ Deletes the Column specified in the URL.
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Specify optional 'include' parameter
+smartsheet.sheetResources().columnResources().getColumn(sheetId(), columnId(), EnumSet.of(ColumnInclusion.FILTERS));
+
+// Omit optional 'include' parameter
+smartsheet.sheetResources().columnResources().getColumn(sheetId(), columnId(), null);
 ```
 
 > Example Response:
@@ -2018,6 +2053,17 @@ Gets the Column specified in the URL.
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Specify pagination parameters includeAll
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// Specify optional 'include' and pagination parameters
+smartsheet.sheetResources().columnResources().listColumns(sheetId, EnumSet.of(ColumnInclusion.FILTERS), parameters);
+
+// Omit optional 'include' and pagination parameters
+smartsheet.sheetResources().columnResources().listColumns(sheetId, null, null);
 ```
 
 > Example Response:
@@ -2077,6 +2123,13 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
 -d '{"title":"First Column","index":0, "type" : "PICKLIST", "options" :["One","Two"]}'
 ```
 
+```java
+// Specify updated column properties
+Column column = new Column.UpdateColumnBuilder().setTitle("First Column").setIndex(0).setType(ColumnType.PICKLIST).setOptions(Arrays.asList("One", "Two")).build();
+
+// Update column
+smartsheet.sheetResources().columnResources().updateColumn(newSheet.getId(), column);
+```
 > Example Response:
 
 ```json
