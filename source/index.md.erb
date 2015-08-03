@@ -1060,6 +1060,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId}/attach
 -F "file=@ProgressReport.docx;type=application/msword"
 ```
 
+```java
+smartsheet.sheetResources().commentResources().attachmentResources().attachFile(sheetId, commentId, file,"application/msword");
+```
+
 > Example Request (simple):
 
 ```shell
@@ -1098,6 +1102,11 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
 -X POST \
 -F "file=@ProgressReport.docx;type=application/msword"
 ```
+
+```java
+smartsheet.sheetResources().rowResources().attachmentResources().attachFile(sheetId, rowId, file, "application/msword");
+```
+
 > Example Request (simple):
 
 ```shell
@@ -1108,6 +1117,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
 -H "Content-Length: FILE_SIZE" \
 -X POST \
 --data-binary @ProgressReport.docx
+```
+
+```java
+smartsheet.sheetResources().rowResources().attachmentResources().attachFile(sheetId, rowId, file, "application/msword");
 ```
 
 > Example Response:
@@ -1132,6 +1145,11 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
 -X POST \
 -F "file=@ProgressReport.docx;type=application/msword"
 ```
+
+```java
+smartsheet.sheetResources().attachmentResources().attachFile(sheetId, file, "application/msword");
+```
+
 > Example Request (simple):
 
 ```shell
@@ -1142,6 +1160,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
 -H "Content-Length: FILE_SIZE" \
 -X POST \
 --data-binary @ProgressReport.docx
+```
+
+```java
+smartsheet.sheetResources().attachmentResources().attachFile(sheetId, file, "application/msword");
 ```
 
 > Example Response:
@@ -1168,6 +1190,14 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId}/attach
 -d '{"name":"Search Engine", "description": "A popular search engine", "attachmentType":"LINK", "url":"http://www.google.com"}'
 ```
 
+```java
+// Create attachment
+Attachment attachment = new Attachment.CreateAttachmentBuilder().setUrl("http://www.google.com").setAttachmentType(AttachmentType.LINK).setName("Search Engine").setDescription("A popular search engine").build();
+ 
+// Attach URL to comment
+smartsheet.sheetResources().commentResources().attachmentResources().attachUrl(sheetId, commentId, attachment);
+```
+
 > Example Response:
 
 <%= partial "snippets/attachURL_response.md.erb" %>
@@ -1188,6 +1218,14 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
 -H "Content-Type: application/json" \
 -X POST \
 -d '{"name":"Search Engine", "description": "A popular search engine", "attachmentType":"LINK", "url":"http://www.google.com"}'
+```
+
+```java
+// Create attachment
+Attachment attachment = new Attachment.CreateAttachmentBuilder().setUrl("http://www.google.com").setAttachmentType(AttachmentType.LINK).setName("Search Engine").setDescription("A popular search engine").build();
+
+// Attach URL to row
+smartsheet.sheetResources().rowResources().attachmentResources().attachUrl(sheetId, rowId, attachment);
 ```
 
 > Example Response:
@@ -1212,6 +1250,14 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
 -d '{"name":"Search Engine", "description": "A popular search engine", "attachmentType":"LINK", "url":"http://www.google.com"}'
 ```
 
+```java
+// Create attachment
+Attachment attachment = new Attachment.CreateAttachmentBuilder().setUrl("http://www.google.com").setAttachmentType(AttachmentType.LINK).setName("Search Engine").setDescription("A popular search engine").build();
+
+// Attach URL to sheet
+smartsheet.sheetResources().attachmentResources().attachUrl(sheetId, attachment);
+```
+
 > Example Response:
 
 <%= partial "snippets/attachURL_response.md.erb" %>
@@ -1230,6 +1276,10 @@ Attaches a URL to the Sheet.
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId} \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -X DELETE
+```
+
+```java
+smartsheet.sheetResources().attachmentResources().deleteAttachment(sheetId, sheetAttachmentId);
 ```
 
 > Example Response:
@@ -1262,6 +1312,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId} 
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+smartsheet.sheetResources().attachmentResources().getAttachment(sheetId, attachmentId);
+```
+
 > Example Response:
 
 ```json
@@ -1292,6 +1346,17 @@ Fetches the Attachment specified in the URL.
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Specify pagination parameters includeAll
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// Get all attachments with pagination
+PagedResult<Attachment> attachments = smartsheet.sheetResources().attachmentResources().listAttachments(sheetId, parameters);
+
+// Get all attachments without pagination
+PagedResult<Attachment> attachments = smartsheet.sheetResources().attachmentResources().listAttachments(sheetId, null);
 ```
 
 > Example Response:
@@ -1345,6 +1410,17 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions/{discussionId}/
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Specify pagination parameters includeAll
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// Get all discussion attachments with pagination
+PagedResult<Attachment> attachments = smartsheet.sheetResources().discussionResources().attachmentResources().getAttachments(sheetId, discussionId, parameters);
+
+// Get all discussion attachments without pagination
+PagedResult<Attachment> attachments = smartsheet.sheetResources().discussionResources().attachmentResources().getAttachments(sheetId, discussionId, null);
+```
+
 > Example Response:
 
 ```json
@@ -1394,6 +1470,17 @@ Gets a list of all Attachments that are in the Discussion.
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Specify pagination parameters includeAll
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// Get all row attachments with pagination
+PagedResult<Attachment> attachments = smartsheet.sheetResources().rowResources().attachmentResources().getAttachments(sheetId, rowId, parameters);
+
+// Get all row attachments without pagination
+PagedResult<Attachment> attachments = smartsheet.sheetResources().rowResources().attachmentResources().getAttachments(sheetId, rowId, null);
 ```
 
 > Example Response:
@@ -1450,6 +1537,15 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/
 -X POST \
 -F "file=@ProgressReport.docx;type=application/msword"
 ```
+
+```java
+//Create new file to attach
+File file = new File(filePath);
+
+//Attach new verion
+smartsheet.sheetResources().attachmentResources().versioningResources().attachNewVersion(sheetId, sheetAttachmentId, file, "application/msword");
+```
+
 > Example Request (simple):
 
 ```shell
@@ -1460,6 +1556,14 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/
 -H "Content-Length: FILE_SIZE" \
 -X POST \
 --data-binary @ProgressReport.docx
+```
+
+```java
+//Create new file to attach
+File file = new File(filePath);
+
+//Attach new verion
+smartsheet.sheetResources().attachmentResources().versioningResources().attachNewVersion(sheetId, sheetAttachmentId, file, "application/msword");
 ```
 
 > Example Response:
@@ -1496,6 +1600,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/
 -X DELETE
 ```
 
+```java
+smartsheet.sheetResources().attachmentResources().versioningResources().deleteAllVersions(sheetId, attachmentId);
+```
+
 > Example Response:
 
 ```json
@@ -1522,6 +1630,17 @@ Deletes all versions of the attachment corresponding to the specified Attachment
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/versions \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Specify pagination parameters includeAll
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List all attachment versions with pagination
+PagedResult<Attachment> attachments = smartsheet.sheetResources().attachmentResources().versioningResources().listAllVersions(sheetId, attachmentId, parameters);
+
+// List all attachment versions without pagination
+PagedResult<Attachment> attachments = smartsheet.sheetResources().attachmentResources().versioningResources().listAllVersions(sheetId, attachmentId, null);
 ```
 
 > Example Response:
