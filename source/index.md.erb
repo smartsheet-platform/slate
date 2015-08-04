@@ -3650,6 +3650,13 @@ curl https://api.smartsheet.com/2.0/groups/{groupId}/members \
 -d '[{ "email": "jane.doe@smartsheet.com" }]'
 ```
 
+```java
+// Create group member.
+GroupMember member = new GroupMember.AddGroupMemberBuilder().setEmail("jane.doe@smartsheet.com").build();
+
+// Add member to group.
+smartsheet.groupResources().members().addGroupMembers(groupId, Arrays.asList(member));
+```
 > Example Response:
 
 ```json
@@ -3696,6 +3703,11 @@ of [GroupMember objects](#groupmember-object) any users specified in the array t
 curl https://api.smartsheet.com/2.0/groups/{groupId}/members/{userId} \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -X DELETE
+```
+
+```java
+// Remove member from group.
+smartsheet.groupResources().members().deleteGroupMember(groupId, userId)
 ```
 
 > Example Response:
