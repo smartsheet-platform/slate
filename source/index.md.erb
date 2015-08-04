@@ -3376,6 +3376,16 @@ curl https://api.smartsheet.com/2.0/groups \
 -d '{ "name": "API-created Group", "description": "Group created via API", "members": [{ "email": "john.doe@smartsheet.com" }]}'
 ```
 
+```java
+// Create group member.
+GroupMember member = new GroupMember.AddGroupMemberBuilder().setEmail("john.doe@smartsheet.com").build(); 
+
+// Add member to group.
+Group group = new Group.CreateGroupBuilder().setName("API-created Group").setDescription("Group created via API").setMembers(Arrays.asList(member)).build();
+
+// Create group.
+smartsheet.groupResources().createGroup(group);
+```
 > Example Response:
 
 ```json
@@ -3426,6 +3436,10 @@ curl https://api.smartsheet.com/2.0/groups/{groupId} \
 -X DELETE
 ```
 
+```java
+// Delete group.
+smartsheet.groupResources().deleteGroup(groupId);
+```
 > Example Response:
 
 ```json
@@ -3458,6 +3472,10 @@ curl https://api.smartsheet.com/2.0/groups/{groupId} \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Get group.
+smartsheet.groupResources().getGroup(groupId);
+```
 > Example Response:
 
 ```json
@@ -3500,6 +3518,16 @@ curl https://api.smartsheet.com/2.0/groups \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List all org groups (omit pagination parameters).
+smartsheet.groupResources().listGroups(null);
+
+// List all org groups (specify 'includeAll' parameter with value of "true").
+smartsheet.groupResources().listGroups(parameters);
+```
 > Example Response:
 
 ```json
@@ -3547,6 +3575,14 @@ curl https://api.smartsheet.com/2.0/groups/{groupId} \
 -d '{ "name": "Renamed Group", "description": "Some new description" }'
 ```
 
+```java
+// Specify the name and description of the group.
+Group group = new Group.UpdateGroupBuilder().setName("Renamed Group").setDescription("Some new description").build();
+
+// Update group.
+smartsheet.groupResources().updateGroup(groupId, group);
+
+```
 > Example Response:
 
 ```json
