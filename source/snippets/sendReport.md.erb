@@ -8,6 +8,25 @@ curl https://api.smartsheet.com/2.0/reports/{reportId}/emails \
 -d '{"sendTo" : [{"email": "john.doe@smartsheet.com"}, {"groupId": 2258118617917316}], "subject": "Check these rows out!", "message": "Here are the rows I mentioned in our meeting", "ccMe": false, "format": "PDF", formatDetails": {"paperSize": "A4"}}'
 ```
 
+```java
+// Specify recipients.
+List<Recipient> recipients = new ArrayList<Recipient>();
+RecipientEmail recipientEmail = new RecipientEmail.AddRecipientEmailBuilder().setEmail("john.doe@smartsheet.com").build();
+RecipientGroup recipientGroup = new RecipientGroup.AddRecipientGroupBuilder().setGroupId(2258118617917316).build();
+
+recipients.add(recipientEmail);
+recipients.add(recipientGroup);
+
+//Set format details
+FormatDetails formatDetails = new FormatDetails();
+formatDetails.setPaperSize(PaperSize.A0); 
+
+// Configure email.
+SheetEmail sheetEmail = new SheetEmail.AddSheetEmailBuilder().setSendTo(recipients).setSubject("Check this report out!").setMessage("Here is the report I mentioned in our meeting").setCcMe(false).setFormat(SheetEmailFormat.PDF).setFormatDetails(formatDetails).build();
+
+// Send Report via email.
+smartsheet.reportResources().sendReport(reportId, sheetEmail)
+```
 > Example Response:
 
 ```json

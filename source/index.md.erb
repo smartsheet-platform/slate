@@ -3758,6 +3758,14 @@ curl https://api.smartsheet.com/2.0/home?include=source \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// List all contents (omit 'include' parameter).
+smartsheet.homeResources().getHome(null);
+
+// List all contents (specify 'include' parameter with value of "source").
+smartsheet.homeResources().getHome(EnumSet.of(SourceInclusion.SOURCE)));
+```
+
 > Example Response:
 
 ```json
@@ -3866,6 +3874,13 @@ curl https://api.smartsheet.com/2.0/reports/{reportId} \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Get report (omit 'include', 'pageSize', and 'page' parameters).
+smartsheet.reportResources().getReport(reportId, null, null, null);
+
+// Get report (specify 'include' parameter with value of "attachments" and "discussions", 'pageSize' parameter with value of "500", and 'page' of value "2").
+smartsheet.reportResources().getReport(reportId, EnumSet.of(ReportInclusion.ATTACHMENTS, ReportInclusion.DISCUSSIONS), 500, 2)
+```
 > Example Response:
 
 ```json
@@ -3947,6 +3962,11 @@ curl https://api.smartsheet.com/2.0/reports/{reportId} \
 -o output.xls
 ```
 
+```java
+// Get report as Excel.
+smartsheet.reportResources().getReportAsExcel(reportId, outputStream);
+```
+
 > Example Response:
 
 ```desc
@@ -3960,6 +3980,11 @@ curl https://api.smartsheet.com/2.0/reports/{reportId} \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -H "Accept: text/csv" \
 -o output.csv
+```
+
+```java
+// Get report as CSV.
+smartsheet.reportResources().getReportAsCsv(reportId, outputStream);
 ```
 
 > Example Response:
@@ -3991,6 +4016,17 @@ Gets the Report in the format specified, based on the Report ID.
 ```shell
 curl https://api.smartsheet.com/2.0/reports 
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List reports (omit pagination parameters).
+smartsheet.reportResources().listReports(null)
+
+// List reports (specify 'includeAll' parameter with value of "true").
+smartsheet.reportResources().listReports(parameters);
 ```
 
 > Example Response:
