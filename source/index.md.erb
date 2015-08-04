@@ -2196,6 +2196,14 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions/{discussionId}/
 -d '{"text":"This is a new comment."}'
 ```
 
+```java
+// Create comment 
+Comment comment = new Comment.AddCommentBuilder().setText("This is a new comment.").build();
+
+// Add comment to discussion
+smartsheet.sheetResources().discussionResources().commentResources().addComment(sheetId, discussionId(), comment);
+```
+
 > Example Request (with attachment):
 
 ```shell
@@ -2211,6 +2219,16 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions/{discussionId}/
     {
         "text":"This text is the body of the new comment"
     }
+```
+
+```java
+// Create comment 
+Comment comment = new Comment.AddCommentBuilder().setText("This is a new comment.").build();
+
+// Add comment with attachment to discussion
+File file = new File(filePath);
+
+smartsheet.sheetResources().discussionResources().commentResources().addCommentWithAttachment(sheetId, discussionId, comment, file, "application/octet-stream");
 ```
 
 > Example Response:
@@ -2263,6 +2281,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId} \
 -X 'DELETE'
 ```
 
+```java
+smartsheet.sheetResources().commentResources().deleteComment(sheetId, commentId);
+```
+
 > Example Response:
 
 ```json
@@ -2291,6 +2313,9 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{id} \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+smartsheet.sheetResources().commentResources().getComment(sheetId, commentId);
+```
 > Example Response:
 
 ```json
