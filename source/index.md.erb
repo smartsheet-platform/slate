@@ -3040,6 +3040,13 @@ curl https://api.smartsheet.com/2.0/home/folders \
 -d '{"name": "New folder"}'
 ```
 
+```java
+// Set folder name.
+Folder folder = new Folder.CreateFolderBuilder().setName("New Folder").build();
+
+// Create folder in "Sheets" folder (Home).
+smartsheet.homeResources().folderResources().createFolder(folder);
+```
 > Example Response:
 
 <%= partial "snippets/createFolder_response.md.erb" %>
@@ -3060,6 +3067,14 @@ curl https://api.smartsheet.com/2.0/folders/{folderid}/folders \
 -H "Content-Type: application/json" \
 -X POST \
 -d '{"name": "New folder"}'
+```
+
+```java
+// Set folder name.
+Folder folder = new Folder.CreateFolderBuilder().setName("New Folder").build();
+
+// Create folder in another folder.
+smartsheet.folderResources().createFolder(destinationFolderId, folder);
 ```
 
 > Example Response:
@@ -3084,6 +3099,14 @@ curl https://api.smartsheet.com/2.0/workspaces/{workspaceid}/folders \
 -d '{"name": "New folder"}'
 ```
 
+```java
+// Set folder name.
+Folder folder = new Folder.CreateFolderBuilder().setName("New Folder").build();
+
+// Create folder in a workspace.
+smartsheet.workspaceResources().folderResources().createFolder(workspaceId, folder);
+```
+
 > Example Response:
 
 <%= partial "snippets/createFolder_response.md.erb" %>
@@ -3102,6 +3125,11 @@ Creates a Folder in the specified Workspace.
 curl https://api.smartsheet.com/2.0/folders/{folderId} \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -X DELETE
+```
+
+```java
+// Delete folder.
+smartsheet.folderResources().deleteFolder(folderId);
 ```
 
 > Example Response:
@@ -3130,6 +3158,15 @@ Deletes the Folder (and its contents) specified in the URL.
 ```shell
 curl https://api.smartsheet.com/2.0/folders/{folderId} \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Get folder (omit 'include' parameter).
+smartsheet.folderResources().getFolder(folderId, null)
+
+// Get folder (specify 'include' parameter with value of "source").
+smartsheet.folderResources().getFolder(folderId, EnumSet.of(SourceInclusion.SOURCE))
+
 ```
 
 > Example Response:
@@ -3175,6 +3212,17 @@ curl https://api.smartsheet.com/2.0/home/folders \
 -H "Content-Type: application/json"
 ```
 
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List folders (omit pagination parameters).
+smartsheet.homeResources().folderResources().listFolders(null);
+
+// List folders in "Sheets" folder (specify 'includeAll' parameter with value of "true").
+smartsheet.homeResources().folderResources().listFolders(parameters);
+```
+
 > Example Response:
 
 <%= partial "snippets/listFolders_response.md.erb" %>
@@ -3195,6 +3243,17 @@ Gets a list of the top-level child Folders within the user's **Sheets** folder (
 curl https://api.smartsheet.com/2.0/folders/{folderId}/folders \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -H "Content-Type: application/json"
+```
+
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List folders (omit pagination parameters).
+smartsheet.folderResources().listFolders(null);
+
+// List folders in another folder (specify 'includeAll' parameter with value of "true").
+smartsheet.folderResources().listFolders(parameters);
 ```
 
 > Example Response:
@@ -3219,6 +3278,17 @@ curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/folders \
 -H "Content-Type: application/json"
 ```
 
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List folders (omit pagination parameters).
+smartsheet.workspaceResources().folderResources().listFolders(null);
+
+// List folders in workspace (specify 'includeAll' parameter with value of "true").
+smartsheet.workspaceResources().folderResources().listFolders(parameters);
+```
+
 > Example Response:
 
 <%= partial "snippets/listFolders_response.md.erb" %>
@@ -3241,6 +3311,14 @@ curl https://api.smartsheet.com/2.0/folders/{folderId} \
 -H "Content-Type: application/json" \
 -X PUT \
 -d '{"name": "New name for folder"}'
+```
+
+```java
+// Set folder name and id of the folder to be updated.
+Folder folder = new Folder.UpdateFolderBuilder().setName("New name for folder").setId(folderId).build();
+
+// Update folder.
+smartsheet.folderResources().updateFolder(folder);
 ```
 
 > Example Response:
