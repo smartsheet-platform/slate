@@ -2659,6 +2659,12 @@ curl https://api.smartsheet.com/2.0/favorites \
 -d '[{"type": "sheet", "objectId": 8400677765441412}]'
 ```
 
+```java
+// Mark a single sheet as a Favorite.
+List<Favorite> favorites = new Favorite.AddFavoriteBuilder().addFavorite(sheetId, FavoriteType.SHEET).build();
+
+smartsheet.favoriteResources().addFavorites(favorites);
+```
 > Example Response:
 
 ```json
@@ -2698,6 +2704,16 @@ curl https://api.smartsheet.com/2.0/favorites \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List favorites (omit pagination parameters).
+smartsheet.favoriteResources().listFavorites(null);
+
+// List favorites (specify 'includeAll' parameter with value of "true").
+smartsheet.favoriteResources().listFavorites(parameters);
+```
 > Example Response:
 
 ```json
@@ -2744,6 +2760,11 @@ curl https://api.smartsheet.com/2.0/favorites/folder/{folderId} \
 -X DELETE
 ```
 
+```java
+// Remove folder from list of favorites.
+smartsheet.favoriteResources().removeFavorites(FavoriteType.FOLDER, new HashSet(Arrays.asList(folderId)));
+```
+
 > Example Response:
 
 <%= partial "snippets/removeFavorite_response.md.erb" %>
@@ -2764,6 +2785,11 @@ curl https://api.smartsheet.com/2.0/favorites/report/{reportId} \
 -X DELETE
 ```
 
+```java
+// Remove report from list of favorites.
+smartsheet.favoriteResources().removeFavorites(FavoriteType.REPORT, new HashSet(Arrays.asList(reportId)));
+```
+
 > Example Response:
 
 <%= partial "snippets/removeFavorite_response.md.erb" %>
@@ -2782,6 +2808,11 @@ Removes a single Report from the user's list of Favorite items.
 curl https://api.smartsheet.com/2.0/favorites/sheet/{sheetId} \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -X DELETE
+```
+
+```java
+// Remove sheet from list of favorites.
+smartsheet.favoriteResources().removeFavorites(FavoriteType.SHEET, new HashSet(Arrays.asList(sheetId)));
 ```
 
 > Example Response:
@@ -2808,6 +2839,11 @@ curl https://api.smartsheet.com/2.0/favorites/workspace/{workspaceId} \
 -X DELETE
 ```
 
+```java
+// Remove workspace from list of favorites.
+smartsheet.favoriteResources().removeFavorites(FavoriteType.WORKSPACE, new HashSet(Arrays.asList(workspaceId)));
+```
+
 > Example Response:
 
 <%= partial "snippets/removeFavorite_response.md.erb" %>
@@ -2826,6 +2862,11 @@ Removes a single Workspace from the user's list of Favorite items.
 curl https://api.smartsheet.com/2.0/favorites/template/{templateId} \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -X DELETE
+```
+
+```java
+// Remove template from list of favorites.
+smartsheet.favoriteResources().removeFavorites(FavoriteType.TEMPLATE, new HashSet(Arrays.asList(templateId)));
 ```
 
 > Example Response:
@@ -2849,6 +2890,10 @@ curl https://api.smartsheet.com/2.0/favorites/folder?objectIds={folderId1},{fold
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -X DELETE
 ```
+```java
+// Remove folders from list of favorites.
+smartsheet.favoriteResources().removeFavorites(FavoriteType.FOLDER, new HashSet(Arrays.asList(folderId1, folderId2)));
+```
 
 > Example Response:
 
@@ -2868,6 +2913,11 @@ Removes multiple Folders from the user's list of Favorite items.
 curl https://api.smartsheet.com/2.0/favorites/report?objectIds={reportId1},{reportId2} \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -X DELETE
+```
+
+```java
+// Remove reports from list of favorites.
+smartsheet.favoriteResources().removeFavorites(FavoriteType.REPORT, new HashSet(Arrays.asList(reportId1, reportId2)));
 ```
 
 > Example Response:
@@ -2890,6 +2940,11 @@ curl https://api.smartsheet.com/2.0/favorites/sheet?objectIds={sheetId1},{sheetI
 -X DELETE
 ```
 
+```java
+// Remove sheets from list of favorites.
+smartsheet.favoriteResources().removeFavorites(FavoriteType.SHEET, new HashSet(Arrays.asList(sheetId1, sheetId2)));
+```
+
 > Example Response:
 
 <%= partial "snippets/removeFavorites_response.md.erb" %>
@@ -2910,6 +2965,11 @@ curl https://api.smartsheet.com/2.0/favorites/template?objectIds={templateId1},{
 -X DELETE
 ```
 
+```java
+// Remove templates from list of favorites.
+smartsheet.favoriteResources().removeFavorites(FavoriteType.TEMPLATE, new HashSet(Arrays.asList(templateId1, templateId2)));
+```
+
 > Example Response:
 
 <%= partial "snippets/removeFavorites_response.md.erb" %>
@@ -2928,6 +2988,11 @@ Removes multiple Templates from the user's list of Favorite items.
 curl https://api.smartsheet.com/2.0/favorites/workspace?objectIds={workspaceId1},{workspaceId2} \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -X DELETE
+```
+
+```java
+// Remove workspaces from list of favorites.
+smartsheet.favoriteResources().removeFavorites(FavoriteType.WORKSPACE, new HashSet(Arrays.asList(workspaceId1, workspaceId2)));
 ```
 
 > Example Response:
