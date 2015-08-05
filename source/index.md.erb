@@ -6024,6 +6024,17 @@ curl https://api.smartsheet.com/2.0/templates/public \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List public templates (omit pagination parameters).
+smartsheet.templateResources().listPublicTemplates(null);
+
+// List public templates (specify 'includeAll' parameter with value of "true").
+smartsheet.templateResources().listPublicTemplates(parameters);
+```
+
 > Example Response:
 
 <%= partial "snippets/listTemplates_response.md.erb" %>
@@ -6043,6 +6054,17 @@ Gets the list of public Templates to which the user has access.
 ```shell
 curl https://api.smartsheet.com/2.0/templates \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List user-created templates (omit pagination parameters).
+smartsheet.templateResources().listUserCreatedTemplates(null);
+
+// List user-created templates (specify 'includeAll' parameter with value of "true").
+smartsheet.templateResources().listUserCreatedTemplates(parameters);
 ```
 
 > Example Response:
@@ -6207,6 +6229,14 @@ curl https://api.smartsheet.com/2.0/users?sendEmail=true \
 -d '{"firstName": "John", "lastName": "Doe", "email": "NEW_USER_EMAIL", "admin": false, "licensedSheetCreator": true}'
 ```
 
+```java
+// Set user properties.
+User user = new User.AddUserBuilder().setAdmin(false).setEmail("NEW_USER_EMAIL").setFirstName("John").setLastName("Doe").setLicensedSheetCreator(true).build();
+
+// Add user.
+smartsheet.userResources().addUser(user);
+```
+
 > Example Response:
 
 ```json
@@ -6250,6 +6280,11 @@ curl https://api.smartsheet.com/2.0/users/me \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Get current user.
+smartsheet.userResources().getCurrentUser();
+```
+
 > Example Response:
 
 ```json
@@ -6280,6 +6315,10 @@ curl https://api.smartsheet.com/2.0/users/{userId} \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Get user.
+smartsheet.userResources().getUser(userId);
+```
 > Example Response:
 
 ```json
@@ -6312,6 +6351,17 @@ Gets the User specified in the URL.
 ```shell
 curl https://api.smartsheet.com/2.0/users?email=john.doe@smartsheet.com \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List users (omit 'email' parameter and pagination parameters).
+smartsheet.userResources().listUsers(null, null);
+
+// List users (specify 'email' parameter with value of "john.doe@smartsheet.com" and 'includeAll' parameter with value of "true").
+smartsheet.userResources().listUsers(new HashSet(Arrays.asList("john.doe@smartsheet.com")), parameters);
 ```
 
 > Example Response:
@@ -6358,6 +6408,12 @@ curl https://api.smartsheet.com/2.0/users/{userId}?transferTo=USER_ID&removeFrom
 -X DELETE
 ```
 
+```java
+// Remove user (transferring ownership of groups and sheets to another user, and removing the user from sharing).
+DeleteUserParameters parameters = new DeleteUserParameters(12345L, true, true);
+smartsheet.userResources().deleteUser(userId, parameters);
+```
+
 > Example Response:
 
 ```json
@@ -6392,6 +6448,14 @@ curl https://api.smartsheet.com/2.0/users/{userId} \
 -H "Content-Type: application/json" \
 -X PUT \
 -d '{"admin": false, "licensedSheetCreator": true}'
+```
+
+```java
+/ Specify updated user properties.
+User user = new User.UpdateUserBuilder().setAdmin(false).setLicensedSheetCreator(true).build();
+
+// Update user.
+smartsheet.userResources().updateUser(userId, user);
 ```
 
 > Example Response:
@@ -6448,6 +6512,14 @@ curl https://api.smartsheet.com/2.0/workspaces \
 -d '{"name": "New workspace"}'
 ```
 
+```java
+// Specify workspace name.
+Workspace workspace = new Workspace.UpdateWorkspaceBuilder().setName("New workspace").build();
+
+// Create workspace.
+smartsheet.workspaceResources().createWorkspace(workspace);
+```
+
 > Example Response:
 
 ```json
@@ -6484,6 +6556,11 @@ curl https://api.smartsheet.com/2.0/workspaces/7960873114331012 \
 -X DELETE
 ```
 
+```java
+// Delete workspace.
+smartsheet.workspaceResources().deleteWorkspace(workspaceId);
+```
+
 > Example Response:
 
 ```json
@@ -6510,6 +6587,14 @@ Deletes the specified Workspace (and its contents).
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces/{workspaceid} \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Get workspace (omit 'loadAll' and 'include' parameters).
+smartsheet.workspaceResources().getWorkspace(workspaceId, null, null);
+
+// Get workspace (specify 'loadAll' parameter with value of "false", and 'include' parameter with value of "source").
+smartsheet.workspaceResources().getWorkspace(workspaceId, false, EnumSet.of(SourceInclusion.SOURCE));
 ```
 
 > Example Response:
@@ -6554,6 +6639,17 @@ Gets the specified Workspace (and lists its contents).
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List workspaces (omit pagination parameters).
+smartsheet.workspaceResources().listWorkspaces(null);
+
+// List workspaces (specify 'includeAll' parameter with value of "true").
+smartsheet.workspaceResources().listWorkspaces(parameters);
 ```
 
 > Example Response:
