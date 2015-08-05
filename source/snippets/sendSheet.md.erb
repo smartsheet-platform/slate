@@ -9,6 +9,24 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/emails \
  
 ```
 
+```java
+// Specify recipients.
+RecipientEmail recipientEmail = new RecipientEmail.AddRecipientEmailBuilder().setEmail("john.doe@smartsheet.com").build();
+RecipientGroup recipientGroup = new RecipientGroup.AddRecipientGroupBuilder().setGroupId(2258118617917316).build();
+
+List<Recipient> recipients = Arrays.asList(recipientEmail, recipientGroup);
+
+//Set format details
+FormatDetails formatDetails = new FormatDetails();
+formatDetails.setPaperSize(PaperSize.A0); 
+
+// Configure email.
+RowEmail email = new RowEmail.AddRowEmailBuilder().setSendTo(recipients).setSubject("Check these rows out!").setMessage("Here are the rows I mentioned in our meeting").setCcMe(false).setIncludeAttachments(true).setIncludeDiscussions(true).build();
+
+// Send Sheet via email.
+smartsheet.sheetResources().sendSheet(sheetId, email);
+```
+
 > Example Response:
 
 ```json

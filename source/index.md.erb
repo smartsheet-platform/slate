@@ -4173,6 +4173,22 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows \
 -d '[{"toTop":true, "cells": [ {"columnId": 7960873114331012, "value": true}, {"columnId": 642523719853956, "value": "New status", "strict": false} ] }, {"toTop":true, "cells": [ {"columnId": 7960873114331012, "value": true}, {"columnId": 642523719853956, "value": "New status", "strict": false} ] }]'
 ```
 
+```java
+// Specify cell values for first row.
+List<Cell> cellsA = new Cell.AddRowCellsBuilder().addCell(7960873114331012, true).addCell(642523719853956, "New status").build();
+
+// Specify contents of first row.
+Row rowA = new Row.AddRowBuilder().setCells(cellsA).setToBottom(true).build();
+
+// Specify cell values for second row.
+List<Cell> cellsB = new Cell.AddRowCellsBuilder().addCell(7960873114331012, true).addCell(642523719853956, "New status").build();
+
+// Specify contents of second row.
+Row rowB = new Row.AddRowBuilder().setCells(cellsB).setToBottom(true).build();
+
+// Add rows to sheet.
+smartsheet.sheetResources().rowResources().addRows(sheetId, Arrays.asList(rowA, rowB));
+```
 > Example Response:
 
 ```json
@@ -4254,6 +4270,20 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/copy \
 -d '{ "rowIds": [145417762563972, 8026717110462340], "to": {"sheetId": 2258256056870788} }'
 ```
 
+```java
+// Specify destination sheet.
+CopyOrMoveRowDestination destination = new CopyOrMoveRowDestination.InsertCopyOrMoveRowDestinationBuilder().setSheetId(2258256056870788).build();
+
+// Specify rows to be copied (and destination sheet).
+CopyOrMoveRowDirective directive = new CopyOrMoveRowDirective.InsertCopyOrMoveRowDirectiveBuilder().setRowIds(Arrays.asList(145417762563972, 8026717110462340)).setTo(destination).build();
+
+// Copy rows (omit 'include' and 'ignoreRowsNotFound' parameters).
+smartsheet.sheetResources().rowResources().copyRows(sheetId, null, null, directive);
+
+// Copy rows (specify 'include' parameter with value of "children", and 'ignoreRowsNotFound' parameter with value of "true").
+smartsheet.sheetResources().rowResources().copyRows(sheetId, EnumSet.of(RowCopyInclusion.CHILDREN), true, directive);
+```
+
 <%= partial "snippets/rowCopyMove_response.md.erb" %>
 
 `POST /sheets/{sheetId}/rows/copy`
@@ -4277,6 +4307,11 @@ Copies Row(s) from the Sheet specified in the URL to (the bottom of) another she
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId} \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -X DELETE
+```
+
+```java
+// Delete row.
+smartsheet.sheetResources().rowResources().deleteRow(sheetId, rowId);
 ```
 
 > Example Response:
@@ -4307,6 +4342,14 @@ Deletes the Row specified in the URL.
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}?include=discussions,attachments,columns,columnType \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Get row (omit 'include' parameter and pagination parameters).
+smartsheet.sheetResources().rowResources().getRow(sheetId, rowId, null, null);
+
+// Get row (specify 'include' parameter with values of "columns" and "columnType", and 'exclude' parameter with value of "nonexistentCells").
+smartsheet.sheetResources().rowResources().getRow(sheetId, rowId, EnumSet.of(RowInclusion.COLUMNS, RowInclusion.COLUMN_TYPE), EnumSet.of(ObjectExclusion.NONEXISTENT_CELLS));
 ```
 
 > Example Response:
@@ -4358,6 +4401,20 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/move \
 -H "Content-Type: application/json" \
 -X POST \
 -d '{ "rowIds": [145417762563972, 8026717110462340], "to": {"sheetId": 2258256056870788} }'
+```
+
+```java
+// Specify destination sheet.
+CopyOrMoveRowDestination destination = new CopyOrMoveRowDestination.InsertCopyOrMoveRowDestinationBuilder().setSheetId(2258256056870788).build();
+
+// Specify rows to be moved (and destination sheet).
+CopyOrMoveRowDirective directive = new CopyOrMoveRowDirective.InsertCopyOrMoveRowDirectiveBuilder().setRowIds(Arrays.asList(145417762563972, 8026717110462340)).setTo(destination).build();
+
+// Move rows (omit 'include' and 'ignoreRowsNotFound' parameters).
+smartsheet.sheetResources().rowResources().moveRows(sheetId, null, null, directive);
+
+// Move rows (specify 'include' parameter with value of "attachments" and "discussions", and 'ignoreRowsNotFound' parameter with value of "true").
+smartsheet.sheetResources().rowResources().moveRows(sheetId, EnumSet.of(EnumSet.of(RowMoveInclusion.ATTACHMENTS, RowMoveInclusion.DISCUSSIONS)), true, directive);
 ```
 
 <%= partial "snippets/rowCopyMove_response.md.erb" %>
@@ -4538,6 +4595,14 @@ curl https://api.smartsheet.com/2.0/search?query=stuff \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Set search criteria.
+string query = "stuff";
+
+// Search everything.
+smartsheet.searchResources().search(query);
+```
+
 > Example Response:
 
 ```json
@@ -4667,6 +4732,11 @@ For developer convenience, the Smartsheet API provides access to application con
 curl https://api.smartsheet.com/2.0/serverinfo
 ```
 
+```java
+// Get server info.
+smartsheet.serverInfoResources().getServerInfo();
+
+```
 > Example Response: (*too long to list in its entirety*)
 
 ```json
@@ -4719,6 +4789,10 @@ curl https://api.smartsheet.com/2.0/reports/{reportId}/shares/{shareId} \
 -X DELETE
 ```
 
+```java
+// Delete report share.
+smartsheet.reportResources().shareResources().deleteShare(reportId, shareId);
+```
 > Example Response:
 
 <%= partial "snippets/deleteShare_response.md.erb" %>
@@ -4738,6 +4812,11 @@ curl https://api.smartsheet.com/2.0/reports/{reportId}/shares/{shareId} \
 -H "Authorization: Bearer ACCESS_TOKEN" 
 ```
 
+```java
+// Get report share.
+smartsheet.reportResources().shareResources().getShare(reportId, shareId);
+```
+
 > Example Response:
 
 <%= partial "snippets/getShare_response.md.erb" %>
@@ -4755,6 +4834,17 @@ Gets the Share specified in the URL.
 ```shell
 curl https://api.smartsheet.com/2.0/reports/{reportId}/shares \
 -H "Authorization: Bearer ACCESS_TOKEN" 
+```
+
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List report shares (omit pagination parameters).
+smartsheet.reportResources().shareResources().listShares(reportId, null);
+
+// List report shares (specify 'includeAll' parameter with value of "true").
+smartsheet.reportResources().shareResources().listShares(reportId, parameters);
 ```
 
 > Example Response:
@@ -4779,6 +4869,14 @@ curl https://api.smartsheet.com/2.0/reports/{reportId}/shares?sendEmail=true \
 -H "Content-Type: application/json" \
 -X POST \
 -d '[{"email": "jane.doe@smartsheet.com", "accessLevel": "EDITOR"}]'
+```
+
+```java
+// Specify share (to one user as Editor).
+List<Share> shares = Arrays.asList(new Share.CreateUserShareBuilder().setEmailAddress("jane.doe@smartsheet.com").setAccessLevel(AccessLevel.EDITOR).build());
+
+// Share report.
+smartsheet.reportResources().shareResources().shareTo(reportId, shares, true);
 ```
 
 > Example Response:
@@ -4808,6 +4906,14 @@ curl https://api.smartsheet.com/2.0/reports/{reportId}/shares/{shareId} \
 -d '{"accessLevel": "VIEWER"}'
 ```
 
+```java
+// Set the access level to Viewer.
+Share share = new Share.UpdateShareBuilder().setAccessLevel(AccessLevel.VIEWER).build();
+
+// Update report share.
+smartsheet.reportResources().shareResources().updateShare(reportId, shareId, share);
+```
+
 > Example Response:
 
 <%= partial "snippets/updateShare_response.md.erb" %>
@@ -4830,6 +4936,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/shares/{shareId} \
 -X DELETE
 ```
 
+```java
+// Delete sheet share.
+smartsheet.sheetResources().shareResources().deleteShare(sheetId, shareId);
+```
 > Example Response:
 
 <%= partial "snippets/deleteShare_response.md.erb" %>
@@ -4849,6 +4959,11 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/shares/{shareId} \
 -H "Authorization: Bearer ACCESS_TOKEN" 
 ```
 
+```java
+// Get sheet share.
+smartsheet.sheetResources().shareResources().getShare(sheetId, shareId);
+```
+
 > Example Response:
 
 <%= partial "snippets/getShare_response.md.erb" %>
@@ -4866,6 +4981,17 @@ Gets the Share specified in the URL.
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/shares \
 -H "Authorization: Bearer ACCESS_TOKEN" 
+```
+
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List sheet shares (omit pagination parameters).
+smartsheet.sheetResources().shareResources().listShares(sheetId, null);
+
+// List sheet shares (specify 'includeAll' parameter with value of "true").
+smartsheet.sheetResources().shareResources().listShares(sheetId, parameters);
 ```
 
 > Example Response:
@@ -4891,6 +5017,15 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/shares?sendEmail=true \
 -X POST \
 -d '[{"email": "jane.doe@smartsheet.com", "accessLevel": "EDITOR"}]'
 ```
+
+```java
+// Specify share (to one user as Editor).
+List<Share> shares = Arrays.asList(new Share.CreateUserShareBuilder().setEmailAddress("jane.doe@smartsheet.com").setAccessLevel(AccessLevel.EDITOR).build());
+
+// Share sheet.
+smartsheet.sheetResources().shareResources().shareTo(sheetId, shares, true);
+```
+
 
 > Example Response:
 
@@ -4918,6 +5053,14 @@ curl https://api.smartsheet.com/2.0/sheets/{reportId}/shares/{shareId} \
 -d '{"accessLevel": "VIEWER"}'
 ```
 
+```java
+// Set the access level to Viewer.
+Share share = new Share.UpdateShareBuilder().setAccessLevel(AccessLevel.VIEWER).build();
+
+// Update report share.
+smartsheet.sheetResources().shareResources().updateShare(sheetId, shareId, share);
+```
+
 > Example Response:
 
 <%= partial "snippets/updateShare_response.md.erb" %>
@@ -4938,6 +5081,11 @@ Updates the access level of a User or Group for the specified Sheet.
 curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/shares/{shareId} \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -X DELETE
+```
+
+```java
+// Delete workspace share.
+smartsheet.workspaceResources().shareResources().deleteShare(workspaceId, shareId);
 ```
 
 > Example Response:
@@ -4963,6 +5111,11 @@ curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/shares/{shareId} \
 -H "Authorization: Bearer ACCESS_TOKEN" 
 ```
 
+```java
+// Get workspace share.
+smartsheet.workspaceResources().shareResources().getShare(workspaceId, shareId);
+```
+
 > Example Response:
 
 <%= partial "snippets/getShare_response.md.erb" %>
@@ -4980,6 +5133,17 @@ Gets the Share specified in the URL.
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/shares \
 -H "Authorization: Bearer ACCESS_TOKEN" 
+```
+
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List workspace shares (omit pagination parameters).
+smartsheet.workspaceResources().shareResources().listShares(workspaceId, null);
+
+// List workspace shares (specify 'includeAll' parameter with value of "true").
+smartsheet.workspaceResources().shareResources().listShares(workspaceId, parameters);
 ```
 
 > Example Response:
@@ -5004,6 +5168,14 @@ curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/shares?sendEmail=tr
 -H "Content-Type: application/json" \
 -X POST \
 -d '[{"email": "jane.doe@smartsheet.com", "accessLevel": "EDITOR"}]'
+```
+
+```java
+// Specify share (to one user as Editor).
+List<Share> shares = Arrays.asList(new Share.CreateUserShareBuilder().setEmailAddress("jane.doe@smartsheet.com").setAccessLevel(AccessLevel.EDITOR).build());
+
+// Share workspace.
+smartsheet.workspaceResources().shareResources().shareTo(workspaceId, shares, true);
 ```
 
 > Example Response:
@@ -5036,6 +5208,14 @@ curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/shares/{shareId} \
 -H "Content-Type: application/json" \
 -X PUT \
 -d '{"accessLevel": "VIEWER"}'
+```
+
+```java
+// Set the access level to Viewer.
+Share share = new Share.UpdateShareBuilder().setAccessLevel(AccessLevel.VIEWER).build();
+
+// Update workspace share.
+smartsheet.workspaceResources().shareResources().updateShare(workspaceId, shareId, share);
 ```
 
 > Example Response:
@@ -5137,6 +5317,21 @@ curl https://api.smartsheet.com/2.0/sheets \
 -d '{"name":"newsheet","columns":[{"title":"Favorite","type":"CHECKBOX","symbol":"STAR"}, {"title":"Primary Column", "primary":true,"type":"TEXT_NUMBER"}, {"title":"Status", "type":"PICKLIST", "options":["Not Started","Started","Completed"]}]}'
 ```
 
+```java
+// Specify properties of the first column.
+Column columnA = new Column.AddColumnToSheetBuilder().setTitle("Favorite").setType(ColumnType.CHECKBOX).setSymbol(Symbol.STAR).build();
+
+// Specify properties of the second column.
+Column columnB = new Column.AddColumnToSheetBuilder().setTitle("Primary Column").setType(ColumnType.TEXT_NUMBER).setPrimary(true).build();
+
+// Specify properties of the third column.
+Column columnC = new Column.AddColumnToSheetBuilder().setTitle("col 3").setType(ColumnType.PICKLIST).setOptions(Arrays.asList("Not Started", "Started", "Completed")).setPrimary(false).build();
+
+// Create sheet in "Sheets" folder (specifying the 3 columns to include in the sheet).
+Sheet sheet = new Sheet.CreateSheetBuilder().setName("newsheet").setColumns(Arrays.asList(columnA, columnB, columnC)).build();
+smartsheet.sheetResources().createSheet(sheet);
+```
+
 > Example Response:
 
 <%= partial "snippets/createSheet_response.md.erb" %>
@@ -5159,6 +5354,22 @@ curl https://api.smartsheet.com/2.0/folders/{folderId}/sheets \
 -d '{"name":"newsheet","columns":[{"title":"Favorite","type":"CHECKBOX","symbol":"STAR"}, {"title":"Primary Column", "primary":true,"type":"TEXT_NUMBER"}, {"title":"Status", "type":"PICKLIST", "options":["Not Started","Started","Completed"]}]}'
 ```
 
+```java
+// Specify properties of the first column.
+Column columnA = new Column.AddColumnToSheetBuilder().setTitle("Favorite").setType(ColumnType.CHECKBOX).setSymbol(Symbol.STAR).build();
+
+// Specify properties of the second column.
+Column columnB = new Column.AddColumnToSheetBuilder().setTitle("Primary Column").setType(ColumnType.TEXT_NUMBER).setPrimary(true).build();
+
+// Specify properties of the third column.
+Column columnC = new Column.AddColumnToSheetBuilder().setTitle("col 3").setType(ColumnType.PICKLIST).setOptions(Arrays.asList("Not Started", "Started", "Completed")).setPrimary(false).build();
+
+// Create sheet in folder (specifying the 3 columns to include in the sheet).
+Sheet sheet = new Sheet.CreateSheetBuilder().setName("newsheet").setColumns(Arrays.asList(columnA, columnB, columnC)).build();
+
+smartsheet.sheetResources().createSheetInFolder(folderId, sheet);
+```
+
 > Example Response:
 
 <%= partial "snippets/createSheet_response.md.erb" %>
@@ -5179,6 +5390,22 @@ curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/sheets \
 -H "Content-Type: application/json" \
 -X POST \
 -d '{"name":"newsheet","columns":[{"title":"Favorite","type":"CHECKBOX","symbol":"STAR"}, {"title":"Primary Column", "primary":true,"type":"TEXT_NUMBER"}, {"title":"Status", "type":"PICKLIST", "options":["Not Started","Started","Completed"]}]}'
+```
+
+```java
+// Specify properties of the first column.
+Column columnA = new Column.AddColumnToSheetBuilder().setTitle("Favorite").setType(ColumnType.CHECKBOX).setSymbol(Symbol.STAR).build();
+
+// Specify properties of the second column.
+Column columnB = new Column.AddColumnToSheetBuilder().setTitle("Primary Column").setType(ColumnType.TEXT_NUMBER).setPrimary(true).build();
+
+// Specify properties of the third column.
+Column columnC = new Column.AddColumnToSheetBuilder().setTitle("col 3").setType(ColumnType.PICKLIST).setOptions(Arrays.asList("Not Started", "Started", "Completed")).setPrimary(false).build();
+
+// Create sheet in workspace (specifying the 3 columns to include in the sheet).
+Sheet sheet = new Sheet.CreateSheetBuilder().setName("newsheet").setColumns(Arrays.asList(columnA, columnB, columnC)).build();
+
+smartsheet.sheetResources().createSheetInWorkspace(workspaceId, sheet);
 ```
 
 > Example Response:
@@ -5213,6 +5440,17 @@ curl https://api.smartsheet.com/2.0/sheets?include=data,attachments,discussions 
 -d '{"name":"newsheet", "fromId": 7679398137620356}'
 ```
 
+```java
+// Specify name for the sheet and ID of the template.
+Sheet sheet = new Sheet.CreateFromTemplateOrSheetBuilder().setFromId(templateId).setName("newsheet").build();
+
+// Create sheet from template (omit 'include' parameter).
+smartsheet.sheetResources().createSheetFromTemplate(sheet, null);
+
+// Create sheet from template (including data, attachments, and discussions).
+smartsheet.sheetResources().createSheetFromTemplate(sheet, EnumSet.of(SheetTemplateInclusion.ATTACHMENTS, SheetTemplateInclusion.DATA, SheetTemplateInclusion.DISCUSSIONS));
+```
+
 > Example Response:
 
 <%= partial "snippets/createSheetFromExisting_response.md.erb" %>
@@ -5233,6 +5471,17 @@ curl https://api.smartsheet.com/2.0/folders/{folderId}/sheets?include=data,attac
 -H "Content-Type: application/json" \
 -X POST \
 -d '{"name":"newsheet", "fromId": 7679398137620356}'
+```
+
+```java
+// Specify name for the sheet and ID of the template.
+Sheet sheet = new Sheet.CreateFromTemplateOrSheetBuilder().setFromId(templateId).setName("newsheet").build();
+
+// Create sheet from template in the specified folder (omit 'include' parameter).
+smartsheet.sheetResources().createSheetInFolderFromTemplate(folderId, sheet, null);
+
+// Create sheet from template (including data, attachments, and discussions).
+smartsheet.sheetResources().createSheetInFolderFromTemplate(folderId, sheet, EnumSet.of(SheetTemplateInclusion.ATTACHMENTS, SheetTemplateInclusion.DATA, SheetTemplateInclusion.DISCUSSIONS));	
 ```
 
 > Example Response:
@@ -5257,6 +5506,17 @@ curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/sheets?include=data
 -d '{"name":"newsheet", "fromId": 7679398137620356}'
 ```
 
+```java
+// Specify name for the sheet and ID of the template.
+Sheet sheet = new Sheet.CreateFromTemplateOrSheetBuilder().setFromId(templateId).setName("newsheet").build();
+
+// Create sheet from template in the specified folder (omit 'include' parameter).
+smartsheet.sheetResources().createSheetInFolderFromTemplate(folderId, sheet, null);
+
+// Create sheet from template in the specified workspace (including data, attachments, and discussions).
+smartsheet.sheetResources().createSheetInWorkspaceFromTemplate(folderId, sheet, EnumSet.of(SheetTemplateInclusion.ATTACHMENTS, SheetTemplateInclusion.DATA, SheetTemplateInclusion.DISCUSSIONS));	
+```
+
 > Example Response:
 
 <%= partial "snippets/createSheetFromExisting_response.md.erb" %>
@@ -5275,6 +5535,11 @@ Creates a Sheet at the top-level of the specified Workspace, from the specified 
 ...curl https://api.smartsheet.com/2.0/sheets/{sheetId} \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -X DELETE
+```
+
+```java
+// Delete sheet.
+smartsheet.sheetResources().deleteSheet(sheetId);
 ```
 
 > Example Response:
@@ -5305,6 +5570,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/version \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Get sheet version.
+smartsheet.sheetResources().getSheetVersion(sheetId);
+```
 > Example Response:
 
 ```json
@@ -5340,6 +5609,11 @@ The following actions increment Sheet version:
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId} \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Get sheet (omit all parameters).
+smartsheet.sheetResources().getSheet(sheetId, null, null, null, null, null, null, null);
 ```
 
 > Example Response:
@@ -5395,7 +5669,31 @@ Gets the Sheet specified in the URL. Returns the Sheet, including Rows, and opti
 
 ## Get Sheet as Excel / PDF / CSV
 
-> Example Request:
+> Example Request (Excel):
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId} \
+-H "Authorization: Bearer ACCESS_TOKEN" \
+-H "Accept: application/vnd.ms-excel" \
+-o output.xls
+```
+
+```java
+// Get sheet as Excel.
+smartsheet.sheetResources().getSheetAsExcel(sheetId, outputStream);
+```
+
+> Example Response:
+
+```shell
+# See local file named "output.pdf"
+```
+
+```java
+// Contents of Excel file will be written to "outputStream"
+```
+
+> Example Request (PDF):
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}?paperSize=A1 \
@@ -5404,10 +5702,43 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}?paperSize=A1 \
 -o  output.pdf
 ```
 
+```java
+// Get report as PDF.
+smartsheet.sheetResources().getSheetAsPDF(sheetId, outputStream, PaperSize.A1);
+```
+
 > Example Response:
 
-```desc
-See local file named "output.pdf"
+```shell
+# See local file named "output.pdf"
+```
+
+```java
+// Contents of PDF file will be written to "outputStream"
+```
+
+> Example Request (CSV):
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId} \
+-H "Authorization: Bearer ACCESS_TOKEN" \
+-H "Accept: text/csv" \
+-o output.csv
+```
+
+```java
+// Get sheet as CSV.
+smartsheet.sheetResources().getSheetAsCSV(sheetId, outputStream);
+```
+
+> Example Response:
+
+```shell
+# See local file named "output.csv"
+```
+
+```java
+// Contents of CSV file will be written to "outputStream"
 ```
 
 `GET /sheets/{sheetId}`
@@ -5435,6 +5766,18 @@ Gets the Sheet in the format specified, based on the Sheet ID.
 ```shell
 curl https://api.smartsheet.com/2.0/sheets \
 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+```java
+// Specify pagination parameters includeAll 
+PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List sheets (omit 'include' parameter and pagination parameters).
+smartsheet.sheetResources().listSheets(null, null);
+
+// List sheets (specify 'include' parameter with value of "source", and 'includeAll' parameter with value of "true").
+smartsheet.sheetResources().listSheets(EnumSet.of(SourceInclusion.SOURCE), parameters);
+
 ```
 
 > Example Response:
@@ -5486,6 +5829,11 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/publish \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Get sheet publish status.
+smartsheet.sheetResources().getPublishStatus(sheetId);
+```
+
 > Example Response:
 
 ```json
@@ -5518,6 +5866,14 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/publish \
 -H "Content-Type: application/json" \
 -X PUT \
 -d '{"readOnlyLiteEnabled": true,"readOnlyFullEnabled": false,"readWriteEnabled": false,"icalEnabled": false}'
+```
+
+```java
+// Specify sheet publish status properties.
+SheetPublish sheetPublish = new SheetPublish.PublishStatusBuilder().setIcalEnabled(false).setReadOnlyFullEnabled(false).setReadWriteEnabled(false).setReadOnlyLiteEnabled(true).build();
+
+// Set sheet publish status.
+smartsheet.sheetResources().updatePublishStatus(sheetId, sheetPublish);
 ```
 
 > Example Response:
@@ -5569,6 +5925,14 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId} \
 -H "Content-Type: application/json" \
 -X PUT \
 -d '{"name":"New Sheet Name", "userSettings": {"criticalPathEnabled": true}}'
+```
+
+```java
+// Specify updated sheet properties.
+Sheet sheet = new Sheet.UpdateSheetBuilder().setName("New Sheet Name").setUserSettings(new SheetUserSettings.AddUserSettingsBuilder().setCriticalPathEnabled(true).build()).build();
+
+// Update sheet.
+smartsheet.sheetResources().updateSheet(sheetId, sheet);
 ```
 
 > Example Response:

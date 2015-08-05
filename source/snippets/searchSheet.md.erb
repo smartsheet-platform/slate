@@ -5,6 +5,14 @@ curl https://api.smartsheet.com/2.0/search/sheets/{sheetId}?query=stuff \
 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+```java
+// Set search criteria.
+string query = "stuff";
+
+// Search sheet.
+smartsheet.searchResources().searchSheet(sheetId, query);
+```
+
 > Example Response:
 
 ```json
