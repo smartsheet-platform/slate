@@ -6093,6 +6093,11 @@ curl https://api.smartsheet.com/2.0/token \
 -X POST
 ```
 
+```java
+// Get access token.
+OAuthFlow oAuth = new OAuthFlowBuilder().setClientId(clientId).setRedirectURL(redirectUrl).setClientSecret(clientSecret).build();
+oAuth.obtainNewToken(authorizationResult);
+```
 > Example Response:
 
 ```json
@@ -6128,6 +6133,12 @@ curl https://api.smartsheet.com/2.0/token \
 -X POST
 ```
 
+```java
+// Refresh access token.
+OAuthFlow oAuth = new OAuthFlowBuilder().setClientId(clientId).setRedirectURL(redirectUrl).setClientSecret(clientSecret).build();
+oAuthFlow.refreshToken(token);
+```
+
 > Example Response:
 
 ```json
@@ -6159,6 +6170,12 @@ Refreshes an access token, as part of the oAuth process. For more information, s
 curl https://api.smartsheet.com/2.0/token \
 -H "Authorization: Bearer ACCESS_TOKEN" \
 -X DELETE
+```
+
+```java
+// Revoke access token.
+OAuthFlow oAuth = new OAuthFlowBuilder().setClientId(clientId).setRedirectURL(redirectUrl).setClientSecret(clientSecret).build();
+oAuthFlow.revokeAccessToken(token);
 ```
 
 > Example Response:
