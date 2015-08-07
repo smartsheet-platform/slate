@@ -1061,7 +1061,11 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId}/attach
 ```
 
 ```java
-smartsheet.sheetResources().commentResources().attachmentResources().attachFile(sheetId, commentId, file,"application/msword");
+//Create new file to attach
+File file = new File(filePath);
+
+// Attach file to comment.
+smartsheet.sheetResources().commentResources().attachmentResources().attachFile(sheetId, commentId, file, "application/msword");
 ```
 
 > Example Request (simple):
@@ -1104,6 +1108,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
 ```
 
 ```java
+//Create new file to attach
+File file = new File(filePath);
+
+// Attach file to row.
 smartsheet.sheetResources().rowResources().attachmentResources().attachFile(sheetId, rowId, file, "application/msword");
 ```
 
@@ -1147,6 +1155,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
 ```
 
 ```java
+//Create new file to attach
+File file = new File(filePath);
+
+// Attach file to comment.
 smartsheet.sheetResources().attachmentResources().attachFile(sheetId, file, "application/msword");
 ```
 
@@ -1279,6 +1291,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId} 
 ```
 
 ```java
+// Delete attachment.
 smartsheet.sheetResources().attachmentResources().deleteAttachment(sheetId, sheetAttachmentId);
 ```
 
@@ -1313,6 +1326,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId} 
 ```
 
 ```java
+// Get attachment.
 smartsheet.sheetResources().attachmentResources().getAttachment(sheetId, attachmentId);
 ```
 
@@ -4447,6 +4461,24 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows \
 -H "Content-Type: application/json" \
 -X PUT \
 -d '[{"id": "6572427401553796", "cells": [{"columnId": 7518312134403972,"value": "new value"}, {"columnId": 1888812600190852,"value": "A"}]}, {"id": "2068827774183300", "cells": [{"columnId": 7518312134403972,"value": "desc_updated"}, {"columnId": 1888812600190852,"value": "B"}]}]'
+```
+
+```java
+// Specify updated cell values for first row.
+List<Cell> cellsA = new Cell.UpdateRowCellsBuilder().addCell(7518312134403972, "new value").addCell(1888812600190852, "A").build();
+
+// Specify updated contents of first row.
+Row rowA = new Row.UpdateRowBuilder().setCells(cellsA).setRowId(6572427401553796).build();
+
+// Specify updated cell values for second row.
+List<Cell> cellsB = new Cell.UpdateRowCellsBuilder().addCell(7518312134403972, "desc_updated").addCell(1888812600190852, "B").build();
+
+// Specify updated contents of second row.
+Row rowB = new Row.UpdateRowBuilder().setCells(cellsB).setRowId(2068827774183300).build();
+
+// Update rows in sheet.
+smartsheet.SheetResources.RowResources.UpdateRows(sheetId, new Row[] { rowA, rowB });
+smartsheet.sheetResources().rowResources().updateRows(sheetId, Arrays.asList(rowB, rowB));
 ```
 
 > Example Response:
