@@ -1999,7 +1999,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
 
 ```java
 //Delete column.
-smartsheet.sheetResources().columnResources().deleteColumn(sheetId(), columnId());
+smartsheet.sheetResources().columnResources().deleteColumn(sheetId, columnId);
 ```
 
 > Example Response:
@@ -2032,10 +2032,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
 
 ```java
 // Get column (omit 'include' parameter).
-smartsheet.sheetResources().columnResources().getColumn(sheetId(), columnId(), EnumSet.of(ColumnInclusion.FILTERS));
+smartsheet.sheetResources().columnResources().getColumn(sheetId, columnId, EnumSet.of(ColumnInclusion.FILTERS));
 
 // Get column (specify 'include' parameter with value of "filters").
-smartsheet.sheetResources().columnResources().getColumn(sheetId(), columnId(), null);
+smartsheet.sheetResources().columnResources().getColumn(sheetId, columnId, null);
 ```
 
 > Example Response:
@@ -2140,10 +2140,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
 
 ```java
 // Specify updated column properties.
-Column column = new Column.UpdateColumnBuilder().setTitle("First Column").setIndex(0).setType(ColumnType.PICKLIST).setOptions(Arrays.asList("One", "Two")).build();
+Column column = new Column.UpdateColumnBuilder().setColumnId(columnId).setTitle("First Column").setIndex(0).setType(ColumnType.PICKLIST).setOptions(Arrays.asList("One", "Two")).build();
 
 // Update column.
-smartsheet.sheetResources().columnResources().updateColumn(newSheet.getId(), column);
+smartsheet.sheetResources().columnResources().updateColumn(sheetId, column);
 ```
 > Example Response:
 
@@ -2216,7 +2216,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions/{discussionId}/
 Comment comment = new Comment.AddCommentBuilder().setText("This is a new comment.").build();
 
 // Add comment to discussion.
-smartsheet.sheetResources().discussionResources().commentResources().addComment(sheetId, discussionId(), comment);
+smartsheet.sheetResources().discussionResources().commentResources().addComment(sheetId, discussionId, comment);
 ```
 
 > Example Request (with attachment):
@@ -3591,10 +3591,10 @@ curl https://api.smartsheet.com/2.0/groups/{groupId} \
 
 ```java
 // Specify the name and description of the group.
-Group group = new Group.UpdateGroupBuilder().setName("Renamed Group").setDescription("Some new description").build();
+Group group = new Group.UpdateGroupBuilder().setId(groupId).setName("Renamed Group").setDescription("Some new description").build();
 
 // Update group.
-smartsheet.groupResources().updateGroup(groupId, group);
+smartsheet.groupResources().updateGroup(group);
 
 ```
 > Example Response:
@@ -4477,8 +4477,7 @@ List<Cell> cellsB = new Cell.UpdateRowCellsBuilder().addCell(7518312134403972, "
 Row rowB = new Row.UpdateRowBuilder().setCells(cellsB).setRowId(2068827774183300).build();
 
 // Update rows in sheet.
-smartsheet.SheetResources.RowResources.UpdateRows(sheetId, new Row[] { rowA, rowB });
-smartsheet.sheetResources().rowResources().updateRows(sheetId, Arrays.asList(rowB, rowB));
+smartsheet.sheetResources().rowResources().updateRows(sheetId, Arrays.asList(rowA, rowB));
 ```
 
 > Example Response:
@@ -4940,10 +4939,10 @@ curl https://api.smartsheet.com/2.0/reports/{reportId}/shares/{shareId} \
 
 ```java
 // Set the access level to Viewer.
-Share share = new Share.UpdateShareBuilder().setAccessLevel(AccessLevel.VIEWER).build();
+Share share = new Share.UpdateShareBuilder().setShareId(shareId).setAccessLevel(AccessLevel.VIEWER).build();
 
 // Update report share.
-smartsheet.reportResources().shareResources().updateShare(reportId, shareId, share);
+smartsheet.reportResources().shareResources().updateShare(reportId, share);
 ```
 
 > Example Response:
@@ -5087,10 +5086,10 @@ curl https://api.smartsheet.com/2.0/sheets/{reportId}/shares/{shareId} \
 
 ```java
 // Set the access level to Viewer.
-Share share = new Share.UpdateShareBuilder().setAccessLevel(AccessLevel.VIEWER).build();
+Share share = new Share.UpdateShareBuilder().setShareId(shareId).setAccessLevel(AccessLevel.VIEWER).build();
 
 // Update report share.
-smartsheet.sheetResources().shareResources().updateShare(sheetId, shareId, share);
+smartsheet.sheetResources().shareResources().updateShare(sheetId, share);
 ```
 
 > Example Response:
@@ -5244,10 +5243,10 @@ curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/shares/{shareId} \
 
 ```java
 // Set the access level to Viewer.
-Share share = new Share.UpdateShareBuilder().setAccessLevel(AccessLevel.VIEWER).build();
+Share share = new Share.UpdateShareBuilder().setShareId(shareId).setAccessLevel(AccessLevel.VIEWER).build();
 
 // Update workspace share.
-smartsheet.workspaceResources().shareResources().updateShare(workspaceId, shareId, share);
+smartsheet.workspaceResources().shareResources().updateShare(workspaceId, share);
 ```
 
 > Example Response:
@@ -5961,10 +5960,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId} \
 
 ```java
 // Specify updated sheet properties.
-Sheet sheet = new Sheet.UpdateSheetBuilder().setName("New Sheet Name").setUserSettings(new SheetUserSettings.AddUserSettingsBuilder().setCriticalPathEnabled(true).build()).build();
+Sheet sheet = new Sheet.UpdateSheetBuilder().setSheetId(sheetId).setName("New Sheet Name").setUserSettings(new SheetUserSettings.AddUserSettingsBuilder().setCriticalPathEnabled(true).build()).build();
 
 // Update sheet.
-smartsheet.sheetResources().updateSheet(sheetId, sheet);
+smartsheet.sheetResources().updateSheet(sheet);
 ```
 
 > Example Response:
@@ -6500,11 +6499,11 @@ curl https://api.smartsheet.com/2.0/users/{userId} \
 ```
 
 ```java
-/ Specify updated user properties.
-User user = new User.UpdateUserBuilder().setAdmin(false).setLicensedSheetCreator(true).build();
+// Specify updated user properties.
+User user = new User.UpdateUserBuilder().setUserId(userId).setAdmin(false).setLicensedSheetCreator(true).build();
 
 // Update user.
-smartsheet.userResources().updateUser(userId, user);
+smartsheet.userResources().updateUser(user);
 ```
 
 > Example Response:
@@ -6753,6 +6752,15 @@ curl https://api.smartsheet.com/2.0/workspaces/7960873114331012 \
 -H "Content-Type: application/json" \
 -X PUT \
 -d '{"name": "Updated workspace"}'
+```
+
+```java
+// Specify updated workspace properties.
+Workspace workspace = new Workspace.UpdateWorkspaceBuilder().setName("Updated workspace").setId(workspaceId).build();
+
+// Update workspace.
+smartsheet.workspaceResources().updateWorkspace(workspace);
+
 ```
 
 > Example Response:
