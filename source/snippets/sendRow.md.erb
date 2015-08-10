@@ -9,13 +9,16 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/emails \
 ```
 
 ```java
-// Specify recipients.
+// Specify individual recipient.
 RecipientEmail recipientEmail = new RecipientEmail.AddRecipientEmailBuilder().setEmail("john.doe@smartsheet.com").build();
+
+// Specify group recipient.
 RecipientGroup recipientGroup = new RecipientGroup.AddRecipientGroupBuilder().setGroupId(2258118617917316).build();
 
+// Set recipients.
 List<Recipient> recipients = Arrays.asList(recipientEmail, recipientGroup);
 
-//Set format details
+// Set format details.
 FormatDetails formatDetails = new FormatDetails();
 formatDetails.setPaperSize(PaperSize.A0); 
 

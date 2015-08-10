@@ -4919,14 +4919,14 @@ curl https://api.smartsheet.com/2.0/reports/{reportId}/shares \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll'
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// List report shares (omit pagination parameters).
-smartsheet.reportResources().shareResources().listShares(reportId, null);
 
 // List report shares (specify 'includeAll' parameter with value of "true").
 smartsheet.reportResources().shareResources().listShares(reportId, parameters);
+
+// List report shares (omit pagination parameters).
+smartsheet.reportResources().shareResources().listShares(reportId, null);
 ```
 
 > Example Response:
@@ -5066,14 +5066,14 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/shares \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll' 
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// List sheet shares (omit pagination parameters).
-smartsheet.sheetResources().shareResources().listShares(sheetId, null);
 
 // List sheet shares (specify 'includeAll' parameter with value of "true").
 smartsheet.sheetResources().shareResources().listShares(sheetId, parameters);
+
+// List sheet shares (omit pagination parameters).
+smartsheet.sheetResources().shareResources().listShares(sheetId, null);
 ```
 
 > Example Response:
@@ -5218,14 +5218,14 @@ curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/shares \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll'
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// List workspace shares (omit pagination parameters).
-smartsheet.workspaceResources().shareResources().listShares(workspaceId, null);
 
 // List workspace shares (specify 'includeAll' parameter with value of "true").
 smartsheet.workspaceResources().shareResources().listShares(workspaceId, parameters);
+
+// List workspace shares (omit pagination parameters).
+smartsheet.workspaceResources().shareResources().listShares(workspaceId, null);
 ```
 
 > Example Response:
@@ -5851,15 +5851,14 @@ curl https://api.smartsheet.com/2.0/sheets \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll' 
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// List sheets (omit 'include' parameter and pagination parameters).
-smartsheet.sheetResources().listSheets(null, null);
 
 // List sheets (specify 'include' parameter with value of "source", and 'includeAll' parameter with value of "true").
 smartsheet.sheetResources().listSheets(EnumSet.of(SourceInclusion.SOURCE), parameters);
 
+// List sheets (omit 'include' parameter and pagination parameters).
+smartsheet.sheetResources().listSheets(null, null);
 ```
 
 > Example Response:
@@ -6107,14 +6106,14 @@ curl https://api.smartsheet.com/2.0/templates/public \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll'
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// List public templates (omit pagination parameters).
-smartsheet.templateResources().listPublicTemplates(null);
 
 // List public templates (specify 'includeAll' parameter with value of "true").
 smartsheet.templateResources().listPublicTemplates(parameters);
+
+// List public templates (omit pagination parameters).
+smartsheet.templateResources().listPublicTemplates(null);
 ```
 
 > Example Response:
@@ -6139,14 +6138,14 @@ curl https://api.smartsheet.com/2.0/templates \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll' 
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// List user-created templates (omit pagination parameters).
-smartsheet.templateResources().listUserCreatedTemplates(null);
 
 // List user-created templates (specify 'includeAll' parameter with value of "true").
 smartsheet.templateResources().listUserCreatedTemplates(parameters);
+
+// List user-created templates (omit pagination parameters).
+smartsheet.templateResources().listUserCreatedTemplates(null);
 ```
 
 > Example Response:
@@ -6453,14 +6452,14 @@ curl https://api.smartsheet.com/2.0/users?email=john.doe@smartsheet.com \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll' 
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// List users (omit 'email' parameter and pagination parameters).
-smartsheet.userResources().listUsers(null, null);
 
 // List users (specify 'email' parameter with value of "john.doe@smartsheet.com" and 'includeAll' parameter with value of "true").
 smartsheet.userResources().listUsers(new HashSet(Arrays.asList("john.doe@smartsheet.com")), parameters);
+
+// List users (omit 'email' parameter and pagination parameters).
+smartsheet.userResources().listUsers(null, null);
 ```
 
 > Example Response:
@@ -6741,14 +6740,14 @@ curl https://api.smartsheet.com/2.0/workspaces \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll' 
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// List workspaces (omit pagination parameters).
-smartsheet.workspaceResources().listWorkspaces(null);
 
 // List workspaces (specify 'includeAll' parameter with value of "true").
 smartsheet.workspaceResources().listWorkspaces(parameters);
+
+// List workspaces (omit pagination parameters).
+smartsheet.workspaceResources().listWorkspaces(null);
 ```
 
 > Example Response:
