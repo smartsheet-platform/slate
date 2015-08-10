@@ -1085,7 +1085,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId}/attach
 ```
 
 ```java
-//Create new file to attach
+// Specify file to be attached.
 File file = new File(filePath);
 
 // Attach file to comment.
@@ -1105,7 +1105,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId}/attach
 ```
 
 ```java
-//Create new file to attach
+// Specify file to be attached.
 File file = new File(filePath);
 
 // Attach file to comment.
@@ -1140,7 +1140,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
 ```
 
 ```java
-//Create new file to attach
+// Specify file to be attached.
 File file = new File(filePath);
 
 // Attach file to row.
@@ -1160,6 +1160,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
 ```
 
 ```java
+// Specify file to be attached.
+File file = new File(filePath);
+
+// Attach file to row.
 smartsheet.sheetResources().rowResources().attachmentResources().attachFile(sheetId, rowId, file, "application/msword");
 ```
 
@@ -1187,10 +1191,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
 ```
 
 ```java
-//Create new file to attach
+// Specify file to be attached.
 File file = new File(filePath);
 
-// Attach file to comment.
+// Attach file to sheet.
 smartsheet.sheetResources().attachmentResources().attachFile(sheetId, file, "application/msword");
 ```
 
@@ -1207,6 +1211,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
 ```
 
 ```java
+// Specify file to be attached.
+File file = new File(filePath);
+
+// Attach file to sheet.
 smartsheet.sheetResources().attachmentResources().attachFile(sheetId, file, "application/msword");
 ```
 
@@ -1395,7 +1403,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
 ```
 
 ```java
-// Specify pagination parameters includeAll.
+// Specify pagination parameter 'includeAll'.
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
 
 // Get all attachments with pagination.
@@ -1457,7 +1465,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions/{discussionId}/
 ```
 
 ```java
-// Specify pagination parameters includeAll.
+// Specify pagination parameter 'includeAll'.
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
 
 // Get all discussion attachments with pagination.
@@ -1519,7 +1527,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
 ```
 
 ```java
-// Specify pagination parameters includeAll.
+// Specify pagination parameter 'includeAll'.
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
 
 // Get all row attachments with pagination.
@@ -1585,10 +1593,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/
 ```
 
 ```java
-//Create new file to attach
+// Specify the new file to be attached.
 File file = new File(filePath);
 
-//Attach new verion
+// Attach new version of the file.
 smartsheet.sheetResources().attachmentResources().versioningResources().attachNewVersion(sheetId, sheetAttachmentId, file, "application/msword");
 ```
 
@@ -1605,10 +1613,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/
 ```
 
 ```java
-//Create new file to attach
+// Specify the new file to be attached.
 File file = new File(filePath);
 
-//Attach new verion
+// Attach new version of the file.
 smartsheet.sheetResources().attachmentResources().versioningResources().attachNewVersion(sheetId, sheetAttachmentId, file, "application/msword");
 ```
 
@@ -1647,6 +1655,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/
 ```
 
 ```java
+// Delete all versions of the attachment.
 smartsheet.sheetResources().attachmentResources().versioningResources().deleteAllVersions(sheetId, attachmentId);
 ```
 
@@ -1679,7 +1688,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/
 ```
 
 ```java
-// Specify pagination parameters includeAll.
+// Specify pagination parameter 'includeAll'.
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
 
 // List all attachment versions with pagination.
@@ -1798,7 +1807,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/columns/{colum
 ```
 
 ```java
-// Specify pagination parameters includeAll.
+// Specify pagination parameter 'includeAll'.
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
 
 // Get cell history with pagination.
@@ -2030,7 +2039,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
 ```
 
 ```java
-//Delete column.
+// Delete column.
 smartsheet.sheetResources().columnResources().deleteColumn(sheetId, columnId);
 ```
 
@@ -2064,10 +2073,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
 
 ```java
 // Get column (omit 'include' parameter).
-smartsheet.sheetResources().columnResources().getColumn(sheetId, columnId, EnumSet.of(ColumnInclusion.FILTERS));
+smartsheet.sheetResources().columnResources().getColumn(sheetId, columnId, null);
 
 // Get column (specify 'include' parameter with value of "filters").
-smartsheet.sheetResources().columnResources().getColumn(sheetId, columnId, null);
+smartsheet.sheetResources().columnResources().getColumn(sheetId, columnId, EnumSet.of(ColumnInclusion.FILTERS));
 ```
 
 > Example Response:
@@ -2103,13 +2112,13 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns \
 ```
 
 ```java
-// Specify pagination parameters includeAll.
+// Specify pagination parameter 'includeAll'.
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
 
-// Get all columns (omit 'include' parameter and pagination parameters).
+// Get all columns (specify 'include' parameter with value of "filters" and 'includeAll' parameter with value of "true").
 smartsheet.sheetResources().columnResources().listColumns(sheetId, EnumSet.of(ColumnInclusion.FILTERS), parameters);
 
-// Get all columns (specify 'include' parameter with value of "filters" and 'includeAll' parameter with value of "true").
+// Get all columns (omit 'include' parameter and pagination parameters).
 smartsheet.sheetResources().columnResources().listColumns(sheetId, null, null);
 ```
 
@@ -2163,6 +2172,7 @@ Gets a list of all Columns belonging to the Sheet specified in the URL.
 
 > Example Request:
 
+
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
 -H "Authorization: Bearer ACCESS_TOKEN" \
@@ -2171,7 +2181,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
 ```
 
 ```java
-// Specify updated column properties.
+// Specify column properties.
 Column column = new Column.UpdateColumnBuilder().setColumnId(columnId).setTitle("First Column").setIndex(0).setType(ColumnType.PICKLIST).setOptions(Arrays.asList("One", "Two")).build();
 
 // Update column.
@@ -2432,7 +2442,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/discussions \
 // Create comment.
 Comment comment = new Comment.AddCommentBuilder().setText("This text is the body of the first comment").build();
 
-// Create discussion with created comment.
+// Create discussion (including the comment).
 Discussion discussion = new Discussion.CreateDiscussionBuilder().setTitle("This is a new discussion").setComment(comment).build();
 
 // Add discussion to row.
@@ -2470,7 +2480,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions \
 // Create comment.
 Comment comment = new Comment.AddCommentBuilder().setText("This text is the body of the first comment").build();
 
-// Create discussion with created comment.
+// Create discussion (including the comment).
 Discussion discussion = new Discussion.CreateDiscussionBuilder().setTitle("This is a new discussion").setComment(comment).build();
 
 // Add discussion to sheet.
@@ -2571,14 +2581,14 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions?include=comment
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll'
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// Get all discussions (omit 'include' parameter and pagination parameters).
-smartsheet.sheetResources().discussionResources().listDiscussions(sheetId, null, null);
 
 // Get all discussions (specify 'include' parameter with values of 'comments' and 'attachments', and 'includeAll' parameter with value of "true").
 smartsheet.sheetResources().discussionResources().listDiscussions(sheetId, parameters, EnumSet.of(DiscussionInclusion.COMMENTS, DiscussionInclusion.ATTACHMENTS));
+
+// Get all discussions (omit 'include' parameter and pagination parameters).
+smartsheet.sheetResources().discussionResources().listDiscussions(sheetId, null, null);
 ```
 
 > Example Response:
@@ -2645,14 +2655,14 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/discussions?in
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll'
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// Get row discussions (omit 'include' parameter and pagination parameters).
-smartsheet.sheetResources().rowResources().discussionResources().listDiscussions(sheetId, rowId, null, null);
 
 // Get row discussions (specify 'include' parameter with values of 'comments' and 'attachments', and 'includeAll' parameter with value of "true").
 smartsheet.sheetResources().rowResources().discussionResources().listDiscussions(sheetId, rowId, parameters, EnumSet.of(DiscussionInclusion.COMMENTS, DiscussionInclusion.ATTACHMENTS));
+
+// Get row discussions (omit 'include' parameter and pagination parameters).
+smartsheet.sheetResources().rowResources().discussionResources().listDiscussions(sheetId, rowId, null, null);
 ```
 
 > Example Response:
@@ -2751,15 +2761,16 @@ curl https://api.smartsheet.com/2.0/favorites \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll' 
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// List favorites (omit pagination parameters).
-smartsheet.favoriteResources().listFavorites(null);
 
 // List favorites (specify 'includeAll' parameter with value of "true").
 smartsheet.favoriteResources().listFavorites(parameters);
+
+// List favorites (omit pagination parameters).
+smartsheet.favoriteResources().listFavorites(null);
 ```
+
 > Example Response:
 
 ```json
@@ -3259,14 +3270,14 @@ curl https://api.smartsheet.com/2.0/home/folders \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll' 
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List folders (specify 'includeAll' parameter with value of "true").
+smartsheet.homeResources().folderResources().listFolders(parameters);
 
 // List folders (omit pagination parameters).
 smartsheet.homeResources().folderResources().listFolders(null);
-
-// List folders in "Sheets" folder (specify 'includeAll' parameter with value of "true").
-smartsheet.homeResources().folderResources().listFolders(parameters);
 ```
 
 > Example Response:
@@ -3292,14 +3303,14 @@ curl https://api.smartsheet.com/2.0/folders/{folderId}/folders \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll' 
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List folders (specify 'includeAll' parameter with value of "true").
+smartsheet.folderResources().listFolders(parameters);
 
 // List folders (omit pagination parameters).
 smartsheet.folderResources().listFolders(null);
-
-// List folders in another folder (specify 'includeAll' parameter with value of "true").
-smartsheet.folderResources().listFolders(parameters);
 ```
 
 > Example Response:
@@ -3325,14 +3336,14 @@ curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/folders \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll' 
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
+
+// List folders (specify 'includeAll' parameter with value of "true").
+smartsheet.workspaceResources().folderResources().listFolders(parameters);
 
 // List folders (omit pagination parameters).
 smartsheet.workspaceResources().folderResources().listFolders(null);
-
-// List folders in workspace (specify 'includeAll' parameter with value of "true").
-smartsheet.workspaceResources().folderResources().listFolders(parameters);
 ```
 
 > Example Response:
@@ -3565,14 +3576,14 @@ curl https://api.smartsheet.com/2.0/groups \
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll'
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// List all org groups (omit pagination parameters).
-smartsheet.groupResources().listGroups(null);
 
 // List all org groups (specify 'includeAll' parameter with value of "true").
 smartsheet.groupResources().listGroups(parameters);
+
+// List all org groups (omit pagination parameters).
+smartsheet.groupResources().listGroups(null);
 ```
 > Example Response:
 
@@ -4015,8 +4026,12 @@ smartsheet.reportResources().getReportAsExcel(reportId, outputStream);
 
 > Example Response:
 
-```desc
+```shell
 See local file named "output.xls"
+```
+
+```java
+// Contents of Excel file will be written to "outputStream"
 ```
 
 > Example Request (CSV):
@@ -4035,8 +4050,12 @@ smartsheet.reportResources().getReportAsCsv(reportId, outputStream);
 
 > Example Response:
 
-```desc
+```shell
 See local file named "output.csv"
+```
+
+```java
+// Contents of CSV file will be written to "outputStream"
 ```
 
 `GET /reports/{reportId}`
@@ -4065,14 +4084,14 @@ curl https://api.smartsheet.com/2.0/reports
 ```
 
 ```java
-// Specify pagination parameters includeAll 
+// Specify pagination parameter 'includeAll' 
 PaginationParameters parameters = new PaginationParameters.PaginationParametersBuilder().setIncludeAll(true).build();
-
-// List reports (omit pagination parameters).
-smartsheet.reportResources().listReports(null)
 
 // List reports (specify 'includeAll' parameter with value of "true").
 smartsheet.reportResources().listReports(parameters);
+
+// List reports (omit pagination parameters).
+smartsheet.reportResources().listReports(null);
 ```
 
 > Example Response:
