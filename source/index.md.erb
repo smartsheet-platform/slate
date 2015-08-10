@@ -608,6 +608,30 @@ See our [Github repository](https://github.com/smartsheet-platform) for sample /
  
 See our [SDK page](http://www.smartsheet.com/developers/sdks) for available SDKs or to submit your vote for additional language coverage.
 
+### Java Sample Code
+
+The Java code samples included in this API documentation demonstrate how to execute operations using the [Smartsheet Java SDK](https://github.com/smartsheet-platform/smartsheet-java-sdk). 
+Each code sample uses a **Smartsheet** object called "smartsheet" that can be created as follows:
+
+<code>
+// Set the Access Token<br/>
+Token token = new Token();<br/>
+token.setAccessToken("INSERT_YOUR_TOKEN_HERE");<br/>
+</code>
+
+<code>
+// Use the Smartsheet Builder to create a Smartsheet<br/>
+Smartsheet smartsheet = new SmartsheetBuilder().setAccessToken(token.getAccessToken()).build();<br/>
+</code>
+
+For operations that support querystring parameters, the Java code sample often contains multiple example requests, each one showing a different combination of querystring parameters. 
+The code samples are intended for example purposes only and should not be considered to cover all possible combinations of querystring parameters. 
+
+Within the Java code samples, the **...Id** naming convention is used to denote an object ID that will need to be replaced with an actual object ID, should you use the code in your application.
+For example, in the following code example, **sheetId** should be replaced with the actual ID of the Sheet and **rowId** should be replaced with the actual ID of the Row:  
+
+<code>smartsheet.sheetResources().rowResources().discussionResources().createDiscussion(sheetId, rowId, discussion);</code>
+
 ## Direct API Access
 
 Smartsheet makes it easy to directly access your data via the API. 
