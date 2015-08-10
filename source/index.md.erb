@@ -1597,7 +1597,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/
 File file = new File(filePath);
 
 // Attach new version of the file.
-smartsheet.sheetResources().attachmentResources().versioningResources().attachNewVersion(sheetId, sheetAttachmentId, file, "application/msword");
+smartsheet.sheetResources().attachmentResources().versioningResources().attachNewVersion(sheetId, attachmentId, file, "application/msword");
 ```
 
 > Example Request (simple):
@@ -1617,7 +1617,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/
 File file = new File(filePath);
 
 // Attach new version of the file.
-smartsheet.sheetResources().attachmentResources().versioningResources().attachNewVersion(sheetId, sheetAttachmentId, file, "application/msword");
+smartsheet.sheetResources().attachmentResources().versioningResources().attachNewVersion(sheetId, attachmentId, file, "application/msword");
 ```
 
 > Example Response:
@@ -2282,7 +2282,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions/{discussionId}/
 // Create comment.
 Comment comment = new Comment.AddCommentBuilder().setText("This is a new comment.").build();
 
-// Add comment with attachment to discussion.
+// Add comment (with attachment) to discussion.
 File file = new File(filePath);
 
 smartsheet.sheetResources().discussionResources().commentResources().addCommentWithAttachment(sheetId, discussionId, comment, file, "application/octet-stream");
@@ -2511,11 +2511,11 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions \
 // Create comment.
 Comment comment = new Comment.AddCommentBuilder().setText("This text is the body of the first comment").build();
 
-// Create discussion with created comment.
+// Create discussion (including the comment).
 Discussion discussion = new Discussion.CreateDiscussionBuilder().setTitle("This is a new discussion").setComment(comment).build();
 File file = new File(filePath);
 
-// Add discussion with attachment to sheet.
+// Add discussion (including comment with attachment) to sheet.
 smartsheet.sheetResources().discussionResources().createDiscussionWithAttachment(sheetId, discussion, file, "application/octet-stream");
 ```
 
