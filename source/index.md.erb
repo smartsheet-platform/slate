@@ -1080,6 +1080,14 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId}/attach
 --data-binary @ProgressReport.docx
 ```
 
+```java
+//Create new file to attach
+File file = new File(filePath);
+
+// Attach file to comment.
+smartsheet.sheetResources().commentResources().attachmentResources().attachFile(sheetId, commentId, file, "application/msword");
+```
+
 > Example Response:
 
 <%= partial "snippets/attachFile_response.md.erb" %>
