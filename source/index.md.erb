@@ -13016,6 +13016,9 @@ Revokes the access token used to make this request.  The access token will no lo
 **resourceViewer** | boolean | Flag indicating whether the user is a resource viewer (can access resource views)
 **status** | string |  User status, set to one of the following values:<ul><li>ACTIVE</li><li>PENDING</li><li>DECLINED</li></ul>
 **alternateEmails** | [AlternateEmail](#alternateemail-object)[] | An array of [AlternateEmail objects](#alternateemail-object) representing the alternate email address(es) associated with the User account
+**sheetCount** | number | Count of user's owned sheets within an organization
+**lastLogin** | timestamp | User's timestamp of last login
+**customWelcomeScreenViewed** | timestamp | User's timestamp of viewing an Enterprise Custom Welcome Screen
 
 ### UserProfile Object
 
@@ -13220,8 +13223,6 @@ smartsheet.Users.add_alternate_email(
 
 Adds one or more alternate email addresses for the specified User.
 
-<aside class="notice">If this operation is done within the context of an Enterprise account and the alternate email's <a href="http://help.smartsheet.com/articles/2072731-user-auto-provisioning-enterprise-only-">domain is verified</a>, the added email will be automatically confirmed and will not send a confirmation to the specified user.</aside>
-
      |     |
 -----|-----|
 <%= SCOPE %> | ADMIN_USERS
@@ -13229,64 +13230,6 @@ Adds one or more alternate email addresses for the specified User.
 <%= REQUEST %> | Array of [AlternateEmail objects](#alternateemail-object), each limited to only the **email** attribute
 <%= RETURNS %> | [Result object](#result-object) containing an array of the newly created [AlternateEmail objects](#alternateemail-object).
 <%= ERRORS %>  | If a single email address is specified in the request and an error occurs, the response will contain the typical [Error object](#errors).<br/><br/>If multiple email addresses are specified in the request and an error occurs, the [Error object](#errors) returned will contain a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**email**: Problematic email address specified in the request</li><li>**errorCode**: Smartsheet [error code](#error-handling)</li><li>**message**: Message that describes the problem with the specified email address</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 1160,<br/>&#160;&#160;"message": "Invalid bulk request. See detail for more information."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"email": "altEmail1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"errorCode": 1157,<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"message": "This address is already associated with another Smartsheet account, so it cannot be added as an alternate address for this account."<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
-
-
-### Make Alternate Email Primary
-
-> Example Request:
-
-```shell
-curl https://api.smartsheet.com/2.0/users/{userId}/alternateemails/{alternatEmailId}/makeprimary \
--H "Authorization: Bearer ACCESS_TOKEN" \
--H "Content-Type: application/json" \
--X POST
-```
-
-```javascript
-// [todo]
-```
-
-```csharp
-// [todo]
-```
-
-```java
-// [todo]
-```
-
-```python
-# [todo]
-```
-
-> Example Response:
-
-```json
-{
-"message": "SUCCESS",
-"resultCode": 0,
-"result":
-  {
-    "id": 12345,
-    "email": "altEmail1@smartsheet.com",
-    "confirmed": false
-  }
-}
-```
-
-`POST /users/{userId}/alternateemails/{alternateEmailId}/makeprimary`
-
-Makes the specified alternate email address the primary email address for the specified user.
-
-<aside class="notice">The alternate address can only be made primary if both conditions are met: <br/> 1) The current primary email domain is validated <br/> 2) The alternate addres is confirmed <b>OR</b> the alternate address domain is validated</aside>
-
-
-     |     |
------|-----|
-<%= SCOPE %> | ADMIN_USERS
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= RETURNS %> | [Result object](#result-object) containing an object of the now primary [AlternateEmail object](#alternateemail-object)
-<%= ERRORS %> | If an error occurs because the account type is not Enterprise, we restrict this API endpoint to only Enterprise accounts. [Learn more](https://www.smartsheet.com/enterprise/scale) about the Enterprise platform.<br/>If an error occurs because either the primary or alternate email domains are not validated, that specific domain needs to be [validated](http://help.smartsheet.com/articles/2072731-user-auto-provisioning-enterprise-only-).<br/>If an error occurs because a user has a perosnal email address as their current primary address, the specified user needs to manually change their primary address in their Personal Settings.
-
 
 ### Delete Alternate Email
 
@@ -13642,25 +13585,28 @@ users = action.data
     "pageSize": 100,
     "totalPages": 1,
     "totalCount": 1,
-	"data": [
-		{
-			"id": 94094820842,
-			"admin": true,
-			"email": "john.doe@smartsheet.com",
-			"name": "John Doe",
+    "data": [
+        {
+            "id": 94094820842,
+            "admin": true,
+            "email": "john.doe@smartsheet.com",
+            "name": "John Doe",
             "status": "ACTIVE",
             "admin": true,
             "licensedSheetCreator": true,
             "groupAdmin": true,
-            "resourceViewer": true
-		}
-	]
+            "resourceViewer": true,
+            "sheetCount": 3,
+            "lastLogin": "2016-08-15T18:32:47Z",
+            "customWelcomeScreenViewed": "2016-08-12T12:15:47Z"
+        }
+    ]
 }
 ```
 
 `GET /users`
 
-Gets the list of Users in the organization. To filter by email, use the optional **email** query string parameter to specify a list of users' email addresses. 
+Gets the list of Users in the organization. To filter by email, use the optional **email** query string parameter to specify a list of users' email addresses.
 
 <aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
@@ -13669,7 +13615,7 @@ Gets the list of Users in the organization. To filter by email, use the optional
 <%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **email** (optional): Comma-separated list of email addresses on which to filter the results<br/><br/><%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [User objects](#user-object)<br/><br/><b>Note</b>: If the API request is submitted by a system administrator, the following User attributes will be included in the response (else, they will be omitted from the response):<ul><li>status</li><li>admin</li><li>licensedSheetCreator</li><li>groupAdmin</li><li>resourceViewer</li></ul>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [User objects](#user-object)<br/><br/><b>Note</b>: If the API request is submitted by a system administrator, the following User attributes will be included in the response (else, they will be omitted from the response):<ul><li>status</li><li>admin</li><li>licensedSheetCreator</li><li>groupAdmin</li><li>resourceViewer</li><li>lastLogin</li><li>sheetCount</li></ul><br/><b>Note</b>: If the API request is submitted by a system administrator of an Enterprise account, the following User attributes will be included in the response (else, they will be omitted from the response): <br/><ul><li>customWelcomeScreenViewed</li></ul>
 
 ## Remove User
 
