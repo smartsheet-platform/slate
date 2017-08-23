@@ -15,20 +15,7 @@ Options:
                            deploy branch.
   -n, --no-hash            Don't append the source commit's hash to the deploy
                            commit's message.
-  -c, --config-file PATH   Override default & environment variables' values
-                           with those in set in the file at 'PATH'. Must be the
-                           first option specified.
-
-Variables:
-
-  GIT_DEPLOY_DIR      Folder path containing the files to deploy.
-  GIT_DEPLOY_BRANCH   Commit deployable files to this branch.
-  GIT_DEPLOY_REPO     Push the deploy branch to this repository.
-
-These variables have default values defined in the script. The defaults can be
-overridden by environment variables. Any environment variables are overridden
-by values set in a '.env' file (if it exists), and in turn by those set in a
-file specified by the '--config-file' option."
+"
 
 bundle exec middleman build --clean
 
@@ -36,12 +23,6 @@ parse_args() {
   # Set args from a local environment file.
   if [ -e ".env" ]; then
     source .env
-  fi
-
-  # Set args from file specified on the command-line.
-  if [[ $1 = "-c" || $1 = "--config-file" ]]; then
-    source "$2"
-    shift 2
   fi
 
   # Parse arg flags

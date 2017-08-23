@@ -14,103 +14,94 @@ License for the specific language governing permissions and limitations
 under the License.
 */
 
-
 ////////////////////////////////////////////////////////////////////////////////
 // CUSTOMIZE SLATE
 ////////////////////////////////////////////////////////////////////////////////
 // Use these settings to help adjust the appearance of Slate
-
-
 // BACKGROUND COLORS
 ////////////////////
-$examples-bg: #27313e; /* 294773 20385b 3e4956 292929 1c1c1c 3e4956 393939 5c6167 */
-$code-bg: #27313e; /* 294773 20385b 3e4956 292929 1c1c1c 27313e 292929 393939 */
-$code-annotation-bg: #3e4956; /* 20385b 27313e 393939 344B56 393939 1c1c1c 292929 */
-$nav-bg: #f5f5f5; /* f5f5f5 222 3e4956 2A3A5C 27313e 393939 2467af */
-$nav-subitem-bg: #f5f5f5; /* f5f5f5 27313e 2A3A5C 3e4956 262626 518eb3 */
-$nav-active-bg: #2467af; 
-$lang-select-border: #000;
-$lang-select-bg: $examples-bg;
-$lang-select-active-bg: #38719a; 
-$lang-select-pressed-bg: #111; // color of language tab bg when mouse is pressed
-$main-bg: #fbfbfb; /* #f5f5f5 eaf2f6 */
-$search-notice-bg: #c97a7e;
+$nav-bg: #f5f5f5 !default;
+$examples-bg: #000000 !default;// #2E3336 !default;
+$code-bg: #000000 !default; // #1E2224 !default;
+$code-annotation-bg: #3e4956 !default;
+$nav-subitem-bg: #e0e0e0 !default;
+$nav-active-bg: #2467AF !default;
+$nav-active-parent-bg: #d8d8d8 !default; // parent links of the current section
+$lang-select-border: #000 !default;
+$lang-select-bg: #1E2224 !default;
+$lang-select-active-bg: #38719a; // feel free to change this to blue or something
+$lang-select-pressed-bg: #111 !default; // color of language tab bg when mouse is pressed
+$main-bg: #FBFBFB !default;
+
 $aside-notice-bg: #e3edf2;
 $aside-warning-bg: #FFF5F5;
 $aside-success-bg: #E8FAEE; 
 $aside-notice-border: #5bc0de; 
 $aside-warning-border: #d9534f; 
 $aside-success-border: #50af51; 
-$banner-bg: #393939; 
+
+$banner-bg: #393939;
+
 $table-odd-bg: #fff;
 $table-even-bg: #f8f8f8;
 
+$sb-bg-color: lighten($code-annotation-bg, 0.5);
+$sb-thumb-color: grey; // darken($code-annotation-bg, 0.2);
+
 // TEXT COLORS
 ////////////////////
-$main-text: #000; // main content text color
-$nav-text: #000; 
-$nav-active-text: #fff;
-$lang-select-text: #fff; // color of unselected language tab text
-$lang-select-active-text: #fff; // color of selected language tab text
-$lang-select-pressed-text: #fff; // color of language tab text when mouse is pressed
+$main-text: #000 !default; // main content text color
+$nav-text: #fff !default;
+$nav-active-text: #fff !default;
+$nav-active-parent-text: #000000 !default; // parent links of the current section
+$lang-select-text: #fff !default; // color of unselected language tab text
+$lang-select-active-text: #fff !default; // color of selected language tab text
+$lang-select-pressed-text: #fff !default; // color of language tab text when mouse is pressed
 $nav-hover-text: #4c555a;
 $content-link-text: #2467af;
 
 // SIZES
 ////////////////////
-$nav-width: 250px; // width of the navbar
-$examples-width: 40%; // portion of the screen taken up by code examples
-$logo-margin: 20px; // margin between nav items and logo, ignored if search is active
-$main-padding: 28px; // padding to left and right of content & examples
-$nav-padding: 15px; // padding to left and right of navbar
-$nav-v-padding: 10px; // padding used vertically around search boxes and results
-$nav-indent: 10px; // extra padding for ToC subitems
-$code-annotation-padding: 5px; // 13px; padding inside code annotations 
-$h1-margin-bottom: 14px; // padding under the largest header tags
-$tablet-width: 930px; // min width before reverting to tablet size
-$phone-width: $tablet-width - $nav-width; // min width before reverting to mobile size
-
+$nav-width: 230px !default; // width of the navbar
+$examples-width: 50% !default; // portion of the screen taken up by code examples
+$logo-margin: 0px !default; // margin below logo
+$main-padding: 20px !default; // padding to left and right of content & examples
+$nav-padding: 15px !default; // padding to left and right of navbar
+$nav-v-padding: 10px !default; // padding used vertically around search boxes and results
+$nav-indent: 10px !default; // extra padding for ToC subitems
+$code-annotation-padding: 5px !default; // padding inside code annotations
+$h1-margin-bottom: 21px !default; // padding under the largest header tags
+$tablet-width: 930px !default; // min width before reverting to tablet size
+$phone-width: $tablet-width - $nav-width !default; // min width before reverting to mobile size
 // FONTS
 ////////////////////
 %default-font {
-  font-family: proxima_nova_reg, Helvetica, Arial, sans-serif;
-  font-size: 13px;
+    font-family: proxima_nova_reg, Helvetica, Arial, sans-serif;
+    font-size: 13px;
 }
 
 %header-font {
-  @extend %default-font;
-  font-weight: bold;
+    @extend %default-font;
+    font-weight: bold;
 }
 
 %code-font {
-  font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
-  font-size: 12px;
-  line-height: 1.5;
+    font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
+    font-size: 12px;
+    line-height: 1.5;
 }
-
 
 // OTHER
 ////////////////////
-$nav-active-shadow: #000 !default;
 $nav-footer-border-color: #666 !default;
-$nav-embossed-border-top: #000 !default;
-$nav-embossed-border-bottom: #939393 !default;
-$main-embossed-text-shadow: 0px 1px 0px #fff !default;
 $search-box-border-color: #666 !default;
 
+$nav-bar-height: 60px;  // SS Menu, etc.
 ////////////////////////////////////////////////////////////////////////////////
 // INTERNAL
 ////////////////////////////////////////////////////////////////////////////////
 // These settings are probably best left alone.
-
 %break-words {
- -ms-word-break: break-all;
-     word-break: break-all;
-
-     /* Non standard for webkit */
-     word-break: break-word;
-
--webkit-hyphens: auto;
-   -moz-hyphens: auto;
-        hyphens: auto;
+    word-break: break-all;
+    hyphens: auto;
 }

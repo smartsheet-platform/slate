@@ -1,4 +1,4 @@
-//= require ../lib/_jquery.tocify
+//= require ../lib/_jquery
 //= require ../lib/_imagesloaded.min
 
 function _trace(msg) { 
@@ -11,8 +11,23 @@ _trace("* Loading " + window.location);
 ;(function () {
   'use strict';
 
+  var loaded = false;
+
+  var debounce = function(func, waitTime) {
+    var timeout = false;
+    return function() {
+      if (timeout === false) {
+        setTimeout(function() {
+          func();
+          timeout = false;
+        }, waitTime);
+        timeout = true;
+      }
+    };
+  };
+
   var closeToc = function() {
-    $(".tocify-wrapper").removeClass('open');
+    $(".toc-wrapper").removeClass('open');
     $("#nav-button").removeClass('open');
   };
   
@@ -106,12 +121,11 @@ _trace("* Loading " + window.location);
       $(window).resize(debounce(recacheHeights, 150));
     };
 
-  $(function() {
     makeToc();
-    animate();
-    $('.content').imagesLoaded( function() {
-      global.toc.calculateHeights();
-    });
-  });
-})(window);
 
+    window.recacheHeights = recacheHeights;
+    window.refreshToc = refreshToc;
+  }
+
+  window.loadToc = loadToc;
+})();
