@@ -876,6 +876,7 @@ Gets a nested list of all Home Objects, including Sheets, Workspaces, Folders, R
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>ownerInfo - owner's email address and user Id for each sheet</li><li>source - the [source](#source-object) for any sheet that was created from another sheet or template</li></ul>
+  | **exclude** (optional) -- a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>permalinks - excludes the permalink from each data object</li></ul> 
 <%= RETURNS %> | [Home Object](#home-object), populated according to the **include** parameter
 
 ## <%= RELATED %>
@@ -2070,6 +2071,7 @@ Copies Rows from the Sheet specified in the URL to (the bottom of) another sheet
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/rows?ids={rowId1},{rowId2},{rowId3}&ignoreRowsNotFound=true' \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -X DELETE
 ```
 
@@ -4837,7 +4839,7 @@ Smartsheet users can define and save personal column filters on sheets they can 
 **operator** | string | One of the following values:<ul><li>EQUAL</li><li>NOT_EQUAL</li><li>GREATER_THAN</li><li>LESS_THAN</li><li>CONTAINS</li><li>BETWEEN</li><li>TODAY</li><li>PAST</li><li>FUTURE</li><li>LAST_N_DAYS</li><li>NEXT_N_DAYS</li><li>IS_BLANK</li><li>IS_NOT_BLANK</li><li>IS_NUMBER</li><li>IS_NOT_NUMBER</li><li>IS_DATE</li><li>IS_NOT_DATE</li><li>IS_CHECKED</li><li>IS_NOT_CHECKED</li></ul>
 **includeParent** | Boolean | If **true**, indicates that "show parent rows" is enabled for the filters.
 **excludeSelected** | Boolean | If **true**, rows containing cells matching the "values" or "criteria" items are excluded instead of included.
-**values** | object[] containing strings, numbers, and Booleans | An array of literal cell values that this filter matches against row cells in this column. The type of the objects in the array depend on the type of the cell values selected to be filtered on when the filter was created. These may be strings, numbers, Booleans, or dates.
+**values** | array | Optional. Present if a custom filter criteria's operator has one or more arguments.
 **criteria** | [Criteria](#criteria-object)[] | An array of Criteria Objects specifying custom criteria against which to match cell values.
 
 ### ProjectSettings Object
@@ -6110,11 +6112,12 @@ Gets the Sheet specified in the URL. Returns the Sheet, including Rows, and opti
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ownerInfo**: includes owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source Object](#source-object) indicating which sheet or template the sheet was created from, if any.
   | **exclude** (optional) -- a comma-separated list of elements to <i>not include</i> in the response.<br/><ul><li>**nonexistentCells**: excludes cells that have never contained any data</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** Object:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li></ul>
-  | **rowIds** (optional): a comma-separated list of Row Ids on which to filter the rows included in the result
-  | **rowNumbers** (optional): a comma-separated list of Row numbers  on which to filter the rows included in the result.  Non-existent row numbers are ignored.
   | **columnIds** (optional): a comma-separated list of Column Ids. The response contains only the specified columns in the "columns" array, and individual rows' "cells" array only contains cells in the specified columns.
-  | **pageSize** (optional): number of rows per page to include with the sheet.  If neither **pageSize** or **page** are specified, returns all rows in the sheet.  If only page is specified, defaults to a page size of 100.
+  | **ifVersionAfter** (optional): If version specified is still the current sheet version, then returns an abbreviated Sheet Object with only the sheet **version** property. Otherwise, if the sheet has been modified, returns the complete Sheet Object. Intended to allow clients with a cached copy to make sure they have the latest version.
   | **page** (optional): which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
+  | **pageSize** (optional): number of rows per page to include with the sheet.  If neither **pageSize** nor **page** is specified, returns all rows in the sheet.  If only page is specified, defaults to a page size of 100.
+  | **rowIds** (optional): a comma-separated list of Row Ids on which to filter the rows included in the result
+  | **rowNumbers** (optional): a comma-separated list of Row numbers on which to filter the rows included in the result.  Non-existent row numbers are ignored.
 <%= RETURNS %> | [Sheet Object](#sheet-object), populated according to the specified parameters
 
 ## Get Sheet as Excel / PDF / CSV
@@ -7111,7 +7114,7 @@ For details about working with a Sheet's rows, see [Rows](#rows).
 
 # Sights
 
-Smartsheet Sights(TM) are a collection of widgets that can contain data from a variety of different data sources (for example, Sheets, Reports, custom data).
+Smartsheet Sights(TM) are a collection of widgets that can contain data from a variety of different data sources (for example, Sheets, Reports, or custom data). Sights are now called Dashboards in the UI. 
 
 ## <%= OBJECTS %>
 
@@ -7188,7 +7191,8 @@ Smartsheet Sights(TM) are a collection of widgets that can contain data from a v
 
      |     |     |
 -----|-----|-----|
-**UI widget name** | **type string** | **Object** 
+**UI widget name** | **type string** | **Object**
+Chart | CHART | [ChartWidgetContent](#chartwidgetcontent-object) 
 Image | IMAGE | [ImageWidgetContent](#imagewidgetcontent-object)
 Metric | SHEETSUMMARY | [CellLinkWidgetContent](#celllinkwidgetcontent-object)
 Report | GRIDGANTT | [ReportWidgetContent](#reportwidgetcontent-object)
@@ -7215,6 +7219,14 @@ columns | [column](#column-object)[] | Array of Column Objects
 **valueFormat** | string | [formatDescriptor](#formatting)
 **order** | integer | The display order for the CellDataItem
 **columnId** | number | Column Id for the cell
+
+### ChartWidgetContent Object
+
+     |     |     |
+-----|-----|-----|
+**series** | series[] | An array of Series Objects
+**axes** | axes[] | An array of Axes Objects
+**legend** | string | The location in the widget where Smartsheet renders the legend, for example, **RIGHT**
 
 ### ImageWidgetContent Object
 
@@ -7488,7 +7500,8 @@ Sight sight = smartsheet.sightResources().getSight(
 ```
 
 ```python
-# [todo]
+sight = ss_client.Sights.get_sight(
+  6327127650920324)     # sightId
 ```
 
 ```ruby

@@ -459,15 +459,16 @@ Revokes the access token used to make this request.  The access token is no long
 ```json
 {
   "email": "john.doe@smartsheet.com",
+  "name": "John Doe",
   "firstName": "John",
   "lastName": "Doe",
+  "profileImage": {},
   "id": 48569348493401200,
   "status": "ACTIVE",
   "admin": true,
   "licensedSheetCreator": true,
   "groupAdmin": true,
   "resourceViewer": true, 
-  "alternateEmails": [],
   "sheetCount": 3,
   "lastLogin": "2016-08-15T18:32:47Z",
   "customWelcomeScreenViewed": "2016-08-12T12:15:47Z"
@@ -481,12 +482,12 @@ Revokes the access token used to make this request.  The access token is no long
 **name** | string | User's full name (read-only)
 **firstName** | string | User's first name
 **lastName** | string | User's last name
-**admin** | Boolean | Flag indicating whether the user is a system admin (can manage users and account)
-**licensedSheetCreator** | Boolean | Flag indicating whether the user is a licensed user (can create and own sheets)
-**groupAdmin** | Boolean | Flag indicating whether the user is a group admin (can create and edit groups)
-**resourceViewer** | Boolean | Flag indicating whether the user is a resource viewer (can access resource views)
+**profileImage** | [Image](#image-object) | An [Image Object](#image-object) representing the profile image associated with the User account
 **status** | string |  User status, set to one of the following values:<ul><li>ACTIVE</li><li>PENDING</li><li>DECLINED</li></ul>
-**alternateEmails** | [AlternateEmail](#alternateemail-object)[] | An array of [AlternateEmail Objects](#alternateemail-object) representing the alternate email addresses associated with the User account
+**admin** | Boolean | Indicates whether the user is a system admin (can manage users and account)
+**licensedSheetCreator** | Boolean | Indicates whether the user is a licensed user (can create and own sheets)
+**groupAdmin** | Boolean | Indicates whether the user is a group admin (can create and edit groups)
+**resourceViewer** | Boolean | Indicates whether the user is a resource viewer (can access resource views)
 **sheetCount** | number | The number of sheets owned by the current user within the organization
 **lastLogin** | timestamp | Last login time of the current user
 **customWelcomeScreenViewed** | timestamp | Timestamp of viewing an Enterprise [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) by the current user
@@ -499,15 +500,24 @@ Revokes the access token used to make this request.  The access token is no long
 **email** | string | Current user's primary email address
 **firstName** | string | Current user's first name
 **lastName** | string | Current user's last name
-**timeZone** | string | Current user's time zone Id
 **locale** | string | Current user's locale (see [Server Information](#server-information))
+**timeZone** | string | Current user's time zone Id
 **account** | [Account](#account-object) | Account Object representing the current user's customer account
-**admin** | Boolean | Flag indicating whether the user is a system admin (can manage users and account)
-**licensedSheetCreator** | Boolean | Flag indicating whether the user is a licensed user (can create and own sheets)
-**groupAdmin** | Boolean | Flag indicating whether the user is a group admin (can create and edit groups)
-**resourceViewer** | Boolean | Flag indicating whether the user is a resource viewer (can access resource views)
-**status** | string | User status, set to one of the following values: <ul><li>ACTIVE</li><li>PENDING</li><li>DECLINED</li></ul>
+**admin** | Boolean | Indicates whether the user is a system admin (can manage users and account)
+**licensedSheetCreator** | Boolean | Indicates whether the user is a licensed user (can create and own sheets)
+**groupAdmin** | Boolean | Indicates whether the user is a group admin (can create and edit groups)
+**resourceViewer** | Boolean | Indicates whether the user is a resource viewer (can access resource views)
+**jiraAdmin** | Boolean | Indicates whether the user is a JIRA admin
+**salesforceAdmin** | Boolean | Indicates whether the user is a Salesforce admin
+**salesforceUser** | Boolean | Indicates whether the user is a registered Salesforce user
 **alternateEmails** | [AlternateEmail](#alternateemail-object)[] | An array of [AlternateEmail Objects](#alternateemail-object) representing the alternate email addresses associated with the User account
+**title** | string | User's title
+**department** | string | User's department
+**company** | string | User's company
+**workPhone** | string | User's work phone number
+**mobilePhone** | string | User's mobile phone number
+**role** | string | User's role
+**profileImage** | [Image](#image-object) | An [Image Object](#image-object) representing the profile image associated with the User account
 **sheetCount** | number | The number of sheets owned by the current user within the organization
 **lastLogin** | timestamp | Last login time of the current user
 **customWelcomeScreenViewed** | timestamp | Timestamp of viewing an Enterprise [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) by the current user
@@ -632,11 +642,21 @@ new_user = response[:result]
   "message": "SUCCESS",
   "resultCode": 0,
   "result": {
-    "admin": false,
+    "id": 94094820842,
     "email": "john.doe@smartsheet.com",
     "name": "John Doe",
-    "id": 1768423626696580,
-    "licensedSheetCreator": true
+    "firstName": "John",
+    "lastName": "Doe",
+    "profileImage": {
+      "imageId": "u!1!8ljad7w9-aY!AsDeH0wWv1Y!y9VvAgUOFdg",
+      "height": 1050,
+      "width": 1050
+    },
+    "status": "ACTIVE",
+    "admin": true,
+    "licensedSheetCreator": true,
+    "groupAdmin": true,
+    "resourceViewer": true
   }
 }
 ```
@@ -1113,24 +1133,44 @@ user_profile = smartsheet.users.get_current
 
 ```json
 {
+  "id": 48569348493401200,
   "email": "john.doe@smartsheet.com",
   "firstName": "John",
   "lastName": "Doe",
-  "id": 48569348493401200, 
+  "locale": "en_US",
+  "timeZone": "US/Pacific",
+  "account": {
+    "name": "Team Smartsheet",
+    "id": 942513719853956
+  },
   "admin": true,
   "licensedSheetCreator": true,
   "groupAdmin": true,
-  "resourceViewer": true,	
+  "resourceViewer": true,
+  "jiraAdmin": false,
+  "salesforceAdmin": false,
+  "salesforceUser": false,
   "alternateEmails": [
     {
       "id": 12345,
       "email": "altEmail1@smartsheet.com",
       "confirmed": true                
     }
-	],
-  "sheetCount": 0,
-  "lastLogin": "2016-11-23T19:27:31Z",
-  "customWelcomeScreenViewed": "2016-11-23T19:46:34Z"
+  ],
+  "title": "Senior Sales Representative",
+  "department": "Marketing",
+  "company": "Smartsheet",
+  "workPhone": "",
+  "mobilePhone": "206 123-4567",
+  "role": "Sales",
+  "profileImage": {
+    "imageId": "u!1!8ljad7w9-aY!AsDeH0wWv1Y!y9VvAgUOFdg",
+    "height": 1050,
+    "width": 1050
+  },
+  "sheetCount": 3,
+  "lastLogin": "2016-08-15T18:32:47Z",
+  "customWelcomeScreenViewed": "2016-08-12T12:15:47Z"
 }
 ```
 
@@ -1196,15 +1236,23 @@ user_profile = smartsheet.users.get(
 
 ```json
 {
+  "id": 48569348493401200,
   "email": "john.doe@smartsheet.com",
   "firstName": "John",
   "lastName": "Doe",
-  "id": 48569348493401200,
-  "status": "ACTIVE",
+  "locale": "en_US",
+  "timeZone": "US/Pacific",
+  "account": {
+    "name": "Team Smartsheet",
+    "id": 942513719853956
+  },
   "admin": true,
   "licensedSheetCreator": true,
   "groupAdmin": true,
-  "resourceViewer": true,	
+  "resourceViewer": true,
+  "jiraAdmin": false,
+  "salesforceAdmin": false,
+  "salesforceUser": false,
   "alternateEmails": [
     {
       "id": 12345,
@@ -1212,6 +1260,17 @@ user_profile = smartsheet.users.get(
       "confirmed": true                
     }
   ],
+  "title": "Senior Sales Representative",
+  "department": "Marketing",
+  "company": "Smartsheet",
+  "workPhone": "",
+  "mobilePhone": "206 123-4567",
+  "role": "Sales",
+  "profileImage": {
+    "imageId": "u!1!8ljad7w9-aY!AsDeH0wWv1Y!y9VvAgUOFdg",
+    "height": 1050,
+    "width": 1050
+  },
   "sheetCount": 3,
   "lastLogin": "2016-08-15T18:32:47Z",
   "customWelcomeScreenViewed": "2016-08-12T12:15:47Z"
@@ -1308,9 +1367,15 @@ users = response[:data]
   "data": [
     {
       "id": 94094820842,
-      "admin": true,
       "email": "john.doe@smartsheet.com",
       "name": "John Doe",
+      "firstName": "John",
+      "lastName": "Doe",
+      "profileImage": {
+        "imageId": "u!1!8ljad7w9-aY!AsDeH0wWv1Y!y9VvAgUOFdg",
+        "height": 1050,
+        "width": 1050
+      },
       "status": "ACTIVE",
       "admin": true,
       "licensedSheetCreator": true,
@@ -1541,6 +1606,73 @@ Updates the User specified in the URL.
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [User Object](#user-object) containing at least one of the following attributes:<ul><li>admin (required)</li><li>licensedSheetCreator (required)</li><li>firstName (optional)</li><li>lastName (optional)</li><li>groupAdmin (optional)</li><li>resourceViewer (optional)</li></ul>
 <%= RETURNS %> | [Result Object](#result-object) containing the [User Object](#user-object) for the updated User
+
+## Update User Profile Image
+
+> Example Request: Update User Profile Image
+
+```shell
+curl 'https://api.smartsheet.com/2.0/users/{userId}/profileimage' \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: image/jpeg" \
+-H 'Content-Disposition: attachment; filename=janeroe.jpg' \
+-X POST \
+--data-binary @janeroe.jpg
+```
+
+```javascript
+// Not yet implemented
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+# Not yet implemented
+```
+
+> Example Response:
+
+```json
+{
+  "message": "SUCCESS",
+  "resultCode": 0,
+  "result": {
+    "email": "jane.roe@smartsheet.com",
+    "name": "Jane Roe",
+    "firstName": "Jane",
+    "lastName": "Row",
+    "profileImage": {
+      "imageId": "u!1!nAtdn5RJB_o!k6_e_3h2R3w!wmYXPek-yVD",
+      "height": 1050,
+      "width": 1050
+    },
+    "id": 3173821341106052
+  }
+}
+```
+
+`POST /users/{userId}/profileimage`
+
+Uploads an image to the User profile. 
+
+     |     |
+-----|-----|
+<%= SCOPE %> | WRITE_SHEETS
+<%= HEADERS %> | See [Simple Uploads](#simple-uploads) for information about required headers.
+<%= REQUEST %> | Binary content for the file
+<%= RETURNS %> | [Result Object](#result-object) containing the [User Object](#user-object) for the updated user.
+
+<aside class="notice">Uploading a profile image differs from <a href="#add-image-to-cell">Adding an Image to a Cell</a> in the following ways:<ul><li>A Content-Length header is not required</li><li>Allowable file types are limited to: gif, jpg, and png</li><li>Maximum file size is determined by the following rules:<ul><li>If you have not defined a custom size and the image is larger than 1050 x 1050 pixels, Smartsheet scales the image down to 1050 x 1050</li><li>If you have defined a custom size, Smartsheet uses that as the file size max</li></ul></li><li>If the image is not square, Smartsheet uses a solid color to pad the image</li></ul></aside>
 
 # Workspaces
 

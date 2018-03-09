@@ -129,36 +129,7 @@ As shown in this example, the contents of the file is included in the body of th
 
 ## Attach File to Comment
 
-> Example Request (multipart): Attach File to Comment
-
-```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId}/attachments \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--X POST \
--F "file=@ProgressReport.docx;type=application/msword"
-```
-
-```javascript
-// Multipart operations are not supported by the Node SDK. Instead, see the example for a simple request.
-```
-
-```csharp
-// Multipart operations are not supported by the C# SDK. Instead, see the example for a simple request.
-```
-
-```java
-// Multipart operations are not supported by the Java SDK. Instead, see the example for a simple request.
-```
-
-```python
-# Multipart operations are not supported by the Python SDK. Instead, see the example for a simple request.
-```
-
-```ruby
-# Multipart operations are not supported by the Ruby SDK. Instead, see the example for a simple request.
-```
-
-> Example Request (simple): Attach File to Comment
+> Example Request: Attach File to Comment
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId}/attachments \
@@ -267,36 +238,7 @@ Attaches a file to the Comment. <%= SUPPORTS_MULTIPART %>
 
 ## Attach File to Row
 
-> Example Request (multipart): Attach File to Row
-
-```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--X POST \
--F "file=@ProgressReport.docx;type=application/msword"
-```
-
-```javascript
-// Multipart operations are not supported by the Node SDK. Instead, see the example for a simple request.
-```
-
-```csharp
-// Multipart operations are not supported by the C# SDK. Instead, see the example for a simple request.
-```
-
-```java
-// Multipart operations are not supported by the Java SDK. Instead, see the example for a simple request.
-```
-
-```python
-# Multipart operations are not supported by the Python SDK. Instead, see the example for a simple request.
-```
-
-```ruby
-# Multipart operations are not supported by the Ruby SDK. Instead, see the example for a simple request.
-```
-
-> Example Request (simple): Attach File to Row
+> Example Request: Attach File to Row
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
@@ -401,36 +343,7 @@ Attaches a file to the Row. <%= SUPPORTS_MULTIPART %>
 
 ## Attach File to Sheet 
 
-> Example Request (multipart): Attach File to Sheet
-
-```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--X POST \
--F "file=@ProgressReport.docx;type=application/msword"
-```
-
-```javascript
-// Multipart operations are not supported by the Node SDK. Instead, see the example for a simple request.
-```
-
-```csharp
-// Multipart operations are not supported by the C# SDK. Instead, see the example for a simple request.
-```
-
-```java
-// Multipart operations are not supported by the Java SDK. Instead, see the example for a simple request.
-```
-
-```python
-# Multipart operations are not supported by the Python SDK. Instead, see the example for a simple request.
-```
-
-```ruby
-# Multipart operations are not supported by the Ruby SDK. Instead, see the example for a simple request.
-```
-
-> Example Request (simple): Attach File to Sheet
+> Example Request: Attach File to Sheet
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
@@ -1349,7 +1262,7 @@ Gets a list of all Attachments that are on the Row, including Row and Discussion
 
 ### Attach New Version
 
-> Example Request (simple): Attach New Version
+> Example Request: Attach New Version
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/versions \
@@ -1440,35 +1353,6 @@ response = smartsheet.sheets.attachments.attach_new_version(
   file_length: file_length
 )
 updated_attachment = response[:result]
-```
-
-> Example Request (multipart): Attach New Version
-
-```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/versions \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--X POST \
--F "file=@ProgressReport.docx;type=application/msword"
-```
-
-```javascript
-// Multipart operations are not supported by the Node SDK. Instead, see the example for a simple request.
-```
-
-```csharp
-// Multipart operations are not supported by the C# SDK. Instead, see the example for a simple request.
-```
-
-```java
-// Multipart operations are not supported by the Java SDK. Instead, see the example for a simple request.
-```
-
-```python
-# Multipart operations are not supported by the Python SDK. Instead, see the example for a simple request.
-```
-
-```ruby
-# Multipart operations are not supported by the Ruby SDK. Instead, see the example for a simple request.
 ```
 
 > Example Response:
@@ -1997,88 +1881,6 @@ Returns all automation rules associated with the specified sheet.
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [AutomationRule Objects](#automationrule-object).
-
-## Update an Automation Rule
-
-> Example Request: Update an Automation Rule
-
-```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automationRuleId} \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--X PUT \
--d '{
-	"action": {
-		"type": "APPROVAL_REQUEST_ACTION",
-		"recipients": [{
-			"email": "john.doe@smartsheet.com"
-		}],
-		"frequency": "WEEKLY"
-	}
-}'
-```
-
-```javascript
-// Not yet implemented
-```
-	
-```csharp
-// Not yet implemented
-```
-
-```java
-// Not yet implemented
-```
-
-```python
-# Not yet implemented
-```
-
-```ruby
-# Not yet implemented
-```
-
-> Example Response:
-
-```json
-{
-  "id": 789994550205316,
-  "name": "Approval Request",
-  "enabled": true,
-  "createdBy": {
-    "email": "john.doe@smartsheet.com"
-  },
-  "createdAt": "2017-12-14T18:31:55Z",
-  "modifiedBy": {
-    "email": "john.doe@smartsheet.com"
-  },
-  "modifiedAt": "2017-12-14T18:47:36Z",
-  "userCanModify": true,
-  "action": {
-    "type": "APPROVAL_REQUEST_ACTION",
-    "recipients": [
-      {
-        "email": "jane.roe@smartsheet.com"
-      }
-    ],
-    "frequency": "WEEKLY",
-    "includeAllColumns": true,
-    "includeAttachments": true,
-    "includeDiscussions": true,
-    "notifyAllSharedUsers": false
-  }
-}
-```
-
-`PUT /sheets/{sheetId}/automationrules/{automationRuleId}`
-
-Updates an existing automation rule.
-
-     |     |
------|-----|
-<%= SCOPE %> | WRITE_SHEETS
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | An [AutomationRule Object](#automationrule-object). When sending an AutomationRule, you must always specify `action.type` and it must match the existing rule type.
-<%= RETURNS %> | The [AutomationRule Object](#automationrule-object) that was modified
 
 ## <%= RELATED %>
 
@@ -2787,9 +2589,7 @@ curl https://api.smartsheet.com/2.0/imageurls \
 }
 
 // Step 4: Download the image
-curl -o "stanley_hotel" "https://aws.smartsheet.com/storageProxy/image/images/OMB9hAConFbhUdJMQ5czQEkwAj1-ErW-sXz3Dr4nDfE?expirationDate=2017-07-25T22%3A01%3A33%2B0000&height=40&width=20&hmac=5t%2FHs9%2BXTk5cNhyDax9ZgcbepKI%3D"
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/json" \
+curl -o "stanley_hotel.png" "https://aws.smartsheet.com/storageProxy/image/images/OMB9hAConFbhUdJMQ5czQEkwAj1-ErW-sXz3Dr4nDfE?expirationDate=2017-07-25T22%3A01%3A33%2B0000&height=40&width=20&hmac=5t%2FHs9%2BXTk5cNhyDax9ZgcbepKI%3D"
 ```
 
 ```javascript
@@ -2860,11 +2660,56 @@ fos.close();
 ```
 
 ```python
-# [todo]
+sheetId = 1639534409607044
+rowId = 3344087179913092
+columnId = 1735559124150148
+
+# Steps 1 and 2: Locate the cell and obtain the imageId
+row = ss_client.Sheets.get_row(sheet_id, row_id)
+cell = row.get_column(column_id)
+image = cell.image
+image_id = image.id
+
+# Automate using Alt Text as the file name
+filename = getattr(image, 'alt_text', default_filename)
+
+# Step 3: Obtain a temporary image URL
+imageUrl = ss_client.models.ImageUrl( { "imageId": image_id } )
+response = ss_client.Images.get_image_urls([imageUrl])
+url = response.image_urls[0].url
+
+# Step 4: Download the image
+import requests
+response = requests.get(url)
+if response.status_code == 200:
+  with open(filename, 'wb') as f:
+    f.write(response.content)
 ```
 
 ```ruby
-# [todo]
+require 'open-uri'
+
+sheet_id = 1639534409607044
+row_id = 3344087179913092
+column_id = 1735559124150148
+default_filename = 'my_image.png'
+
+# Steps 1 and 2: Locate the cell and obtain the imageId
+row = smartsheet.sheets.rows.get(sheet_id: sheet_id, row_id: row_id)
+cell = row[:cells].select { |cell| cell[:column_id] == column_id }.first
+image = cell[:image]
+image_id = image[:id]
+
+# Automate using Alt Text as the file name
+filename = image[:alt_text] || default_filename
+
+# Step 3: Obtain a temporary image URL
+response = smartsheet.sheets.list_image_urls(body: [{image_id: image_id}])
+url = response[:image_urls][0][:url]
+
+# Step 4: Download the image
+image_download = open(url)
+IO.copy_stream(image_download, filename)
 ```
 
 Downloading a cell image is a multi-step process. This sample downloads a cell image to a local file. The cell is specified by sheet Id, row Id, and column Id.
@@ -2938,7 +2783,16 @@ String temporaryUrl = smartsheet.imageUrlResources().getImageUrls(imageUrls).get
 ```
 
 ```python
-# [todo]
+imageUrl = ss_client.models.ImageUrl(
+  {
+    "imageId": 'jpbGklqdfZuL4Jw-kZhdZA',
+    "height": 256,
+    "width": 256
+  }
+)
+
+response = ss_client.Images.get_image_urls([imageUrl])
+url = response.image_urls[0].url
 ```
 
 ```ruby
@@ -2985,6 +2839,8 @@ Gets a list of URLs that can be used to retrieve the specified cell images.
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | Array of [ImageUrl Objects](#imageurl-object), with the following attributes:<ul><li><b>imageId</b> (required)</li><li><b>height</b> (optional)</li><li><b>width</b> (optional)</li></ul>Each image in the response is sized according to which dimensions were specified by the request:<ul><li>If neither <b>height</b> nor <b>width</b> is specified, the image is returned in its original size.</li><li>If both <b>height</b> AND <b>width</b> are specified, image is sized using those measurements.</li><li>If either <b>height</b> OR <b>width</b> is specified (that is, one or the other -- not both), the image is automatically scaled using that measurement.</li></ul>Additionally, the following rules apply:<ul><li>If the requested image size is less than or equal to the actual image size, the returned image size matches the requested size.</li><li>If the requested image size is larger than the actual image size, the returned image size matches the actual image size.</li></ul>
 <%= RETURNS %> | [ImageUrlMap Object](#imageurlmap-object)
+
+To retrieve images, see the workflow in [Download Cell Image](#download-cell-image).
 
 ## Remove Image from Cell
 
@@ -3036,7 +2892,6 @@ A Column is a component of a Sheet or Report.
 **validation** | Boolean | Indicates whether validation has been enabled for the column (value = `true`)
 **width** | number | Display width of the column in pixels
 **format** | string | The format descriptor (see [Formatting](#formatting))<br/>Only returned if the **include** query string parameter contains **format** and this column has a non-default format applied to it.
-**filter** | [Filters](#filters-object) | The filter applied to the column.<br/>Only returned if the **include** query string parameter contains **filters** and this column has a filter applied to it.
 **locked** | Boolean | Indicates whether the column is locked. In a response, a value of `true` indicates that the column has been locked by the sheet owner or the admin.
 **lockedForUser** | Boolean | Indicates whether the column is locked for the requesting user.  This attribute may be present in a response, but cannot be specified in a request.
 
@@ -3862,15 +3717,8 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions/{discussionId}/
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: multipart/form-data" \
 -X POST \
--F "comment=<comment.json;type=application/json" \
--F "file=@datafile;type=application/octet-stream"
-
-    #
-    # Content of the comment.json file:
-    #
-    {
-      "text":"This is a new comment."
-    }
+-F 'comment={ "text":"This is a new comment." };type=application/json' \
+-F "file=@insurance_benefits.pdf;type=application/octet-stream"
 ```
 
 ```javascript
@@ -4642,6 +4490,10 @@ Lists all cross-sheet references for the sheet.
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [CrossSheetReference Objects](#crosssheetreference-object)
 
+# Dashboards
+
+Dashboards and Sights are two terms for one thing. Dashboard information is managed using the Sights endpoints and properties. For more information, see the [Sights](#sights) section.
+
 # Discussions
 
 A Discussion is a container for a collection of individual [Comments](#comments) within a single thread. A Discussion can exist on a [Row](#rows) or a [Sheet](#sheets).
@@ -4803,17 +4655,8 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/discussions \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: multipart/form-data" \
 -X POST \
--F "discussion=<discussion.json;type=application/json" \
--F "file=@datafile;type=application/octet-stream"
-
-  #
-  # Content of the discussion.json file:
-  #
-  {
-    "comment": {
-      "text":"This text is the body of the first comment"
-    }
-  }
+-F 'discussion={ "comment": { "text": "This text is the body of the first comment" } };type=application/json' \
+-F "file=@insurance_benefits.pdf;type=application/octet-stream"
 ```
 
 ```javascript
@@ -5002,18 +4845,10 @@ new_discussion = response[:result]
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: multipart/form-data" \
 -X POST \
--F "discussion=<discussion.json;type=application/json" \
--F "file=@file_to_attach;type=application/octet-stream"
-
-  #
-  # Content of the discussion.json file:
-  #
-  {
-    "comment": {
-      "text":"This text is the body of the first comment"
-    }
-  }
+-F 'discussion={ "comment": { "text": "This text is the body of the first comment" } };type=application/json' \
+-F "file=@file_to_attach;type=application/octet-stream" \
 ```
 
 ```javascript
