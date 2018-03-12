@@ -6876,7 +6876,17 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
 ```
 
 ```ruby
-# Not yet implemented
+smartsheet.sheets.rows.sort(
+  sheet_id: 9283173393803140,
+  body: {
+    sort_criteria: [
+      {
+        column_id: 4583173393803140,
+        direction: 'DESCENDING'
+      }
+    ]
+  }
+)
 ```
 
 > Example Response:
