@@ -619,11 +619,15 @@ ss_client.assume_user("jane.doe@smartsheet.com")
 ```
 
 ```ruby
-smartsheet = Smartsheet::Client.new(
-  token: config['token'],
-  logger: logger,
-  assume_user: 'jane.doe@smartsheet.com'
-)
+smartsheet = Smartsheet::Client.new
+jane_doe_client = Smartsheet::Client.new(assume_user: 'jane.doe@smartsheet.com')
+
+# Assume user per client
+smartsheet.sheets.list
+jane_doe_client.sheets.list
+
+# Assume user per request
+smartsheet.sheets.list(header_override: {:'Assume-User' => CGI::escape('jane.doe@smartsheet.com')})
 ```
 
 Allows an admin to act on behalf of, or impersonate, the user to make API calls. You might do this to troubleshoot a user problem or cover for vacations and sick time. The With cURL, the email address used to identify the user must be URI-encoded.
