@@ -298,6 +298,46 @@ If the values match, you can be sure the request originated from Smartsheet and 
 
 # Preventing Infinite Loops
 
+> Example Request: Smartsheet-Change-Agent header
+
+```shell
+
+```
+
+```javascript
+
+```
+
+```csharp
+
+```
+
+```java
+
+```
+
+```python
+
+```
+
+```ruby
+body = {
+  'name': 'My new sheet',
+  'columns': [
+    {
+      'title': 'Col1',
+      'primary': true,
+      'type': 'TEXT_NUMBER'
+    }
+  ]
+}
+
+smartsheet.sheets.create(
+  body: body,
+  header_overrides: {'Smartsheet-Change-Agent': 'MyChangeAgent'}
+)
+```
+
 It's possible that an application which subscribes to callbacks (using webhooks) might react to those callbacks by using the API to make additional changes in Smartsheet. 
 But, consider the following scenario:
 
