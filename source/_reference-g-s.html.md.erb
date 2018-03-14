@@ -5039,7 +5039,7 @@ Creates a copy of the specified Sheet.
 -----|-----|
 <%= SCOPE %> | CREATE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>attachments</li><li>cellLinks</li><li>data -- includes formatting</li><li>discussions -- includes comments</li><li>forms</li><li>ruleRecipients -- includes notification recipients, must also include **rules** when using this attribute</li><li>rules -- includes notifications and workflow rules</li><li>shares</li><li>all - deprecated</li></ul><i>Note</i>: Cell history is not copied, regardless of which **include** parameter values are specified.
+<%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>attachments</li><li>cellLinks</li><li>data -- includes formatting</li><li>discussions -- includes comments</li><li>filters</li><li>forms</li><li>ruleRecipients -- includes notification recipients, must also include **rules** when using this attribute</li><li>rules -- includes notifications and workflow rules</li><li>shares</li><li>all - deprecated</li></ul><i>Note</i>: Cell history is not copied, regardless of which **include** parameter values are specified.
  | **omit** (optional) -- when specified with a value of "sheetHyperlinks", excludes this category from the response
 <%= REQUEST %> | [ContainerDestination Object](#containerdestination-object)
 <%= RETURNS %> | [Result Object](#result-object) containing a [Sheet Object](#sheet-object) for the newly created Sheet, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
