@@ -321,18 +321,18 @@ If the values match, you can be sure the request originated from Smartsheet and 
 ```
 
 ```ruby
+# Specify updated cell values
 body = {
-  'name': 'My new sheet',
-  'columns': [
-    {
-      'title': 'Col1',
-      'primary': true,
-      'type': 'TEXT_NUMBER'
-    }
+  id: 4293147074291588,   # row Id
+  cells: [
+    column_id: 7036894123976580,
+    value: 'new value'
   ]
 }
 
-smartsheet.sheets.create(
+# Update row
+response = smartsheet.sheets.rows.update(
+  sheet_id: 2068827774183300,
   body: body,
   header_overrides: {'Smartsheet-Change-Agent': 'MyChangeAgent'}
 )

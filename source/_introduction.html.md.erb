@@ -619,16 +619,6 @@ ss_client.assume_user("jane.doe@smartsheet.com")
 ```
 
 ```ruby
-smartsheet = Smartsheet::Client.new
-jane_doe_client = Smartsheet::Client.new(
-  assume_user: 'jane.doe@smartsheet.com'
-)
-
-# Assume user per client
-smartsheet.sheets.list
-jane_doe_client.sheets.list
-
-# Assume user per request
 smartsheet.sheets.list(
   header_override: {:'Assume-User' => CGI::escape('jane.doe@smartsheet.com')}
 )
