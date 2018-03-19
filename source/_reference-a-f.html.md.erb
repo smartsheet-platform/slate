@@ -1927,7 +1927,26 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automation
 ```
 
 ```ruby
-# Not yet implemented
+smartsheet.sheets.automation_rules.update(
+  sheet_id: 4583173393803140,
+  automation_rule_id: 789994550205316,
+  body: {
+    name: 'Approval Request',
+    enabled: true,
+    action: {
+      type: 'APPROVAL_REQUEST_ACTION',
+      recipients: [
+        {
+            email: 'john.doe@smartsheet.com'
+        }
+      ],
+      frequency: 'WEEKLY',
+      include_all_columns: true,
+      include_attachments: true,
+      include_discussions: true,
+      notify_all_shared_users: false
+    }
+})
 ```
 
 > Example Response:
