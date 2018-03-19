@@ -619,10 +619,8 @@ ss_client.assume_user("jane.doe@smartsheet.com")
 ```
 
 ```ruby
-smartsheet = Smartsheet::Client.new(
-  token: config['token'],
-  logger: logger,
-  assume_user: 'jane.doe@smartsheet.com'
+smartsheet.sheets.list(
+  header_override: {:'Assume-User' => CGI::escape('jane.doe@smartsheet.com')}
 )
 ```
 
@@ -731,7 +729,7 @@ app.get('/auth', (req, res) => {
     console.log(authorizationUri);
     res.redirect(authorizationUri);
 });
-``
+```
 
 ```csharp
 // [todo]

@@ -1683,7 +1683,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automation
 ```
 
 ```ruby
-# Not yet implemented
+smartsheet.sheets.automation_rules.delete(
+  sheet_id: 9283173393803140,
+  automation_rule_id: 789004550205316
+)
 ```
 
 > Example Response:
@@ -1731,7 +1734,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automation
 ```
 
 ```ruby
-# Not yet implemented
+rule = smartsheet.sheets.automation_rules.get(
+  sheet_id: 9283173393803140,
+  automation_rule_id: 789994550205316
+)
 ```
 
 > Example Response:
@@ -1802,7 +1808,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules \
 ```
 
 ```ruby
-# Not yet implemented
+response = smartsheet.sheets.automation_rules.list(
+  sheet_id: 9283173393803140
+)
+rules = response[:data]
 ```
 
 > Example Response:
@@ -4335,7 +4344,17 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences \
 ```
 
 ```ruby
-# Not yet implemented
+smartsheet.sheets.cross_sheet_references.create(
+  sheet_id: 8157685695702916,
+  body: {
+    name: "Sample Time Log Sheet Range 1",
+    source_sheet_id: 154378742065028,
+    start_row_id: 4089096300717956,
+    end_row_id: 2681721417164676,
+    start_column_id: 824812248557444,
+    end_column_id: 824812248557444
+  }
+)
 ```
 
 > Example Response:
@@ -4392,7 +4411,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences/{cross
 ```
 
 ```ruby
-# Not yet implemented
+smartsheet.sheets.cross_sheet_references.get(
+  sheet_id: 9283173393803140,
+  cross_sheet_reference_id: 8157685695702916
+)
 ```
 
 > Example Response:
@@ -4446,7 +4468,9 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences \
 ```
 
 ```ruby
-# Not yet implemented
+smartsheet.sheets.cross_sheet_references.list(
+  sheet_id: 9283173393803140
+)
 ```
 
 > Example Response:
