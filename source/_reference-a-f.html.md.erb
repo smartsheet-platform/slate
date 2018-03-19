@@ -1667,7 +1667,22 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automation
 ```
 
 ```javascript
-// Not yet implemented
+// Set options
+var options = {
+  sheetId: 9283173393803140,
+  automationRuleId: 789004550205316
+};
+
+// Delete automation rule
+smartsheet.sheets.deleteAutomationRule(options)
+  .then((result) => {
+    console.log("success");
+    console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 	
 ```csharp
@@ -1718,7 +1733,22 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automation
 ```
 
 ```javascript
-// Not yet implemented
+// Set options
+var options = {
+  sheetId: 9283173393803140,
+  automationRuleId: 789994550205316
+};
+
+// Get automation rule
+smartsheet.sheets.getAutomationRule(options)
+  .then((automationRule) => {
+    console.log("success");
+    console.log(JSON.stringify(automationRule));
+  })
+  catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 	
 ```csharp
@@ -1792,7 +1822,21 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules \
 ```
 
 ```javascript
-// Not yet implemented
+// Set options
+var options = {
+  sheetId: 9283173393803140
+};
+
+// List automation rules
+smartsheet.sheets.listAutomationRules(options)
+  .then((automationRules) => {
+    console.log("success");
+    console.log(JSON.stringify(automationRules));
+  })
+  .catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 	
 ```csharp
@@ -1911,7 +1955,41 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automation
 ```
 
 ```javascript
-// Not yet implemented
+// Specify the changes
+var body = {
+  "name": "a cool rule",
+  "action": {
+    "type": "APPROVAL_REQUEST_ACTION",
+    "recipients": [
+      {
+        "email": "john.doe@smartsheet.com"
+      }
+    ],
+    "frequency": "WEEKLY",
+    "includeAllColumns": true,
+    "includeAttachments": true,
+    "includeDiscussions": true,
+    "notifyAllSharedUsers": false
+  }
+};
+
+// Set options
+var options = {
+  sheetId: 4583173393803140,
+  automationRuleId: 789994550205316,
+  body: body
+  };
+
+// Update the automation rule
+smartsheet.sheets.updateAutomationRule(options)
+  .then((result) => {
+    console.log("success");
+    console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 	
 ```csharp
