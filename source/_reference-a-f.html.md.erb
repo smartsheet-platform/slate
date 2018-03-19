@@ -1891,6 +1891,88 @@ Returns all automation rules associated with the specified sheet.
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [AutomationRule Objects](#automationrule-object).
 
+## Update an Automation Rule
+
+> Example Request: Update an Automation Rule
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automationRuleId} \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-X PUT \
+-d '{
+	"action": {
+		"type": "APPROVAL_REQUEST_ACTION",
+		"recipients": [{
+			"email": "john.doe@smartsheet.com"
+		}],
+		"frequency": "WEEKLY"
+	}
+}'
+```
+
+```javascript
+// Not yet implemented
+```
+	
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+# Not yet implemented
+```
+
+> Example Response:
+
+```json
+{
+  "id": 789994550205316,
+  "name": "Approval Request",
+  "enabled": true,
+  "createdBy": {
+    "email": "john.doe@smartsheet.com"
+  },
+  "createdAt": "2017-12-14T18:31:55Z",
+  "modifiedBy": {
+    "email": "john.doe@smartsheet.com"
+  },
+  "modifiedAt": "2017-12-14T18:47:36Z",
+  "userCanModify": true,
+  "action": {
+    "type": "APPROVAL_REQUEST_ACTION",
+    "recipients": [
+      {
+        "email": "jane.roe@smartsheet.com"
+      }
+    ],
+    "frequency": "WEEKLY",
+    "includeAllColumns": true,
+    "includeAttachments": true,
+    "includeDiscussions": true,
+    "notifyAllSharedUsers": false
+  }
+}
+```
+
+`PUT /sheets/{sheetId}/automationrules/{automationRuleId}`
+
+Updates an existing automation rule.
+
+     |     |
+-----|-----|
+<%= SCOPE %> | WRITE_SHEETS
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
+<%= REQUEST %> | An [AutomationRule Object](#automationrule-object). When sending an AutomationRule, you must always specify `action.type` and it must match the existing rule type.
+<%= RETURNS %> | [Result Object](#result-object) containing the updated [AutomationRule Object](#automationrule-object)
+
 ## <%= RELATED %>
 
 ### Disabled Reasons for Automation Rules
