@@ -35,7 +35,7 @@ search: false
 <% SUPPORTS_BULK_INSERT = "This operation supports both single-object and bulk semantics." %>
 <% SUPPORTS_OPTIONAL_BULK = "This operation supports both single-object and bulk semantics.  For more information, see <a href='#optional-bulk-operations'>Optional Bulk Operations</a>." %>
 <% SUPPORTS_NUMERICDATES = "You may use the query string parameter <b>numericDates</b> with a value of <code>true</code> to enable strict parsing of dates in numeric format.  See <a href='#dates-and-times'>Dates and Times</a> for more information." %>
-<% REQUEST_ONLY_ATTRIBUTE = "This attribute can be specified in a request, but is never present in a response." %>
+<% REQUEST_ONLY_ATTRIBUTE = "You can specify this attribute in a request, but it is never present in a response." %>
 <% PARTIAL_SUCCESS = "When partial success is enabled, and one or more of the objects in the request fail to be added/updated/deleted, a standard [Result Object](#result-object) is returned, but with a **message** of 'PARTIAL_SUCCESS' (instead of 'SUCCESS'), and a **resultCode** of 3. Additionally, the object contains a **failedItems** attribute -- an array of [BulkItemFailure Objects](#bulkitemfailure-object) that contains an item for each object in the request that failed to be added/updated/deleted." %>
 <% SHARING_ERRORS = "If called with a single [Share Object](#share-object), and that user or group share already exists, [error code](#complete-error-code-list) **1025** is returned.  If called with an array of Share Objects, and one or more user or group shares in the array already exist, they are ignored and omitted from the response." %>
 <% LIST_SHARES_RESPONSE_DESC = "By default, this operation returns only <i>item-level</i> shares (<b><a href='#share-object'>scope</b></a>='ITEM'). Use the <b>include</b> parameter to request that <i>workspace-level</i> shares (<b><a href='#share-object'>scope</b></a>=='WORKSPACE') also be returned." %>
@@ -44,7 +44,7 @@ search: false
 <% USER_AUTO_PROVISIONING_URL = "https://help.smartsheet.com/articles/2072731-user-auto-provisioning-enterprise-only-" %>
 <% PERSONAL_SETTINGS_MANAGE_EMAIL_URL = "https://help.smartsheet.com/articles/2392037-change-the-email-address-used-with-your-smartsheet-account#manageemails" %>
 # <span class="customTOCSectionHeading">Smartsheet API 2.0</span>
-Updated 2018-03-19
+Updated 2018-03-22
 <%= partial "introduction.html.md.erb"%>
 <%= partial "reference-a-f.html.md.erb"%>
 <%= partial "reference-g-s.html.md.erb"%>
