@@ -1593,44 +1593,54 @@ A Row is a component of a Sheet or Report. Each Row is composed of a collection 
 {
   "id": 2361756178769796,
   "sheetId": 4583173393803140,
-  "rowNumber": 1,
+  "rowNumber": 2,
+  "parentId": 4392908622194564,
+  "version": 23,
   "expanded": true,
-  "cells": [],
-  "createdAt": "2012-07-24T23:10:55-07:00",
-  "modifiedAt": "2012-07-24T23:14:27-07:00"
+  "accessLevel": "OWNER",
+  "createdAt": "2017-10-06T21:21:25Z",
+  "modifiedAt": "2018-03-22T21:24:50Z",
+  "cells": []
 }
 ```
-
-If you specify the **parentId** attribute or the **siblingId** attribute, you can set one or the other, but not both.
 
      |     |     |
 -----|-----|-----|
 **id** | number | Row Id
-**sheetId** | number | Parent Sheet Id
-**rowNumber** | number | Row number within the sheet (1-based - starts at 1)
-**version** | number | Sheet version number that is incremented every time a sheet is modified
-**filteredOut** | Boolean | `true` if this row is filtered out by a column filter (and thus is not displayed in the Smartsheet app), `false` if the row is not filtered out.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **filters**.
-**inCriticalPath** | Boolean | Only returned, with a value of `true`, if the sheet is a project sheet with dependencies enabled and this row is in the critical path
-**locked** | Boolean | Flag indicating whether the row is locked. In a response, a value of `true` indicates that the row has been locked by the sheet owner or the admin.
-**lockedForUser** | Boolean | Flag indicating whether the row is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.
-**expanded** | Boolean | Flag to indicate if the row is expanded or collapsed
 **accessLevel** | string | User's permission level on the Sheet that contains the Row
-**format** | string | Format descriptor (see [Formatting](#formatting)).<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this row has a non-default format applied.
-**conditionalFormat** | string | Format descriptor describing this row's conditional format (see [Formatting](#formatting))<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this row has a conditional format applied.
+**attachments** | [Attachment](#attachment-object)[] | Array of Attachment Objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **attachments**.
+**cells** | [Cell](#cell-object)[] | Array of Cell Objects belonging to the row
+**columns** | [Column](#column-object)[] | Array of Column Objects.<br/>Only returned if the [Get Row](#get-row) **include** query string parameter contains **columns**.
+**conditionalFormat** | string | Describes this row's conditional format (see [Formatting](#formatting))<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this row has a conditional format applied.
 **createdAt** | timestamp | Time of creation
 **createdBy** | [User](#user-object) | User Object containing name and email of the creator of this row
+**discussions** | [Discussion](#discussion-object)[] | Array of Discussion Objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **discussions**.
+**expanded** | Boolean | Indicates whether the row is expanded or collapsed
+**filteredOut** | Boolean | `true` if this row is filtered out by a column filter (and thus is not displayed in the Smartsheet app), `false` if the row is not filtered out.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **filters**.
+**format** | string | Format descriptor (see [Formatting](#formatting)).<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this row has a non-default format applied.
+**inCriticalPath** | Boolean | Only returned, with a value of `true`, if the sheet is a project sheet with dependencies enabled and this row is in the critical path
+**locked** | Boolean | Indicates whether the row is locked. In a response, a value of `true` indicates that the row has been locked by the sheet owner or the admin.
+**lockedForUser** | Boolean | Indicates whether the row is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.
 **modifiedAt** | timestamp | Time of last modification
 **modifiedBy** | [User](#user-object) | User Object containing name and email of the last person to modify this row
-**cells** | [Cell](#cell-object)[] | Array of Cell Objects belonging to the row
-**discussions** | [Discussion](#discussion-object)[] | Array of Discussion Objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **discussions**.
-**attachments** | [Attachment](#attachment-object)[] | Array of Attachment Objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **attachments**.
-**columns** | [Column](#column-object)[] | Array of Column Objects.<br/>Only returned if the [Get Row](#get-row) **include** query string parameter contains **columns**.
 **permalink** | string | URL that represents a direct link to the Row in Smartsheet<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **rowPermalink**.
-**parentId** | number | In a response - the Id of the parent row (if any).<br/><br/>In a request - the Id of the desired parent row (used to specify the location for a new or moved row). For more information, see [Row Location](#row-location).
-**siblingId** | number | In a response - the Id of the previous sibling row at the same hierarchical level of this row (if any).<br/><br/>In a request - the Id of the desired sibling row (used to specify the location for a new or moved row). For more information, see [Row Location](#row-location).
-**toTop** | Boolean | Flag used to specify the location for a new or moved row. <%= REQUEST_ONLY_ATTRIBUTE %> For more information, see [Row Location](#row-location).
-**toBottom** | Boolean | Flag used to specify the location for a new or moved row. <%= REQUEST_ONLY_ATTRIBUTE %> For more information, see [Row Location](#row-location).
-**above** | Boolean | Flag used to specify the location for a new or moved row. <%= REQUEST_ONLY_ATTRIBUTE %> For more information, see [Row Location](#row-location).
+**rowNumber** | number | Row number within the sheet (1-based - starts at 1)
+**sheetId** | number | Parent Sheet Id
+**version** | number | Sheet version number that is incremented every time a sheet is modified
+
+#### Row Object Location-specifier Attributes
+
+For more information, see [Specify Row Location](#specify-row-location).
+
+     |     |     |
+-----|-----|-----|
+**above** | Boolean | Specifies the location for a new or moved row. <%= REQUEST_ONLY_ATTRIBUTE %>
+**indent** | number | Specifies the number of levels to indent an existing row. <%= REQUEST_ONLY_ATTRIBUTE %>
+**outdent** | number | Specifies the number of levels to outdent an existing row. <%= REQUEST_ONLY_ATTRIBUTE %>
+**parentId** | number | In a response - the Id of the parent row (if any).<br/><br/>In a request - the Id of the desired parent row (used to specify the location for a new or moved row).
+**siblingId** | number | In a response - the Id of the previous sibling row at the same hierarchical level of this row (if any).<br/><br/>In a request - the Id of the desired sibling row (used to specify the location for a new or moved row).
+**toBottom** | Boolean | Adds or moves the row to the bottom of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %>
+**toTop** | Boolean | Adds or moves the row to the top of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %>
 
 ### CopyOrMoveRowDirective Object
 
@@ -1909,7 +1919,7 @@ response = smartsheet.sheets.rows.add(
 
 `POST /sheets/{sheetId}/rows`
 
-Inserts one or more rows into the Sheet specified in the URL.
+Inserts one or more rows into the Sheet specified in the URL. If you want to insert the rows in any position but the default, use [location-specifier attributes](#change-the-location-of-a-row).
 
 <aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
 
@@ -2430,6 +2440,30 @@ For details about sending update requests, see [Create Update Request](#create-u
 
 For details about sorting the rows in a sheet, see [Sort Rows in Sheet](#sort-rows-in-sheet).
 
+## Specify Row Location
+
+When you [add a row](#add-rows), the default behavior is for Smartsheet to put the new row at the bottom of the sheet. And when you [update a row](#update-rows), the default behavior is to keep the row where it is. It is not necessary to use a location-specifier attribute if you want the default behavior.
+
+To specify a location for new or updated rows other than the defaults, use the table below for reference. The table details possible row locations and provides JSON examples to help you construct one or more [Row Objects](#row-object) with location-specifier attributes.
+
+Note the following restrictions:
+
+* If you specify the **parentId** attribute, you cannot also specify the **siblingId** attribute. 
+* If you specify the **siblingId** attribute, you cannot also specify the **parentId**, **toTop**, or **toBottom** attributes.
+* If multiple rows are specified in the request, all rows must have the same location-specifier attributes.
+* If you want to indent or outdent multiple rows, use the **parentId** attribute.
+
+Destination | Row Attributes | Examples
+-------|--------|--------
+Top of a sheet | **toTop** | ```("toTop": true}```
+Bottom of a sheet | **toBottom** | ```("toBottom": true}```
+Top of an indented section a.k.a., first child row | **parentId** | ```("parentId": 8896508249565060}```
+Bottom of an indented section a.k.a., last child row | **parentId** +<br/>**toBottom** | ```{"parentId": 8896508249565060, "toBottom": true}``` 
+Below a specific row, at the same indent level | **siblingId** | ```{"siblingId": 8896508249565060}```
+Above a specific row, at the same indent level | **siblingId** +<br/>**above** | ```{"siblingId": 8896508249565060, "above": true}```
+Indent one existing row, must have a value of "1" | **indent** | ```{"indent": 1}```
+Outdent one existing row, must have a value of "1" | **outdent** | ```{"outdent": 1}```
+
 ## Update Rows
 
 > Example Request: Update Rows
@@ -2649,9 +2683,11 @@ response = smartsheet.sheets.rows.update(
 
 `PUT /sheets/{sheetId}/rows`
 
-Updates cell values in the specified rows, expands/collapses the specified rows, and/or modifies the position of specified rows (including indenting/outdenting). 
+Updates cell values in the specified rows, expands/collapses the specified rows, and/or modifies the position of specified rows (including indenting/outdenting). For detailed information about changing row positions, see [location-specifier attributes](#change-the-location-of-a-row).
 
 <aside class="notice">If a row's position is updated, all child rows are moved with the row.</aside>
+
+<aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>toTop</b>, <b>toBottom</b>, <b>parentId</b>, <b>siblingId</b>, and <b>above</b> attributes must be the same for all rows in the request).</aside>
 
 <aside class="notice">In a parent row, values of the following fields are auto-calculated based upon values in the child rows (and therefore cannot be updated using the API): Start Date, End Date, Duration, % Complete.</aside>
 
@@ -2700,23 +2736,6 @@ Include Flag | Description |
 **rowPermalink** | Includes **permalink** attribute that represents a direct link to the [row](#row-object) in the Smartsheet application.
 **rowWriterInfo** | Includes **createdBy** and **modifiedBy** attributes on the row, indicating the row's creator, and last modifier.
 **objectValue** | Includes **objectValue** attribute on cells containing values. For more information see [Cell Reference](#cell-reference).
-
-### Row Location
-
-When you [add a row](#add-rows), the default behavior is for Smartsheet to put the new row at the bottom of the sheet. And when you [update a row](#update-rows), the default behavior is to keep the row where it is.
-
-If you want to specify where the row is added or moved to in the sheet, Smartsheet provides the following "location-specifier" [row](#row-object) attributes. Boolean attributes only take effect if the value is `true`.
-
-Row Attribute | Type | Description
--------|--------|--------
-**toTop** | Boolean | Add or move the row to the top of the sheet.
-**toBottom** | Boolean | Add or move the row to the bottom of the sheet.
-**parentId** | Number | Add or move the row so that it is the first child row of the specified parent row. (Cannot be used with a **siblingId**.) 
-**parentId** +<br/>**toBottom** | Number + Boolean | Add or move the row so that it is the last child row of the specified parent row. 
-**siblingId** | Number | Add or move the row directly below the sibling row (at the same indent level as the specified row). (Cannot be used with **parentId**. **toTop**, or **toBottom**.) 
-**siblingId** +<br/>**above** | Number + Boolean | Add or move the row directly above the sibling row (at the same indent level as the specified row). 
-**indent** | Number | Number of levels to indent an existing row. For new rows, use **parentId**.
-**outdent** | Number | Number of levels to outdent an existing row. For new rows, use **parentId**.
 
 # Search
 

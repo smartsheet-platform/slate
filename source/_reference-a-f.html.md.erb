@@ -1667,7 +1667,20 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automation
 ```
 
 ```javascript
-// Not yet implemented
+// Set options
+var options = {
+  sheetId: 9283173393803140,
+  automationRuleId: 789004550205316
+};
+
+// Delete automation rule
+smartsheet.sheets.deleteAutomationRule(options)
+  .then(function(results) {
+    console.log(results);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 ```
 	
 ```csharp
@@ -1718,7 +1731,20 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automation
 ```
 
 ```javascript
-// Not yet implemented
+// Set options
+var options = {
+  sheetId: 9283173393803140,
+  automationRuleId: 789994550205316
+};
+
+// Get automation rule
+smartsheet.sheets.getAutomationRule(options)
+  .then(function(automationRule) {
+    console.log(automationRule);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 ```
 	
 ```csharp
@@ -1792,7 +1818,19 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules \
 ```
 
 ```javascript
-// Not yet implemented
+// Set options
+var options = {
+  sheetId: 9283173393803140
+};
+
+// List automation rules
+smartsheet.sheets.listAutomationRules(options)
+  .then(function(automationRulesList) {
+    console.log(automationRulesList);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 ```
 	
 ```csharp
@@ -1890,6 +1928,139 @@ Returns all automation rules associated with the specified sheet.
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [AutomationRule Objects](#automationrule-object).
+
+## Update an Automation Rule
+
+> Example Request: Update an Automation Rule
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automationRuleId} \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-X PUT \
+-d '{
+	"action": {
+		"type": "APPROVAL_REQUEST_ACTION",
+		"recipients": [{
+			"email": "jane.roe@smartsheet.com"
+		}],
+		"frequency": "WEEKLY"
+	}
+}'
+```
+
+```javascript
+// Specify the changes
+var body = {
+  "name": "Approval Request",
+  "action": {
+    "type": "APPROVAL_REQUEST_ACTION",
+    "recipients": [
+      {
+        "email": "jane.roe@smartsheet.com"
+      }
+    ],
+    "frequency": "WEEKLY",
+    "includeAllColumns": true,
+    "includeAttachments": true,
+    "includeDiscussions": true,
+    "notifyAllSharedUsers": false
+  }
+};
+
+// Set options
+var options = {
+  sheetId: 4583173393803140,
+  automationRuleId: 789994550205316,
+  body: body
+  };
+
+// Update the automation rule
+smartsheet.sheets.updateAutomationRule(options)
+  .then(function(updatedAutomationRule) {
+    console.log(updatedAutomationRule);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+	
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+smartsheet.sheets.automation_rules.update(
+  sheet_id: 4583173393803140,
+  automation_rule_id: 789994550205316,
+  body: {
+    name: 'Approval Request',
+    enabled: true,
+    action: {
+      type: 'APPROVAL_REQUEST_ACTION',
+      recipients: [
+        {
+            email: 'jane.roe@smartsheet.com'
+        }
+      ],
+      frequency: 'WEEKLY',
+      include_all_columns: true,
+      include_attachments: true,
+      include_discussions: true,
+      notify_all_shared_users: false
+    }
+})
+```
+
+> Example Response:
+
+```json
+{
+  "id": 789994550205316,
+  "name": "Approval Request",
+  "enabled": true,
+  "createdBy": {
+    "email": "john.doe@smartsheet.com"
+  },
+  "createdAt": "2017-12-14T18:31:55Z",
+  "modifiedBy": {
+    "email": "john.doe@smartsheet.com"
+  },
+  "modifiedAt": "2017-12-14T18:47:36Z",
+  "userCanModify": true,
+  "action": {
+    "type": "APPROVAL_REQUEST_ACTION",
+    "recipients": [
+      {
+        "email": "jane.roe@smartsheet.com"
+      }
+    ],
+    "frequency": "WEEKLY",
+    "includeAllColumns": true,
+    "includeAttachments": true,
+    "includeDiscussions": true,
+    "notifyAllSharedUsers": false
+  }
+}
+```
+
+`PUT /sheets/{sheetId}/automationrules/{automationRuleId}`
+
+Updates an existing automation rule.
+
+     |     |
+-----|-----|
+<%= SCOPE %> | WRITE_SHEETS
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
+<%= REQUEST %> | An [AutomationRule Object](#automationrule-object). When sending an AutomationRule, you must always specify `action.type` and it must match the existing rule type.
+<%= RETURNS %> | [Result Object](#result-object) containing the updated [AutomationRule Object](#automationrule-object)
 
 ## <%= RELATED %>
 
