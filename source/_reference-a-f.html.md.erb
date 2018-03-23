@@ -1675,13 +1675,11 @@ var options = {
 
 // Delete automation rule
 smartsheet.sheets.deleteAutomationRule(options)
-  .then((result) => {
-    console.log("success");
-    console.log(JSON.stringify(result));
+  .then(function(results) {
+    console.log(results);
   })
-  .catch((error) => {
-    console.log("error");
-    console.log(JSON.stringify(error));
+  .catch(function(error) {
+    console.log(error);
   });
 ```
 	
@@ -1741,13 +1739,11 @@ var options = {
 
 // Get automation rule
 smartsheet.sheets.getAutomationRule(options)
-  .then((automationRule) => {
-    console.log("success");
-    console.log(JSON.stringify(automationRule));
+  .then(function(automationRule) {
+    console.log(automationRule);
   })
-  catch((error) => {
-    console.log("error");
-    console.log(JSON.stringify(error));
+  .catch(function(error) {
+    console.log(error);
   });
 ```
 	
@@ -1829,13 +1825,11 @@ var options = {
 
 // List automation rules
 smartsheet.sheets.listAutomationRules(options)
-  .then((automationRules) => {
-    console.log("success");
-    console.log(JSON.stringify(automationRules));
+  .then(function(automationRulesList) {
+    console.log(automationRulesList);
   })
-  .catch((error) => {
-    console.log("error");
-    console.log(JSON.stringify(error));
+  .catch(function(error) {
+    console.log(error);
   });
 ```
 	
@@ -1947,7 +1941,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automation
 	"action": {
 		"type": "APPROVAL_REQUEST_ACTION",
 		"recipients": [{
-			"email": "john.doe@smartsheet.com"
+			"email": "jane.roe@smartsheet.com"
 		}],
 		"frequency": "WEEKLY"
 	}
@@ -1957,12 +1951,12 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automation
 ```javascript
 // Specify the changes
 var body = {
-  "name": "a cool rule",
+  "name": "Approval Request",
   "action": {
     "type": "APPROVAL_REQUEST_ACTION",
     "recipients": [
       {
-        "email": "john.doe@smartsheet.com"
+        "email": "jane.roe@smartsheet.com"
       }
     ],
     "frequency": "WEEKLY",
@@ -1982,13 +1976,11 @@ var options = {
 
 // Update the automation rule
 smartsheet.sheets.updateAutomationRule(options)
-  .then((result) => {
-    console.log("success");
-    console.log(JSON.stringify(result));
+  .then(function(updatedAutomationRule) {
+    console.log(updatedAutomationRule);
   })
-  .catch((error) => {
-    console.log("error");
-    console.log(JSON.stringify(error));
+  .catch(function(error) {
+    console.log(error);
   });
 ```
 	
@@ -2015,7 +2007,7 @@ smartsheet.sheets.automation_rules.update(
       type: 'APPROVAL_REQUEST_ACTION',
       recipients: [
         {
-            email: 'john.doe@smartsheet.com'
+            email: 'jane.roe@smartsheet.com'
         }
       ],
       frequency: 'WEEKLY',
