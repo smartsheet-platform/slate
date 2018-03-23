@@ -2457,12 +2457,12 @@ Destination | Row Attributes | Examples
 -------|--------|--------
 Top of a sheet | **toTop** | ```("toTop": true}```
 Bottom of a sheet | **toBottom** | ```("toBottom": true}```
-Top of an indented section aka first child row | **parentId** | ```("parentId": 8896508249565060}```
-Bottom of an indented section aka last child row | **parentId** +<br/>**toBottom** | ```{"parentId": 8896508249565060, "toBottom": true}``` 
+Top of an indented section a.k.a., first child row | **parentId** | ```("parentId": 8896508249565060}```
+Bottom of an indented section a.k.a., last child row | **parentId** +<br/>**toBottom** | ```{"parentId": 8896508249565060, "toBottom": true}``` 
 Below a specific row, at the same indent level | **siblingId** | ```{"siblingId": 8896508249565060}```
 Above a specific row, at the same indent level | **siblingId** +<br/>**above** | ```{"siblingId": 8896508249565060, "above": true}```
-Indent one row, must have a value of "1" | **indent** | ```{"indent": 1}```
-Outdent one row, must have a value of "1" | **outdent** | ```{"outdent": 1}```
+Indent one existing row, must have a value of "1" | **indent** | ```{"indent": 1}```
+Outdent one existing row, must have a value of "1" | **outdent** | ```{"outdent": 1}```
 
 ## Update Rows
 
