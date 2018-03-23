@@ -1604,8 +1604,6 @@ A Row is a component of a Sheet or Report. Each Row is composed of a collection 
 }
 ```
 
-If you specify the **parentId** attribute or the **siblingId** attribute, you can set one or the other, but not both.
-
      |     |     |
 -----|-----|-----|
 **id** | number | Row Id
@@ -1632,15 +1630,17 @@ If you specify the **parentId** attribute or the **siblingId** attribute, you ca
 
 #### Row Object Location-specifier Attributes
 
+For more information, see [Specify Row Location](#specify-row-location).
+
      |     |     |
 -----|-----|-----|
-**above** | Boolean | Specifies the location for a new or moved row. <%= REQUEST_ONLY_ATTRIBUTE %> For more information, see [Change the Location of a Row](#change-the-location-of-a-row).
-**indent** | number | Specifies the number of levels to indent an existing row. <%= REQUEST_ONLY_ATTRIBUTE %> For more information, see [Change the Location of a Row](#change-the-location-of-a-row).
-**outdent** | number | Specifies the number of levels to outdent an existing row. <%= REQUEST_ONLY_ATTRIBUTE %> For more information, see [Change the Location of a Row](#change-the-location-of-a-row).
-**parentId** | number | In a response - the Id of the parent row (if any).<br/><br/>In a request - the Id of the desired parent row (used to specify the location for a new or moved row). For more information, see [Change the Location of a Row](#change-the-location-of-a-row).
-**siblingId** | number | In a response - the Id of the previous sibling row at the same hierarchical level of this row (if any).<br/><br/>In a request - the Id of the desired sibling row (used to specify the location for a new or moved row). For more information, see [Change the Location of a Row](#change-the-location-of-a-row).
-**toBottom** | Boolean | Adds or moves the row to the bottom of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %> For more information, see [Change the Location of a Row](#change-the-location-of-a-row).
-**toTop** | Boolean | Adds or moves the row to the top of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %> For more information, see [Change the Location of a Row](#change-the-location-of-a-row).
+**above** | Boolean | Specifies the location for a new or moved row. <%= REQUEST_ONLY_ATTRIBUTE %>
+**indent** | number | Specifies the number of levels to indent an existing row. <%= REQUEST_ONLY_ATTRIBUTE %>
+**outdent** | number | Specifies the number of levels to outdent an existing row. <%= REQUEST_ONLY_ATTRIBUTE %>
+**parentId** | number | In a response - the Id of the parent row (if any).<br/><br/>In a request - the Id of the desired parent row (used to specify the location for a new or moved row).
+**siblingId** | number | In a response - the Id of the previous sibling row at the same hierarchical level of this row (if any).<br/><br/>In a request - the Id of the desired sibling row (used to specify the location for a new or moved row).
+**toBottom** | Boolean | Adds or moves the row to the bottom of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %>
+**toTop** | Boolean | Adds or moves the row to the top of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %>
 
 ### CopyOrMoveRowDirective Object
 
@@ -1939,25 +1939,6 @@ Inserts one or more rows into the Sheet specified in the URL. If you want to ins
 -----|-----|
 <%= RETURNS %> | [Result object](#result-object) containing the newly created rows -- either a single [Row object](#row-object) or array of Row objects, corresponding to what was specified in the request, as well as the new version of the Sheet.
 <%= ERRORS %> | <u><b>When <code>allowPartialSuccess=false</code> (or not specified):</b></u><br/><br/>If an error occurs, the [Error object](#error-object) returned contains a **detail** attribute set to an object with the following attribute:<ul><li>**index**: the array index of the row that caused the error (0 if a single Row was passed in)</li></ul>If any error occurs, the entire request fails (no rows are added), and the Error response returned describes the first problem that was encountered. For example:<br/>{<br/>&#160;&#160;"errorCode": 1042,<br/>&#160;&#160;"message": "The cell value in column 5504245941200772 did not conform to the strict requirements for type CHECKBOX."<br/>&#160;&#160;"detail": {<br/>&#160;&#160;&#160;&#160;"index": 4<br/>&#160;&#160;}<br/>}<br/><br/><br/><u><b>When <code>allowPartialSuccess=true</code>:</b></u><br/><br/><%= PARTIAL_SUCCESS %>
-
-## Change the Location of a Row
-
-If you want to specify where a row is added or moved to in a sheet, use the following location-specifier attributes in the [Row Object](#row-object) either individually or in combination.
-
-When you [add a row](#add-rows), the default behavior is for Smartsheet to put the new row at the bottom of the sheet. And when you [update a row](#update-rows), the default behavior is to keep the row where it is. It is not necessary to use a location-specifier attribute if you want the default behavior.
-
-<aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>toTop</b>, <b>toBottom</b>, <b>parentId</b>, <b>siblingId</b>, and <b>above</b> attributes must be the same for all rows in the request).</aside>
-
-Destination | Row Attributes | Examples and notes
--------|--------|--------
-Top of a sheet | **toTop** | ```("toTop": true}```
-Bottom of a sheet | **toBottom** | ```("toBottom": true}```
-Top of an indented section aka first child row | **parentId** | Cannot be used with a **siblingId**, example: ```("parentId": 8896508249565060}```
-Bottom of an indented section aka last child row | **parentId** +<br/>**toBottom** | ```{"parentId": 8896508249565060, "toBottom": true}``` 
-Above a sibling row | **siblingId** +<br/>**above** | ```{"siblingId": 8896508249565060, "above": true}```
-Below a sibling row | **siblingId** | Cannot be used with **parentId**. **toTop**, or **toBottom**, example: ```{"siblingId": 8896508249565060}```
-Indent one existing row, one position at a time | **indent** | ```{"indent": 1}```
-Outdent one existing row, one position at a time | **outdent** | ```{"outdent": 1}```
 
 ## Copy Rows to Another Sheet
 
@@ -2458,6 +2439,30 @@ For details about sending update requests, see [Create Update Request](#create-u
 ## Sort Rows
 
 For details about sorting the rows in a sheet, see [Sort Rows in Sheet](#sort-rows-in-sheet).
+
+## Specify Row Location
+
+When you [add a row](#add-rows), the default behavior is for Smartsheet to put the new row at the bottom of the sheet. And when you [update a row](#update-rows), the default behavior is to keep the row where it is. It is not necessary to use a location-specifier attribute if you want the default behavior.
+
+To specify a location for new or updated rows other than the defaults, use the table below for reference. The table details possible row locations and provides JSON examples to help you construct one or more [Row Objects](#row-object) with location-specifier attributes.
+
+Note the following restrictions:
+
+* If you specify the **parentId** attribute, you cannot also specify the **siblingId** attribute. 
+* If you specify the **siblingId** attribute, you cannot also specify the **parentId**, **toTop**, or **toBottom** attributes.
+* If multiple rows are specified in the request, all rows must have the same location-specifier attributes.
+* If you want to indent or outdent multiple rows, use the **parentId** attribute.
+
+Destination | Row Attributes | Examples
+-------|--------|--------
+Top of a sheet | **toTop** | ```("toTop": true}```
+Bottom of a sheet | **toBottom** | ```("toBottom": true}```
+Top of an indented section aka first child row | **parentId** | ```("parentId": 8896508249565060}```
+Bottom of an indented section aka last child row | **parentId** +<br/>**toBottom** | ```{"parentId": 8896508249565060, "toBottom": true}``` 
+Below a specific row, at the same indent level | **siblingId** | ```{"siblingId": 8896508249565060}```
+Above a specific row, at the same indent level | **siblingId** +<br/>**above** | ```{"siblingId": 8896508249565060, "above": true}```
+Indent one row, must have a value of "1" | **indent** | ```{"indent": 1}```
+Outdent one row, must have a value of "1" | **outdent** | ```{"outdent": 1}```
 
 ## Update Rows
 
