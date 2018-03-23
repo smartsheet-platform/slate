@@ -1919,7 +1919,7 @@ response = smartsheet.sheets.rows.add(
 
 `POST /sheets/{sheetId}/rows`
 
-Inserts one or more rows into the Sheet specified in the URL. If you want to insert the rows in any position but the default, use [location-specifier attributes](#change-the-location-of-a-row).
+Inserts one or more rows into the Sheet specified in the URL. If you want to insert the rows in any position but the default, use [location-specifier attributes](#specify-row-location).
 
 <aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
 
@@ -2683,7 +2683,7 @@ response = smartsheet.sheets.rows.update(
 
 `PUT /sheets/{sheetId}/rows`
 
-Updates cell values in the specified rows, expands/collapses the specified rows, and/or modifies the position of specified rows (including indenting/outdenting). For detailed information about changing row positions, see [location-specifier attributes](#change-the-location-of-a-row).
+Updates cell values in the specified rows, expands/collapses the specified rows, and/or modifies the position of specified rows (including indenting/outdenting). For detailed information about changing row positions, see [location-specifier attributes](#specify-row-location).
 
 <aside class="notice">If a row's position is updated, all child rows are moved with the row.</aside>
 
