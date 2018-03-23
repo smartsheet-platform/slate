@@ -1942,22 +1942,22 @@ Inserts one or more rows into the Sheet specified in the URL.
 
 ## Change the Location of a Row
 
-If you want to specify where a row is added or moved to in a sheet, the [Row Object](#row-object) has location-specifier attributes that you can use individually or in combination.
+If you want to specify where a row is added or moved to in a sheet, use the following location-specifier attributes in the [Row Object](#row-object) either individually or in combination.
 
-When you [add a row](#add-rows), the default behavior is for Smartsheet to put the new row at the bottom of the sheet. And when you [update a row](#update-rows), the default behavior is to keep the row where it is.
+When you [add a row](#add-rows), the default behavior is for Smartsheet to put the new row at the bottom of the sheet. And when you [update a row](#update-rows), the default behavior is to keep the row where it is. It is not necessary to use a location-specifier attribute if you want the default behavior.
 
 <aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>toTop</b>, <b>toBottom</b>, <b>parentId</b>, <b>siblingId</b>, and <b>above</b> attributes must be the same for all rows in the request).</aside>
 
 Destination | Row Attributes | Examples and notes
 -------|--------|--------
+Top of a sheet | **toTop** | ```("toTop": true}```
+Bottom of a sheet | **toBottom** | ```("toBottom": true}```
+Top of an indented section aka first child row | **parentId** | Cannot be used with a **siblingId**, example: ```("parentId": 8896508249565060}```
+Bottom of an indented section aka last child row | **parentId** +<br/>**toBottom** | ```{"parentId": 8896508249565060, "toBottom": true}``` 
 Above a sibling row | **siblingId** +<br/>**above** | ```{"siblingId": 8896508249565060, "above": true}```
 Below a sibling row | **siblingId** | Cannot be used with **parentId**. **toTop**, or **toBottom**, example: ```{"siblingId": 8896508249565060}```
-Bottom of a sheet | **toBottom** | ```("toBottom": true}```
-First child row | **parentId** | Cannot be used with a **siblingId**, example: ```("parentId": 8896508249565060}```
-Indented | **indent** | ```{"indent": 1}```
-Last child row | **parentId** +<br/>**toBottom** | ```{"parentId": 8896508249565060, "toBottom": true}``` 
-Outdented | **outdent** | ```{"outdent": 1}```
-Top of a sheet | **toTop** | ```("toTop": true}```
+Indent one existing row, one position at a time | **indent** | ```{"indent": 1}```
+Outdent one existing row, one position at a time | **outdent** | ```{"outdent": 1}```
 
 ## Copy Rows to Another Sheet
 
