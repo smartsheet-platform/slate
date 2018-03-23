@@ -503,6 +503,9 @@
                     <a href="#list-all-automation-rules" class="toc-h2 toc-link" data-title="List All Automation Rules">List All Automation Rules</a>
                   </li>
                   <li>
+                    <a href="#update-an-automation-rule" class="toc-h2 toc-link" data-title="Update an Automation Rule">Update an Automation Rule</a>
+                  </li>
+                  <li>
                     <a href="#related-items" class="toc-h2 toc-link" data-title="Related Items">Related Items</a>
                         <ul class="toc-list-subhead">
                             <li>
@@ -1086,6 +1089,9 @@
                     <a href="#sort-rows" class="toc-h2 toc-link" data-title="Sort Rows">Sort Rows</a>
                   </li>
                   <li>
+                    <a href="#specify-row-location" class="toc-h2 toc-link" data-title="Specify Row Location">Specify Row Location</a>
+                  </li>
+                  <li>
                     <a href="#update-rows" class="toc-h2 toc-link" data-title="Update Rows">Update Rows</a>
                   </li>
                   <li>
@@ -1102,9 +1108,6 @@
                             </li>
                             <li>
                                 <a href="#row-include-flags" class="toc-h3 toc-link" data-title="Row Include Flags">Row Include Flags</a>
-                            </li>
-                            <li>
-                                <a href="#row-location" class="toc-h3 toc-link" data-title="Row Location">Row Location</a>
                             </li>
                         </ul>
                   </li>
@@ -1853,7 +1856,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2018-03-19
+<p>Updated 2018-03-23
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -5205,7 +5208,20 @@ For example, you can perform a simple upload to upload a file to a <a href="#att
 <pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/automationrules/<span class="o">{</span>automationRuleId<span class="o">}</span> <span class="se">\</span>
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
 -X DELETE
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set options</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">sheetId</span><span class="p">:</span> <span class="mi">9283173393803140</span><span class="p">,</span>
+  <span class="na">automationRuleId</span><span class="p">:</span> <span class="mi">789004550205316</span>
+<span class="p">};</span>
+
+<span class="c1">// Delete automation rule</span>
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">deleteAutomationRule</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
 </code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
@@ -5257,7 +5273,20 @@ For example, you can perform a simple upload to upload a file to a <a href="#att
 
 <pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/automationrules/<span class="o">{</span>automationRuleId<span class="o">}</span> <span class="se">\</span>
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set options</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">sheetId</span><span class="p">:</span> <span class="mi">9283173393803140</span><span class="p">,</span>
+  <span class="na">automationRuleId</span><span class="p">:</span> <span class="mi">789994550205316</span>
+<span class="p">};</span>
+
+<span class="c1">// Get automation rule</span>
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">getAutomationRule</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">automationRule</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">automationRule</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
 </code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
@@ -5332,7 +5361,19 @@ For example, you can perform a simple upload to upload a file to a <a href="#att
 
 <pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/automationrules <span class="se">\</span>
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set options</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">sheetId</span><span class="p">:</span> <span class="mi">9283173393803140</span>
+<span class="p">};</span>
+
+<span class="c1">// List automation rules</span>
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">listAutomationRules</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">automationRulesList</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">automationRulesList</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
 </code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
@@ -5431,6 +5472,143 @@ For example, you can perform a simple upload to upload a file to a <a href="#att
 <tr>
 <td><strong>Returns</strong></td>
 <td><a href="#indexresult-object">IndexResult Object</a> containing an array of <a href="#automationrule-object">AutomationRule Objects</a>.</td>
+</tr>
+</tbody></table>
+
+<h2 id='update-an-automation-rule'>Update an Automation Rule</h2>
+
+<blockquote>
+<p>Example Request: Update an Automation Rule</p>
+</blockquote>
+
+<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/automationrules/<span class="o">{</span>automationRuleId<span class="o">}</span> <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
+-X PUT <span class="se">\</span>
+-d <span class="s1">'{
+    "action": {
+        "type": "APPROVAL_REQUEST_ACTION",
+        "recipients": [{
+            "email": "jane.roe@smartsheet.com"
+        }],
+        "frequency": "WEEKLY"
+    }
+}'</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Specify the changes</span>
+<span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Approval Request"</span><span class="p">,</span>
+  <span class="s2">"action"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"APPROVAL_REQUEST_ACTION"</span><span class="p">,</span>
+    <span class="s2">"recipients"</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="s2">"email"</span><span class="p">:</span> <span class="s2">"jane.roe@smartsheet.com"</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">"frequency"</span><span class="p">:</span> <span class="s2">"WEEKLY"</span><span class="p">,</span>
+    <span class="s2">"includeAllColumns"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">"includeAttachments"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">"includeDiscussions"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">"notifyAllSharedUsers"</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Set options</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">sheetId</span><span class="p">:</span> <span class="mi">4583173393803140</span><span class="p">,</span>
+  <span class="na">automationRuleId</span><span class="p">:</span> <span class="mi">789994550205316</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">body</span>
+  <span class="p">};</span>
+
+<span class="c1">// Update the automation rule</span>
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">updateAutomationRule</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">updatedAutomationRule</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">updatedAutomationRule</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">automation_rules</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span>
+  <span class="ss">sheet_id: </span><span class="mi">4583173393803140</span><span class="p">,</span>
+  <span class="ss">automation_rule_id: </span><span class="mi">789994550205316</span><span class="p">,</span>
+  <span class="ss">body: </span><span class="p">{</span>
+    <span class="ss">name: </span><span class="s1">'Approval Request'</span><span class="p">,</span>
+    <span class="ss">enabled: </span><span class="kp">true</span><span class="p">,</span>
+    <span class="ss">action: </span><span class="p">{</span>
+      <span class="ss">type: </span><span class="s1">'APPROVAL_REQUEST_ACTION'</span><span class="p">,</span>
+      <span class="ss">recipients: </span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="ss">email: </span><span class="s1">'jane.roe@smartsheet.com'</span>
+        <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="ss">frequency: </span><span class="s1">'WEEKLY'</span><span class="p">,</span>
+      <span class="ss">include_all_columns: </span><span class="kp">true</span><span class="p">,</span>
+      <span class="ss">include_attachments: </span><span class="kp">true</span><span class="p">,</span>
+      <span class="ss">include_discussions: </span><span class="kp">true</span><span class="p">,</span>
+      <span class="ss">notify_all_shared_users: </span><span class="kp">false</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">789994550205316</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Approval Request"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john.doe@smartsheet.com"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-12-14T18:31:55Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john.doe@smartsheet.com"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-12-14T18:47:36Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"userCanModify"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"APPROVAL_REQUEST_ACTION"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"recipients"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jane.roe@smartsheet.com"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"frequency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WEEKLY"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"includeAllColumns"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"includeAttachments"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"includeDiscussions"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"notifyAllSharedUsers"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><code>PUT /sheets/{sheetId}/automationrules/{automationRuleId}</code></p>
+
+<p>Updates an existing automation rule.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Access Scope</strong></td>
+<td>WRITE_SHEETS</td>
+</tr>
+<tr>
+<td><strong>Headers</strong></td>
+<td><strong>Authorization</strong>: Bearer ll352u9jujauoqz4gstvsae05<br/><strong>Content-Type</strong>: application/json</td>
+</tr>
+<tr>
+<td><strong>Request Body</strong></td>
+<td>An <a href="#automationrule-object">AutomationRule Object</a>. When sending an AutomationRule, you must always specify <code>action.type</code> and it must match the existing rule type.</td>
+</tr>
+<tr>
+<td><strong>Returns</strong></td>
+<td><a href="#result-object">Result Object</a> containing the updated <a href="#automationrule-object">AutomationRule Object</a></td>
 </tr>
 </tbody></table>
 
@@ -5553,7 +5731,7 @@ For example, you can perform a simple upload to upload a file to a <a href="#att
 <tr>
 <td><strong>strict</strong></td>
 <td>Boolean</td>
-<td>Set to <strong>false</strong> to enable lenient parsing. Defaults to <strong>true</strong>. This attribute can be specified in a request, but is never present in a response. See <a href="#cell-value-parsing">Cell Value Parsing</a> for more information about using this attribute.</td>
+<td>Set to <strong>false</strong> to enable lenient parsing. Defaults to <strong>true</strong>. You can specify this attribute in a request, but it is never present in a response. See <a href="#cell-value-parsing">Cell Value Parsing</a> for more information about using this attribute.</td>
 </tr>
 <tr>
 <td><strong>image</strong></td>
@@ -14027,15 +14205,16 @@ of <a href="#groupmember-object">GroupMember Objects</a> any users specified in 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2361756178769796</span><span class="p">,</span><span class="w">
   </span><span class="s2">"sheetId"</span><span class="p">:</span><span class="w"> </span><span class="mi">4583173393803140</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"rowNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rowNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"parentId"</span><span class="p">:</span><span class="w"> </span><span class="mi">4392908622194564</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
   </span><span class="s2">"expanded"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cells"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-  </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-24T23:10:55-07:00"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-24T23:14:27-07:00"</span><span class="w">
+  </span><span class="s2">"accessLevel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OWNER"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-10-06T21:21:25Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-03-22T21:24:50Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cells"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>If you specify the <strong>parentId</strong> attribute or the <strong>siblingId</strong> attribute, you can set one or the other, but not both.</p>
-
 <table><thead>
 <tr>
 <th></th>
@@ -14049,59 +14228,29 @@ of <a href="#groupmember-object">GroupMember Objects</a> any users specified in 
 <td>Row Id</td>
 </tr>
 <tr>
-<td><strong>sheetId</strong></td>
-<td>number</td>
-<td>Parent Sheet Id</td>
-</tr>
-<tr>
-<td><strong>rowNumber</strong></td>
-<td>number</td>
-<td>Row number within the sheet (1-based - starts at 1)</td>
-</tr>
-<tr>
-<td><strong>version</strong></td>
-<td>number</td>
-<td>Sheet version number that is incremented every time a sheet is modified</td>
-</tr>
-<tr>
-<td><strong>filteredOut</strong></td>
-<td>Boolean</td>
-<td><code>true</code> if this row is filtered out by a column filter (and thus is not displayed in the Smartsheet app), <code>false</code> if the row is not filtered out.<br/>Only returned if the <a href="#row-include-flags"><strong>include</strong></a> query string parameter contains <strong>filters</strong>.</td>
-</tr>
-<tr>
-<td><strong>inCriticalPath</strong></td>
-<td>Boolean</td>
-<td>Only returned, with a value of <code>true</code>, if the sheet is a project sheet with dependencies enabled and this row is in the critical path</td>
-</tr>
-<tr>
-<td><strong>locked</strong></td>
-<td>Boolean</td>
-<td>Flag indicating whether the row is locked. In a response, a value of <code>true</code> indicates that the row has been locked by the sheet owner or the admin.</td>
-</tr>
-<tr>
-<td><strong>lockedForUser</strong></td>
-<td>Boolean</td>
-<td>Flag indicating whether the row is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.</td>
-</tr>
-<tr>
-<td><strong>expanded</strong></td>
-<td>Boolean</td>
-<td>Flag to indicate if the row is expanded or collapsed</td>
-</tr>
-<tr>
 <td><strong>accessLevel</strong></td>
 <td>string</td>
 <td>User&#39;s permission level on the Sheet that contains the Row</td>
 </tr>
 <tr>
-<td><strong>format</strong></td>
-<td>string</td>
-<td>Format descriptor (see <a href="#formatting">Formatting</a>).<br/>Only returned if the <a href="#row-include-flags"><strong>include</strong></a> query string parameter contains <strong>format</strong> and this row has a non-default format applied.</td>
+<td><strong>attachments</strong></td>
+<td><a href="#attachment-object">Attachment</a>[]</td>
+<td>Array of Attachment Objects.<br/>Only returned if the <a href="#row-include-flags"><strong>include</strong></a> query string parameter contains <strong>attachments</strong>.</td>
+</tr>
+<tr>
+<td><strong>cells</strong></td>
+<td><a href="#cell-object">Cell</a>[]</td>
+<td>Array of Cell Objects belonging to the row</td>
+</tr>
+<tr>
+<td><strong>columns</strong></td>
+<td><a href="#column-object">Column</a>[]</td>
+<td>Array of Column Objects.<br/>Only returned if the <a href="#get-row">Get Row</a> <strong>include</strong> query string parameter contains <strong>columns</strong>.</td>
 </tr>
 <tr>
 <td><strong>conditionalFormat</strong></td>
 <td>string</td>
-<td>Format descriptor describing this row&#39;s conditional format (see <a href="#formatting">Formatting</a>)<br/>Only returned if the <a href="#row-include-flags"><strong>include</strong></a> query string parameter contains <strong>format</strong> and this row has a conditional format applied.</td>
+<td>Describes this row&#39;s conditional format (see <a href="#formatting">Formatting</a>)<br/>Only returned if the <a href="#row-include-flags"><strong>include</strong></a> query string parameter contains <strong>format</strong> and this row has a conditional format applied.</td>
 </tr>
 <tr>
 <td><strong>createdAt</strong></td>
@@ -14114,6 +14263,41 @@ of <a href="#groupmember-object">GroupMember Objects</a> any users specified in 
 <td>User Object containing name and email of the creator of this row</td>
 </tr>
 <tr>
+<td><strong>discussions</strong></td>
+<td><a href="#discussion-object">Discussion</a>[]</td>
+<td>Array of Discussion Objects.<br/>Only returned if the <a href="#row-include-flags"><strong>include</strong></a> query string parameter contains <strong>discussions</strong>.</td>
+</tr>
+<tr>
+<td><strong>expanded</strong></td>
+<td>Boolean</td>
+<td>Indicates whether the row is expanded or collapsed</td>
+</tr>
+<tr>
+<td><strong>filteredOut</strong></td>
+<td>Boolean</td>
+<td><code>true</code> if this row is filtered out by a column filter (and thus is not displayed in the Smartsheet app), <code>false</code> if the row is not filtered out.<br/>Only returned if the <a href="#row-include-flags"><strong>include</strong></a> query string parameter contains <strong>filters</strong>.</td>
+</tr>
+<tr>
+<td><strong>format</strong></td>
+<td>string</td>
+<td>Format descriptor (see <a href="#formatting">Formatting</a>).<br/>Only returned if the <a href="#row-include-flags"><strong>include</strong></a> query string parameter contains <strong>format</strong> and this row has a non-default format applied.</td>
+</tr>
+<tr>
+<td><strong>inCriticalPath</strong></td>
+<td>Boolean</td>
+<td>Only returned, with a value of <code>true</code>, if the sheet is a project sheet with dependencies enabled and this row is in the critical path</td>
+</tr>
+<tr>
+<td><strong>locked</strong></td>
+<td>Boolean</td>
+<td>Indicates whether the row is locked. In a response, a value of <code>true</code> indicates that the row has been locked by the sheet owner or the admin.</td>
+</tr>
+<tr>
+<td><strong>lockedForUser</strong></td>
+<td>Boolean</td>
+<td>Indicates whether the row is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.</td>
+</tr>
+<tr>
 <td><strong>modifiedAt</strong></td>
 <td>timestamp</td>
 <td>Time of last modification</td>
@@ -14124,54 +14308,70 @@ of <a href="#groupmember-object">GroupMember Objects</a> any users specified in 
 <td>User Object containing name and email of the last person to modify this row</td>
 </tr>
 <tr>
-<td><strong>cells</strong></td>
-<td><a href="#cell-object">Cell</a>[]</td>
-<td>Array of Cell Objects belonging to the row</td>
-</tr>
-<tr>
-<td><strong>discussions</strong></td>
-<td><a href="#discussion-object">Discussion</a>[]</td>
-<td>Array of Discussion Objects.<br/>Only returned if the <a href="#row-include-flags"><strong>include</strong></a> query string parameter contains <strong>discussions</strong>.</td>
-</tr>
-<tr>
-<td><strong>attachments</strong></td>
-<td><a href="#attachment-object">Attachment</a>[]</td>
-<td>Array of Attachment Objects.<br/>Only returned if the <a href="#row-include-flags"><strong>include</strong></a> query string parameter contains <strong>attachments</strong>.</td>
-</tr>
-<tr>
-<td><strong>columns</strong></td>
-<td><a href="#column-object">Column</a>[]</td>
-<td>Array of Column Objects.<br/>Only returned if the <a href="#get-row">Get Row</a> <strong>include</strong> query string parameter contains <strong>columns</strong>.</td>
-</tr>
-<tr>
 <td><strong>permalink</strong></td>
 <td>string</td>
 <td>URL that represents a direct link to the Row in Smartsheet<br/>Only returned if the <a href="#row-include-flags"><strong>include</strong></a> query string parameter contains <strong>rowPermalink</strong>.</td>
 </tr>
 <tr>
+<td><strong>rowNumber</strong></td>
+<td>number</td>
+<td>Row number within the sheet (1-based - starts at 1)</td>
+</tr>
+<tr>
+<td><strong>sheetId</strong></td>
+<td>number</td>
+<td>Parent Sheet Id</td>
+</tr>
+<tr>
+<td><strong>version</strong></td>
+<td>number</td>
+<td>Sheet version number that is incremented every time a sheet is modified</td>
+</tr>
+</tbody></table>
+<h4 id='row-object-location-specifier-attributes'>Row Object Location-specifier Attributes</h4>
+<p>For more information, see <a href="#specify-row-location">Specify Row Location</a>.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>above</strong></td>
+<td>Boolean</td>
+<td>Specifies the location for a new or moved row. You can specify this attribute in a request, but it is never present in a response.</td>
+</tr>
+<tr>
+<td><strong>indent</strong></td>
+<td>number</td>
+<td>Specifies the number of levels to indent an existing row. You can specify this attribute in a request, but it is never present in a response.</td>
+</tr>
+<tr>
+<td><strong>outdent</strong></td>
+<td>number</td>
+<td>Specifies the number of levels to outdent an existing row. You can specify this attribute in a request, but it is never present in a response.</td>
+</tr>
+<tr>
 <td><strong>parentId</strong></td>
 <td>number</td>
-<td>In a response - the Id of the parent row (if any).<br/><br/>In a request - the Id of the desired parent row (used to specify the location for a new or moved row). For more information, see <a href="#row-location">Row Location</a>.</td>
+<td>In a response - the Id of the parent row (if any).<br/><br/>In a request - the Id of the desired parent row (used to specify the location for a new or moved row).</td>
 </tr>
 <tr>
 <td><strong>siblingId</strong></td>
 <td>number</td>
-<td>In a response - the Id of the previous sibling row at the same hierarchical level of this row (if any).<br/><br/>In a request - the Id of the desired sibling row (used to specify the location for a new or moved row). For more information, see <a href="#row-location">Row Location</a>.</td>
-</tr>
-<tr>
-<td><strong>toTop</strong></td>
-<td>Boolean</td>
-<td>Flag used to specify the location for a new or moved row. This attribute can be specified in a request, but is never present in a response. For more information, see <a href="#row-location">Row Location</a>.</td>
+<td>In a response - the Id of the previous sibling row at the same hierarchical level of this row (if any).<br/><br/>In a request - the Id of the desired sibling row (used to specify the location for a new or moved row).</td>
 </tr>
 <tr>
 <td><strong>toBottom</strong></td>
 <td>Boolean</td>
-<td>Flag used to specify the location for a new or moved row. This attribute can be specified in a request, but is never present in a response. For more information, see <a href="#row-location">Row Location</a>.</td>
+<td>Adds or moves the row to the bottom of the sheet. You can specify this attribute in a request, but it is never present in a response.</td>
 </tr>
 <tr>
-<td><strong>above</strong></td>
+<td><strong>toTop</strong></td>
 <td>Boolean</td>
-<td>Flag used to specify the location for a new or moved row. This attribute can be specified in a request, but is never present in a response. For more information, see <a href="#row-location">Row Location</a>.</td>
+<td>Adds or moves the row to the top of the sheet. You can specify this attribute in a request, but it is never present in a response.</td>
 </tr>
 </tbody></table>
 <h3 id='copyormoverowdirective-object'>CopyOrMoveRowDirective Object</h3>
@@ -14482,7 +14682,7 @@ of <a href="#groupmember-object">GroupMember Objects</a> any users specified in 
 
 <p><code>POST /sheets/{sheetId}/rows</code></p>
 
-<p>Inserts one or more rows into the Sheet specified in the URL.</p>
+<p>Inserts one or more rows into the Sheet specified in the URL. If you want to insert the rows in any position but the default, use <a href="#change-the-location-of-a-row">location-specifier attributes</a>.</p>
 
 <aside class="notice">This operation supports both single-object and bulk semantics.  For more information, see <a href='#optional-bulk-operations'>Optional Bulk Operations</a>.</aside>
 
@@ -14510,7 +14710,7 @@ of <a href="#groupmember-object">GroupMember Objects</a> any users specified in 
 </tr>
 <tr>
 <td><strong>Request Body</strong></td>
-<td><a href="#row-object">Row object</a> or an array of Row objects, with the following attributes:<ul><p><li>One or more <a href="#row-location"><em>location-specifier</em> attributes</a> (optional)</li><li><strong>expanded</strong> (optional)</li><li><strong>format</strong> (optional)</li><li><strong>cells</strong> (optional) -- if specified, must be an array of <a href="#cell-object">Cell objects</a>, where each object is limited to the following attributes:</li><ul><li>columnId (required)</li><li>One of the following (required):</li><ul><li>value</li><li>formula: for cross-sheet formulas, you must first define a <a href="#cross-sheet-references">cross-sheet reference</a></li></ul><li>When <strong>value</strong> is specified</li><ul><li>strict (optional)</li><li><a href="#hyperlink-object">hyperlink</a> (optional) with exactly one of the following attributes set:</li><ul><li>url</li><li>sheetId</li><li>reportId</li></ul><li><a href="#celllink-object">linkInFromCell</a> (optional) with all of the following attributes set:</li><ul><li>sheetId</li><li>rowId</li><li>columnId</li></ul></ul><li>overrideValidation (optional)</li><li>format (optional)</li><li>image (optional) -- if specified, use to update alternate text where <strong>altText</strong> = string.</li></ul><li><strong>locked</strong> (optional) - <strong>true</strong> to lock the row or <strong>false</strong> to unlock the row.</li></ul>See <a href="#column-types">Column Types</a> for more information.<BR/><BR/>Please note the following:<ul><li>Column Ids must be valid for the sheet to which the row belongs, and must only be used once for each row in the operation.</li><li>Cells of a project sheet in the &quot;Finish Date&quot; column cannot be updated via API.</li><li>Cells of a project sheet in the  &quot;Start Date&quot; column cannot be updated via API for rows that contain a value in the &quot;Predecessor&quot; column.</li><li>Max length for a cell value is 4000 characters after which truncation occurs without warning. Empty string values are converted to null.</li><li>Calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = &quot;#CIRCULAR REFERENCE&quot;.</li> </p></td>
+<td><a href="#row-object">Row object</a> or an array of Row objects, with the following attributes:<ul><p><li>One or more <a href="#specify-row-location">location-specifier attributes</a> (optional)</li><li><strong>expanded</strong> (optional)</li><li><strong>format</strong> (optional)</li><li><strong>cells</strong> (optional) -- if specified, must be an array of <a href="#cell-object">Cell objects</a>, where each object is limited to the following attributes:</li><ul><li>columnId (required)</li><li>One of the following (required):</li><ul><li>value</li><li>formula: for cross-sheet formulas, you must first define a <a href="#cross-sheet-references">cross-sheet reference</a></li></ul><li>When <strong>value</strong> is specified</li><ul><li>strict (optional)</li><li><a href="#hyperlink-object">hyperlink</a> (optional) with exactly one of the following attributes set:</li><ul><li>url</li><li>sheetId</li><li>reportId</li></ul><li><a href="#celllink-object">linkInFromCell</a> (optional) with all of the following attributes set:</li><ul><li>sheetId</li><li>rowId</li><li>columnId</li></ul></ul><li>overrideValidation (optional)</li><li>format (optional)</li><li>image (optional) -- if specified, use to update alternate text where <strong>altText</strong> = string.</li></ul><li><strong>locked</strong> (optional) - <strong>true</strong> to lock the row or <strong>false</strong> to unlock the row.</li></ul>See <a href="#column-types">Column Types</a> for more information.<BR/><BR/>Please note the following:<ul><li>Column Ids must be valid for the sheet to which the row belongs, and must only be used once for each row in the operation.</li><li>Cells of a project sheet in the &quot;Finish Date&quot; column cannot be updated via API.</li><li>Cells of a project sheet in the  &quot;Start Date&quot; column cannot be updated via API for rows that contain a value in the &quot;Predecessor&quot; column.</li><li>Max length for a cell value is 4000 characters after which truncation occurs without warning. Empty string values are converted to null.</li><li>Calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = &quot;#CIRCULAR REFERENCE&quot;.</li> </p></td>
 </tr>
 </tbody></table>
 
@@ -15274,6 +15474,70 @@ of <a href="#groupmember-object">GroupMember Objects</a> any users specified in 
 
 <p>For details about sorting the rows in a sheet, see <a href="#sort-rows-in-sheet">Sort Rows in Sheet</a>.</p>
 
+<h2 id='specify-row-location'>Specify Row Location</h2>
+
+<p>When you <a href="#add-rows">add a row</a>, the default behavior is for Smartsheet to put the new row at the bottom of the sheet. And when you <a href="#update-rows">update a row</a>, the default behavior is to keep the row where it is. It is not necessary to use a location-specifier attribute if you want the default behavior.</p>
+
+<p>To specify a location for new or updated rows other than the defaults, use the table below for reference. The table details possible row locations and provides JSON examples to help you construct one or more <a href="#row-object">Row Objects</a> with location-specifier attributes.</p>
+
+<p>Note the following restrictions:</p>
+
+<ul>
+<li>If you specify the <strong>parentId</strong> attribute, you cannot also specify the <strong>siblingId</strong> attribute. </li>
+<li>If you specify the <strong>siblingId</strong> attribute, you cannot also specify the <strong>parentId</strong>, <strong>toTop</strong>, or <strong>toBottom</strong> attributes.</li>
+<li>If multiple rows are specified in the request, all rows must have the same location-specifier attributes.</li>
+<li>If you want to indent or outdent multiple rows, use the <strong>parentId</strong> attribute.</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Destination</th>
+<th>Row Attributes</th>
+<th>Examples</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Top of a sheet</td>
+<td><strong>toTop</strong></td>
+<td><code>(&quot;toTop&quot;: true}</code></td>
+</tr>
+<tr>
+<td>Bottom of a sheet</td>
+<td><strong>toBottom</strong></td>
+<td><code>(&quot;toBottom&quot;: true}</code></td>
+</tr>
+<tr>
+<td>Top of an indented section a.k.a., first child row</td>
+<td><strong>parentId</strong></td>
+<td><code>(&quot;parentId&quot;: 8896508249565060}</code></td>
+</tr>
+<tr>
+<td>Bottom of an indented section a.k.a., last child row</td>
+<td><strong>parentId</strong> +<br/><strong>toBottom</strong></td>
+<td><code>{&quot;parentId&quot;: 8896508249565060, &quot;toBottom&quot;: true}</code></td>
+</tr>
+<tr>
+<td>Below a specific row, at the same indent level</td>
+<td><strong>siblingId</strong></td>
+<td><code>{&quot;siblingId&quot;: 8896508249565060}</code></td>
+</tr>
+<tr>
+<td>Above a specific row, at the same indent level</td>
+<td><strong>siblingId</strong> +<br/><strong>above</strong></td>
+<td><code>{&quot;siblingId&quot;: 8896508249565060, &quot;above&quot;: true}</code></td>
+</tr>
+<tr>
+<td>Indent one existing row, must have a value of &quot;1&quot;</td>
+<td><strong>indent</strong></td>
+<td><code>{&quot;indent&quot;: 1}</code></td>
+</tr>
+<tr>
+<td>Outdent one existing row, must have a value of &quot;1&quot;</td>
+<td><strong>outdent</strong></td>
+<td><code>{&quot;outdent&quot;: 1}</code></td>
+</tr>
+</tbody></table>
+
 <h2 id='update-rows'>Update Rows</h2>
 
 <blockquote>
@@ -15480,9 +15744,11 @@ of <a href="#groupmember-object">GroupMember Objects</a> any users specified in 
 
 <p><code>PUT /sheets/{sheetId}/rows</code></p>
 
-<p>Updates cell values in the specified rows, expands/collapses the specified rows, and/or modifies the position of specified rows (including indenting/outdenting). </p>
+<p>Updates cell values in the specified rows, expands/collapses the specified rows, and/or modifies the position of specified rows (including indenting/outdenting). For detailed information about changing row positions, see <a href="#change-the-location-of-a-row">location-specifier attributes</a>.</p>
 
 <aside class="notice">If a row's position is updated, all child rows are moved with the row.</aside>
+
+<aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>toTop</b>, <b>toBottom</b>, <b>parentId</b>, <b>siblingId</b>, and <b>above</b> attributes must be the same for all rows in the request).</aside>
 
 <aside class="notice">In a parent row, values of the following fields are auto-calculated based upon values in the child rows (and therefore cannot be updated using the API): Start Date, End Date, Duration, % Complete.</aside>
 
@@ -15506,7 +15772,7 @@ of <a href="#groupmember-object">GroupMember Objects</a> any users specified in 
 </tr>
 <tr>
 <td><strong>Request Body</strong></td>
-<td><a href="#row-object">Row object</a> or an array of Row objects, with the following attributes:<ul><li><strong>id</strong> (required)</li><p><li>One or more <a href="#row-location"><em>location-specifier</em> attributes</a> (optional)</li><li><strong>expanded</strong> (optional)</li><li><strong>format</strong> (optional)</li><li><strong>cells</strong> (optional) -- if specified, must be an array of <a href="#cell-object">Cell objects</a>, where each object is limited to the following attributes:</li><ul><li>columnId (required)</li><li>One of the following (required):</li><ul><li>value</li><li>formula: for cross-sheet formulas, you must first define a <a href="#cross-sheet-references">cross-sheet reference</a></li></ul><li>When <strong>value</strong> is specified</li><ul><li>strict (optional)</li><li><a href="#hyperlink-object">hyperlink</a> (optional) with exactly one of the following attributes set:</li><ul><li>url</li><li>sheetId</li><li>reportId</li></ul><li><a href="#celllink-object">linkInFromCell</a> (optional) with all of the following attributes set:</li><ul><li>sheetId</li><li>rowId</li><li>columnId</li></ul></ul><li>overrideValidation (optional)</li><li>format (optional)</li><li>image (optional) -- if specified, use to update alternate text where <strong>altText</strong> = string.</li></ul><li><strong>locked</strong> (optional) - <strong>true</strong> to lock the row or <strong>false</strong> to unlock the row.</li></ul>See <a href="#column-types">Column Types</a> for more information.<BR/><BR/>Please note the following:<ul><li>Column Ids must be valid for the sheet to which the row belongs, and must only be used once for each row in the operation.</li><li>Cells of a project sheet in the &quot;Finish Date&quot; column cannot be updated via API.</li><li>Cells of a project sheet in the  &quot;Start Date&quot; column cannot be updated via API for rows that contain a value in the &quot;Predecessor&quot; column.</li><li>Max length for a cell value is 4000 characters after which truncation occurs without warning. Empty string values are converted to null.</li><li>Calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = &quot;#CIRCULAR REFERENCE&quot;.</li> </p></td>
+<td><a href="#row-object">Row object</a> or an array of Row objects, with the following attributes:<ul><li><strong>id</strong> (required)</li><p><li>One or more <a href="#specify-row-location">location-specifier attributes</a> (optional)</li><li><strong>expanded</strong> (optional)</li><li><strong>format</strong> (optional)</li><li><strong>cells</strong> (optional) -- if specified, must be an array of <a href="#cell-object">Cell objects</a>, where each object is limited to the following attributes:</li><ul><li>columnId (required)</li><li>One of the following (required):</li><ul><li>value</li><li>formula: for cross-sheet formulas, you must first define a <a href="#cross-sheet-references">cross-sheet reference</a></li></ul><li>When <strong>value</strong> is specified</li><ul><li>strict (optional)</li><li><a href="#hyperlink-object">hyperlink</a> (optional) with exactly one of the following attributes set:</li><ul><li>url</li><li>sheetId</li><li>reportId</li></ul><li><a href="#celllink-object">linkInFromCell</a> (optional) with all of the following attributes set:</li><ul><li>sheetId</li><li>rowId</li><li>columnId</li></ul></ul><li>overrideValidation (optional)</li><li>format (optional)</li><li>image (optional) -- if specified, use to update alternate text where <strong>altText</strong> = string.</li></ul><li><strong>locked</strong> (optional) - <strong>true</strong> to lock the row or <strong>false</strong> to unlock the row.</li></ul>See <a href="#column-types">Column Types</a> for more information.<BR/><BR/>Please note the following:<ul><li>Column Ids must be valid for the sheet to which the row belongs, and must only be used once for each row in the operation.</li><li>Cells of a project sheet in the &quot;Finish Date&quot; column cannot be updated via API.</li><li>Cells of a project sheet in the  &quot;Start Date&quot; column cannot be updated via API for rows that contain a value in the &quot;Predecessor&quot; column.</li><li>Max length for a cell value is 4000 characters after which truncation occurs without warning. Empty string values are converted to null.</li><li>Calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = &quot;#CIRCULAR REFERENCE&quot;.</li> </p></td>
 </tr>
 </tbody></table>
 
@@ -15588,61 +15854,6 @@ a comma-delimited list of flags that indicate additional attributes to be includ
 <tr>
 <td><strong>objectValue</strong></td>
 <td>Includes <strong>objectValue</strong> attribute on cells containing values. For more information see <a href="#cell-reference">Cell Reference</a>.</td>
-</tr>
-</tbody></table>
-
-<h3 id='row-location'>Row Location</h3>
-
-<p>When you <a href="#add-rows">add a row</a>, the default behavior is for Smartsheet to put the new row at the bottom of the sheet. And when you <a href="#update-rows">update a row</a>, the default behavior is to keep the row where it is.</p>
-
-<p>If you want to specify where the row is added or moved to in the sheet, Smartsheet provides the following &quot;location-specifier&quot; <a href="#row-object">row</a> attributes. Boolean attributes only take effect if the value is <code>true</code>.</p>
-
-<table><thead>
-<tr>
-<th>Row Attribute</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>toTop</strong></td>
-<td>Boolean</td>
-<td>Add or move the row to the top of the sheet.</td>
-</tr>
-<tr>
-<td><strong>toBottom</strong></td>
-<td>Boolean</td>
-<td>Add or move the row to the bottom of the sheet.</td>
-</tr>
-<tr>
-<td><strong>parentId</strong></td>
-<td>Number</td>
-<td>Add or move the row so that it is the first child row of the specified parent row. (Cannot be used with a <strong>siblingId</strong>.)</td>
-</tr>
-<tr>
-<td><strong>parentId</strong> +<br/><strong>toBottom</strong></td>
-<td>Number + Boolean</td>
-<td>Add or move the row so that it is the last child row of the specified parent row.</td>
-</tr>
-<tr>
-<td><strong>siblingId</strong></td>
-<td>Number</td>
-<td>Add or move the row directly below the sibling row (at the same indent level as the specified row). (Cannot be used with <strong>parentId</strong>. <strong>toTop</strong>, or <strong>toBottom</strong>.)</td>
-</tr>
-<tr>
-<td><strong>siblingId</strong> +<br/><strong>above</strong></td>
-<td>Number + Boolean</td>
-<td>Add or move the row directly above the sibling row (at the same indent level as the specified row).</td>
-</tr>
-<tr>
-<td><strong>indent</strong></td>
-<td>Number</td>
-<td>Number of levels to indent an existing row. For new rows, use <strong>parentId</strong>.</td>
-</tr>
-<tr>
-<td><strong>outdent</strong></td>
-<td>Number</td>
-<td>Number of levels to outdent an existing row. For new rows, use <strong>parentId</strong>.</td>
 </tr>
 </tbody></table>
 
@@ -16831,17 +17042,17 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <tr>
 <td><strong>subject</strong></td>
 <td>string</td>
-<td>The subject of the email that is optionally sent to notify the recipient. This attribute can be specified in a request, but is never present in a response.</td>
+<td>The subject of the email that is optionally sent to notify the recipient. You can specify this attribute in a request, but it is never present in a response.</td>
 </tr>
 <tr>
 <td><strong>message</strong></td>
 <td>string</td>
-<td>The message included in the body of the email that is optionally sent to the recipient. This attribute can be specified in a request, but is never present in a response.</td>
+<td>The message included in the body of the email that is optionally sent to the recipient. You can specify this attribute in a request, but it is never present in a response.</td>
 </tr>
 <tr>
 <td><strong>ccMe</strong></td>
 <td>Boolean</td>
-<td>Flag to indicate whether to send a copy of the email to the sharer of the sheet. This attribute can be specified in a request, but is never present in a response.</td>
+<td>Flag to indicate whether to send a copy of the email to the sharer of the sheet. You can specify this attribute in a request, but it is never present in a response.</td>
 </tr>
 </tbody></table>
 <h2 id='report-sharing'>Report Sharing</h2><h3 id='delete-report-share'>Delete Report Share</h3>
