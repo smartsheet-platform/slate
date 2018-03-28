@@ -6,7 +6,7 @@ A Template can be used to create a Sheet, as described in [Create Sheet from Tem
 
 ### Template Object
 
-> Example Template Object:
+> Example: Template object
 
 ```json
 {
@@ -34,7 +34,7 @@ A Template can be used to create a Sheet, as described in [Create Sheet from Tem
 
 ## List Public Templates
 
-> Example Request: List Public Templates
+> Example request: list public templates
 
 ```shell
 curl https://api.smartsheet.com/2.0/templates/public \
@@ -78,7 +78,7 @@ response = smartsheet.templates.list_public
 templates = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/listTemplates_response.md.erb" %>
 
@@ -92,7 +92,7 @@ Gets a list of public Templates that the user has access to.
 
 ## List User-created Templates
 
-> Example Request: List User-created Templates
+> Example request: list user-created templates
 
 ```shell
 curl https://api.smartsheet.com/2.0/templates \
@@ -136,7 +136,7 @@ response = smartsheet.templates.list
 templates = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/listTemplates_response.md.erb" %>
 
@@ -150,13 +150,13 @@ Gets a list of user-created Templates that the user has access to.
 
 # Token
 
-The Smartsheet API utilizes OAuth 2.0 for Authentication and Authorization. An **Authorization** HTTP header containing an Access Token is required to authenticate all API requests except for the requests to Get Access Token or Refresh Access Token.  For more information, see [Authentication](#authentication-and-access-tokens).
+The Smartsheet API utilizes OAuth 2.0 for authentication and authorization. An **Authorization** HTTP header containing an access token is required to authenticate all API requests except for the requests to GET Access Token or Refresh Access Token.  For more information, see [Authentication](#authentication-and-access-tokens).
 
 ## <%= OBJECTS %>
 
 ### Token Object
 
-> Example User Object:
+> Example: Token object
 
 ```json
 {
@@ -178,7 +178,7 @@ The Smartsheet API utilizes OAuth 2.0 for Authentication and Authorization. An *
 
 ## Get Access Token
 
-> Example Request: Get Access Token
+> Example request: get access token
 
 ```shell
 curl https://api.smartsheet.com/2.0/token \
@@ -236,7 +236,7 @@ smartsheet.token.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -261,11 +261,11 @@ Gets an access token, as part of the OAuth process. For more information, see [O
  | **client_id** (required) -- client id for your app
  | **code** (required) -- authorization code returned during the OAuth Flow.
  | **hash** (required) -- [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  The app_secret is never sent with the request.
- %= RETURNS %> | [Token Object](#token-object) containing an access token and a refresh token.
+ %= RETURNS %> | [Token object](#token-object) containing an access token and a refresh token.
 
 ## Refresh Access Token
 
-> Example Request: Refresh Access Token
+> Example request: refresh access token
 
 ```shell
 curl https://api.smartsheet.com/2.0/token \
@@ -325,7 +325,7 @@ smartsheet.token.refresh(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -350,11 +350,11 @@ Refreshes an access token, as part of the OAuth process. For more information, s
  | **client_id** (required) -- client id for your app
  | **refresh_token** (required) -- refresh_token value that came with the access token
  | **hash** (required) -- [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token value
- %= RETURNS %> | [Token Object](#token-object) containing an access token and a refresh token.
+ %= RETURNS %> | [Token object](#token-object) containing an access token and a refresh token.
 
 ## Revoke Access Token
 
-> Example Request: Revoke Access Token
+> Example request: revoke access token
 
 ```shell
 curl https://api.smartsheet.com/2.0/token \
@@ -388,7 +388,7 @@ ss_client.Token.revoke_access_token()
 smartsheet.token.revoke
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -404,7 +404,7 @@ Revokes the access token used to make this request.  The access token is no long
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 # Update Requests
 
@@ -454,7 +454,7 @@ Revokes the access token used to make this request.  The access token is no long
 
 ### User Object
 
-> Example User Object:
+> Example: User object
 
 ```json
 {
@@ -482,7 +482,7 @@ Revokes the access token used to make this request.  The access token is no long
 **name** | string | User's full name (read-only)
 **firstName** | string | User's first name
 **lastName** | string | User's last name
-**profileImage** | [Image](#image-object) | An [Image Object](#image-object) representing the profile image associated with the User account
+**profileImage** | [Image](#image-object) | An [Image object](#image-object) representing the profile image associated with the User account
 **status** | string |  User status, set to one of the following values:<ul><li>ACTIVE</li><li>PENDING</li><li>DECLINED</li></ul>
 **admin** | Boolean | Indicates whether the user is a system admin (can manage users and account)
 **licensedSheetCreator** | Boolean | Indicates whether the user is a licensed user (can create and own sheets)
@@ -502,7 +502,7 @@ Revokes the access token used to make this request.  The access token is no long
 **lastName** | string | Current user's last name
 **locale** | string | Current user's locale (see [Server Information](#server-information))
 **timeZone** | string | Current user's time zone Id
-**account** | [Account](#account-object) | Account Object representing the current user's customer account
+**account** | [Account](#account-object) | Account object representing the current user's customer account
 **admin** | Boolean | Indicates whether the user is a system admin (can manage users and account)
 **licensedSheetCreator** | Boolean | Indicates whether the user is a licensed user (can create and own sheets)
 **groupAdmin** | Boolean | Indicates whether the user is a group admin (can create and edit groups)
@@ -510,14 +510,14 @@ Revokes the access token used to make this request.  The access token is no long
 **jiraAdmin** | Boolean | Indicates whether the user is a JIRA admin
 **salesforceAdmin** | Boolean | Indicates whether the user is a Salesforce admin
 **salesforceUser** | Boolean | Indicates whether the user is a registered Salesforce user
-**alternateEmails** | [AlternateEmail](#alternateemail-object)[] | An array of [AlternateEmail Objects](#alternateemail-object) representing the alternate email addresses associated with the User account
+**alternateEmails** | [AlternateEmail](#alternateemail-object)[] | An array of [AlternateEmail objects](#alternateemail-object) representing the alternate email addresses associated with the User account
 **title** | string | User's title
 **department** | string | User's department
 **company** | string | User's company
 **workPhone** | string | User's work phone number
 **mobilePhone** | string | User's mobile phone number
 **role** | string | User's role
-**profileImage** | [Image](#image-object) | An [Image Object](#image-object) representing the profile image associated with the User account
+**profileImage** | [Image](#image-object) | An [Image object](#image-object) representing the profile image associated with the User account
 **sheetCount** | number | The number of sheets owned by the current user within the organization
 **lastLogin** | timestamp | Last login time of the current user
 **customWelcomeScreenViewed** | timestamp | Timestamp of viewing an Enterprise [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) by the current user
@@ -535,11 +535,11 @@ Revokes the access token used to make this request.  The access token is no long
 -----|-----|-----|
 **id** | number | AlternateEmail Id
 **email** | string | User's alternate email address
-**confirmed** | Boolean | Flag indicating whether the alternate email address has been confirmed
+**confirmed** | Boolean | Indicates whether the alternate email address has been confirmed
 
 ## Add User
 
-> Example Request: Add User
+> Example request: add user
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/users?sendEmail=true' \
@@ -635,7 +635,7 @@ response = smartsheet.users.add(
 new_user = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -672,9 +672,9 @@ Adds a User to the organization.
 <%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **sendEmail** (optional): A Boolean flag indicating whether or not to send a welcome email. Defaults to **false**.
-<%= REQUEST %> | [User Object](#user-object) with the following attributes:<ul><li>email (required)</li><li>admin (required)</li><li>licensedSheetCreator (required)</li><li>firstName (optional)</li><li>lastName (optional)</li><li>groupAdmin (optional)</li><li>resourceViewer (optional)</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing the newly created [User Object](#user-object).
-<%= ERRORS %>  | If an error occurs because the request specified the [*alternate* email address](#alternate-email-addresses) (that is, not the primary email address) of an existing Smartsheet User (to invite the user into the Org), the [Error Object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "The specified email address (u1+1@smartsheet.com) is an alternate address for a user with the primary email address of u1@smartsheet.com. Please retry using their primary address."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
+<%= REQUEST %> | [User object](#user-object) with the following attributes:<ul><li>email (required)</li><li>admin (required)</li><li>licensedSheetCreator (required)</li><li>firstName (optional)</li><li>lastName (optional)</li><li>groupAdmin (optional)</li><li>resourceViewer (optional)</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing the newly created [User object](#user-object).
+<%= ERRORS %>  | If an error occurs because the request specified the [*alternate* email address](#alternate-email-addresses) (that is, not the primary email address) of an existing Smartsheet User (to invite the user into the Org), the [Error object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "The specified email address (u1+1@smartsheet.com) is an alternate address for a user with the primary email address of u1@smartsheet.com. Please retry using their primary address."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
 
 <aside class="notice">If successful, and user auto provisioning (UAP) is on, and user matches the auto provisioning rules, user is added to the org.  If UAP is off, or user does not match UAP rules, user is invited to the org and must explicitly accept the invitation to join.</aside>
 
@@ -684,11 +684,11 @@ Adds a User to the organization.
 
 A [User](#user-object) in Smartsheet must have a *primary* email address associated with their account (**User.email**) and may optionally have one or more *alternate* email addresses associated with their account (**User.alternateEmails**). 
 
-<aside class="notice">The following operations must be performed using an User's <i>primary</i> email address:<ul><li><a href="#add-group-members">Add Group Members</a></li><li><a href="#add-user">Add User</a></li><li><a href="#create-update-request">Create Update Request</a></li><li><a href="#report-sharing">Share Report</a></li><li><a href="#share-sheet">Share Sheet</a></li><li><a href="#workspace-sharing">Share Workspace</a></li></ul>Attempting to specify a User's <i>alternate</i> email address for any of the above operations results in an error.</aside>
+<aside class="notice">The following operations must be performed using an user's <i>primary</i> email address:<ul><li><a href="#add-group-members">Add Group Members</a></li><li><a href="#add-user">Add User</a></li><li><a href="#create-update-request">Create Update Request</a></li><li><a href="#report-sharing">Share Report</a></li><li><a href="#share-sheet">Share Sheet</a></li><li><a href="#workspace-sharing">Share Workspace</a></li></ul>Attempting to specify a User's <i>alternate</i> email address for any of the above operations results in an error.</aside>
 
 ### Add Alternate Emails
 
-> Example Request: Add Alternate Emails
+> Example request: add alternate emails
 
 ```shell
 curl https://api.smartsheet.com/2.0/users/{userId}/alternateemails \
@@ -756,7 +756,7 @@ response = smartsheet.users.alternate_emails.add(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -782,13 +782,13 @@ Adds one or more alternate email addresses for the specified User.
 -----|-----|
 <%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | Array of [AlternateEmail Objects](#alternateemail-object), each limited to only the **email** attribute
-<%= RETURNS %> | [Result Object](#result-object) containing an array of the newly created [AlternateEmail Objects](#alternateemail-object).
-<%= ERRORS %>  | If a single email address is specified in the request and an error occurs, the response contains an [Error Object](#error-object).<br/><br/>If multiple email addresses are specified in the request and an error occurs, the Error Object returned contains a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**email**: Problematic email address specified in the request</li><li>**errorCode**: Smartsheet [error code](#complete-error-code-list)</li><li>**message**: Message that describes the problem with the specified email address</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 1160,<br/>&#160;&#160;"message": "Invalid bulk request. See detail for more information."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"email": "altEmail1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"errorCode": 1157,<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"message": "This address is already associated with another Smartsheet account, so it cannot be added as an alternate address for this account."<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
+<%= REQUEST %> | Array of [AlternateEmail objects](#alternateemail-object), each limited to only the **email** attribute
+<%= RETURNS %> | [Result object](#result-object) containing an array of the newly created [AlternateEmail objects](#alternateemail-object).
+<%= ERRORS %>  | If a single email address is specified in the request and an error occurs, the response contains an [Error object](#error-object).<br/><br/>If multiple email addresses are specified in the request and an error occurs, the Error object returned contains a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**email**: Problematic email address specified in the request</li><li>**errorCode**: Smartsheet [error code](#complete-error-code-list)</li><li>**message**: Message that describes the problem with the specified email address</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 1160,<br/>&#160;&#160;"message": "Invalid bulk request. See detail for more information."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"email": "altEmail1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"errorCode": 1157,<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"message": "This address is already associated with another Smartsheet account, so it cannot be added as an alternate address for this account."<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
 
 ### Make Alternate Email Primary
 
-> Example Request: Make Alternate Email Primary
+> Example request: make alternate email primary
 
 ```shell
 curl https://api.smartsheet.com/2.0/users/{userId}/alternateemails/{alternatEmailId}/makeprimary \
@@ -838,7 +838,7 @@ response = smartsheet.users.alternate_emails.make_primary(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -864,12 +864,12 @@ Makes the specified alternate email address to become the primary email address 
 -----|-----|
 <%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= RETURNS %> | [Result Object](#result-object) containing the [AlternateEmail Object](#alternateemail-object) that is now the primary email address
+<%= RETURNS %> | [Result object](#result-object) containing the [AlternateEmail object](#alternateemail-object) that is now the primary email address
 <%= ERRORS %> | If an error occurs because the special permission is not granted to change primary email address, contact Smartsheet (<a href="mailto:api@smartsheet.com">api@smartsheet.com</a>) for assistance to enable this feature.<br/><br/>If an error occurs because the specified user has a personal email address as the primary email address (that is. the email address domain cannot be [validated](<%= USER_AUTO_PROVISIONING_URL %>), the specified user needs to manually change the primary email address in the [Personal Settings](<%= PERSONAL_SETTINGS_MANAGE_EMAIL_URL %>).
 
 ### Delete Alternate Email
 
-> Example Request: Delete Alternate Email
+> Example request: delete alternate email
 
 ```shell
 curl https://api.smartsheet.com/2.0/users/{userId}/alternateemails/{alternatEmailId} \
@@ -921,7 +921,7 @@ smartsheet.users.alternate_emails.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -938,11 +938,11 @@ Deletes the specified alternate email address for the specified user.
 -----|-----|
 <%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ### Get Alternate Email
 
-> Example Request: Get Alternate Email
+> Example request: get alternate email
 
 ```shell
 curl https://api.smartsheet.com/2.0/users/{userId}/alternateemails/{alternateEmailId} \
@@ -993,7 +993,7 @@ alt_email = smartsheet.users.alternate_emails.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1011,11 +1011,11 @@ Gets the specified Alternate Email.
 -----|-----|
 <%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [AlternateEmail Object](#alternateemail-object)<br/><br/>
+<%= RETURNS %> | [AlternateEmail object](#alternateemail-object)<br/><br/>
 
 ### List Alternate Emails
 
-> Example Request: List Alternate Emails
+> Example request: list alternate emails
 
 ```shell
 curl https://api.smartsheet.com/2.0/users/{userId}/alternateemails \
@@ -1067,7 +1067,7 @@ response = smartsheet.users.alternate_emails.list(
 emails = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1092,11 +1092,11 @@ Gets a list of the Alternate Emails for the specified User.
 -----|-----|
 <%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [AlternateEmail Objects](#alternateemail-object)<br/><br/>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [AlternateEmail objects](#alternateemail-object)<br/><br/>
 
 ## Get Current User
 
-> Example Request: Get Current User
+> Example request: get current user
 
 ```shell
 curl https://api.smartsheet.com/2.0/users/me \
@@ -1129,7 +1129,7 @@ user_profile = ss_client.Users.get_current_user()
 user_profile = smartsheet.users.get_current
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1182,11 +1182,11 @@ Gets the current User.
 -----|-----|
 <%= SCOPE %> | all scopes
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [UserProfile Object](#userprofile-object)<br/><br/><b>Note</b>: For system administrators, the following UserProfile attributes are included in the response):<ul><li>lastLogin (only returned if the user has logged in)</li><li>sheetCount (only returned if the status attribute is ACTIVE)</li><li>customWelcomeScreenViewed (only returned when an Enterprise user has viewed the [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>))</li></ul>
+<%= RETURNS %> | [UserProfile object](#userprofile-object)<br/><br/><b>Note</b>: For system administrators, the following UserProfile attributes are included in the response):<ul><li>lastLogin (only returned if the user has logged in)</li><li>sheetCount (only returned if the status attribute is ACTIVE)</li><li>customWelcomeScreenViewed (only returned when an Enterprise user has viewed the [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>))</li></ul>
 
 ## Get User
 
-> Example Request: Get User
+> Example request: get user
 
 ```shell
 curl https://api.smartsheet.com/2.0/users/{userId} \
@@ -1232,7 +1232,7 @@ user_profile = smartsheet.users.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1285,11 +1285,11 @@ Gets the User specified in the URL.
 -----|-----|
 <%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [UserProfile Object](#userprofile-object)<br/><br/><b>Note</b>: For system administrators, the following UserProfile attributes are included in the response):<ul><li>status</li><li>admin</li><li>licensedSheetCreator</li><li>groupAdmin</li><li>resourceViewer</li><li>lastLogin (only returned if the user has logged in)</li><li>sheetCount (only returned if the status attribute is ACTIVE)</li><li>customWelcomeScreenViewed (only returned when an Enterprise user has viewed the [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>))</li></ul>
+<%= RETURNS %> | [UserProfile object](#userprofile-object)<br/><br/><b>Note</b>: For system administrators, the following UserProfile attributes are included in the response):<ul><li>status</li><li>admin</li><li>licensedSheetCreator</li><li>groupAdmin</li><li>resourceViewer</li><li>lastLogin (only returned if the user has logged in)</li><li>sheetCount (only returned if the status attribute is ACTIVE)</li><li>customWelcomeScreenViewed (only returned when an Enterprise user has viewed the [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>))</li></ul>
 
 ## List Users
 
-> Example Request: List Users
+> Example request: list users
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/users?email=john.doe@smartsheet.com&include=lastLogin' \
@@ -1356,7 +1356,7 @@ response = smartsheet.users.list
 users = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1400,14 +1400,14 @@ Gets a list of Users in the organization. To filter by email, use the optional *
 <%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **email** (optional): Comma-separated list of email addresses on which to filter the results.
- | **include** (optional): When specified with a value of "lastLogin", response includes the **lastLogin** attribute for each [user](#user-object) if:<br/><ul><li>the request is submitted by a system administrator, and</li><li>the returned [IndexResult object](#indexresult-object) that contains a maximum of 100 [User Objects](#user-object).</li></ul>
+ | **include** (optional): When specified with a value of "lastLogin", response includes the **lastLogin** attribute for each [user](#user-object) if:<br/><ul><li>the request is submitted by a system administrator, and</li><li>the returned [IndexResult object](#indexresult-object) that contains a maximum of 100 [User objects](#user-object).</li></ul>
  | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [User Objects](#user-object)<br/><br/><b>Note</b>: If the API request is submitted by a system administrator, the following User attributes are included in the response (else, they are omitted from the response):<ul><li>status</li><li>admin</li><li>licensedSheetCreator</li><li>groupAdmin</li><li>resourceViewer</li><li>lastLogin (omitted if the user has never logged in before)</li><li>sheetCount (omitted if the status attribute is not ACTIVE)</li></ul><br/><b>Note</b>: If the API request is submitted by a system administrator of an Enterprise account, and [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) is enabled, the following User attributes are included in the response (else, they are omitted from the response):<ul><li>customWelcomeScreenViewed (omitted if the user has never viewed the Custom Welcome Screen)</li></ul>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [User objects](#user-object)<br/><br/><b>Note</b>: If the API request is submitted by a system administrator, the following User attributes are included in the response (else, they are omitted from the response):<ul><li>status</li><li>admin</li><li>licensedSheetCreator</li><li>groupAdmin</li><li>resourceViewer</li><li>lastLogin (omitted if the user has never logged in before)</li><li>sheetCount (omitted if the status attribute is not ACTIVE)</li></ul><br/><b>Note</b>: If the API request is submitted by a system administrator of an Enterprise account, and [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) is enabled, the following User attributes are included in the response (else, they are omitted from the response):<ul><li>customWelcomeScreenViewed (omitted if the user has never viewed the Custom Welcome Screen)</li></ul>
 
 
 ## Remove User
 
-> Example Request: Remove User
+> Example request: remove user
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/users/{userId}?transferTo=USER_Id&removeFromSharing=true' \
@@ -1467,7 +1467,7 @@ smartsheet.users.remove(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1489,7 +1489,7 @@ Removes a User from an organization. User is transitioned to a free collaborator
 <%= PARAMETERS %> | **transferTo** (required if user owns groups): The Id of the user to transfer ownership to.  If the user being removed owns groups, they are transferred to this user.  If the user owns sheets, *and* **transferSheets** is true, the removed user's sheets are transferred to this user.
   | **transferSheets** (optional): If `true`, and **transferTo** is specified, the removed user's sheets are transferred.  Else, sheets are not transferred.  Defaults to `false`.
   | **removeFromSharing** (optional): Set to `true` to remove the user from sharing for all sheets/workspaces in the organization. If not specified, User is not removed from sharing.
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 <aside class="notice">If the <b>transferTo</b> parameter is specified and the removed user owns Groups, the user specified via the <b>transferTo</b> parameter must have Group Admin rights.</aside>
 
@@ -1497,7 +1497,7 @@ Removes a User from an organization. User is transitioned to a free collaborator
 
 ## Update User
 
-> Example Request: Update User
+> Example request: update user
 
 ```shell
 curl https://api.smartsheet.com/2.0/users/{userId} \
@@ -1583,7 +1583,7 @@ response = smartsheet.users.update(
 updated_user = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1604,12 +1604,12 @@ Updates the User specified in the URL.
 -----|-----|
 <%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [User Object](#user-object) containing at least one of the following attributes:<ul><li>admin (required)</li><li>licensedSheetCreator (required)</li><li>firstName (optional)</li><li>lastName (optional)</li><li>groupAdmin (optional)</li><li>resourceViewer (optional)</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing the [User Object](#user-object) for the updated User
+<%= REQUEST %> | [User object](#user-object) containing at least one of the following attributes:<ul><li>admin (required)</li><li>licensedSheetCreator (required)</li><li>firstName (optional)</li><li>lastName (optional)</li><li>groupAdmin (optional)</li><li>resourceViewer (optional)</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing the [User object](#user-object) for the updated User
 
 ## Update User Profile Image
 
-> Example Request: Update User Profile Image
+> Example request: update user profile image
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/users/{userId}/profileimage' \
@@ -1640,7 +1640,7 @@ curl 'https://api.smartsheet.com/2.0/users/{userId}/profileimage' \
 # Not yet implemented
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1670,7 +1670,7 @@ Uploads an image to the User profile.
 <%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | See [Simple Uploads](#simple-uploads) for information about required headers.
 <%= REQUEST %> | Binary content for the file
-<%= RETURNS %> | [Result Object](#result-object) containing the [User Object](#user-object) for the updated user.
+<%= RETURNS %> | [Result object](#result-object) containing the [User object](#user-object) for the updated user.
 
 <aside class="notice">Uploading a profile image differs from <a href="#add-image-to-cell">Adding an Image to a Cell</a> in the following ways:<ul><li>A Content-Length header is not required</li><li>Allowable file types are limited to: gif, jpg, and png</li><li>Maximum file size is determined by the following rules:<ul><li>If you have not defined a custom size and the image is larger than 1050 x 1050 pixels, Smartsheet scales the image down to 1050 x 1050</li><li>If you have defined a custom size, Smartsheet uses that as the file size max</li></ul></li><li>If the image is not square, Smartsheet uses a solid color to pad the image</li></ul></aside>
 
@@ -1680,7 +1680,7 @@ Uploads an image to the User profile.
 
 ### Workspace Object
 
-> Example Workspace Object:
+> Example: Workspace object
 
 ```json
 {
@@ -1699,15 +1699,15 @@ Uploads an image to the User profile.
 **favorite** | Boolean | Returned only if the user has marked the Workspace as a Favorite in their Home tab (value = 'true')
 **accessLevel** | string | User's permissions on the Workspace
 **permalink** | string | URL that represents a direct link to the Workspace in Smartsheet
-**sheets** | [Sheet](#sheet-object)[] | Array of Sheet Objects
-**folders** | [Folder](#folder-object)[] | Array of Folder Objects
-**reports** | [Report](#report-object)[] | Array of Report Objects
-**sights** | [Sight](#sight-object)[] | Array of Sight Objects
-**templates** | [Template](#template-object)[] | Array of Template Objects
+**sheets** | [Sheet](#sheet-object)[] | Array of Sheet objects
+**folders** | [Folder](#folder-object)[] | Array of Folder objects
+**reports** | [Report](#report-object)[] | Array of Report objects
+**sights** | [Sight](#sight-object)[] | Array of Sight objects
+**templates** | [Template](#template-object)[] | Array of Template objects
 
 ## Copy Workspace
 
-> Example Request: Copy Workspace
+> Example request: copy workspace
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/workspaces/{workspaceId}/copy?include=data'
@@ -1814,7 +1814,7 @@ response = smartsheet.workspaces.copy(
 new_workspace = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1840,12 +1840,12 @@ Creates a copy of the specified Workspace.
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>attachments</li><li>cellLinks</li><li>data -- includes formatting</li><li>discussions -- includes comments</li><li>filters</li><li>forms</li><li>ruleRecipients -- includes notification recipients, must also include **rules** when using this attribute</li><li>rules -- includes notifications and workflow rules</li><li>shares</li><li>all - deprecated</li></ul><i>Note</i>: Cell history is not copied, regardless of which **include** parameter values are specified.
  | **omit** (optional) -- when specified with a value of "sheetHyperlinks", excludes this category from the response
  | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created workspace:<ul><li>cellLinks</li><li>reports</li><li>sheetHyperlinks</li><li>sights</li></ul>By default, all cell links, reports, sheet hyperlinks, and Sights that reference objects in the source workspace are re-mapped to reference corresponding objects in the newly created workspace. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If "cellLinks" is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created workspace continue to point to the original source sheets.</li><li>If "reports" is specified in the <b>skipRemap</b> parameter value, the reports within the newly created workspace continue to point to the original source sheets.</li><li>If "sheetHyperlinks" is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created workspace continue to point to the original source sheets.</li><li>If "sights" is specified in the <b>skipRemap</b> parameter value, the widgets within Sights in the newly created workspace continue to point to the original source sheets / reports.</li></ul>
-<%= REQUEST %> | [ContainerDestination Object](#containerdestination-object), limited to the following attribute:<ul><li>newName (string) - required</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing a [Workspace Object](#workspace-object) for the newly created Workspace
+<%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following attribute:<ul><li>newName (string) - required</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing a [Workspace object](#workspace-object) for the newly created Workspace
 
 ## Create Workspace
 
-> Example Request: Create Workspace
+> Example request: create workspace
 
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces \
@@ -1912,7 +1912,7 @@ response = smartsheet.workspaces.create(
 workspace = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1935,13 +1935,13 @@ Creates a Workspace.
 -----|-----|
 <%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Workspace Object](#workspace-object), limited to the following attribute:<ul><li>name (string) - required</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing a [Workspace Object](#workspace-object) for the newly created Workspace
+<%= REQUEST %> | [Workspace object](#workspace-object), limited to the following attribute:<ul><li>name (string) - required</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing a [Workspace object](#workspace-object) for the newly created Workspace
 
 
 ## Delete Workspace
 
-> Example Request: Delete Workspace
+> Example request: delete workspace
 
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces/7960873114331012 \
@@ -1988,7 +1988,7 @@ smartsheet.workspaces.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -2005,11 +2005,11 @@ Deletes the specified Workspace (and its contents).
 -----|-----|
 <%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ## Get Workspace
 
-> Example Request: Get Workspace
+> Example request: get workspace
 
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces/{workspaceid} \
@@ -2075,7 +2075,7 @@ response = smartsheet.workspaces.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -2110,11 +2110,11 @@ Gets the specified Workspace (and lists its contents).
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **loadAll** (optional) -- **true** or **false** (defaults to **false**)
 	| **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>ownerInfo - owner's email address and user Id for each sheet</li><li>source - the [source](#source-object) for any sheet that was created from another sheet or template</li></ul>
-<%= RETURNS %> | [Workspace Object](#workspace-object), populated according to the **include** parameter
+<%= RETURNS %> | [Workspace object](#workspace-object), populated according to the **include** parameter
 
 ## List Workspaces
 
-> Example Request: List Workspaces
+> Example request: list workspaces
 
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces \
@@ -2163,7 +2163,7 @@ response = smartsheet.workspaces.list
 workspaces = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -2190,7 +2190,7 @@ workspaces = response[:data]
 
 `GET /workspaces`
 
-Gets a list of Workspaces that the user has access to. The list contains an abbreviated Workspace Object for each Workspaces.
+Gets a list of Workspaces that the user has access to. The list contains an abbreviated Workspace object for each Workspaces.
 
 <aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
@@ -2199,7 +2199,7 @@ Gets a list of Workspaces that the user has access to. The list contains an abbr
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>sheetVersion - current version number of each sheet, should not be combined with pagination</li></ul><%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Workspace Objects](#workspace-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Workspace objects](#workspace-object)
 
 ## Share Workspace
 
@@ -2207,7 +2207,7 @@ For details about Workspace sharing, see [Workspace Sharing](#workspace-sharing)
 
 ## Update Workspace
 
-> Example Request: Update Workspace
+> Example request: update workspace
 
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces/7960873114331012 \
@@ -2283,7 +2283,7 @@ response = smartsheet.workspaces.update(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -2306,8 +2306,8 @@ Updates the Workspace specified in the URL.
 -----|-----|
 <%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Workspace Object](#workspace-object) limited to the following attribute:<ul><li>name (string)</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing the updated [Workspace Object](#workspace-object)
+<%= REQUEST %> | [Workspace object](#workspace-object) limited to the following attribute:<ul><li>name (string)</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing the updated [Workspace object](#workspace-object)
 
 ## <%= RELATED %>
 

@@ -6,7 +6,7 @@ A Group is a collection of [Group Members](#group-members).
 
 ### Group Object
 
-> Example Group Object:
+> Example: Group object
 
 ```json
 {
@@ -28,13 +28,13 @@ A Group is a collection of [Group Members](#group-members).
 **description** | string | Group description
 **owner** | string | Group owner’s email address
 **ownerId** | number | Group owner's User Id
-**members** | [GroupMember](#groupmember-object)[] | Array of GroupMember Objects
+**members** | [GroupMember](#groupmember-object)[] | Array of GroupMember objects
 **createdAt** | timestamp | Time of creation
 **modifiedAt** | timestamp | Time of last modification
 
 ## Create Group
 
-> Example Request: Create Group
+> Example request: create group
 
 ```shell
 curl https://api.smartsheet.com/2.0/groups \
@@ -132,7 +132,7 @@ new_group = smartsheet.groups.create(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -167,12 +167,12 @@ Creates a new Group.
 -----|-----|
 <%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Group Object](#group-object), limited to the following attributes:<ul><li>name (required) -- must be unique within the organization</li><li>description (optional)</li><li>members (optional) -- array of [GroupMember Objects](#groupmember-object), each limited to the following attribute:<ul><li>email</li></ul></li></ul>
-<%= RETURNS %> | [Result Object](#result-object), containing a [Group Object](#group-object) for the newly created Group
+<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>name (required) -- must be unique within the organization</li><li>description (optional)</li><li>members (optional) -- array of [GroupMember objects](#groupmember-object), each limited to the following attribute:<ul><li>email</li></ul></li></ul>
+<%= RETURNS %> | [Result object](#result-object), containing a [Group object](#group-object) for the newly created Group
 
 ## Delete Group
 
-> Example Request: Delete Group
+> Example request: delete group
 
 ```shell
 curl https://api.smartsheet.com/2.0/groups/{groupId} \
@@ -219,7 +219,7 @@ smartsheet.groups.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -238,13 +238,13 @@ Deletes the Group specified in the URL.
 -----|-----|
 <%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 <aside class="notice"><b>This operation is asynchronous</b>, meaning group members may retain their sharing access for a brief period of time after the call returns.  For small groups with limited sharing, the operation should complete quickly (within a few seconds).  For large groups with many shares, this operation could possibly take more than a minute to complete.</aside>
 
 ## Get Group
 
-> Example Request: Get Group
+> Example request: get group
 
 ```shell
 curl https://api.smartsheet.com/2.0/groups/{groupId} \
@@ -291,7 +291,7 @@ group = smartsheet.groups.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -322,11 +322,11 @@ Gets the Group specified in the URL.
 -----|-----|
 <%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Group Object](#group-object) that includes the list of [GroupMembers](#groupmember-object)
+<%= RETURNS %> | [Group object](#group-object) that includes the list of [GroupMembers](#groupmember-object)
 
 ## List Org Groups
 
-> Example Request: List Org Groups
+> Example request: list org groups
 
 ```shell
 curl https://api.smartsheet.com/2.0/groups \
@@ -375,7 +375,7 @@ response = smartsheet.groups.list
 groups = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -408,11 +408,11 @@ Gets a list of all Groups in an organization. To fetch the members of an individ
 <%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Group Objects](#group-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Group objects](#group-object)
 
 ## Update Group
 
-> Example Request: Update Group
+> Example request: update group
 
 ```shell
 curl https://api.smartsheet.com/2.0/groups/{groupId} \
@@ -493,7 +493,7 @@ updated_group = smartsheet.groups.update(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -521,8 +521,8 @@ Updates the Group specified in the URL.
 -----|-----|
 <%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Group Object](#group-object), limited to the following attributes:<ul><li>name (optional) -- must be unique within the organization</li><li>description (optional)</li><li>ownerId (optional): Id of an admin User to whom the group ownership is transferred</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing the [Group Object](#group-object) for the updated group
+<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>name (optional) -- must be unique within the organization</li><li>description (optional)</li><li>ownerId (optional): Id of an admin User to whom the group ownership is transferred</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing the [Group object](#group-object) for the updated group
 
 ## <%= RELATED %>
 
@@ -538,7 +538,7 @@ A Group Member is a User that belongs to a [Group](#groups).
 
 ## <%= OBJECTS %>
 
-> Example GroupMember Object
+> Example: GroupMember object
 
 ```json
 {
@@ -562,7 +562,7 @@ A Group Member is a User that belongs to a [Group](#groups).
 
 ## Add Group Members
 
-> Example Request: Add Group Members
+> Example request: add group members
 
 ```shell
 curl https://api.smartsheet.com/2.0/groups/{groupId}/members \
@@ -633,7 +633,7 @@ new_members = smartsheet.groups.add_members(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -655,8 +655,8 @@ Adds one or more members to a Group.
 
 <aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
 
-If called with a single [GroupMember Object](#groupmember-object), and that group member already exists, [error code](#complete-error-code-list) **1129** is returned. If called with an array
-of [GroupMember Objects](#groupmember-object) any users specified in the array that are already group members are ignored and omitted from the response.
+If called with a single [GroupMember object](#groupmember-object), and that group member already exists, [error code](#complete-error-code-list) **1129** is returned. If called with an array
+of [GroupMember objects](#groupmember-object) any users specified in the array that are already group members are ignored and omitted from the response.
 
 <aside class="notice">This operation is only available to group administrators and system administrators.</aside>
 
@@ -664,15 +664,15 @@ of [GroupMember Objects](#groupmember-object) any users specified in the array t
 -----|-----|
 <%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | A single [GroupMember Object](#groupmember-object) or an array of GroupMember Objects, limited to the following attribute:<ul><li>email</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing the members added to the group -- either a single [GroupMember](#groupmember-object) or array of GroupMember Objects, corresponding to what was specified in the request.
-<%= ERRORS %>  | If an error occurs because the request specified one or more [*alternate* email addresses](#alternate-email-addresses) (that is, not the primary email address associated with the User account), the [Error Object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array has the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry using their primary address u1@smartsheet.com."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
+<%= REQUEST %> | A single [GroupMember object](#groupmember-object) or an array of GroupMember objects, limited to the following attribute:<ul><li>email</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing the members added to the group -- either a single [GroupMember](#groupmember-object) or array of GroupMember objects, corresponding to what was specified in the request.
+<%= ERRORS %>  | If an error occurs because the request specified one or more [*alternate* email addresses](#alternate-email-addresses) (that is, not the primary email address associated with the User account), the [Error object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array has the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry using their primary address u1@smartsheet.com."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
 
 <aside class="notice"><b>This operation is asynchronous</b>, meaning the users may not yet have sharing access to sheets for a period of time after this operation returns.  For small groups with limited sharing, the operation should complete quickly (within a few seconds).  For large groups with many shares, this operation could possibly take more than a minute to complete.</aside>
 
 ## Remove Group Member
 
-> Example Request: Remove Group Member
+> Example request: remove group member
 
 ```shell
 curl https://api.smartsheet.com/2.0/groups/{groupId}/members/{userId} \
@@ -724,7 +724,7 @@ smartsheet.groups.remove_member(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -743,7 +743,7 @@ Removes a member from a Group.
 -----|-----|
 <%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 <aside class="notice"><b>This operation is asynchronous</b>, meaning group members may retain their sharing access for a brief period of time after the call returns.  For small groups with limited sharing, the operation should complete quickly (within a few seconds).  For large groups with many shares, this operation could possibly take more than a minute to complete.</aside>
 
@@ -755,7 +755,7 @@ In the Smartsheet UI, the "Home" tab shows all objects a User has access to, inc
 
 ### Home Object
 
-> Example Home Object:
+> Example: Home object
 
 ```json
 {
@@ -770,17 +770,17 @@ In the Smartsheet UI, the "Home" tab shows all objects a User has access to, inc
 
      |     |     |
 -----|-----|-----|
-**sheets** | [Sheet](#sheet-object)[] | Array of Sheet Objects
-**folders** | [Folder](#folder-object)[] | Array of Folder Objects
-**reports** | [Report](#report-object)[] | Array of Report Objects
-**sights** | [Sight](#sight-object)[] | Array of Sight Objects
-**templates** | [Template](#template-object)[] | Array of Template Objects
-**workspaces** | [Workspace](#workspace-object)[] | Array of Workspace Objects
+**sheets** | [Sheet](#sheet-object)[] | Array of Sheet objects
+**folders** | [Folder](#folder-object)[] | Array of Folder objects
+**reports** | [Report](#report-object)[] | Array of Report objects
+**sights** | [Sight](#sight-object)[] | Array of Sight objects
+**templates** | [Template](#template-object)[] | Array of Template objects
+**workspaces** | [Workspace](#workspace-object)[] | Array of Workspace objects
 
 
 ## List Contents
 
-> Example Request: List Contents
+> Example request: list contents
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/home?include=source' \
@@ -827,7 +827,7 @@ contents = ss_client.Home.list_all_contents(include='source')
 contents = smartsheet.home.list
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -869,7 +869,7 @@ contents = smartsheet.home.list
 
 `GET /home`
 
-Gets a nested list of all Home Objects, including Sheets, Workspaces, Folders, Reports, Templates, and Sights, as shown on the Home tab.
+Gets a nested list of all Home objects, including Sheets, Workspaces, Folders, Reports, Templates, and Sights, as shown on the Home tab.
 
      |     |
 -----|-----|
@@ -877,7 +877,7 @@ Gets a nested list of all Home Objects, including Sheets, Workspaces, Folders, R
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>ownerInfo - owner's email address and user Id for each sheet</li><li>source - the [source](#source-object) for any sheet that was created from another sheet or template</li></ul>
   | **exclude** (optional) -- a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>permalinks - excludes the permalink from each data object</li></ul> 
-<%= RETURNS %> | [Home Object](#home-object), populated according to the **include** parameter
+<%= RETURNS %> | [Home object](#home-object), populated according to the **include** parameter
 
 ## <%= RELATED %>
 
@@ -897,7 +897,7 @@ A Report is a filtered view of the data from one or more Sheets. Like a Sheet, a
 
 ### Report Object
 
-> Example Report Object:
+> Example: Report object
 
 ```json
 {
@@ -913,15 +913,15 @@ A Report is a filtered view of the data from one or more Sheets. Like a Sheet, a
 }
 ```
 
-Extends the [Sheet Object](#sheet-object), adding the following:
+Extends the [Sheet object](#sheet-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-**sourceSheets** | [Sheet](#sheet-object)[] | Array of Sheet Objects (without rows), representing the sheets that rows in the report originated from.  Only included in the [Get Report](#get-report) response if the **include** parameter specifies "sourceSheets".
+**sourceSheets** | [Sheet](#sheet-object)[] | Array of Sheet objects (without rows), representing the sheets that rows in the report originated from.  Only included in the [Get Report](#get-report) response if the **include** parameter specifies "sourceSheets".
 
 ### ReportCell Object
 
-Extends the [Cell Object](#cell-object), adding the following: 
+Extends the [Cell object](#cell-object), adding the following: 
 
      |     |     |
 -----|-----|-----|
@@ -930,7 +930,7 @@ Extends the [Cell Object](#cell-object), adding the following:
 
 ### ReportColumn Object
 
-Extends the [Column Object](#column-object), adding the following: 
+Extends the [Column object](#column-object), adding the following: 
 
      |     |     |
 -----|-----|-----|
@@ -942,7 +942,7 @@ A report column is a "virtual" column, in that it appears identical to source sh
 
 ### ReportRow Object
 
-Extends the [Row Object](#row-object), adding the following: 
+Extends the [Row object](#row-object), adding the following: 
 
      |     |     |
 -----|-----|-----|
@@ -960,7 +960,7 @@ Extends the [Row Object](#row-object), adding the following:
 
 ## Get Report
 
-> Example Request: Get Report
+> Example request: get report
 
 ```shell
 curl https://api.smartsheet.com/2.0/reports/{reportId} \
@@ -1035,7 +1035,7 @@ report = smartsheet.reports.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1103,14 +1103,14 @@ Gets the Report, including one page of Rows, and optionally populated with Discu
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>discussions</li><li>attachments</li><li>[format](#formatting)</li><li>sourceSheets</li></ul> 
-  | **exclude** (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** Object:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li></ul>
+  | **exclude** (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li></ul>
   | **pageSize** (optional): Number of rows per page.  If not specified, the default value is 100.  This operation can return a maximum of 500 rows per page.
   | **page** (optional): Which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
-<%= RETURNS %> | [Report Object](#report-object), populated according to the specified parameters
+<%= RETURNS %> | [Report object](#report-object), populated according to the specified parameters
 
 ## Get Report as Excel / CSV
 
-> Example Request: Get Report as Excel
+> Example request: get report as Excel
 
 ```shell
 curl https://api.smartsheet.com/2.0/reports/{reportId} \
@@ -1178,7 +1178,7 @@ file_contents = smartsheet.reports.get_as_excel(
 File.open('output.xlsx', 'w') {|f| f.write(file_contents)}
 ```
 
-> Example Response:
+> Example response
 
 ```shell
 # See local file named "output.xlsx"
@@ -1204,7 +1204,7 @@ File.open('output.xlsx', 'w') {|f| f.write(file_contents)}
 # See local file named "output.xlsx"
 ```
 
-> Example Request: Get Report as CSV
+> Example request: get report as CSV
 
 ```shell
 curl https://api.smartsheet.com/2.0/reports/{reportId} \
@@ -1272,7 +1272,7 @@ file_contents = smartsheet.reports.get_as_csv(
 File.open('output.csv', 'w') {|f| f.write(file_contents)}
 ```
 
-> Example Response:
+> Example response
 
 ```shell
 # See local file named "output.csv"
@@ -1313,7 +1313,7 @@ Gets the Report in the format specified, based on the Report Id.
 
 ## List Reports
 
-> Example Request: List Reports
+> Example request: list reports
 
 ```shell
 curl https://api.smartsheet.com/2.0/reports 
@@ -1354,7 +1354,7 @@ response = smartsheet.reports.list
 reports = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1380,7 +1380,7 @@ reports = response[:data]
 
 `GET /reports`
 
-Gets a list of all Reports that the User has access to in alphabetical order by name. The list contains an abbreviated Report Object for each Report.
+Gets a list of all Reports that the User has access to in alphabetical order by name. The list contains an abbreviated Report object for each Report.
 
 <aside class="notice"><%= SUPPORTS_NUMERICDATES %></aside>
 
@@ -1389,13 +1389,13 @@ Gets a list of all Reports that the User has access to in alphabetical order by 
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PARAMETER_MODIFIEDSINCE %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Report Objects](#report-object) limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Report objects](#report-object) limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
 
 ## Publish Report
 
 ### Get Report Publish Status
 
-> Example Request: Get Report Publish Status
+> Example request: get report publish status
 
 ```shell
 curl https://api.smartsheet.com/2.0/reports/{reportId}/publish \
@@ -1437,7 +1437,7 @@ status = smartsheet.reports.get_publish_status(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1455,11 +1455,11 @@ Gets the Report's 'Publish' settings.
 -----|-----|
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [ReportPublish Object](#reportpublish-object)
+<%= RETURNS %> | [ReportPublish object](#reportpublish-object)
 
 ### Set Report Publish Status
 
-> Example Request: Set Report Publish Status
+> Example request: set report publish status
 
 ```shell
 curl https://api.smartsheet.com/2.0/reports/{reportId}/publish \
@@ -1520,7 +1520,7 @@ status = smartsheet.reports.set_publish_status(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1542,8 +1542,8 @@ Sets the publish status of the Report and returns the new status, including the 
 -----|-----|
 <%= SCOPE %> | ADMIN_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [ReportPublish Object](#reportpublish-object)
-<%= RETURNS %> | [Result Object](#result-object) containing a [ReportPublish Object](#reportpublish-object)
+<%= REQUEST %> | [ReportPublish object](#reportpublish-object)
+<%= RETURNS %> | [Result object](#result-object) containing a [ReportPublish object](#reportpublish-object)
 
 <aside class="notice">For Read Only, if you do not specify <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level 'Report Publishing' setting (if the Report owner belongs to an organization) or to "ALL" (if the Report owner does not belong to an organization).</aside>
 
@@ -1587,7 +1587,7 @@ A Row is a component of a Sheet or Report. Each Row is composed of a collection 
 
 ### Row Object
 
-> Example Row Object:
+> Example: Row object
 
 ```json
 {
@@ -1608,13 +1608,13 @@ A Row is a component of a Sheet or Report. Each Row is composed of a collection 
 -----|-----|-----|
 **id** | number | Row Id
 **accessLevel** | string | User's permission level on the Sheet that contains the Row
-**attachments** | [Attachment](#attachment-object)[] | Array of Attachment Objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **attachments**.
-**cells** | [Cell](#cell-object)[] | Array of Cell Objects belonging to the row
-**columns** | [Column](#column-object)[] | Array of Column Objects.<br/>Only returned if the [Get Row](#get-row) **include** query string parameter contains **columns**.
+**attachments** | [Attachment](#attachment-object)[] | Array of Attachment objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **attachments**.
+**cells** | [Cell](#cell-object)[] | Array of Cell objects belonging to the row
+**columns** | [Column](#column-object)[] | Array of Column objects.<br/>Only returned if the [Get Row](#get-row) **include** query string parameter contains **columns**.
 **conditionalFormat** | string | Describes this row's conditional format (see [Formatting](#formatting))<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this row has a conditional format applied.
 **createdAt** | timestamp | Time of creation
-**createdBy** | [User](#user-object) | User Object containing name and email of the creator of this row
-**discussions** | [Discussion](#discussion-object)[] | Array of Discussion Objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **discussions**.
+**createdBy** | [User](#user-object) | User object containing name and email of the creator of this row
+**discussions** | [Discussion](#discussion-object)[] | Array of Discussion objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **discussions**.
 **expanded** | Boolean | Indicates whether the row is expanded or collapsed
 **filteredOut** | Boolean | `true` if this row is filtered out by a column filter (and thus is not displayed in the Smartsheet app), `false` if the row is not filtered out.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **filters**.
 **format** | string | Format descriptor (see [Formatting](#formatting)).<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this row has a non-default format applied.
@@ -1622,7 +1622,7 @@ A Row is a component of a Sheet or Report. Each Row is composed of a collection 
 **locked** | Boolean | Indicates whether the row is locked. In a response, a value of `true` indicates that the row has been locked by the sheet owner or the admin.
 **lockedForUser** | Boolean | Indicates whether the row is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.
 **modifiedAt** | timestamp | Time of last modification
-**modifiedBy** | [User](#user-object) | User Object containing name and email of the last person to modify this row
+**modifiedBy** | [User](#user-object) | User object containing name and email of the last person to modify this row
 **permalink** | string | URL that represents a direct link to the Row in Smartsheet<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **rowPermalink**.
 **rowNumber** | number | Row number within the sheet (1-based - starts at 1)
 **sheetId** | number | Parent Sheet Id
@@ -1647,7 +1647,7 @@ For more information, see [Specify Row Location](#specify-row-location).
      |     |     |
 -----|-----|-----|
 **rowIds** | number[] | The Ids of the rows to move or copy from the source sheet
-**to** | [CopyOrMoveRowDestination](#copyormoverowdestination-object) | A CopyOrMoveRowDestination Object that identifies the destination sheet 
+**to** | [CopyOrMoveRowDestination](#copyormoverowdestination-object) | A CopyOrMoveRowDestination object that identifies the destination sheet 
 
 ### CopyOrMoveRowDestination Object
 
@@ -1660,7 +1660,7 @@ For more information, see [Specify Row Location](#specify-row-location).
      |     |     |
 -----|-----|-----|
 **destinationSheetId** | number | Id of the destination sheet
-**rowMappings** | [RowMapping](#rowmapping-object)[] | Array of RowMapping Objects 
+**rowMappings** | [RowMapping](#rowmapping-object)[] | Array of RowMapping objects 
 
 ### RowMapping Object
 
@@ -1671,7 +1671,7 @@ For more information, see [Specify Row Location](#specify-row-location).
 
 ## Add Rows
 
-> Example Request: Add Rows
+> Example request: add rows
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows \
@@ -1866,7 +1866,7 @@ response = smartsheet.sheets.rows.add(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1942,7 +1942,7 @@ Inserts one or more rows into the Sheet specified in the URL. If you want to ins
 
 ## Copy Rows to Another Sheet
 
-> Example Request: Copy Rows to Another Sheet
+> Example request: copy rows to another sheet
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/copy \
@@ -2072,12 +2072,12 @@ Copies Rows from the Sheet specified in the URL to (the bottom of) another sheet
 <%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of row elements to copy in addition to the cell data:<ul><li>attachments</li><li>discussions</li><li>children - if specified, any child rows of the rows specified in the request are also copied to the destination sheet, and parent-child relationships amongst rows are preserved within the destination sheet; if not specified, only the rows specified in the request are copied.</li><li>**all** - specify a value of "all" to include everything (attachments, discussions, and children)</li></ul>**ignoreRowsNotFound** (optional) -- true or false: default is false. If set to true, specifying row Ids that do not exist within the source sheet does not cause an error response. If omitted or set to false, specifying row Ids that do not exist within the source sheet causes an error response (and no rows are copied).
-<%= REQUEST %> | [CopyOrMoveRowDirective Object](#copyormoverowdirective-object)
-<%= RETURNS %> | [CopyOrMoveRowResult Object](#copyormoverowresult-object)
+<%= REQUEST %> | [CopyOrMoveRowDirective object](#copyormoverowdirective-object)
+<%= RETURNS %> | [CopyOrMoveRowResult object](#copyormoverowresult-object)
 
 ## Delete Rows
 
-> Example Request: Delete Rows
+> Example request: delete rows
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/rows?ids={rowId1},{rowId2},{rowId3}&ignoreRowsNotFound=true' \
@@ -2136,7 +2136,7 @@ smartsheet.sheets.rows.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -2161,11 +2161,11 @@ Deletes one or more rows from the Sheet specified in the URL.
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **ids** (required) - comma-separated list of Row Ids
  | **ignoreRowsNotFound** (optional) - true or false. If set to false and any of the specified Row Ids are not found, no rows are deleted, and the "not found" [error](#complete-error-code-list) is returned.
-<%= RETURNS %> | [Result Object](#result-object) containing Row Ids corresponding to all rows that were successfully deleted (including any child rows of rows specified in the URL).
+<%= RETURNS %> | [Result object](#result-object) containing Row Ids corresponding to all rows that were successfully deleted (including any child rows of rows specified in the URL).
 
 ## Get Row
 
-> Example Request: Get Row
+> Example request: get row
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}?include=discussions,attachments,columns,columnType' \
@@ -2246,7 +2246,7 @@ row = smartsheet.sheets.rows.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -2282,8 +2282,8 @@ Gets the Row specified in the URL.
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><br/>See [Row Include Flags](#row-include-flags).<br/>Also supports the **columns** include flag, which adds a columns array that specifies all of the columns for the sheet. This enables you to have the full context of the cells in the row.<br/><br/>The **filters** include flag returns a **filteredOut** attribute indicating if the row should be displayed or hidden according to the sheet's filters.
-  | **exclude** (optional) -- a comma-separated list of elements to <i>not include</i> in the response.<br/><ul><li>**nonexistentCells**: excludes cells that have never contained any data</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** Object:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li></ul>
-<%= RETURNS %> | [Row Object](#row-object), populated according to the specified parameters
+  | **exclude** (optional) -- a comma-separated list of elements to <i>not include</i> in the response.<br/><ul><li>**nonexistentCells**: excludes cells that have never contained any data</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li></ul>
+<%= RETURNS %> | [Row object](#row-object), populated according to the specified parameters
 
 ## List Rows
 
@@ -2291,7 +2291,7 @@ To get the list of all Rows in a Sheet, use the [Get Sheet](#get-sheet) operatio
 
 ## Move Rows to Another Sheet
 
-> Example Request: Move Rows to Another Sheet
+> Example request: move rows to another sheet
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/move \
@@ -2425,8 +2425,8 @@ Moves Rows from the Sheet specified in the URL to (the bottom of) another sheet.
 <%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of row elements to move in addition to the cell data:<ul><li>attachments</li><li>discussions</li></ul>**ignoreRowsNotFound** (optional) -- true or false: default is false. If set to true, specifying row Ids that do not exist within the source sheet do not cause an error response. If omitted or set to false, specifying row Ids that do not exist within the source sheet causes an error response (and no rows are moved).
-<%= REQUEST %> | [CopyOrMoveRowDirective Object](#copyormoverowdirective-object)
-<%= RETURNS %> | [CopyOrMoveRowResult Object](#copyormoverowresult-object)
+<%= REQUEST %> | [CopyOrMoveRowDirective object](#copyormoverowdirective-object)
+<%= RETURNS %> | [CopyOrMoveRowResult object](#copyormoverowresult-object)
 
 ## Send Rows via Email
 
@@ -2444,7 +2444,7 @@ For details about sorting the rows in a sheet, see [Sort Rows in Sheet](#sort-ro
 
 When you [add a row](#add-rows), the default behavior is for Smartsheet to put the new row at the bottom of the sheet. And when you [update a row](#update-rows), the default behavior is to keep the row where it is. It is not necessary to use a location-specifier attribute if you want the default behavior.
 
-To specify a location for new or updated rows other than the defaults, use the table below for reference. The table details possible row locations and provides JSON examples to help you construct one or more [Row Objects](#row-object) with location-specifier attributes.
+To specify a location for new or updated rows other than the defaults, use the table below for reference. The table details possible row locations and provides JSON examples to help you construct one or more [Row objects](#row-object) with location-specifier attributes.
 
 Note the following restrictions:
 
@@ -2466,7 +2466,7 @@ Outdent one existing row, must have a value of "1" | **outdent** | ```{"outdent"
 
 ## Update Rows
 
-> Example Request: Update Rows
+> Example request: update rows
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows \
@@ -2614,7 +2614,7 @@ response = smartsheet.sheets.rows.update(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -2701,7 +2701,7 @@ Updates cell values in the specified rows, expands/collapses the specified rows,
      |     |
 -----|-----|
 <%= RETURNS %> | [Result object](#result-object) containing an array of the updated rows. 
-<%= ERRORS %>  | <u><b>When <code>allowPartialSuccess=false</code> (or not specified):</b></u><br/><br/>If an error occurs, the [Error Object](#error-object) returned contains a **detail** attribute set to an object with the following attributes:<ul><li>**index**: the array index of the row that caused the error (0 if a single Row was passed in)</li><li>**rowId**: the id of the row that caused the error (omitted if the row was missing an id)</li></ul>If any error occurs, the entire request fails (no rows are updated), and the Error response returned describes the first problem that was encountered. For example:<br/>{<br/>&#160;&#160;"errorCode": 1042,<br/>&#160;&#160;"message": "The cell value in column 5504245941200772 did not conform to the strict requirements for type CHECKBOX."<br/>&#160;&#160;"detail": {<br/>&#160;&#160;&#160;&#160;"index": 4<br/>&#160;&#160;&#160;&#160;"rowId": 6572427401553796<br/>&#160;&#160;}<br/>}<br/><br/><br/><u><b>When <code>allowPartialSuccess=true</code>:</b></u><br/><br/><%= PARTIAL_SUCCESS %>
+<%= ERRORS %>  | <u><b>When <code>allowPartialSuccess=false</code> (or not specified):</b></u><br/><br/>If an error occurs, the [Error object](#error-object) returned contains a **detail** attribute set to an object with the following attributes:<ul><li>**index**: the array index of the row that caused the error (0 if a single Row was passed in)</li><li>**rowId**: the id of the row that caused the error (omitted if the row was missing an id)</li></ul>If any error occurs, the entire request fails (no rows are updated), and the Error response returned describes the first problem that was encountered. For example:<br/>{<br/>&#160;&#160;"errorCode": 1042,<br/>&#160;&#160;"message": "The cell value in column 5504245941200772 did not conform to the strict requirements for type CHECKBOX."<br/>&#160;&#160;"detail": {<br/>&#160;&#160;&#160;&#160;"index": 4<br/>&#160;&#160;&#160;&#160;"rowId": 6572427401553796<br/>&#160;&#160;}<br/>}<br/><br/><br/><u><b>When <code>allowPartialSuccess=true</code>:</b></u><br/><br/><%= PARTIAL_SUCCESS %>
 
 ## <%= RELATED %>
 
@@ -2724,7 +2724,7 @@ For details about working with a row's discussions, see [Discussions](#discussio
 ### Row Include Flags
 
 Endpoints which return rows (for example, [get sheet](#get-sheet), [get row](#get-row)) support the optional **include** query string parameter. If specified, the value of the **include** parameter is 
-a comma-delimited list of flags that indicate additional attributes to be included in each [Row Object](#row-object) within the response.
+a comma-delimited list of flags that indicate additional attributes to be included in each [Row object](#row-object) within the response.
 
 Include Flag | Description |
 -------------|-------|
@@ -2745,7 +2745,7 @@ Use the *Search* operations to search a specific Sheet or to search across all S
 
 ### SearchResult Object
 
-> Example SearchResult Object:
+> Example: SearchResult object
 
 ```json
 {
@@ -2769,7 +2769,7 @@ Use the *Search* operations to search a specific Sheet or to search across all S
      |     |     |
 -----|-----|-----|
 **totalCount** | number | Total number of search results
-**results** | [SearchResultItem](#searchresultitem-object)[] | Array of SearchResultItem Objects
+**results** | [SearchResultItem](#searchresultitem-object)[] | Array of SearchResultItem objects
 
 ### SearchResultItem Object
 
@@ -2785,7 +2785,7 @@ Use the *Search* operations to search a specific Sheet or to search across all S
 
 ## Search Everything
 
-> Example Request: Search Everything
+> Example request: search everything
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/search?query=stuff' \
@@ -2839,7 +2839,7 @@ results = smartsheet.search.search_all(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -2886,7 +2886,7 @@ Searches all Sheets that the User can access, for the specified text.
  | **location** (optional): when specified with a value of "personalWorkspace", limits the response to only those items in the user's Workspaces.
  | <%= PARAMETER_MODIFIEDSINCE %>
  | **scopes** (optional): comma-separated list of search filters:<ul><li>attachments</li><li>cellData</li><li>comments</li><li>folderNames</li><li>profileFields</li><li>reportNames</li><li>sheetNames</li><li>sightNames</li><li>templateNames</li><li>workspaceNames</li></ul>
-<%= RETURNS %> | [SearchResult Object](#searchresult-object) that contains a maximum of 100 [SearchResultems](#searchresultitem-object)
+<%= RETURNS %> | [SearchResult object](#searchresult-object) that contains a maximum of 100 [SearchResultems](#searchresultitem-object)
 
 ## Search Sheet
 
@@ -2898,7 +2898,7 @@ Use the *Send* operations to send a Report, a Row, or a Sheet via email.
 
 ## <%= OBJECTS %>
 
-> Example Email Object
+> Example: Email object
 
 ```json
 {
@@ -2921,7 +2921,7 @@ Use the *Send* operations to send a Report, a Row, or a Sheet via email.
 
      |     |     |
 -----|-----|-----|
-**sendTo**  | [Recipient](#recipient-object)[]  | Array of Recipient Objects. Required.
+**sendTo**  | [Recipient](#recipient-object)[]  | Array of Recipient objects. Required.
 **subject** | string | The subject of the email. Optional.
 **message** | string | The message of the email. Optional.
 **ccMe** | Boolean | A flag to indicate whether or not to send a copy of the email to the sender. Optional, defaults to false.
@@ -2944,7 +2944,7 @@ Either **email** and **groupId** may be set, but not both.
 
 ### RowEmail Object
 
-Extends the [Email Object](#email-object), adding the following:
+Extends the [Email object](#email-object), adding the following:
 
      |     |     |
 -----|-----|-----|
@@ -2955,7 +2955,7 @@ Extends the [Email Object](#email-object), adding the following:
 
 ### MultiRowEmail Object
 
-Extends the [RowEmail Object](#rowemail-object), adding the following:
+Extends the [RowEmail object](#rowemail-object), adding the following:
 
      |     |     |
 -----|-----|-----|
@@ -2963,12 +2963,12 @@ Extends the [RowEmail Object](#rowemail-object), adding the following:
 
 ### SheetEmail Object
 
-Extends the [Email Object](#email-object), adding the following:
+Extends the [Email object](#email-object), adding the following:
 
      |     |     |
 -----|-----|-----|
 **format** | string | One of the following values:<ul><li>PDF</li><li>PDF_GANTT</li><li>EXCEL</li></ul>
-**formatDetails** | [FormatDetails](#formatdetails-object) | A FormatDetails Object.
+**formatDetails** | [FormatDetails](#formatdetails-object) | A FormatDetails object.
 
 ## Send Report
 
@@ -2994,7 +2994,7 @@ For developer convenience, the Smartsheet API provides access to application con
 
 ### ServerInfo Object
 
-> Example ServerInfo Object:
+> Example: ServerInfo object
 
 ```json
 {
@@ -3029,7 +3029,7 @@ For developer convenience, the Smartsheet API provides access to application con
 
 ## Get Server Info
 
-> Example Request: Get Server Info
+> Example request: get server info
 
 ```shell
 curl https://api.smartsheet.com/2.0/serverinfo
@@ -3061,7 +3061,7 @@ info = ss_client.Server.server_info()
 info = smartsheet.server_info.get
 ```
 
-> Example Response: (*too long to list in its entirety*)
+> Example response: (*truncated*)
 
 ```json
 {
@@ -3078,7 +3078,7 @@ Gets application constants.
 -----|-----|
 <%= SCOPE %> | None required (may be called unauthenticated)
 <%= HEADERS %> | None required (may be called unauthenticated)
-<%= RETURNS %> | [ServerInfo Object](#serverinfo-object)
+<%= RETURNS %> | [ServerInfo object](#serverinfo-object)
 
 # Sharing
 
@@ -3088,7 +3088,7 @@ Use the *Sharing* operations to control sharing of Reports, Sheets, Workspaces, 
 
 ### Share Object
 
-> Example Share Object:
+> Example: Share object
 
 ```json
 {
@@ -3117,13 +3117,13 @@ Use the *Sharing* operations to control sharing of Reports, Sheets, Workspaces, 
 **modifiedAt**	| timestamp | Time that the share was modified.
 **subject**		| string | The subject of the email that is optionally sent to notify the recipient. <%= REQUEST_ONLY_ATTRIBUTE %>
 **message**		| string | The message included in the body of the email that is optionally sent to the recipient. <%= REQUEST_ONLY_ATTRIBUTE %>
-**ccMe**		| Boolean | Flag to indicate whether to send a copy of the email to the sharer of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %>
+**ccMe**		| Boolean | Indicates whether to send a copy of the email to the sharer of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %>
 
 ## Report Sharing
 
 ### Delete Report Share
 
-> Example Request: Delete Report Share
+> Example request: delete report share
 
 ```shell
 curl https://api.smartsheet.com/2.0/reports/{reportId}/shares/{shareId} \
@@ -3175,7 +3175,7 @@ smartsheet.reports.share.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/deleteShare_response.md.erb" %>
 
@@ -3187,7 +3187,7 @@ Deletes the Share specified in the URL.
 
 ### Get Report Share
 
-> Example Request: Get Report Share
+> Example request: get report share
 
 ```shell
 curl https://api.smartsheet.com/2.0/reports/{reportId}/shares/{shareId} \
@@ -3238,19 +3238,19 @@ share = smartsheet.reports.share.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/getShare_response.md.erb" %>
 
 `GET /reports/{reportId}/shares/{shareId}`
 
-Gets the Share specified in the URL. 
+Gets the share specified in the URL. 
 
 <%= partial "snippets/getShare_table.md.erb" %>
 
 ### List Report Shares
 
-> Example Request: List Report Shares
+> Example request: list report shares
 
 ```shell
 curl https://api.smartsheet.com/2.0/reports/{reportId}/shares \
@@ -3311,13 +3311,13 @@ response = smartsheet.reports.share.list(
 shares = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/listShares_response.md.erb" %>
 
 `GET /reports/{reportId}/shares`
 
-Gets a list of all Users and Groups to whom the specified Report is shared, and their access level. 
+Gets a list of all users and groups to whom the specified report is shared, and their access level. 
 
 <aside class="notice"><%= LIST_SHARES_RESPONSE_DESC %></aside>
 
@@ -3327,7 +3327,7 @@ Gets a list of all Users and Groups to whom the specified Report is shared, and 
 
 ### Share Report
 
-> Example Request: Share Report
+> Example request: share report
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/reports/{reportId}/shares?sendEmail=true' \
@@ -3417,13 +3417,13 @@ response = smartsheet.reports.share.create(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/share_response.md.erb" %>
 
 `POST /reports/{reportId}/shares`
 
-Shares a Report with the specified Users and Groups.
+Shares a report with the specified users and groups.
 
 <aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
 
@@ -3433,7 +3433,7 @@ Shares a Report with the specified Users and Groups.
 
 ### Update Report Share
 
-> Example Request: Update Report Share
+> Example request: update report share
 
 ```shell
 curl https://api.smartsheet.com/2.0/reports/{reportId}/shares/{shareId} \
@@ -3514,13 +3514,13 @@ response = smartsheet.reports.share.update(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/updateShare_response.md.erb" %>
 
 `PUT /reports/{reportId}/shares/{shareId}`
 
-Updates the access level of a User or Group for the specified Report.
+Updates the access level of a user or group for the specified report.
 
 <%= partial "snippets/updateShare_table.md.erb" %>
 
@@ -3528,7 +3528,7 @@ Updates the access level of a User or Group for the specified Report.
 
 ### Delete Sheet Share
 
-> Example Request: Delete Sheet Share
+> Example request: delete sheet share
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/shares/{shareId} \
@@ -3580,7 +3580,7 @@ smartsheet.sheets.share.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/deleteShare_response.md.erb" %>
 
@@ -3592,7 +3592,7 @@ Deletes the Share specified in the URL.
 
 ### Get Sheet Share
 
-> Example Request: Get Sheet Share
+> Example request: get sheet share
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/shares/{shareId} \
@@ -3643,19 +3643,19 @@ share = smartsheet.sheets.share.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/getShare_response.md.erb" %>
 
 `GET /sheets/{sheetId}/shares/{shareId}`
 
-Gets the Share specified in the URL. 
+Gets the share specified in the URL. 
 
 <%= partial "snippets/getShare_table.md.erb" %>
 
 ### List Sheet Shares
 
-> Example Request: List Sheet Shares
+> Example request: list sheet shares
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/shares \
@@ -3718,13 +3718,13 @@ response = smartsheet.sheets.share.list(
 shares = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/listShares_response.md.erb" %>
 
 `GET /sheets/{sheetId}/shares`
 
-Gets a list of all Users and Groups to whom the specified Sheet is shared, and their access level. 
+Gets a list of all users and groups to whom the specified sheet is shared, and their access level. 
 
 <aside class="notice"><%= LIST_SHARES_RESPONSE_DESC %></aside>
 
@@ -3734,7 +3734,7 @@ Gets a list of all Users and Groups to whom the specified Sheet is shared, and t
 
 ### Share Sheet
 
-> Example Request: Share Sheet
+> Example request: share sheet
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/shares?sendEmail=true' \
@@ -3825,13 +3825,13 @@ response = smartsheet.sheets.share.create(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/share_response.md.erb" %>
 
 `POST /sheets/{sheetId}/shares`
 
-Shares a Sheet with the specified Users and Groups.
+Shares a sheet with the specified users and groups.
 
 <aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
 
@@ -3841,7 +3841,7 @@ Shares a Sheet with the specified Users and Groups.
 
 ### Update Sheet Share
 
-> Example Request: Update Sheet Share
+> Example request: update sheet share
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/shares/{shareId} \
@@ -3922,13 +3922,13 @@ response = smartsheet.sheets.share.update(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/updateShare_response.md.erb" %>
 
 `PUT /sheets/{sheetId}/shares/{shareId}`
 
-Updates the access level of a User or Group for the specified Sheet.
+Updates the access level of a user or group for the specified sheet.
 
 <%= partial "snippets/updateShare_table.md.erb" %>
 
@@ -3936,7 +3936,7 @@ Updates the access level of a User or Group for the specified Sheet.
 
 ### Delete Sight Share
 
-> Example Request: Delete Sight Share
+> Example request: delete sight share
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/shares/{shareId} \
@@ -3985,23 +3985,23 @@ smartsheet.sights.share.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/deleteShare_response.md.erb" %>
 
 `DELETE /sights/{sightId}/shares/{shareId}`
 
-Deletes the Share specified in the URL. 
+Deletes the share specified in the URL. 
 
      |     |
 -----|-----|
 <%= SCOPE %> | SHARE_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ### Get Sight Share
 
-> Example Request: Get Sight Share
+> Example request: get sight share
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/shares/{shareId}
@@ -4052,7 +4052,7 @@ share = smartsheet.sights.share.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/getShare_response.md.erb" %>
 
@@ -4064,11 +4064,11 @@ Gets the Share specified in the URL.
 -----|-----|
 <%= SCOPE %> | READ_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Share Object](#share-object)
+<%= RETURNS %> | [Share object](#share-object)
 
 ### List Sight Shares
 
-> Example Request: List Sight Shares
+> Example request: list sight shares
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/shares
@@ -4122,28 +4122,26 @@ response = smartsheet.sights.share.list(
 shares = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/listShares_response.md.erb" %>
 
 `GET /sights/{sightId}/shares`
 
-Gets a list of all Users and Groups to whom the specified Sight is shared, and their access level. 
+Gets a list of all users and groups to whom the specified sight is shared, and their access level. 
 
 <aside class="notice"><%= LIST_SHARES_RESPONSE_DESC %></aside>
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional): when specified with a value of `workspaceShares`, response contains both <i>item-level</i> shares ([<b>scope</b>](#share-object)='ITEM') and <i>workspace-level</i> shares ([<b>scope</b>](#share-object)='WORKSPACE').<br/><br/><%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Share Objects](#share-object)<br/><br/>**NOTE:** If the response contains an *item-level* share (**scope**='ITEM') and a *workspace-level* share (**scope**='WORKSPACE') for the same user or group, the **id** of those two [Share](#share-object) Objects is identical, but the **scope** attribute value can be used to disambiguate the two.
+<%= PARAMETERS %> | **include** (optional): when specified with a value of **workspaceShares**, response contains both item-level shares ([<b>scope='ITEM'</b>](#share-object)) and workspace-level shares (<b>scope='WORKSPACE'</b>).<br/><br/><%= PAGING_PARAMETERS %>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Share objects](#share-object)<br/><br/>**NOTE:** If the response contains an item-level share (**scope='ITEM'**) and a workspace-level share (**scope='WORKSPACE'**) for the same user or group, the **id** of those two [Share objects](#share-object) is identical, but the **scope** attribute value can be used to disambiguate the two.
+<%= SCOPE %> | READ_SIGHTS
 
 ### Share Sight
 
-> Example Request: Share Sight
+> Example request: share sight
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sights/{sightId}/shares?sendEmail=true'
@@ -4221,13 +4219,13 @@ response = smartsheet.sights.share.create(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/share_response.md.erb" %>
 
 `POST /sights/{sightId}/shares`
 
-Shares a Sight with the specified Users and Groups.
+Shares a sight with the specified users and groups.
 
 <aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
 
@@ -4238,13 +4236,13 @@ Shares a Sight with the specified Users and Groups.
 <%= SCOPE %> | SHARE_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **sendEmail** (optional): Either `true` or `false` to indicate whether or not to notify the user by email. Default is **false**.
-<%= REQUEST %> | [Share Object](#share-object) or an array of Share Objects, with the following attributes:<ul><li>email (optional): the individual share recipient's email address</li><li>groupId (optional): the group share recipient's group Id</li><li>accessLevel (required)</li><li>subject (optional): The subject of the email that is optionally sent to notify the recipient.</li><li>message (optional): The message in the body of the email that is optionally sent to the recipient.</li><li>ccMe (optional): Boolean flag to indicate whether or not to CC the user sharing the sheet.</li></ul>**NOTE:** One of **email** or **groupId** must be specified, but not both.
-<%= RETURNS %> | [Result Object](#result-object) containing either a single [Share Object](#share-object) or an array of Share Objects, corresponding to what was specified in the request. All shares have <b>[scope](#share-object)</b>="ITEM".
-<%= ERRORS %>  | If an error occurs because the request specified one or more [*alternate* email addresses](#alternate-email-addresses) (that is, not the primary email address associated with the User account), the [Error Object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry sharing directly to u1@smartsheet.com."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
+<%= REQUEST %> | [Share object](#share-object) or an array of Share objects, with the following attributes:<ul><li>email (optional): the individual share recipient's email address</li><li>groupId (optional): the group share recipient's group Id</li><li>accessLevel (required)</li><li>subject (optional): The subject of the email that is optionally sent to notify the recipient.</li><li>message (optional): The message in the body of the email that is optionally sent to the recipient.</li><li>ccMe (optional): Boolean flag to indicate whether or not to CC the user sharing the sheet.</li></ul>**NOTE:** One of **email** or **groupId** must be specified, but not both.
+<%= RETURNS %> | [Result object](#result-object) containing either a single [Share object](#share-object) or an array of Share objects, corresponding to what was specified in the request. All shares have <b>[scope](#share-object)</b>="ITEM".
+<%= ERRORS %>  | If an error occurs because the request specified one or more [*alternate* email addresses](#alternate-email-addresses) (that is, not the primary email address associated with the User account), the [Error object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry sharing directly to u1@smartsheet.com."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
 
 ### Update Sight Share
 
-> Example Request: Update Sight Share
+> Example request: update sight share
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/shares/{shareId} \
@@ -4314,7 +4312,7 @@ response = smartsheet.sights.share.update(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/updateShare_response.md.erb" %>
 
@@ -4326,14 +4324,14 @@ Updates the access level of a User or Group for the specified Sight.
 -----|-----|
 <%= SCOPE %> | SHARE_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Share Object](#share-object) limited to the following attribute:<ul><li>accessLevel (string)</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing the modified [Share Object](#share-object)
+<%= REQUEST %> | [Share object](#share-object) limited to the following attribute:<ul><li>accessLevel (string)</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing the modified [Share object](#share-object)
 
 ## Workspace Sharing
 
 ### Delete Workspace Share
 
-> Example Request: Delete Workspace Share
+> Example request: delete workspace share
 
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/shares/{shareId} \
@@ -4385,23 +4383,23 @@ smartsheet.workspaces.share.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/deleteShare_response.md.erb" %>
 
 `DELETE /workspaces/{workspaceId}/shares/{shareId}`
 
-Deletes the Share specified in the URL. 
+Deletes the share specified in the URL. 
 
      |     |
 -----|-----|
 <%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ### Get Workspace Share
 
-> Example Request: Get Workspace Share
+> Example request: get workspace share
 
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/shares/{shareId} \
@@ -4452,19 +4450,19 @@ share = smartsheet.workspaces.share.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/getShare_response.md.erb" %>
 
 `GET /workspaces/{workspaceId}/shares/{shareId}`
 
-Gets the Share specified in the URL. 
+Gets the share specified in the URL. 
 
 <%= partial "snippets/getShare_table.md.erb" %>
 
 ### List Workspace Shares
 
-> Example Request: List Workspace Shares
+> Example request: list workspace shares
 
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/shares \
@@ -4527,13 +4525,13 @@ response = smartsheet.workspaces.share.list(
 shares = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/listShares_response.md.erb" %>
 
 `GET /workspaces/{workspaceId}/shares`
 
-Gets a list of all Users and Groups to whom the specified Workspace is shared, and their access level. 
+Gets a list of all users and groups to whom the specified workspace is shared, and their access level. 
 
 <aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
@@ -4542,11 +4540,11 @@ Gets a list of all Users and Groups to whom the specified Workspace is shared, a
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Share Objects](#share-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Share objects](#share-object)
 
 ### Share Workspace
 
-> Example Request: Share Workspace
+> Example request: share workspace
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/workspaces/{workspaceId}/shares?sendEmail=true' \
@@ -4636,7 +4634,7 @@ response = smartsheet.workspaces.share.create(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/share_response.md.erb" %>
 
@@ -4653,13 +4651,13 @@ Shares a Workspace with the specified Users and Groups.
 <%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **sendEmail** (optional): Either `true` or `false` to indicate whether or not to notify the user by email. Default is **false**.
-<%= REQUEST %> | [Share Object](#share-object) or an array of Share Objects, with the following attributes:<ul><li>email (optional): the individual share recipient's email address</li><li>groupId (optional): the group share recipient's group Id</li><li>accessLevel (required)</li><li>subject (optional): The subject of the email that is optionally sent to notify the recipient.</li><li>message (optional): The message in the body of the email that is optionally sent to the recipient.</li><li>ccMe (optional): Boolean flag to indicate whether or not to CC the user sharing the sheet.</li></ul>**NOTE:** One of **email** or **groupId** must be specified, but not both.
-<%= RETURNS %> | [Result Object](#result-object) containing either a single [Share Object](#share-object) or an array of Share Objects, corresponding to what was specified in the request.
-<%= ERRORS %>  | If an error occurs because the request specified one or more [*alternate* email addresses](#alternate-email-addresses) (that is, not the primary email address associated with the User account), the [Error Object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry sharing directly to u1@smartsheet.com."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
+<%= REQUEST %> | [Share object](#share-object) or an array of Share objects, with the following attributes:<ul><li>email (optional): the individual share recipient's email address</li><li>groupId (optional): the group share recipient's group Id</li><li>accessLevel (required)</li><li>subject (optional): The subject of the email that is optionally sent to notify the recipient.</li><li>message (optional): The message in the body of the email that is optionally sent to the recipient.</li><li>ccMe (optional): Boolean flag to indicate whether or not to CC the user sharing the sheet.</li></ul>**NOTE:** One of **email** or **groupId** must be specified, but not both.
+<%= RETURNS %> | [Result object](#result-object) containing either a single [Share object](#share-object) or an array of Share objects, corresponding to what was specified in the request.
+<%= ERRORS %>  | If an error occurs because the request specified one or more [*alternate* email addresses](#alternate-email-addresses) (that is, not the primary email address associated with the User account), the [Error object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry sharing directly to u1@smartsheet.com."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
 
 ### Update Workspace Share
 
-> Example Request: Update Workspace Share
+> Example request: update workspace share
 
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/shares/{shareId} \
@@ -4740,30 +4738,30 @@ response = smartsheet.workspaces.share.update(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/updateShare_response.md.erb" %>
 
 `PUT /workspaces/{workspaceId}/shares/{shareId}`
 
-Updates the access level of a User or Group for the specified Workspace.
+Updates the access level of a user or group for the specified workspace.
 
      |     |
 -----|-----|
 <%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Share Object](#share-object) limited to the following attribute:<ul><li>accessLevel (string)</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing the modified [Share Object](#share-object)
+<%= REQUEST %> | [Share object](#share-object) limited to the following attribute:<ul><li>accessLevel (string)</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing the modified [Share object](#share-object)
 
 # Sheets
 
-A Sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [Folder](#folders), or in a [Workspace](#workspaces). It is comprised of Columns, Rows, and Cells, and may optionally contain Attachments and/or Discussions.
+A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#folders), or in a [workspace](#workspaces). It is comprised of columns, rows, and cells, and may optionally contain attachments and/or discussions.
 
 ## <%= OBJECTS %>
 
 ### Sheet Object
 
-> Example Sheet Object:
+> Example: Sheet object
 
 ```json
 {
@@ -4798,23 +4796,23 @@ A Sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [Folder](#
 **resourceManagementEnabled** | Boolean | Flag to indicate that resource management is enabled
 **favorite** | Boolean | Returned only if the User has marked this sheet as a favorite in their Home tab (value = 'true')
 **showParentRowsForFilters** | Boolean | Returned only if there are column filters on the Sheet.  Value = 'true' if "show parent rows" is enabled for the filters.
-**userSettings** | [SheetUserSettings](#sheetusersettings-object) | A SheetUserSettings Object containing the current user's sheet-specific settings.
+**userSettings** | [SheetUserSettings](#sheetusersettings-object) | A SheetUserSettings object containing the current user's sheet-specific settings.
 **owner** | string | Email address of the Sheet owner
 **ownerId** | number | User Id of the Sheet owner
 **permalink** | string | URL that represents a direct link to the Sheet in Smartsheet
-**source** | [Source](#source-object) | A Source Object indicating the Sheet or Template from which this sheet was created
+**source** | [Source](#source-object) | A Source object indicating the Sheet or Template from which this sheet was created
 **createdAt** | timestamp | Time that the Sheet was created
 **modifiedAt** | timestamp | Time that the Sheet was modified
-**columns** | [Column](#column-object)[] | Array of Column Objects
-**rows** | [Row](#row-object)[] | Array of Row Objects
-**attachments** | [Attachment](#attachment-object)[] | Array of Attachment Objects<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **attachments**.
-**crossSheetReferences** | [CrossSheetReference](#crosssheetreference-object)[] | Array of CrossSheetReference Objects<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **crossSheetReferences**.
-**discussions** | [Discussion](#discussion-object)[] | Array of Discussion Objects<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **discussions**.
+**columns** | [Column](#column-object)[] | Array of Column objects
+**rows** | [Row](#row-object)[] | Array of Row objects
+**attachments** | [Attachment](#attachment-object)[] | Array of Attachment objects<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **attachments**.
+**crossSheetReferences** | [CrossSheetReference](#crosssheetreference-object)[] | Array of CrossSheetReference objects<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **crossSheetReferences**.
+**discussions** | [Discussion](#discussion-object)[] | Array of Discussion objects<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **discussions**.
 **fromId** | number | The Id of the Template from which to create the Sheet. This attribute can be specified in a request, but is never present in a response.
 
 ### Criteria Object
 
-> Example Criteria Object:
+> Example: Criteria object
 
 ```json
 {
@@ -4834,7 +4832,7 @@ A Sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [Folder](#
 
 ### Filters Object
 
-> Example Filters Object:
+> Example: Filters object
 
 ```json
 {
@@ -4854,12 +4852,12 @@ Smartsheet users can define and save personal column filters on sheets they can 
 -----|-----|-----|
 **id** | number | Filters Id
 **filterType** | string | One of the following values:<ul><li>PERSONAL</li><li>SHARED</li></ul>
-**query** | object | Contains operator and Criteria Object.
+**query** | object | Contains operator and Criteria object.
 **operator** | string | One of the following values:<ul><li>EQUAL</li><li>NOT_EQUAL</li><li>GREATER_THAN</li><li>LESS_THAN</li><li>CONTAINS</li><li>BETWEEN</li><li>TODAY</li><li>PAST</li><li>FUTURE</li><li>LAST_N_DAYS</li><li>NEXT_N_DAYS</li><li>IS_BLANK</li><li>IS_NOT_BLANK</li><li>IS_NUMBER</li><li>IS_NOT_NUMBER</li><li>IS_DATE</li><li>IS_NOT_DATE</li><li>IS_CHECKED</li><li>IS_NOT_CHECKED</li></ul>
 **includeParent** | Boolean | If **true**, indicates that "show parent rows" is enabled for the filters.
 **excludeSelected** | Boolean | If **true**, rows containing cells matching the "values" or "criteria" items are excluded instead of included.
 **values** | array | Optional. Present if a custom filter criteria's operator has one or more arguments.
-**criteria** | [Criteria](#criteria-object)[] | An array of Criteria Objects specifying custom criteria against which to match cell values.
+**criteria** | [Criteria](#criteria-object)[] | An array of Criteria objects specifying custom criteria against which to match cell values.
 
 ### ProjectSettings Object
 
@@ -4917,12 +4915,12 @@ Represents individual user settings for a specific sheet.  User settings may be 
 
      |     |     |
 -----|-----|-----|
-**id** | number | Id of the Sheet or Template from which the enclosing sheet was created
+**id** | number | Id of the sheet or template from which the enclosing sheet was created
 **type** | string | "sheet" or "template"
 
 ## Copy Sheet
 
-> Example Request: Copy Sheet
+> Example request: copy sheet
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/copy?include=data,attachments'
@@ -5035,7 +5033,7 @@ smartsheet.sheets.copy(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -5060,14 +5058,14 @@ Creates a copy of the specified Sheet.
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>attachments</li><li>cellLinks</li><li>data -- includes formatting</li><li>discussions -- includes comments</li><li>filters</li><li>forms</li><li>ruleRecipients -- includes notification recipients, must also include **rules** when using this attribute</li><li>rules -- includes notifications and workflow rules</li><li>shares</li><li>all - deprecated</li></ul><i>Note</i>: Cell history is not copied, regardless of which **include** parameter values are specified.
  | **omit** (optional) -- when specified with a value of "sheetHyperlinks", excludes this category from the response
-<%= REQUEST %> | [ContainerDestination Object](#containerdestination-object)
-<%= RETURNS %> | [Result Object](#result-object) containing a [Sheet Object](#sheet-object) for the newly created Sheet, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
+<%= REQUEST %> | [ContainerDestination object](#containerdestination-object)
+<%= RETURNS %> | [Result object](#result-object) containing a [Sheet object](#sheet-object) for the newly created Sheet, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
 
 ## Create Sheet
 
 ### Create Sheet in "Sheets" folder
 
-> Example Request: Create Sheet in "Sheets" folder
+> Example request: create sheet in "Sheets" folder
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets \
@@ -5200,19 +5198,19 @@ response = smartsheet.sheets.create(
 new_sheet = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/createSheet_response.md.erb" %>
 
 `POST /sheets`
 
-Creates a Sheet from scratch in the user's **Sheets** folder ([Home](#home)). For subfolders, use [Create Sheet in Folder](#create-sheet-in-folder). 
+Creates a sheet from scratch in the user's **Sheets** folder ([Home](#home)). For subfolders, use [Create Sheet in Folder](#create-sheet-in-folder). 
 
 <%= partial "snippets/createSheet_table.md.erb" %>
 
 ### Create Sheet in Folder
 
-> Example Request: Create Sheet in Folder
+> Example request: create sheet in folder
 
 ```shell
 curl https://api.smartsheet.com/2.0/folders/{folderId}/sheets \
@@ -5354,19 +5352,19 @@ response = smartsheet.sheets.create_in_folder(
 new_sheet = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/createSheet_response.md.erb" %>
 
 `POST /folders/{folderId}/sheets`
 
-Creates a Sheet from scratch in the specified Folder.
+Creates a sheet from scratch in the specified folder.
 
 <%= partial "snippets/createSheet_table.md.erb" %>
 
 ### Create Sheet in Workspace 
 
-> Example Request: Create Sheet in Workspace
+> Example request: create sheet in workspace
 
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/sheets \
@@ -5509,7 +5507,7 @@ response = smartsheet.sheets.create_in_workspace(
 new_sheet = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/createSheet_response.md.erb" %>
 
@@ -5521,9 +5519,9 @@ Creates a Sheet from scratch at the top-level of the specified Workspace. For su
 
 ## Create Sheet from Template
 
-### Create Sheet in "Sheets" Folder From Template
+### Create Sheet in "Sheets" Folder from Template
 
-> Example Request: Create Sheet in "Sheets" Folder From Template
+> Example request: create sheet in "Sheets" folder from template
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets?include=data,attachments,discussions' \
@@ -5622,19 +5620,19 @@ response = smartsheet.sheets.create_from_template(
 new_sheet = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/createSheetFromExisting_response.md.erb" %>
 
 `POST /sheets`
 
-Creates a Sheet in the user's **Sheets** folder ([Home](#home)), from the specified Template. For subfolders, use [Create Sheet in Folder from Template](#create-sheet-in-folder-from-template).
+Creates a sheet in the user's **Sheets** folder ([Home](#home)), from the specified template. For subfolders, use [Create Sheet in Folder from Template](#create-sheet-in-folder-from-template).
 
 <%= partial "snippets/createSheetFromExisting_table.md.erb" %>
 
-### Create Sheet in Folder From Template
+### Create Sheet in Folder from Template
 
-> Example Request: Create Sheet in Folder From Template
+> Example request: create sheet in folder from template
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/folders/{folderId}/sheets?include=data,attachments,discussions' \
@@ -5740,19 +5738,19 @@ response = smartsheet.sheets.create_in_folder_from_template(
 new_sheet = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/createSheetFromExisting_response.md.erb" %>
 
 `POST /folders/{folderId}/sheets`
 
-Creates a Sheet in the specified Folder, from the specified Template.
+Creates a sheet in the specified folder, from the specified template.
 
 <%= partial "snippets/createSheetFromExisting_table.md.erb" %>
 
-### Create Sheet in Workspace From Template
+### Create Sheet in Workspace from Template
 
-> Example Request: Create Sheet in Workspace From Template
+> Example request: create sheet in workspace from template
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/workspaces/{workspaceId}/sheets?include=data,attachments,discussions' \
@@ -5858,19 +5856,19 @@ response = smartsheet.sheets.create_in_workspace_from_template(
 new_sheet = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/createSheetFromExisting_response.md.erb" %>
 
 `POST /workspaces/{workspaceId}/sheets`
 
-Creates a Sheet at the top-level of the specified Workspace, from the specified Template. For subfolders, use [Create Sheet in Folder from Template](#create-sheet-in-folder-from-template).
+Creates a sheet at the top-level of the specified workspace, from the specified template. For subfolders, use [Create Sheet in Folder from Template](#create-sheet-in-folder-from-template).
 
 <%= partial "snippets/createSheetFromExisting_table.md.erb" %>
 
 ## Delete Sheet
 
-> Example Request: Delete Sheet
+> Example request: delete sheet
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId} \
@@ -5915,7 +5913,7 @@ ss_client.Sheets.delete_sheet(
 smartsheet.sheets.delete(sheet_id: 1531988831168388)
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -5926,17 +5924,17 @@ smartsheet.sheets.delete(sheet_id: 1531988831168388)
 
 `DELETE /sheets/{sheetId}`
 
-Deletes the Sheet specified in the URL.
+Deletes the sheet specified in the URL.
 
      |     |
 -----|-----|
 <%= SCOPE %> | DELETE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ## Get Sheet Version
 
-> Example Request: Get Sheet Version
+> Example request: get sheet version
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/version \
@@ -5982,7 +5980,7 @@ version = smartsheet.sheets.get_version(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -6012,7 +6010,7 @@ The following actions increment Sheet version:
 
 ## Get Sheet
 
-> Example Request: Get Sheet
+> Example request: get sheet
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId} \
@@ -6074,7 +6072,7 @@ sheet = smartsheet.sheets.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -6123,25 +6121,25 @@ sheet = smartsheet.sheets.get(
 
 `GET /sheets/{sheetId}`
 
-Gets the Sheet specified in the URL. Returns the Sheet, including Rows, and optionally populated with Discussion and Attachment Objects.
+Gets the Sheet specified in the URL. Returns the Sheet, including Rows, and optionally populated with Discussion and Attachment objects.
 
      |     |
 -----|-----|
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ownerInfo**: includes owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source Object](#source-object) indicating which sheet or template the sheet was created from, if any.
-  | **exclude** (optional) -- a comma-separated list of elements to <i>not include</i> in the response.<br/><ul><li>**nonexistentCells**: excludes cells that have never contained any data</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** Object:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ownerInfo**: includes owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which sheet or template the sheet was created from, if any.
+  | **exclude** (optional) -- a comma-separated list of elements to <i>not include</i> in the response.<br/><ul><li>**nonexistentCells**: excludes cells that have never contained any data</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li></ul>
   | **columnIds** (optional): a comma-separated list of Column Ids. The response contains only the specified columns in the "columns" array, and individual rows' "cells" array only contains cells in the specified columns.
-  | **ifVersionAfter** (optional): If version specified is still the current sheet version, then returns an abbreviated Sheet Object with only the sheet **version** property. Otherwise, if the sheet has been modified, returns the complete Sheet Object. Intended to allow clients with a cached copy to make sure they have the latest version.
+  | **ifVersionAfter** (optional): If version specified is still the current sheet version, then returns an abbreviated Sheet object with only the sheet **version** property. Otherwise, if the sheet has been modified, returns the complete Sheet object. Intended to allow clients with a cached copy to make sure they have the latest version.
   | **page** (optional): which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
   | **pageSize** (optional): number of rows per page to include with the sheet.  If neither **pageSize** nor **page** is specified, returns all rows in the sheet.  If only page is specified, defaults to a page size of 100.
   | **rowIds** (optional): a comma-separated list of Row Ids on which to filter the rows included in the result
   | **rowNumbers** (optional): a comma-separated list of Row numbers on which to filter the rows included in the result.  Non-existent row numbers are ignored.
-<%= RETURNS %> | [Sheet Object](#sheet-object), populated according to the specified parameters
+<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
 
 ## Get Sheet as Excel / PDF / CSV
 
-> Example Request: Get Sheet as Excel
+> Example request: get sheet as Excel
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId} \
@@ -6200,7 +6198,7 @@ file_contents = smartsheet.sheets.get_as_excel(
 File.open('output.xlsx', 'w') {|f| f.write(file_contents)}
 ```
 
-> Example Response:
+> Example response
 
 ```shell
 # See local file named "output.xlsx"
@@ -6226,7 +6224,7 @@ File.open('output.xlsx', 'w') {|f| f.write(file_contents)}
 # See local file named "output.xlsx"
 ```
 
-> Example Request: Get Sheet as PDF
+> Example request: get sheet as PDF
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}?paperSize=A1' \
@@ -6288,7 +6286,7 @@ file_contents = smartsheet.sheets.get_as_pdf(
 File.open('output.pdf', 'w') {|f| f.write(file_contents)}
 ```
 
-> Example Response:
+> Example response
 
 ```shell
 # See local file named "output.pdf"
@@ -6314,7 +6312,7 @@ File.open('output.pdf', 'w') {|f| f.write(file_contents)}
 # See local file named "output.pdf"
 ```
 
-> Example Request: Get Sheet as CSV
+> Example request: get sheet as CSV
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId} \
@@ -6373,7 +6371,7 @@ file_contents = smartsheet.sheets.get_as_csv(
 File.open('output.csv', 'w') {|f| f.write(file_contents)}
 ```
 
-> Example Response:
+> Example response
 
 ```shell
 # See local file named "output.csv"
@@ -6419,7 +6417,7 @@ Gets the Sheet in the format specified, based on the Sheet Id.
 
 ## List Sheets
 
-> Example Request: List Sheets
+> Example request: list sheets
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets \
@@ -6485,7 +6483,7 @@ response = smartsheet.sheets.list(params: {includeAll:true })
 sheets = response
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -6518,7 +6516,7 @@ sheets = response
 
 `GET /sheets`
 
-Gets a list of all Sheets that the User has access to in alphabetical order by name. The list contains an abbreviated Sheet Object for each Sheet.
+Gets a list of all Sheets that the User has access to in alphabetical order by name. The list contains an abbreviated Sheet object for each Sheet.
 
 <aside class="notice"><%= SUPPORTS_NUMERICDATES %></aside>
 
@@ -6531,11 +6529,11 @@ Gets a list of all Sheets that the User has access to in alphabetical order by n
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>ownerInfo - owner's email address and user Id for each sheet</li><li>sheetVersion - current version number of each sheet, should not be combined with pagination</li><li>source - the [source](#source-object) for any sheet that was created from another sheet or template</li></ul>
  | <%= PARAMETER_MODIFIEDSINCE %>
  | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Sheet Objects](#sheet-object) limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li><li>source (included only if "source" is specified with the **include** parameter)</li><li>owner (included only if "ownerInfo" is specified with the **include** parameter)</li><li>ownerId (included only if "ownerInfo" is specified with the **include** parameter)</li><li>createdAt</li><li>modifiedAt</li></ul>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Sheet objects](#sheet-object) limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li><li>source (included only if "source" is specified with the **include** parameter)</li><li>owner (included only if "ownerInfo" is specified with the **include** parameter)</li><li>ownerId (included only if "ownerInfo" is specified with the **include** parameter)</li><li>createdAt</li><li>modifiedAt</li></ul>
 
 ## Move Sheet
 
-> Example Request: Move Sheet
+> Example request: move sheet
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/move \
@@ -6620,7 +6618,7 @@ sheet = smartsheet.sheets.move(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -6645,14 +6643,14 @@ Moves the specified Sheet to a new location.
 -----|-----|
 <%= SCOPE %> | CREATE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [ContainerDestination Object](#containerdestination-object), limited to the following required attributes:<ul><li>destinationType</li><li>destinationId</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing a [Sheet Object](#sheet-object) for the moved Sheet, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
+<%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following required attributes:<ul><li>destinationType</li><li>destinationId</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing a [Sheet object](#sheet-object) for the moved Sheet, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
 
 ## Publish Sheet
 
 ### Get Sheet Publish Status
 
-> Example Request: Get Sheet Publish Status
+> Example request: get sheet publish status
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/publish \
@@ -6700,7 +6698,7 @@ status = smartsheet.sheets.get_publish_status(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -6715,17 +6713,17 @@ status = smartsheet.sheets.get_publish_status(
 
 `GET /sheets/{sheetId}/publish`
 
-Gets the Sheet's 'Publish' settings.
+Gets the sheet's 'Publish' settings.
 
      |     |
 -----|-----|
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [SheetPublish Object](#sheetpublish-object)
+<%= RETURNS %> | [SheetPublish object](#sheetpublish-object)
 
 ### Set Sheet Publish Status
 
-> Example Request: Set Sheet Publish Status
+> Example request: set sheet publish status
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/publish \
@@ -6819,7 +6817,7 @@ status = smartsheet.sheets.set_publish_status(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -6843,8 +6841,8 @@ Sets the publish status of the Sheet and returns the new status, including the U
 -----|-----|
 <%= SCOPE %> | ADMIN_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [SheetPublish Object](#sheetpublish-object)
-<%= RETURNS %> | [Result Object](#result-object) containing a [SheetPublish Object](#sheetpublish-object)
+<%= REQUEST %> | [SheetPublish object](#sheetpublish-object)
+<%= RETURNS %> | [Result object](#result-object) containing a [SheetPublish object](#sheetpublish-object)
 
 <aside class="notice">For Read Only, if you do not specify a value for <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the Sheet owner belongs to an organization) or to "ALL" (if the Sheet owner does not belong to an organization).</aside>
 
@@ -6868,7 +6866,7 @@ For details about Sheet sharing, see [Sheet Sharing](#sheet-sharing).
 
 ## Sort Rows in Sheet
 
-> Example Request: Sort Rows in Sheet
+> Example request: sort rows in sheet
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
@@ -6908,7 +6906,7 @@ smartsheet.sheets.rows.sort(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -6965,11 +6963,11 @@ Sorts the rows of a sheet, either in ascending or descending order.
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>sortCriteria: <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
   | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
-<%= RETURNS %> | [Sheet Object](#sheet-object), populated according to the specified parameters
+<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
 
 ## Update Sheet
 
-> Example Request: Update Sheet
+> Example request: update sheet
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId} \
@@ -7068,7 +7066,7 @@ response = smartsheet.sheets.update(
 updated_sheet = response
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -7104,8 +7102,8 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 -----|-----|
 <%= SCOPE %> | ADMIN_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Sheet Object](#sheet-object) limited to the following attributes:<ul><li>name (optional)</li><li>userSettings (optional): [SheetUserSettings Object](#sheetusersettings-object) for updating these user's settings for the sheet</li><li>projectSettings (optional): [ProjectSettings Object](#projectsettings-object), containing at least one of the projectSettings attributes, for updating this sheet's project settings and dependencies.</li></ul>Note the following:<ul><li>Attributes not specified in projectSettings are not updated.</li><li>If projectSettings.nonWorkingDays is specified as an empty array, all non-working days are removed from the project sheet.</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing a [Sheet Object](#sheet-object) for the updated Sheet
+<%= REQUEST %> | [Sheet object](#sheet-object) limited to the following attributes:<ul><li>name (optional)</li><li>userSettings (optional): [SheetUserSettings object](#sheetusersettings-object) for updating these user's settings for the sheet</li><li>projectSettings (optional): [ProjectSettings object](#projectsettings-object), containing at least one of the projectSettings attributes, for updating this sheet's project settings and dependencies.</li></ul>Note the following:<ul><li>Attributes not specified in projectSettings are not updated.</li><li>If projectSettings.nonWorkingDays is specified as an empty array, all non-working days are removed from the project sheet.</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing a [Sheet object](#sheet-object) for the updated Sheet
 
 ## <%= RELATED %>
 
@@ -7149,7 +7147,7 @@ Smartsheet Sights(TM) are a collection of widgets that can contain data from a v
 
 ### Sight Object
 
-> Example Sight Object:
+> Example: Sight object
 
 ```json
 {
@@ -7166,13 +7164,13 @@ Smartsheet Sights(TM) are a collection of widgets that can contain data from a v
 **id** | number | Sight Id
 **name** | string | Sight Name 
 **columnCount** | number | Number of Columns that the Sight contains
-**widgets** | [widget](#widget-object)[] | Array of Widget Objects
+**widgets** | [widget](#widget-object)[] | Array of Widget objects
 **favorite** | Boolean | Indicates whether the User has marked the Sight as a favorite
 **accessLevel** | string | User's permissions on the Sight. Valid values: <ul><li>OWNER</li> <li>ADMIN</li> <li>VIEWER</li></ul>
 **permalink** | string | URL that represents a direct link to the Sight in Smartsheet
 **createdAt** | timestamp | Time of creation
 **modifiedAt** | timestamp | Time of last modification
-**workspace** | [Workspace](#workspace-object) | A Workspace Object, limited to only 2 attributes: <ul><li>id</li> <li>name</li></ul> _Note: this attribute is only present if the Sight resides within a Workspace._
+**workspace** | [Workspace](#workspace-object) | A Workspace object, limited to only 2 attributes: <ul><li>id</li> <li>name</li></ul> _Note: this attribute is only present if the Sight resides within a Workspace._
 
 ### SightPublish Object
 
@@ -7184,7 +7182,7 @@ Smartsheet Sights(TM) are a collection of widgets that can contain data from a v
 
 ### Widget Object
 
-> Example Widget Object
+> Example: Widget object
 
 ```json
 {
@@ -7216,7 +7214,7 @@ Smartsheet Sights(TM) are a collection of widgets that can contain data from a v
 **width** | number | Number of Columns that the widget occupies on the Sight
 **version** | int | Widget version number
 **type** | string | Type of widget. See table below to see how UI widget names map to type.
-**contents** | WidgetContent Object | Data that specifies the contents of the widget. <b>Note:</b> The type of WidgetContent Object (and attributes within) depends on the value of `widget.type`.
+**contents** | WidgetContent object | Data that specifies the contents of the widget. <b>Note:</b> The type of WidgetContent object (and attributes within) depends on the value of `widget.type`.
 
      |     |     |
 -----|-----|-----|
@@ -7234,8 +7232,8 @@ Title | TITLE | [TitleWidgetContent](#titlewidgetcontent-object)
      |     |     |
 -----|-----|-----|
 hyperlink | [hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
-cellData | [cellData](#celldataitem-object)[] | Array of cellDataItem Objects
-columns | [column](#column-object)[] | Array of Column Objects
+cellData | [cellData](#celldataitem-object)[] | Array of cellDataItem objects
+columns | [column](#column-object)[] | Array of Column objects
 
 ### CellDataItem Object
 
@@ -7244,7 +7242,7 @@ columns | [column](#column-object)[] | Array of Column Objects
 **label** | string | Label for the data point. This is either the column name or a user-provided string
 **labelFormat** | string | [formatDescriptor](#formatting)
 **objectValue** | A **string**, **number**, or a **Boolean** value | The type of data returned depends on the cell type and the data in the cell
-**cell** | [cell](#cell-object) | Cell Object
+**cell** | [cell](#cell-object) | Cell object
 **valueFormat** | string | [formatDescriptor](#formatting)
 **order** | integer | The display order for the CellDataItem
 **columnId** | number | Column Id for the cell
@@ -7253,8 +7251,8 @@ columns | [column](#column-object)[] | Array of Column Objects
 
      |     |     |
 -----|-----|-----|
-**series** | series[] | An array of Series Objects
-**axes** | axes[] | An array of Axes Objects
+**series** | series[] | An array of Series objects
+**axes** | axes[] | An array of Axes objects
 **legend** | string | The location in the widget where Smartsheet renders the legend, for example, **RIGHT**
 
 ### ImageWidgetContent Object
@@ -7283,7 +7281,7 @@ html | string | The widget content as HTML </br> </br> The Rich Text widget supp
 
      |     |     |
 -----|-----|-----|
-shortcutData | [shortcutData](#shortcutdataitem-object)[] | An array of ShortcutDataItem Objects
+shortcutData | [shortcutData](#shortcutdataitem-object)[] | An array of ShortcutDataItem objects
 
 ### ShortcutDataItem Object
 
@@ -7292,7 +7290,7 @@ shortcutData | [shortcutData](#shortcutdataitem-object)[] | An array of Shortcut
 **label** | string | Label for the data point
 **labelFormat** | string | [formatDescriptor](#formatting)
 **attachmentType** | string | Attachment type (one of FILE, GOOGLE_DRIVE, LINK, BOX_COM, DROPBOX, EVERNOTE, EGNYTE, ONEDRIVE, or SMARTSHEET)
-**hyperlink** | [hyperlink](#hyperlink-object) | Hyperlink Object
+**hyperlink** | [hyperlink](#hyperlink-object) | Hyperlink object
 **order** | integer | The display order for the ShortcutWidgetItem
 **mimeType** | string | MIME type if available for attachment type
 
@@ -7305,7 +7303,7 @@ backgroundColor | hex | The hex color, for instance #E6F5FE
 
 ## Copy Sight
 
-> Example Request: Copy Sight
+> Example request: copy sight
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/copy \
@@ -7398,7 +7396,7 @@ new_sight = smartsheet.sights.copy(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -7421,13 +7419,13 @@ Creates a copy of the specified Sight.
 -----|-----|
 <%= SCOPE %> | CREATE_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [ContainerDestination Object](#containerdestination-object)
-<%= RETURNS %> | [Result Object](#result-object) containing a [Sight](#sight-object) for the newly created Sight, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
+<%= REQUEST %> | [ContainerDestination object](#containerdestination-object)
+<%= RETURNS %> | [Result object](#result-object) containing a [Sight](#sight-object) for the newly created Sight, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
 
 
 ## Delete Sight
 
-> Example Request: Delete Sight
+> Example request: delete sight
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId} \
@@ -7472,7 +7470,7 @@ smartsheet.sights.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -7483,17 +7481,17 @@ smartsheet.sights.delete(
 
 `DELETE /sights/{sightId}`
 
-Deletes the Sight specified in the URL.
+Deletes the sight specified in the URL.
 
      |     |
 -----|-----|
 <%= SCOPE %> | DELETE_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ## Get Sight
 
-> Example Request: Get Sight
+> Example request: get sight
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId} \
@@ -7539,7 +7537,7 @@ sight = smartsheet.sights.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -7593,18 +7591,18 @@ sight = smartsheet.sights.get(
 
 `GET /sights/{sightId}`
 
-Gets the specified Sight.
+Gets the specified sight.
 
 
      |     |
 -----|-----|
 <%= SCOPE %> | READ_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Sight Object](#sight-object)
+<%= RETURNS %> | [Sight object](#sight-object)
 
 ## List Sights
 
-> Example Request: List Sights
+> Example request: list sights
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights \
@@ -7645,7 +7643,7 @@ response = smartsheet.sights.list
 sights = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -7688,11 +7686,11 @@ Gets a list of all Sights that the User has access to.
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PARAMETER_MODIFIEDSINCE %>
  | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Sight Objects](#sight-object) limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li><li>createdAt</li><li>modifiedAt</li></ul>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Sight objects](#sight-object) limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li><li>createdAt</li><li>modifiedAt</li></ul>
 
 ## Move Sight
 
-> Example Request: Move Sight
+> Example request: move sight
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/move \
@@ -7781,7 +7779,7 @@ response = smartsheet.sights.move(
 moved_sight = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -7806,14 +7804,14 @@ Moves the specified Sight to a new location.
 -----|-----|
 <%= SCOPE %> | CREATE_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [ContainerDestination Object](#containerdestination-object), limited to the following required attributes:<ul><li>destinationType</li><li>destinationId</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing a [Sight Object](#sight-object) for the moved Sight, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
+<%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following required attributes:<ul><li>destinationType</li><li>destinationId</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing a [Sight object](#sight-object) for the moved Sight, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
 
 ## Publish Sight
 
 ### Get Sight Publish Status
 
-> Example Request: Get Sight Publish Status
+> Example request: get sight publish status
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/publish \
@@ -7855,7 +7853,7 @@ status = smartsheet.sights.get_publish_status(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -7873,11 +7871,11 @@ Gets the Sight 'Publish' settings.
 -----|-----|
 <%= SCOPE %> | READ_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [SightPublish Object](#sightpublish-object)
+<%= RETURNS %> | [SightPublish object](#sightpublish-object)
 
 ### Set Sight Publish Status
 
-> Example Request: Set Sight Publish Status
+> Example request: set sight publish status
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/publish \
@@ -7944,7 +7942,7 @@ response = smartsheet.sights.set_publish_status(
 status = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -7966,18 +7964,18 @@ Publishes or unpublishes a Sight.
 -----|-----|
 <%= SCOPE %> | ADMIN_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [SightPublish Object](#sightpublish-object) limited to the following attributes:<ul><li>**readOnlyFullEnabled** (required)</li><li>**readOnlyFullAccessibleBy** (optional) - set to either "ALL" or "ORG", when **readOnlyFullEnabled**=true.</li></ul>To publish the Sight, set **readOnlyFullEnabled** to `true`. To unpublish the Sight, set **readOnlyFullEnabled** to `false`.
-<%= RETURNS %> | [Result Object](#result-object) containing a [SightPublish Object](#sightpublish-object)
+<%= REQUEST %> | [SightPublish object](#sightpublish-object) limited to the following attributes:<ul><li>**readOnlyFullEnabled** (required)</li><li>**readOnlyFullAccessibleBy** (optional) - set to either "ALL" or "ORG", when **readOnlyFullEnabled**=true.</li></ul>To publish the Sight, set **readOnlyFullEnabled** to `true`. To unpublish the Sight, set **readOnlyFullEnabled** to `false`.
+<%= RETURNS %> | [Result object](#result-object) containing a [SightPublish object](#sightpublish-object)
 
 <aside class="notice">If <b>readOnlyFullEnabled</b> is set to <code>true</code> in the request, but <b>readOnlyFullAccessibleBy</b> is not specified, the value of <b>readOnlyFullAccessibleBy</b> defaults to the organization-level 'Sight Publishing' setting (if the Sight owner belongs to an organization) or to "ALL" (if the Sight owner does not belong to an organization).</aside>
 
 ## Share Sight
 
-For details about Sight sharing, see [Sight Sharing](#sight-sharing).
+For details about sight sharing, see [Sight Sharing](#sight-sharing).
 
 ## Update Sight
 
-> Example Request: Update Sight
+> Example request: update sight
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId} \
@@ -8040,7 +8038,7 @@ response = smartsheet.sights.update(
 updated_sight = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -8057,11 +8055,11 @@ updated_sight = response[:result]
 
 `PUT /sights/{sightId}`
 
-Updates (renames) the specified Sight. 
+Updates (renames) the specified sight. 
 
      |     |
 -----|-----|
 <%= SCOPE %> | ADMIN_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Sight Object](#sight-object) limited to the following attribute:<ul><li>name (string)</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing the updated [Sight Object](#sight-object)
+<%= REQUEST %> | [Sight object](#sight-object) limited to the following attribute:<ul><li>name (string)</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing the updated [Sight object](#sight-object)

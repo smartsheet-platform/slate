@@ -50,7 +50,7 @@ You can view code examples in the programming language of your choice by clickin
 
 ## How Do I Start?
 
-This documentation provides two [Getting Started](#getting-started) tutorials that walk you through making your first API call and interpreting the response to a GET sheet request. You may also want to bookmark or note the following resources:
+This documentation provides two [Getting Started](#getting-started) tutorials that walk you through making your first API call and interpreting the response to a **GET /sheet** request. You may also want to bookmark or note the following resources:
 
 * [Smartsheet Developer Portal:](https://developers.smartsheet.com) If registering, use a different email address from your paid Smartsheet account so you can test the API and make API calls
 * Developer Newsletter (subscribe while at the Developer Portal using the *Get Developer Updates* form)
@@ -67,9 +67,9 @@ To get a list of sheets, use the following:
 
  `GET https://api.smartsheet.com/2.0/sheets`
  
-This returns a list of Sheet Objects, where each Sheet has an “id” attribute.
+This returns a list of Sheet objects, where each sheet has an **id** attribute.
 
-To get details on the sheet with id 123456, use the following:
+To get details on the sheet with **id 123456**, use the following:
  
  `GET https://api.smartsheet.com/2.0/sheets/123456`
 
@@ -100,13 +100,13 @@ The following HTTP request headers may be required, depending on the operation a
 
 Header | Definition | Example |
 -----|-----|-----|
-*Authorization* | Required for all endpoints, except for POST /token. The access token. | Bearer ll352u9jujauoqz4gstvsae05
-*Content-Type* | Required for POST and PUT requests. Defines the structure for the response. | application/json
-*Assume-User* | Optional. Allows an admin to act on behalf of, or impersonate, the user to make API calls. The email address used to identify the user must be URI-encoded. | jane.doe%40smartsheet.com
+Authorization | Required for all endpoints, except for **POST /token**. The access token. | Bearer ll352u9jujauoqz4gstvsae05
+Content-Type | Required for POST and PUT requests. Defines the structure for the response. | application/json
+Assume-User | Optional. Allows an admin to act on behalf of, or impersonate, the user to make API calls. The email address used to identify the user must be URI-encoded. | jane.doe%40smartsheet.com
 
 ### Query Strings
 
-> Example Request: List Sheets with Query Strings
+> Example request: list sheets with query strings
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets?include=attachments,source&includeAll=true \
@@ -171,16 +171,16 @@ Query Parameter | Type | Description | More Info |
 -----|-----|-----|-----|
 pageSize | Number | Specifies the maximum number of items to return per page, for example, pageSize=25. | [Paging](#paging)
 page | String | Specifies which page to return, for example, page=4. | [Paging](#paging)
-includeAll | Boolean | If true, includes all results, for example, includeAll=true. | [Paging](#paging)
-allowPartialSuccess | Boolean | If true, allows bulk operations to process even if one or more operations are invalid for some reason, for example, allowPartialSuccess=true. | [Bulk Operations](#bulk-operations)
-numericDates | Boolean | If true, allows you to input or receive dates in numeric format, for example, numericDates=true. | [Dates and Times](#dates-and-times)
-include/exclude | String | When applicable for a specific object, various include or exclude parameters are available, for example, include=formatting. | Object reference or [Formatting](#formatting)
+includeAll | Boolean | If **true**, includes all results, for example, includeAll=true. | [Paging](#paging)
+allowPartialSuccess | Boolean | If **true**, allows bulk operations to process even if one or more operations are invalid for some reason, for example, **allowPartialSuccess=true**. | [Bulk Operations](#bulk-operations)
+numericDates | Boolean | If **true**, allows you to input or receive dates in numeric format, for example, **numericDates=true**. | [Dates and Times](#dates-and-times)
+include/exclude | String | When applicable for a specific object, various **include** or **exclude** parameters are available, for example, **include=formatting**. | Object reference or [Formatting](#formatting)
 
 <aside class="notice">Query strings are case sensitive. If you do not see the expected response, confirm that your query is formatted correctly.</aside>
 
 ## Authentication and Access Tokens
 
-> Example Request: Authentication and Access Tokens
+> Example request: authentication and access tokens
 
 ```shell
 curl https://api.smartsheet.com/2.0/users/me \
@@ -238,7 +238,7 @@ require 'smartsheet'
 }
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -281,10 +281,10 @@ Sheets are composed of rows, columns, and cells. A cell is identified by the Id 
 
 UI Element | Description | More Info
 -----|-----|-----|
-Sheet | A Sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [Folder](#folders), or in a [Workspace](#workspaces). It is comprised of Columns, Rows, and Cells, and may optionally contain Attachments and/or Discussions. | [Sheet Object](#sheet-object)
-Column | A Column Object *defines* the type of the column, but does not actually contain cells. The Column Id identifies the cells in a row. | [Column Object,](#column-object) [Column types](#column-types)
-Row | A Row is a component of a Sheet or Report. Each Row is composed of a collection of Cells, and may optionally contain Attachments and/or Discussions. | [Row Object](#row-object)
-Cell | A Cell is a location within a Sheet that may contain a value. A collection of Cells comprises each Row in a Sheet. | [Cell Object,](#cell-object) [Cell reference](#cell-reference)
+Sheet | A Sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [Folder](#folders), or in a [Workspace](#workspaces). It is comprised of Columns, Rows, and Cells, and may optionally contain Attachments and/or Discussions. | [Sheet object](#sheet-object)
+Column | A Column object *defines* the type of the column, but does not actually contain cells. The Column Id identifies the cells in a row. | [Column object,](#column-object) [Column types](#column-types)
+Row | A Row is a component of a Sheet or Report. Each Row is composed of a collection of Cells, and may optionally contain Attachments and/or Discussions. | [Row object](#row-object)
+Cell | A Cell is a location within a Sheet that may contain a value. A collection of Cells comprises each Row in a Sheet. | [Cell object,](#cell-object) [Cell reference](#cell-reference)
 
 ## Object Details vs List Summaries
 
@@ -362,7 +362,7 @@ Before you begin, you should already have an access token, which you used in the
 {
   "id": 6141831453927300,                 // This is the Id of the entire sheet
   "name": "My first sheet",
-    "columns": [{                         // Each Column Object associates column
+    "columns": [{                         // Each Column object associates column
                                           // Id to title and defines the
                                           // column details
 
@@ -382,7 +382,7 @@ Before you begin, you should already have an access token, which you used in the
       "width": 150
     }
   ],
-  "rows": [{                              // A Row Object
+  "rows": [{                              // A Row object
     "id": 564480076736388,                // Use the row Id to make updates
     "rowNumber": 1,
     "expanded": true,
@@ -575,11 +575,11 @@ EDITOR_SHARE | The same as EDITOR, but with the ability to share the resource to
 OWNER | The user has complete control over the resource.
 VIEWER | The user has read-only access to the resource.
 
-<aside class="notice">Smartsheet also uses <a href="#access-scopes">Access Scopes</a>. Access Levels describe the actual permissions a specific user has for a specific sheet or other resource. Access Scopes describe the general categories of access requested by a third-party app.</aside>
+<aside class="notice">Smartsheet also uses <a href="#access-scopes">access scopes</a>. Access levels describe the actual permissions a specific user has for a specific sheet or other resource. Access scopes describe the general categories of access requested by a third-party app.</aside>
 
 ## Assume User
 
-> Example: Assume User
+> Example: assume user
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets \
@@ -928,7 +928,7 @@ hash<br/>(required) | [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of you
 
 <aside class="notice">The "Get Access Token" request must have the <b>Content-Type</b> header set to 'application/x-www-form-urlencoded'.</aside>
 
-If your request is successful, the response will contain a [Token Object](#token-object). You can see an example of the Token Object in the dark-blue area in the rightmost pane. 
+If your request is successful, the response will contain a [Token object](#token-object). You can see an example of the Token object in the dark-blue area in the rightmost pane. 
 
 For possible error conditions, see the list of [OAuth Error Types](#oauth-error-types).
 
@@ -1021,7 +1021,7 @@ redirect_uri<br/>(deprecated)| If supplied, must match the redirect URL you [reg
 
 <aside class="notice">The "Refresh Token" request must have the <b>Content-Type</b> header set to 'application/x-www-form-urlencoded'.</aside>
 
-If your request is successful, the response will contain a [Token Object](#token-object). You can see an example of the Token Object in the dark-blue area in the rightmost pane. 
+If your request is successful, the response will contain a [Token object](#token-object). You can see an example of the Token object in the dark-blue area in the rightmost pane. 
 
 ### OAuth Error Types
 
@@ -1044,12 +1044,12 @@ multiple objects in a single request. For example, if you want to update 10 rows
 ### Optional Bulk Operations
 
 Several endpoints support *optional* bulk `POST` operations which exist alongside the standard single-object `POST`.  For these endpoints, you may pass in either a single object or an array of objects.
-Depending on what was passed in, the [Result Object](#result-object) returned contains either a single object or an array.  An example optional bulk operation is [POST /favorites](#add-favorites): you can
-pass in a single [Favorite Object](#favorite-object) to create a single favorite, or an array of Favorite objects to create multiple favorites in a single request.  Endpoints which support bulk operations are
+Depending on what was passed in, the [Result object](#result-object) returned contains either a single object or an array.  An example optional bulk operation is [POST /favorites](#add-favorites): you can
+pass in a single [Favorite object](#favorite-object) to create a single favorite, or an array of Favorite objects to create multiple favorites in a single request.  Endpoints which support bulk operations are
 noted as such in the API reference documentation.
 
 **NOTE**: Most `POST` operations fail when attempting to create a single object which already exists (for example, favorites, shares, group members).  However, for the corresponding bulk operations, these endpoints do *not*
-return an error if one or more items in the array already exist.  Existing items are simply ignored, and the [Result Object](#result-object) returned omits them.
+return an error if one or more items in the array already exist.  Existing items are simply ignored, and the [Result object](#result-object) returned omits them.
 
 ### Partial Success
 
@@ -1069,7 +1069,7 @@ you can retrieve paged subsets of results, enabling you to process potentially l
 
 ### Paging Query String Parameters
 
-> Example Request: List Sheets with Pagination Query Strings
+> Example request: list sheets with pagination query strings
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets?include=attachments,source&includeAll=true \
@@ -1140,7 +1140,7 @@ Value | Type | Description |
 
 ### Paged Responses
 
-Index endpoints all return paged responses via an **IndexResult** Object which provides paging metadata that can be used to navigate the full set of pages in the result set:
+Index endpoints all return paged responses via an **IndexResult** object which provides paging metadata that can be used to navigate the full set of pages in the result set:
 
 <%= partial "snippets/indexResult_object.md.erb" %>
 

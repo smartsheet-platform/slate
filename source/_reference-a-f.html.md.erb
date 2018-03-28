@@ -2,13 +2,13 @@
 
 # Attachments
 
-Attachments can exist on a [Comment](#comments) (that is, within a Discussion), on a [Row](#rows), or on a [Sheet](#sheets).
+Attachments can exist on a [comment](#comments) (that is, within a discussion), on a [row](#rows), or on a [sheet](#sheets).
 
 ## <%= OBJECTS %>
 
 ### Attachment Object
 
-> Example Attachment Object:
+> Example: Attachment object
 
 ```json
 {
@@ -36,7 +36,7 @@ Attachments can exist on a [Comment](#comments) (that is, within a Discussion), 
 **attachmentType** | string | Attachment type (one of FILE, GOOGLE_DRIVE, LINK, BOX_COM, DROPBOX, EVERNOTE, EGNYTE, ONEDRIVE)
 **attachmentSubType** | string | Attachment sub type, valid only for either GOOGLE_DRIVE attachments or EGNYTE attachments:<ul><li>possible values for GOOGLE_DRIVE attachments: DOCUMENT, SPREADSHEET, PRESENTATION, PDF, DRAWING</li><li>possible values for EGNYTE attachments: FOLDER</li></ul>
 **createdAt** | timestamp | A timestamp of when the attachment was originally added
-**createdBy** | [User](#user-object) | User Object containing name and email of the creator of this attachment
+**createdBy** | [User](#user-object) | User object containing name and email of the creator of this attachment
 **mimeType** | string | Attachment MIME type (PNG, etc.)
 **parentType** | string | The type of object the attachment belongs to. One of "SHEET", "ROW", or "COMMENT"
 **parentId** | number | The id of the parent 
@@ -129,7 +129,7 @@ As shown in this example, the contents of the file is included in the body of th
 
 ## Attach File to Comment
 
-> Example Request: Attach File to Comment
+> Example request: attach file to comment
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId}/attachments \
@@ -220,7 +220,7 @@ response = smartsheet.sheets.comments.attachments.attach_file(
 new_attachment = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/attachFile_response.md.erb" %>
 
@@ -238,7 +238,7 @@ Attaches a file to the Comment. <%= SUPPORTS_MULTIPART %>
 
 ## Attach File to Row
 
-> Example Request: Attach File to Row
+> Example request: attach file to row
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
@@ -329,7 +329,7 @@ response = smartsheet.sheets.rows.attachments.attach_file(
 new_attachment = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/attachFile_response.md.erb" %>
 
@@ -343,7 +343,7 @@ Attaches a file to the Row. <%= SUPPORTS_MULTIPART %>
 
 ## Attach File to Sheet 
 
-> Example Request: Attach File to Sheet
+> Example request: attach file to sheet
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
@@ -428,7 +428,7 @@ response = smartsheet.sheets.attachments.attach_file(
 new_attachment = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/attachFile_response.md.erb" %>
 
@@ -442,7 +442,7 @@ Attaches a file to the Sheet. <%= SUPPORTS_MULTIPART %>
 
 ## Attach URL to Comment
 
-> Example Request: Attach URL to Comment
+> Example request: attach URL to comment
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId}/attachments \
@@ -541,19 +541,19 @@ response = smartsheet.sheets.comments.attachments.attach_url(
 new_attachment = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/attachURL_response.md.erb" %>
 
 `POST /sheets/{sheetId}/comments/{commentId}/attachments`
 
-Attaches a URL to the Comment.
+Attaches a URL to the comment.
 
 <%= partial "snippets/attachURL_table.md.erb" %>
 
 ## Attach URL to Row
 
-> Example Request: Attach URL to Row
+> Example request: attach URL to row
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
@@ -656,7 +656,7 @@ response = smartsheet.sheets.rows.attachments.attach_url(
 new_attachment = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/attachURL_response.md.erb" %>
 
@@ -668,7 +668,7 @@ Attaches a URL to the Row.
 
 ## Attach URL to Sheet
 
-> Example Request: Attach URL to Sheet
+> Example request: attach URL to sheet
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
@@ -767,19 +767,19 @@ response = smartsheet.sheets.attachments.attach_url(
 new_attachment = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/attachURL_response.md.erb" %>
 
 `POST /sheets/{sheetId}/attachments`
 
-Attaches a URL to the Sheet.
+Attaches a URL to the sheet.
 
 <%= partial "snippets/attachURL_table.md.erb" %>
 
 ## Delete Attachment
 
-> Example Request: Delete Attachment
+> Example request: delete attachment
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId} \
@@ -831,7 +831,7 @@ smartsheet.sheets.attachments.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -850,11 +850,11 @@ Deletes the Attachment specified in the URL.
 -----|-----|
 <%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ## Get Attachment
 
-> Example Request: Get Attachment
+> Example request: get attachment
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId} \
@@ -905,7 +905,7 @@ attachment = smartsheet.sheets.attachments.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -926,11 +926,11 @@ Fetches a temporary URL that allows you to download an Attachment. The `urlExpir
 -----|-----|
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Attachment Object](#attachment-object). For File attachments, this includes a temporary URL for downloading the file.<br/><br/>Currently, the temporary URL is set to expire in 120000 milliseconds, or 2 minutes.
+<%= RETURNS %> | [Attachment object](#attachment-object). For File attachments, this includes a temporary URL for downloading the file.<br/><br/>Currently, the temporary URL is set to expire in 120000 milliseconds, or 2 minutes.
 
 ## List Attachments
 
-> Example Request: List Attachments
+> Example request: list attachments
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments \
@@ -992,7 +992,7 @@ response = smartsheet.sheets.attachments.list(
 attachments = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1023,7 +1023,7 @@ attachments = response[:data]
 
 `GET /sheets/{sheetId}/attachments`
 
-Gets a list of all Attachments that are on the Sheet, including Sheet, Row, and Discussion-level Attachments. 
+Gets a list of all attachments that are on the sheet, including sheet, row, and discussion-level attachments. 
 
 <aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
@@ -1032,11 +1032,11 @@ Gets a list of all Attachments that are on the Sheet, including Sheet, Row, and 
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Attachment Objects](#attachment-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Attachment objects](#attachment-object)
 
 ## List Discussion Attachments
 
-> Example Request: List Discussion Attachments
+> Example request: list discussion attachments
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions/{discussionId}/attachments \
@@ -1104,7 +1104,7 @@ response = smartsheet.sheets.discussions.attachments.list(
 attachments = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1144,11 +1144,11 @@ Gets a list of all Attachments that are in the Discussion.
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Attachment Objects](#attachment-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Attachment objects](#attachment-object)
 
 ## List Row Attachments
 
-> Example Request: List Row Attachments
+> Example request: list row attachments
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/attachments \
@@ -1216,7 +1216,7 @@ response = smartsheet.sheets.rows.attachments.list(
 attachments = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1256,13 +1256,13 @@ Gets a list of all Attachments that are on the Row, including Row and Discussion
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Attachment Objects](#attachment-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Attachment objects](#attachment-object)
 
 ## Versioning 
 
 ### Attach New Version
 
-> Example Request: Attach New Version
+> Example request: attach new version
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/versions \
@@ -1355,7 +1355,7 @@ response = smartsheet.sheets.attachments.attach_new_version(
 updated_attachment = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1382,7 +1382,7 @@ Uploads a new version of a file to a Sheet or Row. <%= SUPPORTS_MULTIPART %>
 
 ### Delete All Versions
 
-> Example Request: Delete All Versions
+> Example request: delete all versions
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/versions \
@@ -1434,7 +1434,7 @@ smartsheet.sheets.attachments.delete_all_versions(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1452,11 +1452,11 @@ Deletes all versions of the attachment corresponding to the specified Attachment
 -----|-----|
 <%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ### List Versions
 
-> Example Request: List Versions
+> Example request: list versions
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/attachments/{attachmentId}/versions \
@@ -1524,7 +1524,7 @@ response = smartsheet.sheets.attachments.list_versions(
 versions = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1562,7 +1562,7 @@ Gets a list of all versions of the given Attachment Id in order from newest to o
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Attachment Objects](#attachment-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Attachment objects](#attachment-object)
 
 <aside class="notice">To retrieve a download URL for a file attachment, use the Get Attachment operation for the specific version you want to download.</aside>
 
@@ -1574,7 +1574,7 @@ Gets a list of all versions of the given Attachment Id in order from newest to o
 
 ### AutomationRule Object
 
-> Example AutomationRule Object:
+> Example: AutomationRule object
 
 ```json
 {
@@ -1610,19 +1610,19 @@ Gets a list of all versions of the given Attachment Id in order from newest to o
 -----|-----|-----|
 **id** | number | AutomationRule Id
 **name** | string | Rule name as shown in the UI.
-**action** | [AutomationAction](#automationaction-object) | AutomationAction Object containing information for this rule, such as type, recipients, and frequency.
+**action** | [AutomationAction](#automationaction-object) | AutomationAction object containing information for this rule, such as type, recipients, and frequency.
 **enabled** | Boolean | If `true`, indicates that the rule is active.
 **createdAt** | timestamp | A timestamp of when the rule was originally added.
-**createdBy** | [User](#user-object) | User Object containing name and email of the creator of this rule.
+**createdBy** | [User](#user-object) | User object containing name and email of the creator of this rule.
 **modifiedAt** | timestamp | The datetime for when the change was made to the rule.
-**modifiedBy** | [User](#user-object) | User Object containing the name and email of the User that made the change.
+**modifiedBy** | [User](#user-object) | User object containing the name and email of the User that made the change.
 **userCanModify** | Boolean | If `true`, indicates whether the current user can modify the rule.
 **disabledReasonText** | string | Descriptive reason a rule is disabled.
 **disabledReason** | string | Machine-readable reason a rule is disabled. See table of [Disabled Reasons](#disabled-reasons-for-automation-rules). 
 
 ### AutomationAction Object
 
-> Example AutomationAction Object:
+> Example: AutomationAction object
 
 ```json
 {
@@ -1643,7 +1643,7 @@ Gets a list of all versions of the given Attachment Id in order from newest to o
      |     |     |
 -----|-----|-----|
 **type** | string | One of three types: `APPROVAL_REQUEST_ACTION`, `NOTIFICATION_ACTION`, or `UPDATE_REQUEST_ACTION`.
-**recipients** | [Recipient](#recipient-object) | Array of Recipient Objects that contains one or more [Email Objects](#email-object).
+**recipients** | [Recipient](#recipient-object) | Array of Recipient objects that contains one or more [Email objects](#email-object).
 **recipientColumnIds** | long[] | Array of column Ids from which to collect email recipients.
 **notifyAllSharedUsers** | Boolean | If `true`, notifications are sent to all users shared to the sheet. 
 **frequency** | string | Must be one of the following values: `DAILY`, `HOURLY`, `IMMEDIATELY`, or `WEEKLY`.
@@ -1654,11 +1654,11 @@ Gets a list of all versions of the given Attachment Id in order from newest to o
 **includeAttachments** | Boolean | If `true`, includes attachments.
 **includeDiscussions** | Boolean | If `true`, includes discussions.
 
-<aside class="notice">Either recipientColumns, recipientEmails, or notifyAllSharedUsers may be specified, but not more than one per AutomationRule Object.</aside>
+<aside class="notice">Either recipientColumns, recipientEmails, or notifyAllSharedUsers may be specified, but not more than one per AutomationRule object.</aside>
 
 ## Delete an Automation Rule
 
-> Example Request: Delete an Automation Rule
+> Example request: delete an automation rule
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automationRuleId} \
@@ -1702,7 +1702,7 @@ smartsheet.sheets.automation_rules.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1719,11 +1719,11 @@ Deletes an automation rule.
 -----|-----|
 <%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ## Get an Automation Rule
 
-> Example Request: Get an Automation Rule
+> Example request: get an automation rule
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automationRuleId} \
@@ -1766,7 +1766,7 @@ rule = smartsheet.sheets.automation_rules.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1806,11 +1806,11 @@ Returns the specified automation rule, including any action values.
 -----|-----|
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [AutomationRule Object](#automationrule-object).
+<%= RETURNS %> | [AutomationRule object](#automationrule-object).
 
 ## List All Automation Rules
 
-> Example Request: List All Automation Rules
+> Example request: list all automation rules
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules \
@@ -1852,7 +1852,7 @@ response = smartsheet.sheets.automation_rules.list(
 rules = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1927,11 +1927,11 @@ Returns all automation rules associated with the specified sheet.
 -----|-----|
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [AutomationRule Objects](#automationrule-object).
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [AutomationRule objects](#automationrule-object).
 
 ## Update an Automation Rule
 
-> Example Request: Update an Automation Rule
+> Example request: update an automation rule
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/automationrules/{automationRuleId} \
@@ -2019,7 +2019,7 @@ smartsheet.sheets.automation_rules.update(
 })
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -2059,8 +2059,8 @@ Updates an existing automation rule.
 -----|-----|
 <%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | An [AutomationRule Object](#automationrule-object). When sending an AutomationRule, you must always specify `action.type` and it must match the existing rule type.
-<%= RETURNS %> | [Result Object](#result-object) containing the updated [AutomationRule Object](#automationrule-object)
+<%= REQUEST %> | An [AutomationRule object](#automationrule-object). When sending an AutomationRule, you must always specify `action.type` and it must match the existing rule type.
+<%= RETURNS %> | [Result object](#result-object) containing the updated [AutomationRule object](#automationrule-object)
 
 ## <%= RELATED %>
 
@@ -2084,7 +2084,7 @@ A collection of Cells comprises each Row in a Sheet.
 
 ### Cell Object
 
-> Example Cell Object:
+> Example: Cell object
 
 ```json
 {
@@ -2098,7 +2098,7 @@ A collection of Cells comprises each Row in a Sheet.
      |     |     |
 -----|-----|-----|
 **columnId** | number | The Id of the column that the cell is located in
-**columnType** | string | See type definition on the [Column Object](#column-object).<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **columnType**.
+**columnType** | string | See type definition on the [Column object](#column-object).<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **columnType**.
 **value** | string,<br/>number,<br/>or Boolean | A string, a number or a Boolean value -- depending on the cell type and the data in the cell.  Cell values larger than 4000 characters are silently truncated. An empty cell returns no value. See [Cell Reference](#cell-reference).
 **displayValue** | string | Visual representation of cell contents, as presented to the user in the UI.  See [Cell Reference](#cell-reference).
 **objectValue** | [ObjectValue](#objectvalue-object) | [Optionally included](#row-include-flags) object representation of the cell's value. Used for updating predecessor cell values.
@@ -2114,12 +2114,12 @@ A collection of Cells comprises each Row in a Sheet.
 
 ### Cell History Object
 
-Extends the [Cell Object](#cell-object).
+Extends the [Cell object](#cell-object).
 
      |     |     |
 -----|-----|-----|
 **modifiedAt** | timestamp | The datetime for when the change was made to the cell
-**modifiedBy** | [User](#user-object) | User Object containing the name and email of the User that made the change
+**modifiedBy** | [User](#user-object) | User object containing the name and email of the User that made the change
 
 ### CellLink Object
 
@@ -2159,7 +2159,7 @@ This object itself is not used directly.
 
 ### PredecessorList Object
 
-> Example Update Row Request for a Predecessor Cell:
+> Example request: update row for a predecessor cell
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/rows?include=objectValue' \
@@ -2169,7 +2169,7 @@ curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/rows?include=objectValue' 
 -d '[{"id": "6572427401553796", "cells": [{"columnId": 7518312134403972,"objectValue": {"objectType": "PREDECESSOR_LIST","predecessors": [{"rowId": 567735454328708,"type": "FS","lag": {"objectType": "DURATION","days": 2,"hours": 4}}]}}]}]'
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -2202,14 +2202,14 @@ curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/rows?include=objectValue' 
 }
 ```
 
-Extends the [ObjectValue Object](#objectvalue-object).
+Extends the [ObjectValue object](#objectvalue-object).
 
 In a project sheet with dependencies enabled, the **objectValue** attribute for predecessor cells is an object of this type, which represents the predecessors for the row.
 
      |     |     |
 -----|-----|-----|
 **objectType** | string | PREDECESSOR_LIST
-**predecessors** | [Predecessor](#predecessor-object)[] | Array of [Predecessor Objects](#predecessor-object).
+**predecessors** | [Predecessor](#predecessor-object)[] | Array of [Predecessor objects](#predecessor-object).
 
 ### Predecessor Object
 
@@ -2224,7 +2224,7 @@ In a project sheet with dependencies enabled, the **objectValue** attribute for 
 
 ### Duration Object
 
-Extends the [ObjectValue Object](#objectvalue-object).
+Extends the [ObjectValue object](#objectvalue-object).
 
 In a project sheet, represents a value in a duration cell, or a lag value of a predecessor.
 
@@ -2242,7 +2242,7 @@ In a project sheet, represents a value in a duration cell, or a lag value of a p
 
 ## Get Cell History
 
-> Example Request: Get Cell History
+> Example request: get cell history
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/columns/{columnId}/history?include=columnType' \
@@ -2329,7 +2329,7 @@ response = smartsheet.sheets.cells.get_history(
 revisions = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -2389,7 +2389,7 @@ Gets the cell modification history.
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional): when specified with a value of "columnType", response includes the **columnType** attribute for each [cell] (#cell-object)
  | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Cell History Objects](#cell-history-object). For more details, see [Cell Reference](#cell-reference).
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Cell History objects](#cell-history-object). For more details, see [Cell Reference](#cell-reference).
 
 ## Update Cells
 
@@ -2412,7 +2412,7 @@ A cell may not contain both a hyperlink and a cell link, so **hyperlink** and **
 
 #### Cell Value Representation
 
-[Cell Objects](#cell-object) retrieved through the Smartsheet APIs have two main attributes representing cell values: **Cell.value**, and
+[Cell objects](#cell-object) retrieved through the Smartsheet APIs have two main attributes representing cell values: **Cell.value**, and
 **Cell.displayValue**.  A third attribute, **Cell.objectValue** is currently used only for adding and updating predecessors.
 An empty cell returns no value.
 
@@ -2438,22 +2438,22 @@ depending on the column type.  An empty cell returns no value. Complex types are
 
 **Cell.objectValue** is an object representation of a cell's value and is currently used for adding or updating predecessor cell values.
 It provides a more "programmer friendly" format for assembling predecessors. To update a cell's predecessors, set objectValue to a
-[PredecessorList Object](#predecessorlist-object) containing [Predecessor Objects](#predecessor-object).
+[PredecessorList object](#predecessorlist-object) containing [Predecessor objects](#predecessor-object).
 
 #### Cell Value Parsing
 
 The flexibility in cell value data types is a powerful feature in the Smartsheet application, but at the same time, it poses a challenge
 for an API in terms of parsing. Being too flexible might result in unexpected behavior. For instance, if you write code
-to post a Date value to a Smartsheet and the API operation succeeds,  you might assume that the date value you sent was interpreted
+to post a Date value to a Smartsheet and the API operation succeeds, you might assume that the date value you sent was interpreted
 as date. What happens if you posted your date in the wrong format? Do you really want Smartsheet to keep the malformed date
-as a Text value? Probably not.
+as a String value? Probably not.
  
 To address this problem, the Smartsheet API employs a simple scheme to indicate whether you want a more predictable and strict
 interface or a more flexible one. By default, a cell value is expected to conform to "strict" rules for the type of the cell's column.
 If an input value doesn't conform, the API returns [error code 1042](#400-level-error-codes).
 
 If, however, you want the same flexibility as the Smartsheet Web app, you can disable the strict rules, and we’ll do our best to make
-sense of it. To enable lenient parsing simply include `"strict" : false` in the [Cell Object](#cell-object) in your request body.
+sense of it. To enable lenient parsing simply include `"strict" : false` in the [Cell object](#cell-object) in your request body.
 
 <aside class="notice">How does strict cell value parsing compare to cell validation settings? Strict cell value parsing determines how string values are parsed. It is set on a per-call basis. In contrast, cell validation is part of the column definition. The overrideValidation property is restricted to sheet admins and does **not** override strict parsing.</aside>
 
@@ -2511,7 +2511,7 @@ The parsing rules for the various column types are as follows:
 
      |     |
 -----|-----|
-N/A | Set using the objectValue attribute for the Cell Object, which is inherently strict. See [Cell Reference](#cell-reference).
+N/A | Set using the objectValue attribute for the Cell object, which is inherently strict. See [Cell Reference](#cell-reference).
 
 **ABSTRACT_DATETIME**:
 
@@ -2561,7 +2561,7 @@ A 'cell image' is an image that has been uploaded to a Cell within a Sheet.
 
 ### ImageUrl Object
 
-> Example ImageUrl Object:
+> Example: ImageUrl object
 
 ```json
 {
@@ -2576,18 +2576,18 @@ A 'cell image' is an image that has been uploaded to a Cell within a Sheet.
 **width** | number | Image width (in pixels).<br/>In the [Get All Image URLs](#list-image-urls) request, this (optional) attribute represents requested width; in the response, it represents actual width of the image returned. (See [List Image URLs](#list-image-urls).) 
 **height** | number | Image height (in pixels).<br/>In the [Get All Image URLs](#list-image-urls) request, this (optional) attribute represents requested height; in the response, it represents actual height of the image returned. (See [List Image URLs](#list-image-urls).) 
 **url** | string | Temporary URL that can be used to retrieve the image. This attribute can be present in a response but is never specified in a request.
-**error** | [Error Object](#error-object) | Present in the [Get All Image URLs](#list-image-urls) response only if an error occurred retrieving the image.
+**error** | [Error object](#error-object) | Present in the [Get All Image URLs](#list-image-urls) response only if an error occurred retrieving the image.
 
 ### ImageUrlMap Object
 
      |     |     |
 -----|-----|-----|
 **urlExpiresInMillis** | number | Milliseconds before the URLs within **imageUrls** expire
-**imageUrls** | [ImageUrl](#imageurl-object)[] | Array of ImageUrl Objects
+**imageUrls** | [ImageUrl](#imageurl-object)[] | Array of ImageUrl objects
 
 ## Add Image to Cell
 
-> Example Request: Add Image to Cell
+> Example request: add image to cell
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/columns/{columnId}/cellimages?altText=my%20image' \
@@ -2696,7 +2696,7 @@ response = smartsheet.sheets.cells.add_image(
 new_image = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -2709,7 +2709,7 @@ new_image = response[:result]
 		"expanded": true,
 		"createdAt": "2017-08-28T21:29:16Z",
 		"modifiedAt": "2017-08-30T08:10:47Z",
-		"cells": [Object]
+		"cells": []
 	}],
 	"version": 19
 }
@@ -2725,11 +2725,11 @@ Uploads an image to the specified Cell within a Sheet.
 <%= HEADERS %> | See [Simple Uploads](#simple-uploads) for information about required headers.
 <%= PARAMETERS %> | **altText** (optional): url-encoded alternate text for the image<BR><%= PARAMETER_OVERRIDE_VALIDATION %>
 <%= REQUEST %> | Binary content for the file
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ## Download Cell Image
 
-> Example Request: Download Cell Image
+> Example request: download cell image
 
 ```shell
 // Steps 1 and 2: Locate the cell and obtain the imageId
@@ -2902,7 +2902,7 @@ Get the desired row, then locate the desired cell based on the column Id.
 
 **Step 2. Obtain the image Id**
 
-Cell images are identified by an image Id, which is stored in a cell Image Object. (The image Id is the "key" to the image and should be kept secure.)
+Cell images are identified by an image Id, which is stored in a cell Image object. (The image Id is the "key" to the image and should be kept secure.)
 
 When a user uploads an image to a cell, Smartsheet uses the original file name as the image "Alt text." This example uses that Alt text value as the local file name.
 
@@ -2916,7 +2916,7 @@ Once you have the URL, issue a standard HTTP GET to download the image and save 
 
 ## List Image URLs
 
-> Example Request: List Image URLs
+> Example request: list image URLs
 
 ```shell
 curl https://api.smartsheet.com/2.0/imageurls \
@@ -2989,7 +2989,7 @@ image_urls = smartsheet.sheets.list_image_urls(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -3011,14 +3011,14 @@ image_urls = smartsheet.sheets.list_image_urls(
 
 Gets a list of URLs that can be used to retrieve the specified cell images.
 
-<aside class="notice">If an error is encountered for any of the requested images, the corresponding <b>ImageUrl</b> Object in the Response contains an <b>error</b> attribute that describes the error. (See Example Response.) Certain errors are not detected until the returned URL is referenced.</aside>
+<aside class="notice">If an error is encountered for any of the requested images, the corresponding <b>ImageUrl</b> object in the Response contains an <b>error</b> attribute that describes the error. (See Example Response.) Certain errors are not detected until the returned URL is referenced.</aside>
 
      |     |
 -----|-----|
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | Array of [ImageUrl Objects](#imageurl-object), with the following attributes:<ul><li><b>imageId</b> (required)</li><li><b>height</b> (optional)</li><li><b>width</b> (optional)</li></ul>Each image in the response is sized according to which dimensions were specified by the request:<ul><li>If neither <b>height</b> nor <b>width</b> is specified, the image is returned in its original size.</li><li>If both <b>height</b> AND <b>width</b> are specified, image is sized using those measurements.</li><li>If either <b>height</b> OR <b>width</b> is specified (that is, one or the other -- not both), the image is automatically scaled using that measurement.</li></ul>Additionally, the following rules apply:<ul><li>If the requested image size is less than or equal to the actual image size, the returned image size matches the requested size.</li><li>If the requested image size is larger than the actual image size, the returned image size matches the actual image size.</li></ul>
-<%= RETURNS %> | [ImageUrlMap Object](#imageurlmap-object)
+<%= REQUEST %> | Array of [ImageUrl objects](#imageurl-object), with the following attributes:<ul><li><b>imageId</b> (required)</li><li><b>height</b> (optional)</li><li><b>width</b> (optional)</li></ul>Each image in the response is sized according to which dimensions were specified by the request:<ul><li>If neither <b>height</b> nor <b>width</b> is specified, the image is returned in its original size.</li><li>If both <b>height</b> AND <b>width</b> are specified, image is sized using those measurements.</li><li>If either <b>height</b> OR <b>width</b> is specified (that is, one or the other -- not both), the image is automatically scaled using that measurement.</li></ul>Additionally, the following rules apply:<ul><li>If the requested image size is less than or equal to the actual image size, the returned image size matches the requested size.</li><li>If the requested image size is larger than the actual image size, the returned image size matches the actual image size.</li></ul>
+<%= RETURNS %> | [ImageUrlMap object](#imageurlmap-object)
 
 To retrieve images, see the workflow in [Download Cell Image](#download-cell-image).
 
@@ -3042,7 +3042,7 @@ A Column is a component of a Sheet or Report.
 
 ### Column Object
 
-> Example Column Object:
+> Example: Column object
 
 ```json
 {
@@ -3063,7 +3063,7 @@ A Column is a component of a Sheet or Report.
 **primary** | Boolean | Returned only if the column is the Primary Column (value = `true`)
 **type** | string | One of:<ul><li>TEXT_NUMBER</li><li>DATE</li><li>DATETIME</li><li>CONTACT_LIST</li><li>CHECKBOX</li><li>PICKLIST</li><li>DURATION</li><li>PREDECESSOR</li><li>ABSTRACT_DATETIME</li></ul>See [Column Types](#column-types).
 **options** | string[] | Array of the options available for the column
-**contactOptions** | ContactOption[] | Array of ContactOption Objects to specify a pre-defined list of values for the column. Column **type** must be **CONTACT_LIST** 
+**contactOptions** | ContactOption[] | Array of ContactOption objects to specify a pre-defined list of values for the column. Column **type** must be **CONTACT_LIST** 
 **hidden** | Boolean | Indicates whether the column is hidden
 **symbol** | string | When applicable for CHECKBOX or PICKLIST column types. See [Symbol Columns](#symbol-columns).
 **systemColumnType** | string | When applicable, one of: <ul><li>AUTO_NUMBER</li><li>MODIFIED_DATE</li><li>MODIFIED_BY</li><li>CREATED_DATE</li><li>CREATED_BY</li></ul>See [System Columns](#system-columns).
@@ -3086,7 +3086,7 @@ A Column is a component of a Sheet or Report.
 
 ## Add Columns
 
-> Example Request: Add Columns
+> Example request: add columns
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns \
@@ -3231,7 +3231,7 @@ new_columns = smartsheet.sheets.columns.add(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -3280,7 +3280,7 @@ Inserts one or more columns into the Sheet specified in the URL.
 
 ## Delete Column
 
-> Example Request: Delete Column
+> Example request: delete column
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
@@ -3332,7 +3332,7 @@ smartsheet.sheets.columns.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -3349,11 +3349,11 @@ Deletes the Column specified in the URL.
 -----|-----|
 <%= SCOPE %> | ADMIN_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ## Get Column
 
-> Example Request: Get Column
+> Example request: get column
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
@@ -3422,7 +3422,7 @@ column = smartsheet.sheets.columns.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -3443,11 +3443,11 @@ Gets the Column specified in the URL.
 -----|-----|
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Column Object](#column-object)
+<%= RETURNS %> | [Column object](#column-object)
 
 ## List Columns
 
-> Example Request: List Columns
+> Example request: list columns
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns \
@@ -3502,7 +3502,7 @@ response = smartsheet.sheets.columns.list(
 columns = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -3549,11 +3549,11 @@ Gets a list of all Columns belonging to the Sheet specified in the URL.
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Column Objects](#column-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Column objects](#column-object)
 
 ## Update Column
 
-> Example Request: Update Column
+> Example request: update column
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
@@ -3659,7 +3659,7 @@ response = smartsheet.sheets.columns.update(
 updated_column = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -3698,7 +3698,7 @@ Updates properties of the column, moves the column, and/or renames the column.
 
 ### Column Types
 
-Smartsheet supports the following standard column types, which are represented in a [Column Object](#column-object) with a **type** attribute set to one of the following:
+Smartsheet supports the following standard column types, which are represented in a [Column object](#column-object) with a **type** attribute set to one of the following:
 
 Column Type | Column.type Value | Notes |
 ------------|--------------------------|-------|
@@ -3708,7 +3708,7 @@ Date			| DATE			|
 Dropdown List	| PICKLIST		| Custom, RYG, Harvey Ball, Priority types, etc.
 Checkbox 		| CHECKBOX		| Checkbox, star, and flag types
 Duration		| DURATION		| **Only for dependency-enabled project sheets**<br/>The API does not support setting a Column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.)
-Predecessor		| PREDECESSOR	| Defines what must happen first in a project flow. For more information, see the [Predecessor Object](#predecessor-object). **Only for dependency-enabled project sheets** 
+Predecessor		| PREDECESSOR	| Defines what must happen first in a project flow. For more information, see the [Predecessor object](#predecessor-object). **Only for dependency-enabled project sheets** 
 Date/Time 		| ABSTRACT_DATETIME | Represents a project sheet's Start and End dates.<br/>**Only for dependency-enabled project sheets**<br/>The API does not support setting a Column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.) Additionally, the API does not support updating data in the End Date column under any circumstance, and does not support updating data in the Start Date column if Predecessor is set for that row.
 Date/Time		| DATETIME		| Used only by the following System-generated columns: <ul><li>Created (Date) (**Column.systemColumnType** = "CREATED_DATE")</li><li>Modified (Date) (**Column.systemColumnType** = "MODIFIED_DATE")</li></ul>
 
@@ -3768,7 +3768,7 @@ MODIFIED_DATE | DATETIME
 MODIFIED_BY | CONTACT_LIST
 CREATED_DATE | DATETIME
 CREATED_BY  | CONTACT_LIST
-AUTO_NUMBER | TEXT_NUMBER | Columns of this system column type include an [AutoNumberFormat Object](#autonumberformat-object) that describes the mask used to generate the value.
+AUTO_NUMBER | TEXT_NUMBER | Columns of this system column type include an [AutoNumberFormat object](#autonumberformat-object) that describes the mask used to generate the value.
 
 # Comments
 
@@ -3783,7 +3783,7 @@ This section describes operations on an *individual* Comment within a Discussion
 
 ### Comment Object
 
-> Example Comment Object
+> Example: Comment object
 
 ```json
 {
@@ -3800,15 +3800,15 @@ This section describes operations on an *individual* Comment within a Discussion
 -----|-----|-----|
 **id** | number | Comment Id
 **text** | string | Comment body
-**createdBy** | [User](#user-object) | User Object containing name and email of the Comment's author
+**createdBy** | [User](#user-object) | User object containing name and email of the Comment's author
 **createdAt** | timestamp | Time of creation
 **modifiedAt** | timestamp | Time of last modification
-**attachments** | [Attachment](#attachment-object)[] | Array of Attachment Objects
+**attachments** | [Attachment](#attachment-object)[] | Array of Attachment objects
 **discussionId** | number (optional) | Discussion Id
 
 ## Add Comment
 
-> Example Request (without attachment): Add Comment
+> Example request: add comment (without attachment)
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions/{discussionId}/comments \
@@ -3890,7 +3890,7 @@ response = smartsheet.sheets.comments.add(
 new_comment = response[:result]
 ```
 
-> Example Request (with attachment): Add Comment
+> Example request: add comment (with attachment)
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions/{discussionId}/comments \
@@ -3957,7 +3957,7 @@ response = ss_client.Discussions.add_comment_to_discussion_with_attachment(
 # Multipart operations are not supported by the Ruby SDK. Instead, see instructions to Add Comment, and then Attach File to Comment.
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -3978,9 +3978,9 @@ response = ss_client.Discussions.add_comment_to_discussion_with_attachment(
 
 `POST /sheets/{sheetId}/discussions/{discussionId}/comments`
 
-Adds a Comment to a Discussion.
+Adds a comment to a discussion.
 
-<aside class="notice">This operation supports multipart requests. Using a multipart request allows you to create a new Comment and upload a file to that Comment in a single step (that is, using a single request). For more information, see <a href="#multipart-uploads">Multipart Uploads</a>.</aside>
+<aside class="notice">This operation supports multipart requests. Using a multipart request allows you to create a new comment and upload a file to that comment in a single step (that is, using a single request). For more information, see <a href="#multipart-uploads">Multipart Uploads</a>.</aside>
 
 <br/><br/>
 **Creating a Comment without an Attachment:**
@@ -3989,8 +3989,8 @@ Adds a Comment to a Discussion.
 -----|-----|
 <%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Comment Object](#comment-object) with the following attribute:<ul><li>text</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing [Comment Object](#comment-object) that was created
+<%= REQUEST %> | [Comment object](#comment-object) with the following attribute:<ul><li>text</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing [Comment object](#comment-object) that was created
 
 <br/><br/>
 **Creating a Comment with an Attachment:**
@@ -3999,7 +3999,7 @@ Adds a Comment to a Discussion.
 
 ## Edit Comment
 
-> Example Request: Edit Comment
+> Example request: edit comment
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId} \
@@ -4071,7 +4071,7 @@ response = smartsheet.sheets.comments.update(
 updated_comment = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -4094,7 +4094,7 @@ updated_comment = response[:result]
 
 `PUT /sheets/{sheetId}/comments/{commentId}`
 
-Updates the text of a Comment. Note that only the user that created the comment is permitted to update it.
+Updates the text of a comment. Note that only the user that created the comment is permitted to update it.
 
 **Updating a Comment:**
 
@@ -4102,13 +4102,13 @@ Updates the text of a Comment. Note that only the user that created the comment 
 -----|-----|
 <%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Comment Object](#comment-object) with the following attribute:<ul><li>text</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing [Comment Object](#comment-object) that was updated
+<%= REQUEST %> | [Comment object](#comment-object) with the following attribute:<ul><li>text</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing [Comment object](#comment-object) that was updated
 
 
 ## Delete Comment
 
-> Example Request: Delete Comment
+> Example request: delete comment
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId} \
@@ -4160,7 +4160,7 @@ smartsheet.sheets.comments.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -4178,11 +4178,11 @@ Deletes the Comment specified in the URL.
 -----|-----|
 <%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ## Get Comment
 
-> Example Request: Get Comment
+> Example request: get comment
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/comments/{commentId} \
@@ -4233,7 +4233,7 @@ comment = smartsheet.sheets.comments.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -4254,25 +4254,25 @@ Gets the Comment specified in the URL.
 -----|-----|
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Comment Object](#comment-object)
+<%= RETURNS %> | [Comment object](#comment-object)
 
 ## <%= RELATED %>
 
-A Comment can contain one or more Attachments.
+A comment can contain one or more attachments.
 
 ### Comment Attachments
 
-For details about working with a Comment's attachments, see [Attachments](#attachments).
+For details about working with a comment's attachments, see [Attachments](#attachments).
 
 # Contacts
 
-A Contact is a user's personal contact in Smartsheet (as described [here](https://help.smartsheet.com/articles/796143-managing-contacts)).
+A contact is a user's personal contact in Smartsheet (as described [here](https://help.smartsheet.com/articles/796143-managing-contacts)).
 
 ## <%= OBJECTS %>
 
 ### Contact Object
 
-> Example Contact Object:
+> Example: Contact object
 
 ```json
 {
@@ -4290,7 +4290,7 @@ A Contact is a user's personal contact in Smartsheet (as described [here](https:
 
 ## Get Contact
 
-> Example Request: Get Contact
+> Example request: get contact
 
 ```shell
 curl https://api.smartsheet.com/2.0/contacts/{contactId} \
@@ -4334,7 +4334,7 @@ contact = smartsheet.contacts.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -4346,17 +4346,17 @@ contact = smartsheet.contacts.get(
 
 `GET /contacts/{contactId}`
 
-Gets the specified Contact.
+Gets the specified contact.
 
      |     |
 -----|-----|
 <%= SCOPE %> | READ_CONTACTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Contact Object](#contact-object)
+<%= RETURNS %> | [Contact object](#contact-object)
 
 ## List Contacts
 
-> Example Request: List Contacts
+> Example request: list contacts
 
 ```shell
 curl https://api.smartsheet.com/2.0/contacts \
@@ -4405,7 +4405,7 @@ response = smartsheet.contacts.list
 contacts = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -4439,7 +4439,7 @@ Gets a list of the user's Smartsheet Contacts.
 <%= SCOPE %> | READ_CONTACTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Contact Objects](#contact-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Contact objects](#contact-object)
 
 # Cross-sheet References
 
@@ -4453,7 +4453,7 @@ Cross-sheet references that are not used by any formula are automatically delete
 
 ### CrossSheetReference Object
 
-> Example CrossSheetReference Object:
+> Example: CrossSheetReference object
 
 ```json
 {
@@ -4481,7 +4481,7 @@ Cross-sheet references that are not used by any formula are automatically delete
 
 ## Create Cross-sheet References
 
-> Example Request
+> Example request: create cross-sheet references
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences \
@@ -4528,7 +4528,7 @@ smartsheet.sheets.cross_sheet_references.create(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -4553,12 +4553,12 @@ Adds a cross-sheet reference between two sheets and defines the data range for f
 -----|-----|
 <%= SCOPE %> | CREATE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [CrossSheetReference Object](#crosssheetreference-object) with the following attributes:<ul><li>name (optional): unique name for reference. If you omit this parameter, Smartsheet will autogenerate a name.</li><li>sourceSheetId: sheetId for data source</li><li>Either two or all of the following:<ul><li>startRowId: Defines beginning edge of range when specifying one or more rows. Must be used with endRowId.</li><li>endRowId: Defines ending edge of range when specifying one or more rows. Must be used with startRowId.</li><li>startColumnId: Defines beginning edge of range when specifying one or more columns. Must be used with endColumnId.</li><li>endColumnId: Defines ending edge of range when specifying one or more columns. Must be used with startColumnId.</li></ul></li></ul>
-<%= RETURNS %> | [Result object](#result-object) containing a [CrossSheetReference Object](#crosssheetreference-object), corresponding to what was specified in the request.
+<%= REQUEST %> | [CrossSheetReference object](#crosssheetreference-object) with the following attributes:<ul><li>name (optional): unique name for reference. If you omit this parameter, Smartsheet will autogenerate a name.</li><li>sourceSheetId: sheetId for data source</li><li>Either two or all of the following:<ul><li>startRowId: Defines beginning edge of range when specifying one or more rows. Must be used with endRowId.</li><li>endRowId: Defines ending edge of range when specifying one or more rows. Must be used with startRowId.</li><li>startColumnId: Defines beginning edge of range when specifying one or more columns. Must be used with endColumnId.</li><li>endColumnId: Defines ending edge of range when specifying one or more columns. Must be used with startColumnId.</li></ul></li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing a [CrossSheetReference object](#crosssheetreference-object), corresponding to what was specified in the request.
 
 ## Get Cross-sheet Reference
 
-> Example Request
+> Example request: get cross-sheet references
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences/{crossSheetReferenceId} \
@@ -4588,7 +4588,7 @@ smartsheet.sheets.cross_sheet_references.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -4611,11 +4611,11 @@ Gets the cross-sheet reference specified in the URL.
 -----|-----|
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [CrossSheetReference Object](#crosssheetreference-object)
+<%= RETURNS %> | [CrossSheetReference object](#crosssheetreference-object)
 
 ## List Cross-sheet References
 
-> Example Request
+> Example request: list cross-sheet references
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences \
@@ -4644,7 +4644,7 @@ smartsheet.sheets.cross_sheet_references.list(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -4683,7 +4683,7 @@ Lists all cross-sheet references for the sheet.
 -----|-----|
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [CrossSheetReference Objects](#crosssheetreference-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [CrossSheetReference objects](#crosssheetreference-object)
 
 # Dashboards
 
@@ -4701,7 +4701,7 @@ Using the API, you can only add a Comment to a Discussion. If the Discussion doe
 
 ### Discussion Object
 
-> Example Discussion Object:
+> Example: Discussion object
 
 ```json
 {
@@ -4729,20 +4729,20 @@ Using the API, you can only add a Comment to a Discussion. If the Discussion doe
 -----|-----|-----|
 **id** | number | Discussion Id
 **title** | string | Read Only. Discussion title automatically created by duplicating the first 100 characters of the top-level Comment
-**comments** | [Comment](#comment-object)[] | Array of Comment Objects
+**comments** | [Comment](#comment-object)[] | Array of Comment objects
 **commentCount** | number | The number of comments in the discussion
-**commentAttachments** | [Attachment](#attachment-object)[] | Array of Attachment Objects
+**commentAttachments** | [Attachment](#attachment-object)[] | Array of Attachment objects
 **parentId** | number | Id of the directly associated row or sheet: present only when the direct association is not clear (see [List Discussions](#list-discussions))
 **parentType** | string | "SHEET" or "ROW": present only when the direct association is not clear (see [List Discussions](#list-discussions))
 **lastCommentedAt** | timestamp | Time of most recent comment
-**lastCommentedUser** | [User](#user-object) | User Object containing name and email of the author of the most recent Comment
-**createdBy** | [User](#user-object) | User Object containing name and email of the creator of the Discussion
+**lastCommentedUser** | [User](#user-object) | User object containing name and email of the author of the most recent Comment
+**createdBy** | [User](#user-object) | User object containing name and email of the creator of the Discussion
 **accessLevel** | string | User's permissions on the Discussion
 **readOnly** | Boolean | Flag to indicate if the User can modify the Discussion
 
 ## Create Discussion on Row
 
-> Example Request (without attachment): Create Discussion on Row
+> Example request: create discussion on row (without attachment)
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/discussions \
@@ -4843,7 +4843,7 @@ response = smartsheet.sheets.discussions.create_on_row(
 new_discussion = response[:result]
 ```
 
-> Example Request (with attachment): Create Discussion on Row
+> Example request: create discussion on row (with attachment)
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/discussions \
@@ -4920,7 +4920,7 @@ response = ss_client.Discussions.create_discussion_on_row_with_attachment(
 # Multipart operations are not supported by the Ruby SDK. Instead, see instructions to Create Discussion on Row, and then Attach File to Comment.
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/createDiscussion_response.md.erb" %>
 
@@ -4928,7 +4928,7 @@ response = ss_client.Discussions.create_discussion_on_row_with_attachment(
 
 Creates a new Discussion on a Row.
 
-<aside class="notice">This operation supports multipart requests. Using a multipart request allows you to create a new Discussion and upload a file to the first Comment within that Discussion in a single step (that is, using a single request). For more information, see <a href="#multipart-uploads">Multipart Uploads</a>.</aside>
+<aside class="notice">This operation supports multipart requests. Using a multipart request allows you to create a new discussion and upload a file to the first comment within that discussion in a single step (that is, using a single request). For more information, see <a href="#multipart-uploads">Multipart Uploads</a>.</aside>
 
 <br/>
 **Creating a Discussion without an Attachment:**
@@ -4939,7 +4939,7 @@ Creates a new Discussion on a Row.
 
 ## Create Discussion on Sheet
 
-> Example Request (without attachment): Create Discussion on Sheet
+> Example request: create discussion on sheet (without attachment)
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions \
@@ -5035,7 +5035,7 @@ response = smartsheet.sheets.discussions.create_on_sheet(
 new_discussion = response[:result]
 ```
 
-> Example Request (with attachment): Create Discussion on Sheet
+> Example request: create discussion on sheet (with attachment)
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions \
@@ -5107,7 +5107,7 @@ response = ss_client.Discussions.create_discussion_on_sheet_with_attachment(
 # Multipart operations are not supported by the Ruby SDK. Instead, see instructions to Create Discussion on Sheet, and then Attach File to Comment.
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/createDiscussion_response.md.erb" %>
 
@@ -5127,7 +5127,7 @@ Creates a new Discussion on a Sheet.
 
 ## Delete Discussion
 
-> Example Request: Delete Discussion
+> Example request: delete discussion
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions/{discussionId} \
@@ -5179,7 +5179,7 @@ smartsheet.sheets.discussions.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -5190,17 +5190,17 @@ smartsheet.sheets.discussions.delete(
 
 `DELETE /sheets/{sheetId}/discussions/{discussionId}`
 
-Deletes the Discussion specified in the URL.
+Deletes the discussion specified in the URL.
 
      |     |
 -----|-----|
 <%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ## List Discussions
 
-> Example Request: List Discussions
+> Example request: list discussions
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions?include=comments,attachments' \
@@ -5285,13 +5285,13 @@ response = smartsheet.sheets.discussions.list(
 discussions = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/getDiscussions_response.md.erb" %>
 
 `GET /sheets/{sheetId}/discussions`
 
-Gets a list of *all* Discussions associated with the specified Sheet. Remember that Discussions are containers for the conversation thread. To see the entire thread, use the `include=comments` parameter.
+Gets a list of *all* discussions associated with the specified sheet. Remember that discussions are containers for the conversation thread. To see the entire thread, use the **include=comments** parameter.
 
 <aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
@@ -5299,7 +5299,7 @@ Gets a list of *all* Discussions associated with the specified Sheet. Remember t
 
 ## Get Discussion
 
-> Example Request: Get Discussion
+> Example request: get discussion
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/discussions/{discussionId} \
@@ -5352,7 +5352,7 @@ discussion = smartsheet.sheets.discussions.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -5380,11 +5380,11 @@ Gets the Discussion specified in the URL.
 -----|-----|
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Discussion Object](#discussion-object)
+<%= RETURNS %> | [Discussion object](#discussion-object)
 
 ## List Row Discussions
 
-> Example Request: List Row Discussions
+> Example request: list row discussions
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/discussions?include=comments,attachments' \
@@ -5476,7 +5476,7 @@ response = smartsheet.sheets.discussions.list_row_discussions(
 discussions = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/getDiscussions_response.md.erb" %>
 
@@ -5509,7 +5509,7 @@ These API operations allow you to access the user's favorite API-supported objec
 
 ### Favorite Object
 
-> Example Favorite Object:
+> Example: Favorite object
 
 ```json
 {
@@ -5525,7 +5525,7 @@ These API operations allow you to access the user's favorite API-supported objec
 
 ## Add Favorites
 
-> Example Request: Add Favorites
+> Example request: add favorites
 
 ```shell
 curl https://api.smartsheet.com/2.0/favorites \
@@ -5606,7 +5606,7 @@ response = smartsheet.favorites.add(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -5625,18 +5625,18 @@ Adds one or more items to the user's list of Favorite items.
 
 <aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
 
-If called with a single [Favorite Object](#favorite-object), and that favorite already exists, [error code](#complete-error-code-list) **1129** is returned.  If called with an array of [Favorite Objects](#favorite-object), any objects specified in the array that are already marked as favorites are ignored and omitted from the response.
+If called with a single [Favorite object](#favorite-object), and that favorite already exists, [error code](#complete-error-code-list) **1129** is returned.  If called with an array of [Favorite objects](#favorite-object), any objects specified in the array that are already marked as favorites are ignored and omitted from the response.
 
      |     |
 -----|-----|
 <%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Favorite Object](#favorite-object) or an array of Favorite Objects, with the following attributes:<ul><li>type</li><li>objectId</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing objects that were marked as favorites -- either a single [Favorite Object](#favorite-object) or an array of Favorite Objects, corresponding to what was specified in the request.
+<%= REQUEST %> | [Favorite object](#favorite-object) or an array of Favorite objects, with the following attributes:<ul><li>type</li><li>objectId</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing objects that were marked as favorites -- either a single [Favorite object](#favorite-object) or an array of Favorite objects, corresponding to what was specified in the request.
 
 ## List Favorites
 
-> Example Request: List Favorites
+> Example request: list favorites
 
 ```shell
 curl https://api.smartsheet.com/2.0/favorites \
@@ -5677,7 +5677,7 @@ response = smartsheet.favorites.list
 list = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -5709,13 +5709,13 @@ Gets a list of all of the user's Favorite items.
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Favorite Objects](#favorite-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Favorite objects](#favorite-object)
 
 ## Remove Favorite
 
 ### Remove Favorite Folder
 
-> Example Request: Remove Favorite Folder
+> Example request: remove favorite folder
 
 ```shell
 curl https://api.smartsheet.com/2.0/favorites/folder/{folderId} \
@@ -5766,7 +5766,7 @@ smartsheet.favorites.remove_folder(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/removeFavorite_response.md.erb" %>
 
@@ -5778,7 +5778,7 @@ Removes a single Folder from the user's list of Favorite items.
 
 ### Remove Favorite Report
 
-> Example Request: Remove Favorite Report
+> Example request: remove favorite report
 
 ```shell
 curl https://api.smartsheet.com/2.0/favorites/report/{reportId} \
@@ -5829,7 +5829,7 @@ smartsheet.favorites.remove_report(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/removeFavorite_response.md.erb" %>
 
@@ -5841,7 +5841,7 @@ Removes a single Report from the user's list of Favorite items.
 
 ### Remove Favorite Sheet
 
-> Example Request: Remove Favorite Sheet
+> Example request: remove favorite sheet
 
 ```shell
 curl https://api.smartsheet.com/2.0/favorites/sheet/{sheetId} \
@@ -5892,19 +5892,19 @@ smartsheet.favorites.remove_sheet(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/removeFavorite_response.md.erb" %>
 
 `DELETE /favorites/sheet/{sheetId}`
 
-Removes a single Sheet from the user's list of Favorite items.
+Removes a single sheet from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorite_table.md.erb" %>
 
 ### Remove Favorite Sight
 
-> Example Request: Remove Favorite Sight
+> Example request: remove favorite sight
 
 ```shell
 curl https://api.smartsheet.com/2.0/favorites/sight/{sightId} \
@@ -5949,7 +5949,7 @@ smartsheet.favorites.remove_sight(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -5966,11 +5966,11 @@ Removes a single Sight from the user's list of Favorite items.
 -----|-----|
 <%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ### Remove Favorite Template
 
-> Example Request: Remove Favorite Template
+> Example request: remove favorite template
 
 ```shell
 curl https://api.smartsheet.com/2.0/favorites/template/{templateId} \
@@ -6021,19 +6021,19 @@ smartsheet.favorites.remove_template(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/removeFavorite_response.md.erb" %>
 
 `DELETE /favorites/template/{templateId}`
 
-Removes a single Template from the user's list of Favorite items.
+Removes a single template from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorite_table.md.erb" %>
 
 ### Remove Favorite Workspace
 
-> Example Request: Remove Favorite Workspace
+> Example request: remove favorite workspace
 
 ```shell
 curl https://api.smartsheet.com/2.0/favorites/workspace/{workspaceId} \
@@ -6084,13 +6084,13 @@ smartsheet.favorites.remove_workspace(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/removeFavorite_response.md.erb" %>
 
 `DELETE /favorites/workspace/{workspaceId}`
 
-Removes a single Workspace from the user's list of Favorite items.
+Removes a single workspace from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorite_table.md.erb" %>
 
@@ -6098,7 +6098,7 @@ Removes a single Workspace from the user's list of Favorite items.
 
 ### Remove Multiple Favorite Folders
 
-> Example Request: Remove Multiple Favorite Folders
+> Example request: remove multiple favorite folders
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/favorites/folder?objectIds=folderId1,folderId2' \
@@ -6151,19 +6151,19 @@ smartsheet.favorites.remove_folders(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/removeFavorites_response.md.erb" %>
 
 `DELETE /favorites/folder`
 
-Removes multiple Folders from the user's list of Favorite items.
+Removes multiple folders from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorites_table.md.erb" %>
 
 ### Remove Multiple Favorite Reports
 
-> Example Request: Remove Multiple Favorite Reports
+> Example request: remove multiple favorite reports
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/favorites/report?objectIds=reportId1,reportId2' \
@@ -6216,19 +6216,19 @@ smartsheet.favorites.remove_reports(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/removeFavorites_response.md.erb" %>
 
 `DELETE /favorites/report`
 
-Removes multiple Reports from the user's list of Favorite items.
+Removes multiple reports from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorites_table.md.erb" %>
 
 ### Remove Multiple Favorite Sheets
 
-> Example Request: Remove Multiple Favorite Sheets
+> Example request: remove multiple favorite sheets
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/favorites/sheet?objectIds=sheetId1,sheetId2' \
@@ -6293,7 +6293,7 @@ Removes multiple Sheets from the user's list of Favorite items.
 
 ### Remove Multiple Favorite Sights
 
-> Example Request: Remove Multiple Favorite Sights
+> Example request: remove multiple favorite sights
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/favorites/sight?objectIds=sightId1,sightId2' \
@@ -6340,19 +6340,19 @@ smartsheet.favorites.remove_sights(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/removeFavorites_response.md.erb" %>
 
 `DELETE /favorites/sights`
 
-Removes multiple Sights from the user's list of Favorite items.
+Removes multiple sights from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorites_table.md.erb" %>
 
 ### Remove Multiple Favorite Templates
 
-> Example Request: Remove Multiple Favorite Templates
+> Example request: remove multiple favorite templates
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/favorites/template?objectIds=templateId1,templateId2' \
@@ -6405,19 +6405,19 @@ smartsheet.favorites.remove_templates(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/removeFavorites_response.md.erb" %>
 
 `DELETE /favorites/template`
 
-Removes multiple Templates from the user's list of Favorite items.
+Removes multiple templates from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorites_table.md.erb" %>
 
 ### Remove Multiple Favorite Workspaces
 
-> Example Request: Remove Multiple Favorite Workspaces
+> Example request: remove multiple favorite workspaces
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/favorites/workspace?objectIds=workspaceId1,workspaceId2' \
@@ -6470,25 +6470,25 @@ smartsheet.favorites.remove_workspaces(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/removeFavorites_response.md.erb" %>
 
 `DELETE /favorites/workspace`
 
-Removes multiple Workspaces from the user's list of Favorite items.
+Removes multiple workspaces from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorites_table.md.erb" %>
 
 # Folders
 
-A Folder can exist in a user's **Sheets** folder ([Home](#home)), in a [Folder](#folders), or in a [Workspace](#workspaces).
+A folder can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#folders), or in a [workspace](#workspaces).
 
 ## <%= OBJECTS %>
 
 ### Folder Object
 
-> Example Folder Object:
+> Example: Folder object
 
 ```json
 {
@@ -6505,15 +6505,15 @@ A Folder can exist in a user's **Sheets** folder ([Home](#home)), in a [Folder](
 **name** | string | Folder name
 **favorite** | Boolean | Returned only if the user has marked the Folder as a Favorite in their Home tab (value = 'true')
 **permalink** | string | URL that represents a direct link to the Folder in Smartsheet
-**sheets** | [Sheet](#sheet-object)[] | Array of Sheet Objects
-**folders** | [Folder](#folder-object)[] | Array of Folder Objects
-**reports** | [Report](#report-object)[] | Array of Report Objects
-**sights** | [Sight](#sight-object)[] | Array of Sight Objects
-**templates** | [Template](#template-object)[] | Array of Template Objects
+**sheets** | [Sheet](#sheet-object)[] | Array of Sheet objects
+**folders** | [Folder](#folder-object)[] | Array of Folder objects
+**reports** | [Report](#report-object)[] | Array of Report objects
+**sights** | [Sight](#sight-object)[] | Array of Sight objects
+**templates** | [Template](#template-object)[] | Array of Template objects
 
 ## Copy Folder
 
-> Example Request: Copy Folder
+> Example request: copy folder
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/folders/{folderId}/copy?include=data'
@@ -6635,7 +6635,7 @@ response = smartsheet.folders.copy(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -6660,16 +6660,16 @@ Creates a copy of the specified Folder.
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>attachments</li><li>cellLinks</li><li>data -- includes formatting</li><li>discussions -- includes comments</li><li>filters</li><li>forms</li><li>ruleRecipients -- includes notification recipients, must also include **rules** when using this attribute</li><li>rules -- includes notifications and workflow rules</li><li>shares</li><li>all - deprecated</li></ul><i>Note</i>: Cell history is not copied, regardless of which **include** parameter values are specified.
  | **omit** (optional) -- when specified with a value of "sheetHyperlinks", excludes this category from the response
  | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created folder:<ul><li>cellLinks</li><li>reports</li><li>sheetHyperlinks</li><li>sights</li></ul>By default, all cell links, reports, sheet hyperlinks, and Sights that reference objects in the source folder are re-mapped to reference corresponding objects in the newly created folder. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If "cellLinks" is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created folder continue to point to the original source sheets.</li><li>If "reports" is specified in the <b>skipRemap</b> parameter value, the reports within the newly created folder continue to point to the original source sheets.</li><li>If "sheetHyperlinks" is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created folder continue to point to the original source sheets.</li><li>If "sights" is specified in the <b>skipRemap</b> parameter value, the widgets within Sights in the newly created folder continue to point to the original source sheets / reports.</li></ul>
-<%= REQUEST %> | [ContainerDestination Object](#containerdestination-object)</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing a [Folder Object](#folder-object) for the newly created Folder
+<%= REQUEST %> | [ContainerDestination object](#containerdestination-object)</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing a [Folder object](#folder-object) for the newly created folder
 
 ## Create Folder
 
-A Folder can be created in the user's **Sheets** folder ([Home](#home)), in another Folder, or in a Workspace.
+A folder can be created in the user's **Sheets** folder ([Home](#home)), in another folder, or in a workspace.
 
 ### Create Folder (Sheets Level)
 
-> Example Request: Create Folder (Sheets Level)
+> Example request: create folder (sheets level)
 
 ```shell
 curl https://api.smartsheet.com/2.0/home/folders \
@@ -6729,19 +6729,19 @@ body = {
 new_folder = smartsheet.folders.create(body: body)
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/createFolder_response.md.erb" %>
 
 `POST /home/folders`
 
-Creates a Folder in the user's **Sheets** folder ([Home](#home)). 
+Creates a folder in the user's **Sheets** folder ([Home](#home)). 
 
 <%= partial "snippets/createFolder_table.md.erb" %>
 
 ### Create Folder (Subfolder)
 
-> Example Request: Create Folder (Subfolder)
+> Example request: create folder (subfolder)
 
 ```shell
 curl https://api.smartsheet.com/2.0/folders/{folderid}/folders \
@@ -6813,19 +6813,19 @@ new_folder = smartsheet.folders.create_in_folder(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/createFolder_response.md.erb" %>
 
 `POST /folders/{folderId}/folders`
 
-Creates a Folder in the specified Folder. 
+Creates a folder in the specified folder. 
 
 <%= partial "snippets/createFolder_table.md.erb" %>
 
 ### Create Folder (Workspace)
 
-> Example Request: Create Folder (Workspace)
+> Example request: create folder (workspace)
 
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces/{workspaceid}/folders \
@@ -6897,19 +6897,19 @@ new_folder = smartsheet.folders.create_in_workspace(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/createFolder_response.md.erb" %>
 
 `POST /workspaces/{workspaceId}/folders`
 
-Creates a Folder in the specified Workspace. 
+Creates a folder in the specified workspace. 
 
 <%= partial "snippets/createFolder_table.md.erb" %>
 
 ## Delete Folder
 
-> Example Request: Delete Folder
+> Example request: delete folder
 
 ```shell
 curl https://api.smartsheet.com/2.0/folders/{folderId} \
@@ -6956,7 +6956,7 @@ smartsheet.folders.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -6967,17 +6967,17 @@ smartsheet.folders.delete(
 
 `DELETE /folders/{folderId}`
 
-Deletes the Folder (and its contents) specified in the URL.
+Deletes the folder (and its contents) specified in the URL.
 
      |     |
 -----|-----|
 <%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
 
 ## Get Folder
 
-> Example Request: Get Folder
+> Example request: get folder
 
 ```shell
 curl https://api.smartsheet.com/2.0/folders/{folderId} \
@@ -7040,7 +7040,7 @@ folder = smartsheet.folders.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -7087,15 +7087,15 @@ Gets the specified Folder (and lists its contents).
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>ownerInfo - owner's email address and user Id for each sheet</li><li>sheetVersion - current version number of each sheet, should not be combined with pagination</li><li>source - the [source](#source-object) for any sheet that was created from another sheet or template</li></ul>
-<%= RETURNS %> | [Folder Object](#folder-object), populated according to the **include** parameter<br/><br/>Note: If no folders, sheets, reports, templates, or Sights are present in the Folder, the corresponding attribute (for example, "folders", "sheets") is not present in the response.
+<%= RETURNS %> | [Folder object](#folder-object), populated according to the **include** parameter<br/><br/>Note: If no folders, sheets, reports, templates, or Sights are present in the Folder, the corresponding attribute (for example, "folders", "sheets") is not present in the response.
 
 ## List Folders
 
-Gets a list of top-level child Folders from the user's **Sheets** folder ([Home](#home)), from another Folder, or from a Workspace.
+Gets a list of top-level child folders from the user's **Sheets** folder ([Home](#home)), from another folder, or from a workspace.
 
 ### List Folders (Sheet Level)
 
-> Example Request: List Folders (Sheet Level)
+> Example request: list folders (sheet level)
 
 ```shell
 curl https://api.smartsheet.com/2.0/home/folders \
@@ -7145,13 +7145,13 @@ response = smartsheet.folders.list
 folders = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/listFolders_response.md.erb" %>
 
 `GET /home/folders`
 
-Gets a list of the top-level child Folders within the user's **Sheets** folder ([Home](#home)).
+Gets a list of the top-level child folders within the user's **Sheets** folder ([Home](#home)).
 
 <aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
@@ -7159,7 +7159,7 @@ Gets a list of the top-level child Folders within the user's **Sheets** folder (
 
 ### List Folders (Subfolder)
 
-> Example Request: List Folders (Subfolder)
+> Example request: list folders (subfolder)
 
 ```shell
 curl https://api.smartsheet.com/2.0/folders/{folderId}/folders \
@@ -7222,7 +7222,7 @@ response = smartsheet.folders.list_in_folder(
 folders = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/listFolders_response.md.erb" %>
 
@@ -7236,7 +7236,7 @@ Gets a list of the top-level child Folders within the specified Folder.
 
 ### List Folders (Workspace)
 
-> Example Request: List Folders (Workspace)
+> Example request: list folders (workspace)
 
 ```shell
 curl https://api.smartsheet.com/2.0/workspaces/{workspaceId}/folders \
@@ -7299,7 +7299,7 @@ response = smartsheet.folders.list_in_workspace(
 folders = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/listFolders_response.md.erb" %>
 
@@ -7313,7 +7313,7 @@ Gets a list of the top-level child Folders within the specified Workspace.
 
 ## Move Folder
 
-> Example Request: Move Folder
+> Example request: move folder
 
 ```shell
 curl https://api.smartsheet.com/2.0/folders/{folderId}/move \
@@ -7400,7 +7400,7 @@ response = smartsheet.folders.move(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -7416,19 +7416,19 @@ response = smartsheet.folders.move(
 
 `POST /folders/{folderId}/move`
 
-Moves the specified Folder to another location.
+Moves the specified folder to another location.
 
      |     |
 -----|-----|
 <%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [ContainerDestination Object](#containerdestination-object), limited to the following required attributes:<ul><li>destinationType</li><li>destinationId</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing a [Folder Object](#folder-object) for the moved Folder
+<%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following required attributes:<ul><li>destinationType</li><li>destinationId</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing a [Folder object](#folder-object) for the moved Folder
 
 
 ## Update Folder
 
-> Example Request: Update Folder
+> Example request: update folder
 
 ```shell
 curl https://api.smartsheet.com/2.0/folders/{folderId} \
@@ -7500,7 +7500,7 @@ response = smartsheet.folders.update(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -7515,11 +7515,11 @@ response = smartsheet.folders.update(
 
 `PUT /folders/{folderId}`
 
-Updates the Folder specified in the URL.
+Updates the folder specified in the URL.
 
      |     |
 -----|-----|
 <%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Folder Object](#folder-object), limited to the following required attribute:<ul><li>name (string)</li></ul>Name does not have to be unique.
-<%= RETURNS %> | [Result Object](#result-object) containing the updated [Folder Object](#folder-object)
+<%= REQUEST %> | [Folder object](#folder-object), limited to the following required attribute:<ul><li>name (string)</li></ul>Name does not have to be unique.
+<%= RETURNS %> | [Result object](#result-object) containing the updated [Folder object](#folder-object)

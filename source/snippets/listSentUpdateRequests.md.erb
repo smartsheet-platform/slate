@@ -1,4 +1,4 @@
-> Example Request: List Sent Update Requests
+> Example request: list sent update requests
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sentupdaterequests \
@@ -48,7 +48,7 @@ response = smartsheet.update_requests.sent.list(
 update_requests = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/listSentUpdateRequests_response.md.erb" %>
 

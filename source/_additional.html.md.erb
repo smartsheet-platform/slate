@@ -4,7 +4,7 @@
 
 ## AutoNumberFormat Object
 
-> Example AutoNumberFormat Object:
+> Example: AutoNumberFormat object
 
 ```json
 {
@@ -25,7 +25,7 @@ Object that describes how the the System Column type of "AUTO_NUMBER" is auto-ge
 
 ## BulkItemFailure Object
 
-> Example BulkItemFailure Object:
+> Example: BulkItemFailure object
 
 ```json
 {
@@ -45,12 +45,12 @@ Object that contains information about an item that failed to be added or update
 -----|-----|-----|
 **index** | number | The index of the failed item in the bulk request array
 **rowId** | number | The id of the [Row](#row-object) that failed.<br/>*Applicable only to bulk row operations* 
-**error** | [Error Object](#error-object) | The error caused by the failed item
+**error** | [Error object](#error-object) | The error caused by the failed item
 
 
 ## ContainerDestination Object
 
-> Example ContainerDestination Object:
+> Example: ContainerDestination object
 
 ```json
 { 
@@ -70,7 +70,7 @@ Object that describes the destination container when a Sheet or Folder is moved,
  
 ## Error Object
 
-> Example Error Object:
+> Example: Error object
 
 ```json
 {
@@ -88,7 +88,7 @@ Object that describes the destination container when a Sheet or Folder is moved,
 
 ## IndexResult Object
 
-> Example IndexResult Object:
+> Example: IndexResult object
 
 ```json
 {
@@ -106,7 +106,7 @@ Object returned for all `GET` operations against index endpoints.  This object p
 
 ## Result Object
 
-> Example Result Object:
+> Example: Result object
 
 ```json
 {
@@ -126,7 +126,7 @@ Object returned for all `PUT` operations and `POST` operations (and for some oth
 **resultCode** | number | 0 (zero) if successful, 3 for partial success of a bulk operation.
 **result** | Object | Object that was created or updated (if applicable)
 **version** | number | New version of the Sheet.<br/>*Applicable only for operations which update sheet data* 
-**failedItems** | [BulkItemFailure](#bulkitemfailure-object)[] | Array of BulkItemFailure Objects which represents the items that failed to be added or updated. See [Partial Success](#partial-success) for more information.<br/>*Applicable only for bulk operations that support partial success*
+**failedItems** | [BulkItemFailure](#bulkitemfailure-object)[] | Array of BulkItemFailure objects which represents the items that failed to be added or updated. See [Partial Success](#partial-success) for more information.<br/>*Applicable only for bulk operations that support partial success*
 
 # Complete Error Code List
 
@@ -375,13 +375,13 @@ To set or read formatting programmatically, Smartsheet uses a compact format str
 
 <aside class="notice">Formats that have not been explicitly set are omitted in the descriptor string. For example, a cell that has been set to bold and italic, but has no other formats applied to it, has a format descriptor of <code>",,1,1,,,,,,,,,,,,"</code>.</aside>
 
-<aside class="notice">Use <b>GET /serverinfo</b> to return the <a href="#formattables-object">FormatTables Object</a>, which tells you both the default settings and what formatting options are available.</aside>
+<aside class="notice">Use <b>GET /serverinfo</b> to return the <a href="#formattables-object">FormatTables object</a>, which tells you both the default settings and what formatting options are available.</aside>
 
 ## <%= OBJECTS %>
 
 ### FormatTables Object
 
-> Example FormatTables Object:
+> Example: FormatTables object
 
 ```json
 {
@@ -441,7 +441,7 @@ Contains all of the lookup tables that the format descriptor indexes refer to.
 
 ### FontFamily Object
 
-> Example FontFamily Object:
+> Example: FontFamily object
 
 ```json
 {
@@ -461,7 +461,7 @@ Contains all of the lookup tables that the format descriptor indexes refer to.
 
 ### Currency Object
 
-> Example Currency Object:
+> Example: Currency object
 
 ```json
 {

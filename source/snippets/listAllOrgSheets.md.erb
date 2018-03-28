@@ -1,4 +1,4 @@
-> Example Request: List Org Sheets
+> Example request: list org sheets
 
 ```shell
 curl https://api.smartsheet.com/2.0/users/sheets \
@@ -36,7 +36,7 @@ response = smartsheet.sheets.list_for_org
 sheets = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -71,4 +71,4 @@ Gets a summarized list of all Sheets owned by the members of the account (organi
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PARAMETER_MODIFIEDSINCE %>
  | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Sheet Objects](#sheet-object), limited to the following attributes:<ul><li>id</li><li>name</li><li>owner (email address)</li><li>ownerId</li></ul>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Sheet objects](#sheet-object), limited to the following attributes:<ul><li>id</li><li>name</li><li>owner (email address)</li><li>ownerId</li></ul>

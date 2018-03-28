@@ -1,4 +1,4 @@
-> Example Request: Search Sheet
+> Example request: search sheet
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/search/sheets/{sheetId}?query=stuff' \
@@ -64,7 +64,7 @@ response = smartsheet.search.search_sheet(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -96,4 +96,4 @@ Searches a Sheet for the specified text.
 <%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **query** (required): Text with which to perform the search. Use double-quotes for an exact search.
-<%= RETURNS %> | [SearchResult Object](#searchresult-object) that contains a maximum of 100 [SearchResultems](#searchresultitem-object)
+<%= RETURNS %> | [SearchResult object](#searchresult-object) that contains a maximum of 100 [SearchResultem objects](#searchresultitem-object)
