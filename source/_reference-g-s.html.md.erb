@@ -23,14 +23,14 @@ A Group is a collection of [Group Members](#group-members).
 
      |     |     |
 -----|-----|-----|
-**id** | number | Group Id
-**name** | string | Group name
-**description** | string | Group description
-**owner** | string | Group owner’s email address
-**ownerId** | number | Group owner's User Id
-**members** | [GroupMember](#groupmember-object)[] | Array of GroupMember objects
-**createdAt** | timestamp | Time of creation
-**modifiedAt** | timestamp | Time of last modification
+id | number | Group Id
+name | string | Group name
+description | string | Group description
+owner | string | Group owner’s email address
+ownerId | number | Group owner's User Id
+members | [GroupMember](#groupmember-object)[] | Array of GroupMember objects
+createdAt | timestamp | Time of creation
+modifiedAt | timestamp | Time of last modification
 
 ## Create Group
 
@@ -554,11 +554,11 @@ A Group Member is a User that belongs to a [Group](#groups).
 
      |     |     |
 -----|-----|-----|
-**id** | number | Group Member's User Id
-**email** | string | Group Member's email address
-**firstName** | string | Group Member's first name
-**lastName** | string | Group Member's last name
-**name** | string | Group Member's full name
+id | number | Group Member's User Id
+email | string | Group Member's email address
+firstName | string | Group Member's first name
+lastName | string | Group Member's last name
+name | string | Group Member's full name
 
 ## Add Group Members
 
@@ -770,12 +770,12 @@ In the Smartsheet UI, the "Home" tab shows all objects a User has access to, inc
 
      |     |     |
 -----|-----|-----|
-**sheets** | [Sheet](#sheet-object)[] | Array of Sheet objects
-**folders** | [Folder](#folder-object)[] | Array of Folder objects
-**reports** | [Report](#report-object)[] | Array of Report objects
-**sights** | [Sight](#sight-object)[] | Array of Sight objects
-**templates** | [Template](#template-object)[] | Array of Template objects
-**workspaces** | [Workspace](#workspace-object)[] | Array of Workspace objects
+sheets | [Sheet](#sheet-object)[] | Array of Sheet objects
+folders | [Folder](#folder-object)[] | Array of Folder objects
+reports | [Report](#report-object)[] | Array of Report objects
+sights | [Sight](#sight-object)[] | Array of Sight objects
+templates | [Template](#template-object)[] | Array of Template objects
+workspaces | [Workspace](#workspace-object)[] | Array of Workspace objects
 
 
 ## List Contents
@@ -917,7 +917,7 @@ Extends the [Sheet object](#sheet-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-**sourceSheets** | [Sheet](#sheet-object)[] | Array of Sheet objects (without rows), representing the sheets that rows in the report originated from.  Only included in the [Get Report](#get-report) response if the **include** parameter specifies "sourceSheets".
+sourceSheets | [Sheet](#sheet-object)[] | Array of Sheet objects (without rows), representing the sheets that rows in the report originated from.  Only included in the [Get Report](#get-report) response if the **include** parameter specifies "sourceSheets".
 
 ### ReportCell Object
 
@@ -925,7 +925,7 @@ Extends the [Cell object](#cell-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-**virtualColumnId** | number | The virtual Id of the cell's column. This property refers to the cell's parent column in the Report, while the **columnId** property refers to the cell's parent column in its originating source Sheet.
+virtualColumnId | number | The virtual Id of the cell's column. This property refers to the cell's parent column in the Report, while the **columnId** property refers to the cell's parent column in its originating source Sheet.
 
 
 ### ReportColumn Object
@@ -934,8 +934,8 @@ Extends the [Column object](#column-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-**virtualId** | number | The virtual Id of this report column
-**sheetNameColumn** | Boolean | Returned only for the special "Sheet Name" report column (value = 'true')
+virtualId | number | The virtual Id of this report column
+sheetNameColumn | Boolean | Returned only for the special "Sheet Name" report column (value = 'true')
 
 A report column is a "virtual" column, in that it appears identical to source sheet columns, but is in fact a different column belonging to the report. 
 [Cells](#reportcell-object) in the report refer to this column via their **virtualColumnId** attribute, and to their actual column from their source sheet via their **columnId** attribute.
@@ -946,17 +946,17 @@ Extends the [Row object](#row-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-**sheetId** | number | The Id of the Sheet from which the Row originates
+sheetId | number | The Id of the Sheet from which the Row originates
 
 ### ReportPublish Object 
 
      |     |     |
 -----|-----|-----|
-**readOnlyFullEnabled** | Boolean | (Required) If `true`, a rich version of the report is published with the ability to download row attachments and discussions.
-**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published report:<ul><li>If "ALL", it is available to anyone who has the link.</li><li>If "ORG", it is available only to members of the report owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled** = true.
-**readOnlyFullDefaultView** | string | Indicates which view the user has set for a read-only, default view of the published report. Must be one of the following values: "CALENDAR", "CARD", or "GRID".
-**readOnlyFullShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or `true`, is to display the toolbar. If `false`, hides the toolbar.
-**readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published report<br/>Only returned in a response if **readOnlyFullEnabled** = true.
+readOnlyFullEnabled | Boolean | (Required) If `true`, a rich version of the report is published with the ability to download row attachments and discussions.
+readOnlyFullAccessibleBy | string | Indicates who can access the 'Read-Only Full' view of the published report:<ul><li>If "ALL", it is available to anyone who has the link.</li><li>If "ORG", it is available only to members of the report owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled** = true.
+readOnlyFullDefaultView | string | Indicates which view the user has set for a read-only, default view of the published report. Must be one of the following values: "CALENDAR", "CARD", or "GRID".
+readOnlyFullShowToolbar | Boolean | Indicates whether the left nav toolbar is displayed. The default, or `true`, is to display the toolbar. If `false`, hides the toolbar.
+readOnlyFullUrl | string | URL for 'Read-Only Full' view of the published report<br/>Only returned in a response if **readOnlyFullEnabled** = true.
 
 ## Get Report
 
@@ -1606,27 +1606,27 @@ A Row is a component of a Sheet or Report. Each Row is composed of a collection 
 
      |     |     |
 -----|-----|-----|
-**id** | number | Row Id
-**accessLevel** | string | User's permission level on the Sheet that contains the Row
-**attachments** | [Attachment](#attachment-object)[] | Array of Attachment objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **attachments**.
-**cells** | [Cell](#cell-object)[] | Array of Cell objects belonging to the row
-**columns** | [Column](#column-object)[] | Array of Column objects.<br/>Only returned if the [Get Row](#get-row) **include** query string parameter contains **columns**.
-**conditionalFormat** | string | Describes this row's conditional format (see [Formatting](#formatting))<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this row has a conditional format applied.
-**createdAt** | timestamp | Time of creation
-**createdBy** | [User](#user-object) | User object containing name and email of the creator of this row
-**discussions** | [Discussion](#discussion-object)[] | Array of Discussion objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **discussions**.
-**expanded** | Boolean | Indicates whether the row is expanded or collapsed
-**filteredOut** | Boolean | `true` if this row is filtered out by a column filter (and thus is not displayed in the Smartsheet app), `false` if the row is not filtered out.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **filters**.
-**format** | string | Format descriptor (see [Formatting](#formatting)).<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this row has a non-default format applied.
-**inCriticalPath** | Boolean | Only returned, with a value of `true`, if the sheet is a project sheet with dependencies enabled and this row is in the critical path
-**locked** | Boolean | Indicates whether the row is locked. In a response, a value of `true` indicates that the row has been locked by the sheet owner or the admin.
-**lockedForUser** | Boolean | Indicates whether the row is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.
-**modifiedAt** | timestamp | Time of last modification
-**modifiedBy** | [User](#user-object) | User object containing name and email of the last person to modify this row
-**permalink** | string | URL that represents a direct link to the Row in Smartsheet<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **rowPermalink**.
-**rowNumber** | number | Row number within the sheet (1-based - starts at 1)
-**sheetId** | number | Parent Sheet Id
-**version** | number | Sheet version number that is incremented every time a sheet is modified
+id | number | Row Id
+accessLevel | string | User's permission level on the Sheet that contains the Row
+attachments | [Attachment](#attachment-object)[] | Array of Attachment objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **attachments**.
+cells | [Cell](#cell-object)[] | Array of Cell objects belonging to the row
+columns | [Column](#column-object)[] | Array of Column objects.<br/>Only returned if the [Get Row](#get-row) **include** query string parameter contains **columns**.
+conditionalFormat | string | Describes this row's conditional format (see [Formatting](#formatting))<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this row has a conditional format applied.
+createdAt | timestamp | Time of creation
+createdBy | [User](#user-object) | User object containing name and email of the creator of this row
+discussions | [Discussion](#discussion-object)[] | Array of Discussion objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **discussions**.
+expanded | Boolean | Indicates whether the row is expanded or collapsed
+filteredOut | Boolean | `true` if this row is filtered out by a column filter (and thus is not displayed in the Smartsheet app), `false` if the row is not filtered out.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **filters**.
+format | string | Format descriptor (see [Formatting](#formatting)).<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this row has a non-default format applied.
+inCriticalPath | Boolean | Only returned, with a value of `true`, if the sheet is a project sheet with dependencies enabled and this row is in the critical path
+locked | Boolean | Indicates whether the row is locked. In a response, a value of `true` indicates that the row has been locked by the sheet owner or the admin.
+lockedForUser | Boolean | Indicates whether the row is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.
+modifiedAt | timestamp | Time of last modification
+modifiedBy | [User](#user-object) | User object containing name and email of the last person to modify this row
+permalink | string | URL that represents a direct link to the Row in Smartsheet<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **rowPermalink**.
+rowNumber | number | Row number within the sheet (1-based - starts at 1)
+sheetId | number | Parent Sheet Id
+version | number | Sheet version number that is incremented every time a sheet is modified
 
 #### Row Object Location-specifier Attributes
 
@@ -1634,40 +1634,40 @@ For more information, see [Specify Row Location](#specify-row-location).
 
      |     |     |
 -----|-----|-----|
-**above** | Boolean | Specifies the location for a new or moved row. <%= REQUEST_ONLY_ATTRIBUTE %>
-**indent** | number | Specifies the number of levels to indent an existing row. <%= REQUEST_ONLY_ATTRIBUTE %>
-**outdent** | number | Specifies the number of levels to outdent an existing row. <%= REQUEST_ONLY_ATTRIBUTE %>
-**parentId** | number | In a response - the Id of the parent row (if any).<br/><br/>In a request - the Id of the desired parent row (used to specify the location for a new or moved row).
-**siblingId** | number | In a response - the Id of the previous sibling row at the same hierarchical level of this row (if any).<br/><br/>In a request - the Id of the desired sibling row (used to specify the location for a new or moved row).
-**toBottom** | Boolean | Adds or moves the row to the bottom of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %>
-**toTop** | Boolean | Adds or moves the row to the top of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %>
+above | Boolean | Specifies the location for a new or moved row. <%= REQUEST_ONLY_ATTRIBUTE %>
+indent | number | Specifies the number of levels to indent an existing row. <%= REQUEST_ONLY_ATTRIBUTE %>
+outdent | number | Specifies the number of levels to outdent an existing row. <%= REQUEST_ONLY_ATTRIBUTE %>
+parentId | number | In a response - the Id of the parent row (if any).<br/><br/>In a request - the Id of the desired parent row (used to specify the location for a new or moved row).
+siblingId | number | In a response - the Id of the previous sibling row at the same hierarchical level of this row (if any).<br/><br/>In a request - the Id of the desired sibling row (used to specify the location for a new or moved row).
+toBottom | Boolean | Adds or moves the row to the bottom of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %>
+toTop | Boolean | Adds or moves the row to the top of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %>
 
 ### CopyOrMoveRowDirective Object
 
      |     |     |
 -----|-----|-----|
-**rowIds** | number[] | The Ids of the rows to move or copy from the source sheet
-**to** | [CopyOrMoveRowDestination](#copyormoverowdestination-object) | A CopyOrMoveRowDestination object that identifies the destination sheet 
+rowIds | number[] | The Ids of the rows to move or copy from the source sheet
+to | [CopyOrMoveRowDestination](#copyormoverowdestination-object) | A CopyOrMoveRowDestination object that identifies the destination sheet 
 
 ### CopyOrMoveRowDestination Object
 
      |     |     |
 -----|-----|-----|
-**sheetId** | number | Id of the destination sheet
+sheetId | number | Id of the destination sheet
 
 ### CopyOrMoveRowResult Object
 
      |     |     |
 -----|-----|-----|
-**destinationSheetId** | number | Id of the destination sheet
-**rowMappings** | [RowMapping](#rowmapping-object)[] | Array of RowMapping objects 
+destinationSheetId | number | Id of the destination sheet
+rowMappings | [RowMapping](#rowmapping-object)[] | Array of RowMapping objects 
 
 ### RowMapping Object
 
      |     |     |
 -----|-----|-----|
-**from** | number | Row Id in the source sheet
-**to** | number | Row Id in the destination sheet
+from | number | Row Id in the source sheet
+to | number | Row Id in the destination sheet
 
 ## Add Rows
 
@@ -2452,14 +2452,14 @@ Note the following restrictions:
 
 Destination | Row Attributes | Examples
 -------|--------|--------
-Top of a sheet | **toTop** | ```("toTop": true}```
-Bottom of a sheet | **toBottom** | ```("toBottom": true}```
-Top of an indented section a.k.a., first child row | **parentId** | ```("parentId": 8896508249565060}```
-Bottom of an indented section a.k.a., last child row | **parentId** +<br/>**toBottom** | ```{"parentId": 8896508249565060, "toBottom": true}``` 
-Below a specific row, at the same indent level | **siblingId** | ```{"siblingId": 8896508249565060}```
-Above a specific row, at the same indent level | **siblingId** +<br/>**above** | ```{"siblingId": 8896508249565060, "above": true}```
-Indent one existing row, must have a value of "1" | **indent** | ```{"indent": 1}```
-Outdent one existing row, must have a value of "1" | **outdent** | ```{"outdent": 1}```
+Top of a sheet | toTop | ```("toTop": true}```
+Bottom of a sheet | toBottom | ```("toBottom": true}```
+Top of an indented section a.k.a., first child row | parentId | ```("parentId": 8896508249565060}```
+Bottom of an indented section a.k.a., last child row | parentId +<br/>toBottom | ```{"parentId": 8896508249565060, "toBottom": true}``` 
+Below a specific row, at the same indent level | siblingId | ```{"siblingId": 8896508249565060}```
+Above a specific row, at the same indent level | siblingId +<br/>above | ```{"siblingId": 8896508249565060, "above": true}```
+Indent one existing row, must have a value of "1" | indent | ```{"indent": 1}```
+Outdent one existing row, must have a value of "1" | outdent | ```{"outdent": 1}```
 
 ## Update Rows
 
@@ -2725,14 +2725,14 @@ a comma-delimited list of flags that indicate additional attributes to be includ
 
 Include Flag | Description |
 -------------|-------|
-**discussions**	| Includes row **discussions** array.<br/>To include discussion attachments, both **attachments** and **discussions** must be present in the include list.
-**attachments**	| Includes row **attachments** array.<br/>To include discussion attachments, both **attachments** and **discussions** must be present in the include list.
-**format**		| Includes **format** attribute on the row and its cells.  See [Formatting](#formatting).
-**filters**		| Includes **filteredOut** attribute indicating if the row should be displayed or hidden according to the sheet's filters.
-**columnType**	| Includes **columnType** attribute in the row's [cells](#cell-object) indicating the type of the column the cell resides in.
-**rowPermalink** | Includes **permalink** attribute that represents a direct link to the [row](#row-object) in the Smartsheet application.
-**rowWriterInfo** | Includes **createdBy** and **modifiedBy** attributes on the row, indicating the row's creator, and last modifier.
-**objectValue** | Includes **objectValue** attribute on cells containing values. For more information see [Cell Reference](#cell-reference).
+discussions	| Includes row **discussions** array.<br/>To include discussion attachments, both **attachments** and **discussions** must be present in the include list.
+attachments	| Includes row **attachments** array.<br/>To include discussion attachments, both **attachments** and **discussions** must be present in the include list.
+format		| Includes **format** attribute on the row and its cells.  See [Formatting](#formatting).
+filters		| Includes **filteredOut** attribute indicating if the row should be displayed or hidden according to the sheet's filters.
+columnType	| Includes **columnType** attribute in the row's [cells](#cell-object) indicating the type of the column the cell resides in.
+rowPermalink | Includes **permalink** attribute that represents a direct link to the [row](#row-object) in the Smartsheet application.
+rowWriterInfo | Includes **createdBy** and **modifiedBy** attributes on the row, indicating the row's creator, and last modifier.
+objectValue | Includes **objectValue** attribute on cells containing values. For more information see [Cell Reference](#cell-reference).
 
 # Search
 
@@ -2765,20 +2765,20 @@ Use the *Search* operations to search a specific Sheet or to search across all S
 
      |     |     |
 -----|-----|-----|
-**totalCount** | number | Total number of search results
-**results** | [SearchResultItem](#searchresultitem-object)[] | Array of SearchResultItem objects
+totalCount | number | Total number of search results
+results | [SearchResultItem](#searchresultitem-object)[] | Array of SearchResultItem objects
 
 ### SearchResultItem Object
 
      |     |     |
 -----|-----|-----|
-**text** | string | Search result text excerpt
-**objectId** | number | Search result object Id
-**objectType** | string | Search result object type (row, sheet, attachment, discussion, folder, report, sight, template, workspace)
-**parentObjectId** | number | Search result parent object Id
-**parentObjectType** | string | Search result parent object type (workspace, folder, sheet, report, sight, template)
-**parentObjectName** | string | Search result parent object name
-**contextData** | array | Additional info on search result context (row num)
+text | string | Search result text excerpt
+objectId | number | Search result object Id
+objectType | string | Search result object type (row, sheet, attachment, discussion, folder, report, sight, template, workspace)
+parentObjectId | number | Search result parent object Id
+parentObjectType | string | Search result parent object type (workspace, folder, sheet, report, sight, template)
+parentObjectName | string | Search result parent object name
+contextData | array | Additional info on search result context (row num)
 
 ## Search Everything
 
@@ -2918,16 +2918,16 @@ Use the *Send* operations to send a Report, a Row, or a Sheet via email.
 
      |     |     |
 -----|-----|-----|
-**sendTo**  | [Recipient](#recipient-object)[]  | Array of Recipient objects. Required.
-**subject** | string | The subject of the email. Optional.
-**message** | string | The message of the email. Optional.
-**ccMe** | Boolean | A flag to indicate whether or not to send a copy of the email to the sender. Optional, defaults to false.
+sendTo  | [Recipient](#recipient-object)[]  | Array of Recipient objects. Required.
+subject | string | The subject of the email. Optional.
+message | string | The message of the email. Optional.
+ccMe | Boolean | A flag to indicate whether or not to send a copy of the email to the sender. Optional, defaults to false.
 
 ### FormatDetails Object
 
      |     |     |
 -----|-----|-----|
-**paperSize**   | string | One of the following values: LETTER, LEGAL, WIDE, ARCHD, A4, A3, A2, A1, A0.
+paperSize   | string | One of the following values: LETTER, LEGAL, WIDE, ARCHD, A4, A3, A2, A1, A0.
 
 ### Recipient Object
 
@@ -2936,8 +2936,8 @@ Either **email** and **groupId** may be set, but not both.
 
      |     |     |
 -----|-----|-----|
-**email**   | string | The email address of an individual recipient. Optional.
-**groupId** | number | The Id of a group recipient. Optional.
+email   | string | The email address of an individual recipient. Optional.
+groupId | number | The Id of a group recipient. Optional.
 
 ### RowEmail Object
 
@@ -2945,10 +2945,10 @@ Extends the [Email object](#email-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-**columnIds** | number[] | Ids of the columns to be included.
-**includeAttachments** | Boolean | A flag to indicate whether or not to include Attachments in the email.
-**includeDiscussions** | Boolean | A flag to indicate whether or not to include Discussions in the email.
-**layout**   | string | One of the following values: HORIZONTAL, VERTICAL.  Optional, defaults to HORIZONTAL when multiple rows are being sent, and to VERTICAL when a single row is being sent.  HORIZONTAL formats the rows being sent as a grid, whereas VERTICAL formats the rows being sent as separate cards.
+columnIds | number[] | Ids of the columns to be included.
+includeAttachments | Boolean | A flag to indicate whether or not to include Attachments in the email.
+includeDiscussions | Boolean | A flag to indicate whether or not to include Discussions in the email.
+layout | string | One of the following values: HORIZONTAL, VERTICAL.  Optional, defaults to HORIZONTAL when multiple rows are being sent, and to VERTICAL when a single row is being sent.  HORIZONTAL formats the rows being sent as a grid, whereas VERTICAL formats the rows being sent as separate cards.
 
 ### MultiRowEmail Object
 
@@ -2956,7 +2956,7 @@ Extends the [RowEmail object](#rowemail-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-**rowIds** | number[] | Ids of rows to be included.
+rowIds | number[] | Ids of rows to be included.
 
 ### SheetEmail Object
 
@@ -2964,8 +2964,8 @@ Extends the [Email object](#email-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-**format** | string | One of the following values:<ul><li>PDF</li><li>PDF_GANTT</li><li>EXCEL</li></ul>
-**formatDetails** | [FormatDetails](#formatdetails-object) | A FormatDetails object.
+format | string | One of the following values:<ul><li>PDF</li><li>PDF_GANTT</li><li>EXCEL</li></ul>
+formatDetails | [FormatDetails](#formatdetails-object) | A FormatDetails object.
 
 ## Send Report
 
@@ -3021,8 +3021,8 @@ For developer convenience, the Smartsheet API provides access to application con
 
      |     |     |
 -----|-----|-----|
-**supportedLocales** | array | Array of strings representing all Smartsheet-supported locales.
-**formats** | [FormatTables](#formattables-object) | Definition of format tables that are used in Column, Row, and Cell **format** property.  For more information, see [Formatting](#formatting).
+supportedLocales | array | Array of strings representing all Smartsheet-supported locales.
+formats | [FormatTables](#formattables-object) | Definition of format tables that are used in Column, Row, and Cell **format** property.  For more information, see [Formatting](#formatting).
 
 ## Get Server Info
 
@@ -3102,19 +3102,19 @@ Use the *Sharing* operations to control sharing of Reports, Sheets, Workspaces, 
 
      |     |     |
 -----|-----|-----|
-**id**          | string | Share Id.<br/>**NOTE:** unlike other Smartsheet object ids, this id is an alphanumeric string.
-**type**        | string | The type of this share. One of the following values: `USER` or `GROUP`.
-**userId**      | number | User Id if the share is a user share, else null.
-**groupId**     | number | Group Id if the share is a group share, else null.
-**email**       | string | User's primary email address for user shares; null for group shares.
-**name**        | string | If a user share and user is also a contact, the user's full name.  If a group share, the group's name.
-**accessLevel** | string | User or group's [access level](#access-levels) on shared object.
-**scope**       | string | The scope of this share. One of the following values: <ul><li>`ITEM`: an item-level share (that is, the specific object to which the Share applies is shared with the user or group)</li><li>`WORKSPACE`: a workspace-level share (that is, the workspace that contains the object to which the Share applies is shared with the user or group)</li></ul>
-**createdAt**	| timestamp | Time that the share was created.
-**modifiedAt**	| timestamp | Time that the share was modified.
-**subject**		| string | The subject of the email that is optionally sent to notify the recipient. <%= REQUEST_ONLY_ATTRIBUTE %>
-**message**		| string | The message included in the body of the email that is optionally sent to the recipient. <%= REQUEST_ONLY_ATTRIBUTE %>
-**ccMe**		| Boolean | Indicates whether to send a copy of the email to the sharer of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %>
+id | string | Share Id.<br/>**NOTE:** unlike other Smartsheet object ids, this id is an alphanumeric string.
+type | string | The type of this share. One of the following values: `USER` or `GROUP`.
+userId | number | User Id if the share is a user share, else null.
+groupId | number | Group Id if the share is a group share, else null.
+email  | string | User's primary email address for user shares; null for group shares.
+name | string | If a user share and user is also a contact, the user's full name.  If a group share, the group's name.
+accessLevel | string | User or group's [access level](#access-levels) on shared object.
+scope | string | The scope of this share. One of the following values: <ul><li>`ITEM`: an item-level share (that is, the specific object to which the Share applies is shared with the user or group)</li><li>`WORKSPACE`: a workspace-level share (that is, the workspace that contains the object to which the Share applies is shared with the user or group)</li></ul>
+createdAt	| timestamp | Time that the share was created.
+modifiedAt	| timestamp | Time that the share was modified.
+subject	| string | The subject of the email that is optionally sent to notify the recipient. <%= REQUEST_ONLY_ATTRIBUTE %>
+message	| string | The message included in the body of the email that is optionally sent to the recipient. <%= REQUEST_ONLY_ATTRIBUTE %>
+ccMe	| Boolean | Indicates whether to send a copy of the email to the sharer of the sheet. <%= REQUEST_ONLY_ATTRIBUTE %>
 
 ## Report Sharing
 
@@ -4230,12 +4230,12 @@ Shares a sight with the specified users and groups.
 
      |     |
 -----|-----|
-<%= SCOPE %> | SHARE_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **sendEmail** (optional): Either `true` or `false` to indicate whether or not to notify the user by email. Default is **false**.
 <%= REQUEST %> | [Share object](#share-object) or an array of Share objects, with the following attributes:<ul><li>email (optional): the individual share recipient's email address</li><li>groupId (optional): the group share recipient's group Id</li><li>accessLevel (required)</li><li>subject (optional): The subject of the email that is optionally sent to notify the recipient.</li><li>message (optional): The message in the body of the email that is optionally sent to the recipient.</li><li>ccMe (optional): Boolean flag to indicate whether or not to CC the user sharing the sheet.</li></ul>**NOTE:** One of **email** or **groupId** must be specified, but not both.
 <%= RETURNS %> | [Result object](#result-object) containing either a single [Share object](#share-object) or an array of Share objects, corresponding to what was specified in the request. All shares have <b>[scope](#share-object)</b>="ITEM".
 <%= ERRORS %>  | If an error occurs because the request specified one or more [*alternate* email addresses](#alternate-email-addresses) (that is, not the primary email address associated with the User account), the [Error object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry sharing directly to u1@smartsheet.com."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
+<%= SCOPE %> | SHARE_SIGHTS
 
 ### Update Sight Share
 
@@ -4319,10 +4319,10 @@ Updates the access level of a User or Group for the specified Sight.
 
      |     |
 -----|-----|
-<%= SCOPE %> | SHARE_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Share object](#share-object) limited to the following attribute:<ul><li>accessLevel (string)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the modified [Share object](#share-object)
+<%= SCOPE %> | SHARE_SIGHTS
 
 ## Workspace Sharing
 
@@ -4390,9 +4390,9 @@ Deletes the share specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | ADMIN_WORKSPACES
 
 ### Get Workspace Share
 
@@ -4534,10 +4534,10 @@ Gets a list of all users and groups to whom the specified workspace is shared, a
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Share objects](#share-object)
+<%= SCOPE %> | READ_SHEETS
 
 ### Share Workspace
 
@@ -4645,12 +4645,12 @@ Shares a Workspace with the specified Users and Groups.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **sendEmail** (optional): Either `true` or `false` to indicate whether or not to notify the user by email. Default is **false**.
 <%= REQUEST %> | [Share object](#share-object) or an array of Share objects, with the following attributes:<ul><li>email (optional): the individual share recipient's email address</li><li>groupId (optional): the group share recipient's group Id</li><li>accessLevel (required)</li><li>subject (optional): The subject of the email that is optionally sent to notify the recipient.</li><li>message (optional): The message in the body of the email that is optionally sent to the recipient.</li><li>ccMe (optional): Boolean flag to indicate whether or not to CC the user sharing the sheet.</li></ul>**NOTE:** One of **email** or **groupId** must be specified, but not both.
 <%= RETURNS %> | [Result object](#result-object) containing either a single [Share object](#share-object) or an array of Share objects, corresponding to what was specified in the request.
 <%= ERRORS %>  | If an error occurs because the request specified one or more [*alternate* email addresses](#alternate-email-addresses) (that is, not the primary email address associated with the User account), the [Error object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry sharing directly to u1@smartsheet.com."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
+<%= SCOPE %> | ADMIN_WORKSPACES
 
 ### Update Workspace Share
 
@@ -4745,10 +4745,10 @@ Updates the access level of a user or group for the specified workspace.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Share object](#share-object) limited to the following attribute:<ul><li>accessLevel (string)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the modified [Share object](#share-object)
+<%= SCOPE %> | ADMIN_WORKSPACES
 
 # Sheets
 
@@ -4780,32 +4780,32 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 
      |     |     |
 -----|-----|-----|
-**id** | number | Sheet Id
-**name** | string | Sheet name
-**version** | number | A number that is incremented every time a Sheet is modified
-**totalRowCount** | number | The total number of rows in the Sheet
-**accessLevel** | string | User's permissions on the Sheet
-**projectSettings** | [ProjectSettings](#projectsettings-object) | Sheet's project settings containing the working days, non-working days, and length of day for a project sheet
-**effectiveAttachmentOptions** | array | Array of enum strings (see [Attachment.attachmentType](#attachment-object)) indicating the allowable attachment options for the current User and Sheet
-**readOnly** | Boolean | Returned only if the Sheet belongs to an expired trial (value = 'true')
-**ganttEnabled** | Boolean | Flag to indicate that Gantt is enabled
-**dependenciesEnabled** | Boolean | Flag to indicate that dependencies are enabled
-**resourceManagementEnabled** | Boolean | Flag to indicate that resource management is enabled
-**favorite** | Boolean | Returned only if the User has marked this sheet as a favorite in their Home tab (value = 'true')
-**showParentRowsForFilters** | Boolean | Returned only if there are column filters on the Sheet.  Value = 'true' if "show parent rows" is enabled for the filters.
-**userSettings** | [SheetUserSettings](#sheetusersettings-object) | A SheetUserSettings object containing the current user's sheet-specific settings.
-**owner** | string | Email address of the Sheet owner
-**ownerId** | number | User Id of the Sheet owner
-**permalink** | string | URL that represents a direct link to the Sheet in Smartsheet
-**source** | [Source](#source-object) | A Source object indicating the Sheet or Template from which this sheet was created
-**createdAt** | timestamp | Time that the Sheet was created
-**modifiedAt** | timestamp | Time that the Sheet was modified
-**columns** | [Column](#column-object)[] | Array of Column objects
-**rows** | [Row](#row-object)[] | Array of Row objects
-**attachments** | [Attachment](#attachment-object)[] | Array of Attachment objects<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **attachments**.
-**crossSheetReferences** | [CrossSheetReference](#crosssheetreference-object)[] | Array of CrossSheetReference objects<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **crossSheetReferences**.
-**discussions** | [Discussion](#discussion-object)[] | Array of Discussion objects<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **discussions**.
-**fromId** | number | The Id of the Template from which to create the Sheet. This attribute can be specified in a request, but is never present in a response.
+id | number | Sheet Id
+name | string | Sheet name
+version | number | A number that is incremented every time a Sheet is modified
+totalRowCount | number | The total number of rows in the Sheet
+accessLevel | string | User's permissions on the Sheet
+projectSettings | [ProjectSettings](#projectsettings-object) | Sheet's project settings containing the working days, non-working days, and length of day for a project sheet
+effectiveAttachmentOptions | array | Array of enum strings (see [Attachment.attachmentType](#attachment-object)) indicating the allowable attachment options for the current User and Sheet
+readOnly | Boolean | Returned only if the Sheet belongs to an expired trial (value = 'true')
+ganttEnabled | Boolean | Flag to indicate that Gantt is enabled
+dependenciesEnabled | Boolean | Flag to indicate that dependencies are enabled
+resourceManagementEnabled | Boolean | Flag to indicate that resource management is enabled
+favorite | Boolean | Returned only if the User has marked this sheet as a favorite in their Home tab (value = 'true')
+showParentRowsForFilters | Boolean | Returned only if there are column filters on the Sheet.  Value = 'true' if "show parent rows" is enabled for the filters.
+userSettings | [SheetUserSettings](#sheetusersettings-object) | A SheetUserSettings object containing the current user's sheet-specific settings.
+owner | string | Email address of the Sheet owner
+ownerId | number | User Id of the Sheet owner
+permalink | string | URL that represents a direct link to the Sheet in Smartsheet
+source | [Source](#source-object) | A Source object indicating the Sheet or Template from which this sheet was created
+createdAt | timestamp | Time that the Sheet was created
+modifiedAt | timestamp | Time that the Sheet was modified
+columns | [Column](#column-object)[] | Array of Column objects
+rows | [Row](#row-object)[] | Array of Row objects
+attachments | [Attachment](#attachment-object)[] | Array of Attachment objects<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **attachments**.
+crossSheetReferences | [CrossSheetReference](#crosssheetreference-object)[] | Array of CrossSheetReference objects<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **crossSheetReferences**.
+discussions | [Discussion](#discussion-object)[] | Array of Discussion objects<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **discussions**.
+fromId | number | The Id of the Template from which to create the Sheet. This attribute can be specified in a request, but is never present in a response.
 
 ### Criteria Object
 
@@ -4823,9 +4823,9 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 
      |     |     |
 -----|-----|-----|
-**operator** | string | One of the following values:<ul><li>EQUAL</li><li>NOT_EQUAL</li><li>GREATER_THAN</li><li>LESS_THAN</li><li>CONTAINS</li><li>BETWEEN</li><li>TODAY</li><li>PAST</li><li>FUTURE</li><li>LAST_N_DAYS</li><li>NEXT_N_DAYS</li><li>IS_BLANK</li><li>IS_NOT_BLANK</li><li>IS_NUMBER</li><li>IS_NOT_NUMBER</li><li>IS_DATE</li><li>IS_NOT_DATE</li><li>IS_CHECKED</li><li>IS_NOT_CHECKED</li></ul>
-**values** | array | Optional. Present if a custom filter criteria's operator has one or more arguments.
-**columnId** | number | Column Id
+operator | string | One of the following values:<ul><li>EQUAL</li><li>NOT_EQUAL</li><li>GREATER_THAN</li><li>LESS_THAN</li><li>CONTAINS</li><li>BETWEEN</li><li>TODAY</li><li>PAST</li><li>FUTURE</li><li>LAST_N_DAYS</li><li>NEXT_N_DAYS</li><li>IS_BLANK</li><li>IS_NOT_BLANK</li><li>IS_NUMBER</li><li>IS_NOT_NUMBER</li><li>IS_DATE</li><li>IS_NOT_DATE</li><li>IS_CHECKED</li><li>IS_NOT_CHECKED</li></ul>
+values | array | Optional. Present if a custom filter criteria's operator has one or more arguments.
+columnId | number | Column Id
 
 ### Filters Object
 
@@ -4847,14 +4847,14 @@ Smartsheet users can define and save personal column filters on sheets they can 
 
      |     |     |
 -----|-----|-----|
-**id** | number | Filters Id
-**filterType** | string | One of the following values:<ul><li>PERSONAL</li><li>SHARED</li></ul>
-**query** | object | Contains operator and Criteria object.
-**operator** | string | One of the following values:<ul><li>EQUAL</li><li>NOT_EQUAL</li><li>GREATER_THAN</li><li>LESS_THAN</li><li>CONTAINS</li><li>BETWEEN</li><li>TODAY</li><li>PAST</li><li>FUTURE</li><li>LAST_N_DAYS</li><li>NEXT_N_DAYS</li><li>IS_BLANK</li><li>IS_NOT_BLANK</li><li>IS_NUMBER</li><li>IS_NOT_NUMBER</li><li>IS_DATE</li><li>IS_NOT_DATE</li><li>IS_CHECKED</li><li>IS_NOT_CHECKED</li></ul>
-**includeParent** | Boolean | If **true**, indicates that "show parent rows" is enabled for the filters.
-**excludeSelected** | Boolean | If **true**, rows containing cells matching the "values" or "criteria" items are excluded instead of included.
-**values** | array | Optional. Present if a custom filter criteria's operator has one or more arguments.
-**criteria** | [Criteria](#criteria-object)[] | An array of Criteria objects specifying custom criteria against which to match cell values.
+id | number | Filters Id
+filterType | string | One of the following values:<ul><li>PERSONAL</li><li>SHARED</li></ul>
+query | object | Contains operator and Criteria object.
+operator | string | One of the following values:<ul><li>EQUAL</li><li>NOT_EQUAL</li><li>GREATER_THAN</li><li>LESS_THAN</li><li>CONTAINS</li><li>BETWEEN</li><li>TODAY</li><li>PAST</li><li>FUTURE</li><li>LAST_N_DAYS</li><li>NEXT_N_DAYS</li><li>IS_BLANK</li><li>IS_NOT_BLANK</li><li>IS_NUMBER</li><li>IS_NOT_NUMBER</li><li>IS_DATE</li><li>IS_NOT_DATE</li><li>IS_CHECKED</li><li>IS_NOT_CHECKED</li></ul>
+includeParent | Boolean | If **true**, indicates that "show parent rows" is enabled for the filters.
+excludeSelected | Boolean | If **true**, rows containing cells matching the "values" or "criteria" items are excluded instead of included.
+values | array | Optional. Present if a custom filter criteria's operator has one or more arguments.
+criteria | [Criteria](#criteria-object)[] | An array of Criteria objects specifying custom criteria against which to match cell values.
 
 ### ProjectSettings Object
 
@@ -4862,29 +4862,29 @@ Represents the project settings dependencies for a specific sheet.  Project sett
 
      |     |     |
 -----|-----|-----|
-**workingDays** | String[] | Working days of a week for a project sheet. Valid values must be an array of strings of days of the week: <ul><li>MONDAY</li><li>TUESDAY</li><li>WEDNESDAY</li><li>THURSDAY</li><li>FRIDAY</li><li>SATURDAY</li><li>SUNDAY</li></ul>
-**nonWorkingDays** | timestamp[] | Non-working days for a project sheet. The format for the timestamp array must be an array of strings that are valid [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) dates ('YYYY-MM-DD').
-**lengthOfDay** | number | Length of a workday for a project sheet. Valid value must be above or equal to 1 hour, and less than or equal to 24 hours.
+workingDays | String[] | Working days of a week for a project sheet. Valid values must be an array of strings of days of the week: <ul><li>MONDAY</li><li>TUESDAY</li><li>WEDNESDAY</li><li>THURSDAY</li><li>FRIDAY</li><li>SATURDAY</li><li>SUNDAY</li></ul>
+nonWorkingDays | timestamp[] | Non-working days for a project sheet. The format for the timestamp array must be an array of strings that are valid [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) dates ('YYYY-MM-DD').
+lengthOfDay | number | Length of a workday for a project sheet. Valid value must be above or equal to 1 hour, and less than or equal to 24 hours.
 
 ### SheetPublish Object 
 
      |     |     |
 -----|-----|-----|
-**icalEnabled** | Boolean | (Required) If `true`, a webcal is available for the calendar in the sheet.
-**readOnlyFullEnabled** | Boolean | (Required) If `true`, a rich version of the sheet is published with the ability to download row attachments and discussions.
-**readOnlyLiteEnabled** | Boolean | (Required) If `true`, a lightweight version of the sheet is published without row attachments or discussions.
-**readWriteEnabled** | Boolean | (Required) If `true`, a rich version of the sheet is published with the ability to edit cells and manage attachments and discussions.
-**icalUrl** | string | URL for 'iCal' view of the published sheet<br/>Only returned in a response if **icalEnabled** = true.
-**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published sheet:<ul><li>If "ALL", it is available to anyone who has the link.</li><li>If "ORG", it is available only to members of the sheet owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled** = true.
-**readOnlyFullDefaultView** | string | Indicates which view the user has set for a read-only, default view of the published sheet. Must be one of the following values: "CALENDAR", "CARD", or "GRID".
-**readOnlyFullShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or `true`, is to display the toolbar. If `false`, hides the toolbar.
-**readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published sheet<br/>Only returned in a response if **readOnlyFullEnabled** = true.
-**readOnlyLiteSslUrl** | string | URL for 'Read-Only' view of the published sheet when SSL is enabled. 
-**readOnlyLiteUrl** | string | URL for 'Read-Only HTML' view of the published sheet<br/>Only returned in a response if **readOnlyLiteEnabled** = true.
-**readWriteAccessibleBy** | string | Indicates who can access the 'Edit by Anyone' view of the published sheet:<ul><li>If "ALL", it is available to anyone who has the link.</li><li>If "ORG", it is available only to members of the sheet owner's Smartsheet organization.</li></ul>Only returned in a response if **readWriteEnabled** = true.
-**readWriteDefaultView** | string | Indicates which view the user has set for a read-write, default view of the published sheet. Must be one of the following values: "CALENDAR", "CARD", or "GRID".
-**readWriteShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or `true`, is to display the toolbar. If `false`, hides the toolbar.
-**readWriteUrl** | string | URL for 'Edit by Anyone' view of the published sheet<br/>Only returned in a response if **readWriteEnabled** = true.
+icalEnabled | Boolean | (Required) If `true`, a webcal is available for the calendar in the sheet.
+readOnlyFullEnabled | Boolean | (Required) If `true`, a rich version of the sheet is published with the ability to download row attachments and discussions.
+readOnlyLiteEnabled | Boolean | (Required) If `true`, a lightweight version of the sheet is published without row attachments or discussions.
+readWriteEnabled | Boolean | (Required) If `true`, a rich version of the sheet is published with the ability to edit cells and manage attachments and discussions.
+icalUrl | string | URL for 'iCal' view of the published sheet<br/>Only returned in a response if **icalEnabled** = true.
+readOnlyFullAccessibleBy | string | Indicates who can access the 'Read-Only Full' view of the published sheet:<ul><li>If "ALL", it is available to anyone who has the link.</li><li>If "ORG", it is available only to members of the sheet owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled** = true.
+readOnlyFullDefaultView | string | Indicates which view the user has set for a read-only, default view of the published sheet. Must be one of the following values: "CALENDAR", "CARD", or "GRID".
+readOnlyFullShowToolbar | Boolean | Indicates whether the left nav toolbar is displayed. The default, or `true`, is to display the toolbar. If `false`, hides the toolbar.
+readOnlyFullUrl | string | URL for 'Read-Only Full' view of the published sheet<br/>Only returned in a response if **readOnlyFullEnabled** = true.
+readOnlyLiteSslUrl | string | URL for 'Read-Only' view of the published sheet when SSL is enabled. 
+readOnlyLiteUrl | string | URL for 'Read-Only HTML' view of the published sheet<br/>Only returned in a response if **readOnlyLiteEnabled** = true.
+readWriteAccessibleBy | string | Indicates who can access the 'Edit by Anyone' view of the published sheet:<ul><li>If "ALL", it is available to anyone who has the link.</li><li>If "ORG", it is available only to members of the sheet owner's Smartsheet organization.</li></ul>Only returned in a response if **readWriteEnabled** = true.
+readWriteDefaultView | string | Indicates which view the user has set for a read-write, default view of the published sheet. Must be one of the following values: "CALENDAR", "CARD", or "GRID".
+readWriteShowToolbar | Boolean | Indicates whether the left nav toolbar is displayed. The default, or `true`, is to display the toolbar. If `false`, hides the toolbar.
+readWriteUrl | string | URL for 'Edit by Anyone' view of the published sheet<br/>Only returned in a response if **readWriteEnabled** = true.
 
 ### SheetUserSettings Object
 
@@ -4892,28 +4892,28 @@ Represents individual user settings for a specific sheet.  User settings may be 
 
      |     |     |
 -----|-----|-----|
-**criticalPathEnabled** | Boolean | Does this user have "Show Critical Path" turned on for this sheet?  Note this setting only has an effect on project sheets with dependencies enabled.
-**displaySummaryTasks** | Boolean | Does this user have "Display Summary Tasks" turned on for this sheet?  Applies only to sheets where Calendar View has been configured.
+criticalPathEnabled | Boolean | Does this user have "Show Critical Path" turned on for this sheet?  Note this setting only has an effect on project sheets with dependencies enabled.
+displaySummaryTasks | Boolean | Does this user have "Display Summary Tasks" turned on for this sheet?  Applies only to sheets where Calendar View has been configured.
 
 ### SortCriterion Object
 
      |     |     |
 -----|-----|-----|
-**columnId** | number | Column Id
-**direction** | string | The direction for the sort. Must be one of the following values: "ASCENDING" (default) or "DESCENDING"
+columnId | number | Column Id
+direction | string | The direction for the sort. Must be one of the following values: "ASCENDING" (default) or "DESCENDING"
 
 ### SortSpecifier Object
 
      |     |     |
 -----|-----|-----|
-**sortCriteria** | [SortCriterion](#sortcriterion-object)[] | Specifies sort order. Array is in priority order.
+sortCriteria | [SortCriterion](#sortcriterion-object)[] | Specifies sort order. Array is in priority order.
 
 ### Source Object
 
      |     |     |
 -----|-----|-----|
-**id** | number | Id of the sheet or template from which the enclosing sheet was created
-**type** | string | "sheet" or "template"
+id | number | Id of the sheet or template from which the enclosing sheet was created
+type | string | "sheet" or "template"
 
 ## Copy Sheet
 
@@ -5051,12 +5051,12 @@ Creates a copy of the specified Sheet.
 
      |     |
 -----|-----|
-<%= SCOPE %> | CREATE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>attachments</li><li>cellLinks</li><li>data -- includes formatting</li><li>discussions -- includes comments</li><li>filters</li><li>forms</li><li>ruleRecipients -- includes notification recipients, must also include **rules** when using this attribute</li><li>rules -- includes notifications and workflow rules</li><li>shares</li><li>all - deprecated</li></ul><i>Note</i>: Cell history is not copied, regardless of which **include** parameter values are specified.
  | **omit** (optional) -- when specified with a value of "sheetHyperlinks", excludes this category from the response
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object)
 <%= RETURNS %> | [Result object](#result-object) containing a [Sheet object](#sheet-object) for the newly created Sheet, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
+<%= SCOPE %> | CREATE_SHEETS
 
 ## Create Sheet
 
@@ -5925,9 +5925,9 @@ Deletes the sheet specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | DELETE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | DELETE_SHEETS
 
 ## Get Sheet Version
 
@@ -6001,9 +6001,9 @@ The following actions increment Sheet version:
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | A simple object with only a **version** attribute
+<%= SCOPE %> | READ_SHEETS
 
 ## Get Sheet
 
@@ -6122,7 +6122,6 @@ Gets the Sheet specified in the URL. Returns the Sheet, including Rows, and opti
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ownerInfo**: includes owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which sheet or template the sheet was created from, if any.
   | **exclude** (optional) -- a comma-separated list of elements to <i>not include</i> in the response.<br/><ul><li>**nonexistentCells**: excludes cells that have never contained any data</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li></ul>
@@ -6133,6 +6132,7 @@ Gets the Sheet specified in the URL. Returns the Sheet, including Rows, and opti
   | **rowIds** (optional): a comma-separated list of Row Ids on which to filter the rows included in the result
   | **rowNumbers** (optional): a comma-separated list of Row numbers on which to filter the rows included in the result.  Non-existent row numbers are ignored.
 <%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
+<%= SCOPE %> | READ_SHEETS
 
 ## Get Sheet as Excel / PDF / CSV
 
@@ -6402,11 +6402,11 @@ Gets the Sheet in the format specified, based on the Sheet Id.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
  | **Accept** -- must be set to one of the following values:<ul><li>application/pdf</li><li>application/vnd.ms-excel</li><li>text/csv</li></ul>
 <%= PARAMETERS %> | **paperSize** (optional) -- applies to PDF only, must be one of:<ul><li>LETTER (default)</li><li>LEGAL</li><li>WIDE (same as 11x17)</li><li>ARCHD</li><li>A4</li><li>A3</li><li>A2</li><li>A1</li><li>A0</li></ul>
 <%= RETURNS %> | The file in either Excel, PDF, or CSV format.
+<%= SCOPE %> | READ_SHEETS
 
 ## List Org Sheets
 
@@ -6521,12 +6521,12 @@ Gets a list of all Sheets that the User has access to in alphabetical order by n
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>ownerInfo - owner's email address and user Id for each sheet</li><li>sheetVersion - current version number of each sheet, should not be combined with pagination</li><li>source - the [source](#source-object) for any sheet that was created from another sheet or template</li></ul>
  | <%= PARAMETER_MODIFIEDSINCE %>
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Sheet objects](#sheet-object) limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li><li>source (included only if "source" is specified with the **include** parameter)</li><li>owner (included only if "ownerInfo" is specified with the **include** parameter)</li><li>ownerId (included only if "ownerInfo" is specified with the **include** parameter)</li><li>createdAt</li><li>modifiedAt</li></ul>
+<%= SCOPE %> | READ_SHEETS
 
 ## Move Sheet
 
@@ -6638,10 +6638,10 @@ Moves the specified Sheet to a new location.
 
      |     |
 -----|-----|
-<%= SCOPE %> | CREATE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following required attributes:<ul><li>destinationType</li><li>destinationId</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Sheet object](#sheet-object) for the moved Sheet, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
+<%= SCOPE %> | CREATE_SHEETS
 
 ## Publish Sheet
 
@@ -6714,9 +6714,9 @@ Gets the sheet's 'Publish' settings.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [SheetPublish object](#sheetpublish-object)
+<%= SCOPE %> | READ_SHEETS
 
 ### Set Sheet Publish Status
 
@@ -6836,10 +6836,10 @@ Sets the publish status of the Sheet and returns the new status, including the U
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [SheetPublish object](#sheetpublish-object)
 <%= RETURNS %> | [Result object](#result-object) containing a [SheetPublish object](#sheetpublish-object)
+<%= SCOPE %> | ADMIN_SHEETS
 
 <aside class="notice">For Read Only, if you do not specify a value for <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the Sheet owner belongs to an organization) or to "ALL" (if the Sheet owner does not belong to an organization).</aside>
 
@@ -6956,11 +6956,11 @@ Sorts the rows of a sheet, either in ascending or descending order.
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>sortCriteria: <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
   | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
 <%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
+<%= SCOPE %> | WRITE_SHEETS
 
 ## Update Sheet
 
@@ -7097,10 +7097,10 @@ only has read-only access to the sheet (for example, the user has viewer permiss
  
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Sheet object](#sheet-object) limited to the following attributes:<ul><li>name (optional)</li><li>userSettings (optional): [SheetUserSettings object](#sheetusersettings-object) for updating these user's settings for the sheet</li><li>projectSettings (optional): [ProjectSettings object](#projectsettings-object), containing at least one of the projectSettings attributes, for updating this sheet's project settings and dependencies.</li></ul>Note the following:<ul><li>Attributes not specified in projectSettings are not updated.</li><li>If projectSettings.nonWorkingDays is specified as an empty array, all non-working days are removed from the project sheet.</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Sheet object](#sheet-object) for the updated Sheet
+<%= SCOPE %> | ADMIN_SHEETS
 
 ## <%= RELATED %>
 
@@ -7158,24 +7158,24 @@ Smartsheet Sights(TM) are a collection of widgets that can contain data from a v
 
      |     |     |
 -----|-----|-----|
-**id** | number | Sight Id
-**name** | string | Sight Name 
-**columnCount** | number | Number of Columns that the Sight contains
-**widgets** | [widget](#widget-object)[] | Array of Widget objects
-**favorite** | Boolean | Indicates whether the User has marked the Sight as a favorite
-**accessLevel** | string | User's permissions on the Sight. Valid values: <ul><li>OWNER</li> <li>ADMIN</li> <li>VIEWER</li></ul>
-**permalink** | string | URL that represents a direct link to the Sight in Smartsheet
-**createdAt** | timestamp | Time of creation
-**modifiedAt** | timestamp | Time of last modification
-**workspace** | [Workspace](#workspace-object) | A Workspace object, limited to only 2 attributes: <ul><li>id</li> <li>name</li></ul> _Note: this attribute is only present if the Sight resides within a Workspace._
+id | number | Sight Id
+name | string | Sight Name 
+columnCount | number | Number of Columns that the Sight contains
+widgets | [widget](#widget-object)[] | Array of Widget objects
+favorite | Boolean | Indicates whether the User has marked the Sight as a favorite
+accessLevel | string | User's permissions on the Sight. Valid values: <ul><li>OWNER</li> <li>ADMIN</li> <li>VIEWER</li></ul>
+permalink | string | URL that represents a direct link to the Sight in Smartsheet
+createdAt | timestamp | Time of creation
+modifiedAt | timestamp | Time of last modification
+workspace | [Workspace](#workspace-object) | A Workspace object, limited to only 2 attributes: <ul><li>id</li> <li>name</li></ul> _Note: this attribute is only present if the Sight resides within a Workspace._
 
 ### SightPublish Object
 
      |     |     |
 -----|-----|-----|
-**readOnlyFullEnabled** | Boolean | If `true`, a rich version of the Sight is published with the ability to use shortcuts and widget interactions.
-**readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published Sight.<br/>Only returned in a response if **readOnlyFullEnabled** = true.
-**readOnlyFullAccessibleBy** | string | Flag to indicate who can access the 'Read-Only Full' view of the published Sight:<ul><li>If "ALL", it is available to anyone who has the link.</li><li>If "ORG", it is available only to members of the Sight owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled** = true.
+readOnlyFullEnabled | Boolean | If `true`, a rich version of the Sight is published with the ability to use shortcuts and widget interactions.
+readOnlyFullUrl | string | URL for 'Read-Only Full' view of the published Sight.<br/>Only returned in a response if **readOnlyFullEnabled** = true.
+readOnlyFullAccessibleBy | string | Flag to indicate who can access the 'Read-Only Full' view of the published Sight:<ul><li>If "ALL", it is available to anyone who has the link.</li><li>If "ORG", it is available only to members of the Sight owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled** = true.
 
 ### Widget Object
 
@@ -7200,22 +7200,21 @@ Smartsheet Sights(TM) are a collection of widgets that can contain data from a v
 
      |     |     |
 -----|-----|-----|
-**id** | number | Widget Id
-**title** | string | _(Optional)_ Title of the widget
-**showTitle** | Boolean | **True** indicates that the client should display the widget title.  Note that this is independent of the "title" string which may be null or empty.
-**showTitleIcon** | Boolean | **True** indicates that the client should display the Sheet icon in the widget title
-**titleFormat** | string | [FormatDescriptor](#formatting)
-**xPosition** | number | X-coordinate of widget's position on the Sight
-**yPosition** | number | Y-coordinate of widget's position on the Sight
-**height** | number | Number of Rows that the widget occupies on the Sight
-**width** | number | Number of Columns that the widget occupies on the Sight
-**version** | int | Widget version number
-**type** | string | Type of widget. See table below to see how UI widget names map to type.
-**contents** | WidgetContent object | Data that specifies the contents of the widget. <b>Note:</b> The type of WidgetContent object (and attributes within) depends on the value of `widget.type`.
+id | number | Widget Id
+title | string | _(Optional)_ Title of the widget
+showTitle | Boolean | **True** indicates that the client should display the widget title.  Note that this is independent of the "title" string which may be null or empty.
+showTitleIcon | Boolean | **True** indicates that the client should display the Sheet icon in the widget title
+titleFormat | string | [FormatDescriptor](#formatting)
+xPosition | number | X-coordinate of widget's position on the Sight
+yPosition | number | Y-coordinate of widget's position on the Sight
+height | number | Number of Rows that the widget occupies on the Sight
+width | number | Number of Columns that the widget occupies on the Sight
+version | int | Widget version number
+type | string | Type of widget. See table below to see how UI widget names map to type.
+contents | WidgetContent object | Data that specifies the contents of the widget. <b>Note:</b> The type of WidgetContent object (and attributes within) depends on the value of `widget.type`.
 
-     |     |     |
+UI widget name | type string | Object |
 -----|-----|-----|
-**UI widget name** | **type string** | **Object**
 Chart | CHART | [ChartWidgetContent](#chartwidgetcontent-object) 
 Image | IMAGE | [ImageWidgetContent](#imagewidgetcontent-object)
 Metric | SHEETSUMMARY | [CellLinkWidgetContent](#celllinkwidgetcontent-object)
@@ -7236,31 +7235,31 @@ columns | [column](#column-object)[] | Array of Column objects
 
      |     |     |
 -----|-----|-----|
-**label** | string | Label for the data point. This is either the column name or a user-provided string
-**labelFormat** | string | [formatDescriptor](#formatting)
-**objectValue** | A **string**, **number**, or a **Boolean** value | The type of data returned depends on the cell type and the data in the cell
-**cell** | [cell](#cell-object) | Cell object
-**valueFormat** | string | [formatDescriptor](#formatting)
-**order** | integer | The display order for the CellDataItem
-**columnId** | number | Column Id for the cell
+label | string | Label for the data point. This is either the column name or a user-provided string
+labelFormat | string | [formatDescriptor](#formatting)
+objectValue | A **string**, **number**, or a **Boolean** value | The type of data returned depends on the cell type and the data in the cell
+cell | [cell](#cell-object) | Cell object
+valueFormat | string | [formatDescriptor](#formatting)
+order | integer | The display order for the CellDataItem
+columnId | number | Column Id for the cell
 
 ### ChartWidgetContent Object
 
      |     |     |
 -----|-----|-----|
-**series** | series[] | An array of Series objects
-**axes** | axes[] | An array of Axes objects
-**legend** | string | The location in the widget where Smartsheet renders the legend, for example, **RIGHT**
+series | series[] | An array of Series objects
+axes | axes[] | An array of Axes objects
+legend | string | The location in the widget where Smartsheet renders the legend, for example, **RIGHT**
 
 ### ImageWidgetContent Object
 
      |     |     |
 -----|-----|-----|
-**privateId** | string | The image private Id
-**height** | integer | Original height of the image in pixels
-**width** | integer | Original width of the image in pixels
-**fileName** | string | Name of the image file
-**format** | string | [formatDescriptor](#formatting)
+privateId | string | The image private Id
+height | integer | Original height of the image in pixels
+width | integer | Original width of the image in pixels
+fileName | string | Name of the image file
+format | string | [formatDescriptor](#formatting)
 
 ### ReportWidgetContent Object
 
@@ -7284,12 +7283,12 @@ shortcutData | [shortcutData](#shortcutdataitem-object)[] | An array of Shortcut
 
      |     |     |
 -----|-----|-----|
-**label** | string | Label for the data point
-**labelFormat** | string | [formatDescriptor](#formatting)
-**attachmentType** | string | Attachment type (one of FILE, GOOGLE_DRIVE, LINK, BOX_COM, DROPBOX, EVERNOTE, EGNYTE, ONEDRIVE, or SMARTSHEET)
-**hyperlink** | [hyperlink](#hyperlink-object) | Hyperlink object
-**order** | integer | The display order for the ShortcutWidgetItem
-**mimeType** | string | MIME type if available for attachment type
+label | string | Label for the data point
+labelFormat | string | [formatDescriptor](#formatting)
+attachmentType | string | Attachment type (one of FILE, GOOGLE_DRIVE, LINK, BOX_COM, DROPBOX, EVERNOTE, EGNYTE, ONEDRIVE, or SMARTSHEET)
+hyperlink | [hyperlink](#hyperlink-object) | Hyperlink object
+order | integer | The display order for the ShortcutWidgetItem
+mimeType | string | MIME type if available for attachment type
 
 ### TitleWidgetContent Object
 
@@ -7414,11 +7413,10 @@ Creates a copy of the specified Sight.
 
      |     |
 -----|-----|
-<%= SCOPE %> | CREATE_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object)
 <%= RETURNS %> | [Result object](#result-object) containing a [Sight](#sight-object) for the newly created Sight, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
-
+<%= SCOPE %> | CREATE_SIGHTS
 
 ## Delete Sight
 
@@ -7482,9 +7480,9 @@ Deletes the sight specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | DELETE_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | DELETE_SIGHTS
 
 ## Get Sight
 
@@ -7590,12 +7588,11 @@ sight = smartsheet.sights.get(
 
 Gets the specified sight.
 
-
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Sight object](#sight-object)
+<%= SCOPE %> | READ_SIGHTS
 
 ## List Sights
 
@@ -7679,11 +7676,11 @@ Gets a list of all Sights that the User has access to.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PARAMETER_MODIFIEDSINCE %>
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Sight objects](#sight-object) limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li><li>createdAt</li><li>modifiedAt</li></ul>
+<%= SCOPE %> | READ_SIGHTS
 
 ## Move Sight
 
@@ -7799,10 +7796,10 @@ Moves the specified Sight to a new location.
 
      |     |
 -----|-----|
-<%= SCOPE %> | CREATE_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following required attributes:<ul><li>destinationType</li><li>destinationId</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Sight object](#sight-object) for the moved Sight, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
+<%= SCOPE %> | CREATE_SIGHTS
 
 ## Publish Sight
 
@@ -7866,9 +7863,9 @@ Gets the Sight 'Publish' settings.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [SightPublish object](#sightpublish-object)
+<%= SCOPE %> | READ_SIGHTS
 
 ### Set Sight Publish Status
 
@@ -7959,10 +7956,10 @@ Publishes or unpublishes a Sight.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [SightPublish object](#sightpublish-object) limited to the following attributes:<ul><li>**readOnlyFullEnabled** (required)</li><li>**readOnlyFullAccessibleBy** (optional) - set to either "ALL" or "ORG", when **readOnlyFullEnabled**=true.</li></ul>To publish the Sight, set **readOnlyFullEnabled** to `true`. To unpublish the Sight, set **readOnlyFullEnabled** to `false`.
 <%= RETURNS %> | [Result object](#result-object) containing a [SightPublish object](#sightpublish-object)
+<%= SCOPE %> | ADMIN_SIGHTS
 
 <aside class="notice">If <b>readOnlyFullEnabled</b> is set to <code>true</code> in the request, but <b>readOnlyFullAccessibleBy</b> is not specified, the value of <b>readOnlyFullAccessibleBy</b> defaults to the organization-level 'Sight Publishing' setting (if the Sight owner belongs to an organization) or to "ALL" (if the Sight owner does not belong to an organization).</aside>
 
@@ -8056,7 +8053,7 @@ Updates (renames) the specified sight.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Sight object](#sight-object) limited to the following attribute:<ul><li>name (string)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the updated [Sight object](#sight-object)
+<%= SCOPE %> | ADMIN_SIGHTS

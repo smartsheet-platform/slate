@@ -549,11 +549,11 @@ Smartsheet has Software Development Kits (SDKs) providing a higher level interfa
 
 Language | SDK | Sample application
 -----|-----|-----|
-| C# | [smartsheet-csharp-sdk](https://github.com/smartsheet-platform/smartsheet-csharp-sdk) | [csharp-read-write-sheet](https://github.com/smartsheet-samples/csharp-read-write-sheet)
-| Java | [smartsheet-java-sdk](https://github.com/smartsheet-platform/smartsheet-java-sdk) | [java-read-write-sheet](https://github.com/smartsheet-samples/java-read-write-sheet)
-| Node.js | [smartsheet-javascript-sdk](https://github.com/smartsheet-platform/smartsheet-javascript-sdk) | [node-read-write-sheet](https://github.com/smartsheet-samples/node-read-write-sheet)
-| Python | [smartsheet-python-sdk](https://github.com/smartsheet-platform/smartsheet-python-sdk) | [python-read-write-sheet](https://github.com/smartsheet-samples/python-read-write-sheet)
-| Ruby | [smartsheet-ruby-sdk](https://github.com/smartsheet-platform/smartsheet-ruby-sdk) | [ruby-read-write-sheet](https://github.com/smartsheet-samples/ruby-read-write-sheet)
+C# | [smartsheet-csharp-sdk](https://github.com/smartsheet-platform/smartsheet-csharp-sdk) | [csharp-read-write-sheet](https://github.com/smartsheet-samples/csharp-read-write-sheet)
+Java | [smartsheet-java-sdk](https://github.com/smartsheet-platform/smartsheet-java-sdk) | [java-read-write-sheet](https://github.com/smartsheet-samples/java-read-write-sheet)
+Node.js | [smartsheet-javascript-sdk](https://github.com/smartsheet-platform/smartsheet-javascript-sdk) | [node-read-write-sheet](https://github.com/smartsheet-samples/node-read-write-sheet)
+Python | [smartsheet-python-sdk](https://github.com/smartsheet-platform/smartsheet-python-sdk) | [python-read-write-sheet](https://github.com/smartsheet-samples/python-read-write-sheet)
+Ruby | [smartsheet-ruby-sdk](https://github.com/smartsheet-platform/smartsheet-ruby-sdk) | [ruby-read-write-sheet](https://github.com/smartsheet-samples/ruby-read-write-sheet)
 
 In addition to the sample application provided for each SDK, you can always view code examples in this document by clicking the corresponding tab in the dark-blue area in the rightmost pane.
 
@@ -1132,9 +1132,9 @@ Index endpoints all support pagination via the following optional query string p
 
 Value | Type | Description |
 -----|-----|-----|
-**pageSize** 	| number  | The maximum number of items to return per page.  Unless otherwise stated for a specific endpoint, defaults to **100** if not specified.
-**page**		| number  | Which page to return.  Defaults to **1** if not specified.  If you specify a value greater than the total number of pages, the last page of results is returned.
-**includeAll**  | Boolean | If true, include all results, that is, do not paginate.  Mutually exclusive with **pageSize** and **page** (they are ignored if **includeAll**=true is specified).
+pageSize 	| number  | The maximum number of items to return per page.  Unless otherwise stated for a specific endpoint, defaults to **100** if not specified.
+page		| number  | Which page to return.  Defaults to **1** if not specified.  If you specify a value greater than the total number of pages, the last page of results is returned.
+includeAll  | Boolean | If true, include all results, that is, do not paginate.  Mutually exclusive with **pageSize** and **page** (they are ignored if **includeAll**=true is specified).
 
 <aside class="notice">Most index endpoints default to a page size of 100 results.  If you want all results at once, you must specify the <code class="prettyprint">includeAll=true</code> query string parameter.</aside>
 
