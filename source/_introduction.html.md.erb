@@ -664,9 +664,9 @@ After you click **Save**, Smartsheet assigns a client Id and secret to your app.
 
 ### Access Scopes
 
-To access a user's Smartsheet data, your application must explicitly ask the user for permission. You do this by using Access Scopes, which enable your app to communicate to the user what type of operations it is performing. 
-Access Scopes do not override existing [access level restrictions](#access-levels). 
-For example, having the Access Scope of WRITE_SHEETS does not allow your app to update a sheet on which the user has VIEWER access level.
+To access a user's Smartsheet data, your application must explicitly ask the user for permission. You do this by using access scopes, which enable your app to communicate to the user what type of operations it is performing. 
+Access scopes do not override existing [access level restrictions](#access-levels). 
+For example, having the access scope of WRITE_SHEETS does not allow your app to update a sheet on which the user has VIEWER access level.
  
 The Access Scopes are as follows:
 
@@ -689,7 +689,7 @@ SHARE_SHEETS | Share sheets, including sending sheets as attachments.
 SHARE_SIGHTS | Share Sight.
 WRITE_SHEETS | Insert and modify sheet data, including attachments, discussions, and cell data.
 
-<aside class="notice"><b>Additional Info:</b><ul><li>When you request an authorization code, you specify all of the Access Scopes you need for your app. Smartsheet encodes those permissions into the auth code and subsequent access token.</li><li>Your app must request at least one Access Scope, but should only request the scopes necessary.</li><li>Once your app attains a valid access token, it can execute a <a href="#get-current-user">Get Current User</a> operation, regardless of which Access Scopes were requested.</li></ul></aside>
+<aside class="notice"><b>Additional Info:</b><ul><li>When you request an authorization code, you specify all of the Access Scopes you need for your app. Smartsheet encodes those permissions into the auth code and subsequent access token.</li><li>Your app must request at least one access scope, but should only request the scopes necessary.</li><li>Once your app attains a valid access token, it can execute a <a href="#get-current-user">Get Current User</a> operation, regardless of which Access Scopes were requested.</li></ul></aside>
 
 ## OAuth Flow
 

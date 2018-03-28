@@ -848,9 +848,9 @@ Deletes the Attachment specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | WRITE_SHEETS
 
 ## Get Attachment
 
@@ -924,9 +924,9 @@ Fetches a temporary URL that allows you to download an Attachment. The `urlExpir
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Attachment object](#attachment-object). For File attachments, this includes a temporary URL for downloading the file.<br/><br/>Currently, the temporary URL is set to expire in 120000 milliseconds, or 2 minutes.
+<%= SCOPE %> | READ_SHEETS
 
 ## List Attachments
 
@@ -1029,10 +1029,10 @@ Gets a list of all attachments that are on the sheet, including sheet, row, and 
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Attachment objects](#attachment-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## List Discussion Attachments
 
@@ -1141,10 +1141,10 @@ Gets a list of all Attachments that are in the Discussion.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Attachment objects](#attachment-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## List Row Attachments
 
@@ -1253,10 +1253,10 @@ Gets a list of all Attachments that are on the Row, including Row and Discussion
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Attachment objects](#attachment-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## Versioning 
 
@@ -1450,9 +1450,9 @@ Deletes all versions of the attachment corresponding to the specified Attachment
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | WRITE_SHEETS
 
 ### List Versions
 
@@ -1559,10 +1559,10 @@ Gets a list of all versions of the given Attachment Id in order from newest to o
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Attachment objects](#attachment-object)
+<%= SCOPE %> | READ_SHEETS
 
 <aside class="notice">To retrieve a download URL for a file attachment, use the Get Attachment operation for the specific version you want to download.</aside>
 
@@ -1717,9 +1717,9 @@ Deletes an automation rule.
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | WRITE_SHEETS
 
 ## Get an Automation Rule
 
@@ -1804,9 +1804,9 @@ Returns the specified automation rule, including any action values.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [AutomationRule object](#automationrule-object).
+<%= SCOPE %> | READ_SHEETS
 
 ## List All Automation Rules
 
@@ -1925,9 +1925,9 @@ Returns all automation rules associated with the specified sheet.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [AutomationRule objects](#automationrule-object).
+<%= SCOPE %> | READ_SHEETS
 
 ## Update an Automation Rule
 
@@ -2057,10 +2057,10 @@ Updates an existing automation rule.
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | An [AutomationRule object](#automationrule-object). When sending an AutomationRule, you must always specify `action.type` and it must match the existing rule type.
 <%= RETURNS %> | [Result object](#result-object) containing the updated [AutomationRule object](#automationrule-object)
+<%= SCOPE %> | WRITE_SHEETS
 
 ## <%= RELATED %>
 
@@ -2385,11 +2385,11 @@ Gets the cell modification history.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional): when specified with a value of "columnType", response includes the **columnType** attribute for each [cell] (#cell-object)
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Cell History objects](#cell-history-object). For more details, see [Cell Reference](#cell-reference).
+<%= SCOPE %> | READ_SHEETS
 
 ## Update Cells
 
@@ -2721,11 +2721,11 @@ Uploads an image to the specified Cell within a Sheet.
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | See [Simple Uploads](#simple-uploads) for information about required headers.
 <%= PARAMETERS %> | **altText** (optional): url-encoded alternate text for the image<BR><%= PARAMETER_OVERRIDE_VALIDATION %>
 <%= REQUEST %> | Binary content for the file
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | WRITE_SHEETS
 
 ## Download Cell Image
 
@@ -3015,10 +3015,10 @@ Gets a list of URLs that can be used to retrieve the specified cell images.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | Array of [ImageUrl objects](#imageurl-object), with the following attributes:<ul><li><b>imageId</b> (required)</li><li><b>height</b> (optional)</li><li><b>width</b> (optional)</li></ul>Each image in the response is sized according to which dimensions were specified by the request:<ul><li>If neither <b>height</b> nor <b>width</b> is specified, the image is returned in its original size.</li><li>If both <b>height</b> AND <b>width</b> are specified, image is sized using those measurements.</li><li>If either <b>height</b> OR <b>width</b> is specified (that is, one or the other -- not both), the image is automatically scaled using that measurement.</li></ul>Additionally, the following rules apply:<ul><li>If the requested image size is less than or equal to the actual image size, the returned image size matches the requested size.</li><li>If the requested image size is larger than the actual image size, the returned image size matches the actual image size.</li></ul>
 <%= RETURNS %> | [ImageUrlMap object](#imageurlmap-object)
+<%= SCOPE %> | READ_SHEETS
 
 To retrieve images, see the workflow in [Download Cell Image](#download-cell-image).
 
@@ -3273,10 +3273,10 @@ Inserts one or more columns into the Sheet specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Column object](#column-object) or an array of Column objects, with the following attributes:<ul><li>title</li><li>type</li><li>symbol (optional)</li><li>options (optional)</li><li>index (zero-based)</li><li>systemColumnType (optional)</li><li>autoNumberFormat (optional)</li><li>validation (optional)</li><li>width (optional)</li><li>locked (optional)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the the newly created columns -- either a single [Column object](#column-object) or an array of Column objects, corresponding to what was specified in the request.
+<%= SCOPE %> | ADMIN_SHEETS
 
 ## Delete Column
 
@@ -3347,9 +3347,9 @@ Deletes the Column specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | ADMIN_SHEETS
 
 ## Get Column
 
@@ -3441,9 +3441,9 @@ Gets the Column specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Column object](#column-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## List Columns
 
@@ -3546,10 +3546,10 @@ Gets a list of all Columns belonging to the Sheet specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Column objects](#column-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## Update Column
 
@@ -3689,10 +3689,10 @@ Updates properties of the column, moves the column, and/or renames the column.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | A [Column object](#column-object) that contains the following attributes:<ul><li>index</li><li>title -- required when creating a column, optional after that</li><li>type (optional)</li><li>hidden (optional)</li><li>options (optional)</li><li>symbol (optional)</li><li>systemColumnType (optional)</li><li>autoNumberFormat (optional)</li><li>validation (optional)</li><li>width (optional)</li><li>format (optional)</li><li>locked (optional)</li><li>contactOptions (optional) -- must have set column type to CONTACT_LIST</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the [Column object](#column-object) that was modified
+<%= SCOPE %> | ADMIN_SHEETS
 
 ## <%= RELATED %>
 
@@ -3987,10 +3987,10 @@ Adds a comment to a discussion.
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Comment object](#comment-object) with the following attribute:<ul><li>text</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing [Comment object](#comment-object) that was created
+<%= SCOPE %> | WRITE_SHEETS
 
 <br/><br/>
 **Creating a Comment with an Attachment:**
@@ -4100,11 +4100,10 @@ Updates the text of a comment. Note that only the user that created the comment 
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Comment object](#comment-object) with the following attribute:<ul><li>text</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing [Comment object](#comment-object) that was updated
-
+<%= SCOPE %> | WRITE_SHEETS
 
 ## Delete Comment
 
@@ -4176,9 +4175,9 @@ Deletes the Comment specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | WRITE_SHEETS
 
 ## Get Comment
 
@@ -4252,9 +4251,9 @@ Gets the Comment specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Comment object](#comment-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## <%= RELATED %>
 
@@ -4350,9 +4349,9 @@ Gets the specified contact.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_CONTACTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Contact object](#contact-object)
+<%= SCOPE %> | READ_CONTACTS
 
 ## List Contacts
 
@@ -4436,10 +4435,10 @@ Gets a list of the user's Smartsheet Contacts.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_CONTACTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Contact objects](#contact-object)
+<%= SCOPE %> | READ_CONTACTS
 
 # Cross-sheet References
 
@@ -4551,10 +4550,10 @@ Adds a cross-sheet reference between two sheets and defines the data range for f
 
      |     |
 -----|-----|
-<%= SCOPE %> | CREATE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [CrossSheetReference object](#crosssheetreference-object) with the following attributes:<ul><li>name (optional): unique name for reference. If you omit this parameter, Smartsheet will autogenerate a name.</li><li>sourceSheetId: sheetId for data source</li><li>Either two or all of the following:<ul><li>startRowId: Defines beginning edge of range when specifying one or more rows. Must be used with endRowId.</li><li>endRowId: Defines ending edge of range when specifying one or more rows. Must be used with startRowId.</li><li>startColumnId: Defines beginning edge of range when specifying one or more columns. Must be used with endColumnId.</li><li>endColumnId: Defines ending edge of range when specifying one or more columns. Must be used with startColumnId.</li></ul></li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [CrossSheetReference object](#crosssheetreference-object), corresponding to what was specified in the request.
+<%= SCOPE %> | CREATE_SHEETS
 
 ## Get Cross-sheet Reference
 
@@ -4609,9 +4608,9 @@ Gets the cross-sheet reference specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [CrossSheetReference object](#crosssheetreference-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## List Cross-sheet References
 
@@ -4681,9 +4680,9 @@ Lists all cross-sheet references for the sheet.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [CrossSheetReference objects](#crosssheetreference-object)
+<%= SCOPE %> | READ_SHEETS
 
 # Dashboards
 
@@ -5194,9 +5193,9 @@ Deletes the discussion specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | WRITE_SHEETS
 
 ## List Discussions
 
@@ -5378,9 +5377,9 @@ Gets the Discussion specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Discussion object](#discussion-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## List Row Discussions
 
@@ -5629,10 +5628,10 @@ If called with a single [Favorite object](#favorite-object), and that favorite a
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Favorite object](#favorite-object) or an array of Favorite objects, with the following attributes:<ul><li>type</li><li>objectId</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing objects that were marked as favorites -- either a single [Favorite object](#favorite-object) or an array of Favorite objects, corresponding to what was specified in the request.
+<%= SCOPE %> | ADMIN_WORKSPACES
 
 ## List Favorites
 
@@ -5706,10 +5705,10 @@ Gets a list of all of the user's Favorite items.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Favorite objects](#favorite-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## Remove Favorite
 
@@ -5964,9 +5963,9 @@ Removes a single Sight from the user's list of Favorite items.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | ADMIN_WORKSPACES
 
 ### Remove Favorite Template
 
@@ -6655,13 +6654,13 @@ Creates a copy of the specified Folder.
 
      |     |    
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>attachments</li><li>cellLinks</li><li>data -- includes formatting</li><li>discussions -- includes comments</li><li>filters</li><li>forms</li><li>ruleRecipients -- includes notification recipients, must also include **rules** when using this attribute</li><li>rules -- includes notifications and workflow rules</li><li>shares</li><li>all - deprecated</li></ul><i>Note</i>: Cell history is not copied, regardless of which **include** parameter values are specified.
  | **omit** (optional) -- when specified with a value of "sheetHyperlinks", excludes this category from the response
  | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created folder:<ul><li>cellLinks</li><li>reports</li><li>sheetHyperlinks</li><li>sights</li></ul>By default, all cell links, reports, sheet hyperlinks, and Sights that reference objects in the source folder are re-mapped to reference corresponding objects in the newly created folder. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If "cellLinks" is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created folder continue to point to the original source sheets.</li><li>If "reports" is specified in the <b>skipRemap</b> parameter value, the reports within the newly created folder continue to point to the original source sheets.</li><li>If "sheetHyperlinks" is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created folder continue to point to the original source sheets.</li><li>If "sights" is specified in the <b>skipRemap</b> parameter value, the widgets within Sights in the newly created folder continue to point to the original source sheets / reports.</li></ul>
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Folder object](#folder-object) for the newly created folder
+<%= SCOPE %> | ADMIN_WORKSPACES
 
 ## Create Folder
 
@@ -6971,9 +6970,9 @@ Deletes the folder (and its contents) specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | ADMIN_WORKSPACES
 
 ## Get Folder
 
@@ -7084,10 +7083,10 @@ Gets the specified Folder (and lists its contents).
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>ownerInfo - owner's email address and user Id for each sheet</li><li>sheetVersion - current version number of each sheet, should not be combined with pagination</li><li>source - the [source](#source-object) for any sheet that was created from another sheet or template</li></ul>
 <%= RETURNS %> | [Folder object](#folder-object), populated according to the **include** parameter<br/><br/>Note: If no folders, sheets, reports, templates, or Sights are present in the Folder, the corresponding attribute (for example, "folders", "sheets") is not present in the response.
+<%= SCOPE %> | READ_SHEETS
 
 ## List Folders
 
@@ -7420,11 +7419,10 @@ Moves the specified folder to another location.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following required attributes:<ul><li>destinationType</li><li>destinationId</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Folder object](#folder-object) for the moved Folder
-
+<%= SCOPE %> | ADMIN_WORKSPACES
 
 ## Update Folder
 
@@ -7519,7 +7517,7 @@ Updates the folder specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Folder object](#folder-object), limited to the following required attribute:<ul><li>name (string)</li></ul>Name does not have to be unique.
 <%= RETURNS %> | [Result object](#result-object) containing the updated [Folder object](#folder-object)
+<%= SCOPE %> | ADMIN_WORKSPACES

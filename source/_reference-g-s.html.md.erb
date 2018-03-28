@@ -165,10 +165,10 @@ Creates a new Group.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>name (required) -- must be unique within the organization</li><li>description (optional)</li><li>members (optional) -- array of [GroupMember objects](#groupmember-object), each limited to the following attribute:<ul><li>email</li></ul></li></ul>
 <%= RETURNS %> | [Result object](#result-object), containing a [Group object](#group-object) for the newly created Group
+<%= SCOPE %> | ADMIN_USERS
 
 ## Delete Group
 
@@ -236,9 +236,9 @@ Deletes the Group specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | ADMIN_USERS
 
 <aside class="notice"><b>This operation is asynchronous</b>, meaning group members may retain their sharing access for a brief period of time after the call returns.  For small groups with limited sharing, the operation should complete quickly (within a few seconds).  For large groups with many shares, this operation could possibly take more than a minute to complete.</aside>
 
@@ -320,9 +320,9 @@ Gets the Group specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Group object](#group-object) that includes the list of [GroupMembers](#groupmember-object)
+<%= SCOPE %> | READ_USERS
 
 ## List Org Groups
 
@@ -405,10 +405,10 @@ Gets a list of all Groups in an organization. To fetch the members of an individ
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Group objects](#group-object)
+<%= SCOPE %> | READ_USERS
 
 ## Update Group
 
@@ -519,10 +519,10 @@ Updates the Group specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>name (optional) -- must be unique within the organization</li><li>description (optional)</li><li>ownerId (optional): Id of an admin User to whom the group ownership is transferred</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the [Group object](#group-object) for the updated group
+<%= SCOPE %> | ADMIN_USERS
 
 ## <%= RELATED %>
 
@@ -662,11 +662,11 @@ of [GroupMember objects](#groupmember-object) any users specified in the array t
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | A single [GroupMember object](#groupmember-object) or an array of GroupMember objects, limited to the following attribute:<ul><li>email</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the members added to the group -- either a single [GroupMember](#groupmember-object) or array of GroupMember objects, corresponding to what was specified in the request.
 <%= ERRORS %>  | If an error occurs because the request specified one or more [*alternate* email addresses](#alternate-email-addresses) (that is, not the primary email address associated with the User account), the [Error object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array has the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry using their primary address u1@smartsheet.com."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
+<%= SCOPE %> | ADMIN_USERS
 
 <aside class="notice"><b>This operation is asynchronous</b>, meaning the users may not yet have sharing access to sheets for a period of time after this operation returns.  For small groups with limited sharing, the operation should complete quickly (within a few seconds).  For large groups with many shares, this operation could possibly take more than a minute to complete.</aside>
 
@@ -741,9 +741,9 @@ Removes a member from a Group.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | ADMIN_USERS
 
 <aside class="notice"><b>This operation is asynchronous</b>, meaning group members may retain their sharing access for a brief period of time after the call returns.  For small groups with limited sharing, the operation should complete quickly (within a few seconds).  For large groups with many shares, this operation could possibly take more than a minute to complete.</aside>
 
@@ -873,11 +873,11 @@ Gets a nested list of all Home objects, including Sheets, Workspaces, Folders, R
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>ownerInfo - owner's email address and user Id for each sheet</li><li>source - the [source](#source-object) for any sheet that was created from another sheet or template</li></ul>
   | **exclude** (optional) -- a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>permalinks - excludes the permalink from each data object</li></ul> 
 <%= RETURNS %> | [Home object](#home-object), populated according to the **include** parameter
+<%= SCOPE %> | READ_SHEETS
 
 ## <%= RELATED %>
 
@@ -1100,13 +1100,13 @@ Gets the Report, including one page of Rows, and optionally populated with Discu
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>discussions</li><li>attachments</li><li>[format](#formatting)</li><li>sourceSheets</li></ul> 
   | **exclude** (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li></ul>
   | **pageSize** (optional): Number of rows per page.  If not specified, the default value is 100.  This operation can return a maximum of 500 rows per page.
   | **page** (optional): Which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
 <%= RETURNS %> | [Report object](#report-object), populated according to the specified parameters
+<%= SCOPE %> | READ_SHEETS
 
 ## Get Report as Excel / CSV
 
@@ -1306,10 +1306,10 @@ Gets the Report in the format specified, based on the Report Id.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
  | **Accept** -- must be set to one of the following values:<ul><li>application/vnd.ms-excel</li><li>text/csv</li></ul>
 <%= RETURNS %> | The report file in either Excel or CSV format.
+<%= SCOPE %> | READ_SHEETS
 
 ## List Reports
 
@@ -1386,10 +1386,10 @@ Gets a list of all Reports that the User has access to in alphabetical order by 
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PARAMETER_MODIFIEDSINCE %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Report objects](#report-object) limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
+<%= SCOPE %> | READ_SHEETS
 
 ## Publish Report
 
@@ -1453,9 +1453,9 @@ Gets the Report's 'Publish' settings.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [ReportPublish object](#reportpublish-object)
+<%= SCOPE %> | READ_SHEETS
 
 ### Set Report Publish Status
 
@@ -1540,10 +1540,10 @@ Sets the publish status of the Report and returns the new status, including the 
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [ReportPublish object](#reportpublish-object)
 <%= RETURNS %> | [Result object](#result-object) containing a [ReportPublish object](#reportpublish-object)
+<%= SCOPE %> | ADMIN_SHEETS
 
 <aside class="notice">For Read Only, if you do not specify <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level 'Report Publishing' setting (if the Report owner belongs to an organization) or to "ALL" (if the Report owner does not belong to an organization).</aside>
 
@@ -1929,16 +1929,12 @@ Inserts one or more rows into the Sheet specified in the URL. If you want to ins
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | <%= PARAMETER_ALLOW_PARTIAL_SUCCESS %><BR><%= PARAMETER_OVERRIDE_VALIDATION %>
 <%= REQUEST %> | [Row object](#row-object) or an array of Row objects, with the following attributes:<ul><%= partial "snippets/addRowUpdateRow.md.erb" %></ul>
-
-
-     |     |
------|-----|
 <%= RETURNS %> | [Result object](#result-object) containing the newly created rows -- either a single [Row object](#row-object) or array of Row objects, corresponding to what was specified in the request, as well as the new version of the Sheet.
 <%= ERRORS %> | <u><b>When <code>allowPartialSuccess=false</code> (or not specified):</b></u><br/><br/>If an error occurs, the [Error object](#error-object) returned contains a **detail** attribute set to an object with the following attribute:<ul><li>**index**: the array index of the row that caused the error (0 if a single Row was passed in)</li></ul>If any error occurs, the entire request fails (no rows are added), and the Error response returned describes the first problem that was encountered. For example:<br/>{<br/>&#160;&#160;"errorCode": 1042,<br/>&#160;&#160;"message": "The cell value in column 5504245941200772 did not conform to the strict requirements for type CHECKBOX."<br/>&#160;&#160;"detail": {<br/>&#160;&#160;&#160;&#160;"index": 4<br/>&#160;&#160;}<br/>}<br/><br/><br/><u><b>When <code>allowPartialSuccess=true</code>:</b></u><br/><br/><%= PARTIAL_SUCCESS %>
+<%= SCOPE %> | WRITE_SHEETS
 
 ## Copy Rows to Another Sheet
 
@@ -2067,13 +2063,14 @@ response = smartsheet.sheets.rows.copy_to_another_sheet(
 Copies Rows from the Sheet specified in the URL to (the bottom of) another sheet.
 
 <aside class="notice">Up to 5,000 row Ids can be specified in the request, but if the total number of rows in the destination sheet after the copy exceeds the Smartsheet row limit, an error response is returned.</aside>
+
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of row elements to copy in addition to the cell data:<ul><li>attachments</li><li>discussions</li><li>children - if specified, any child rows of the rows specified in the request are also copied to the destination sheet, and parent-child relationships amongst rows are preserved within the destination sheet; if not specified, only the rows specified in the request are copied.</li><li>**all** - specify a value of "all" to include everything (attachments, discussions, and children)</li></ul>**ignoreRowsNotFound** (optional) -- true or false: default is false. If set to true, specifying row Ids that do not exist within the source sheet does not cause an error response. If omitted or set to false, specifying row Ids that do not exist within the source sheet causes an error response (and no rows are copied).
 <%= REQUEST %> | [CopyOrMoveRowDirective object](#copyormoverowdirective-object)
 <%= RETURNS %> | [CopyOrMoveRowResult object](#copyormoverowresult-object)
+<%= SCOPE %> | WRITE_SHEETS
 
 ## Delete Rows
 
@@ -2157,11 +2154,11 @@ Deletes one or more rows from the Sheet specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **ids** (required) - comma-separated list of Row Ids
  | **ignoreRowsNotFound** (optional) - true or false. If set to false and any of the specified Row Ids are not found, no rows are deleted, and the "not found" [error](#complete-error-code-list) is returned.
 <%= RETURNS %> | [Result object](#result-object) containing Row Ids corresponding to all rows that were successfully deleted (including any child rows of rows specified in the URL).
+<%= SCOPE %> | WRITE_SHEETS
 
 ## Get Row
 
@@ -2279,11 +2276,11 @@ Gets the Row specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><br/>See [Row Include Flags](#row-include-flags).<br/>Also supports the **columns** include flag, which adds a columns array that specifies all of the columns for the sheet. This enables you to have the full context of the cells in the row.<br/><br/>The **filters** include flag returns a **filteredOut** attribute indicating if the row should be displayed or hidden according to the sheet's filters.
   | **exclude** (optional) -- a comma-separated list of elements to <i>not include</i> in the response.<br/><ul><li>**nonexistentCells**: excludes cells that have never contained any data</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li></ul>
 <%= RETURNS %> | [Row object](#row-object), populated according to the specified parameters
+<%= SCOPE %> | READ_SHEETS
 
 ## List Rows
 
@@ -2422,11 +2419,11 @@ Moves Rows from the Sheet specified in the URL to (the bottom of) another sheet.
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of row elements to move in addition to the cell data:<ul><li>attachments</li><li>discussions</li></ul>**ignoreRowsNotFound** (optional) -- true or false: default is false. If set to true, specifying row Ids that do not exist within the source sheet do not cause an error response. If omitted or set to false, specifying row Ids that do not exist within the source sheet causes an error response (and no rows are moved).
 <%= REQUEST %> | [CopyOrMoveRowDirective object](#copyormoverowdirective-object)
 <%= RETURNS %> | [CopyOrMoveRowResult object](#copyormoverowresult-object)
+<%= SCOPE %> | WRITE_SHEETS
 
 ## Send Rows via Email
 
@@ -2693,10 +2690,10 @@ Updates cell values in the specified rows, expands/collapses the specified rows,
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | <%= PARAMETER_ALLOW_PARTIAL_SUCCESS %><BR><%= PARAMETER_OVERRIDE_VALIDATION %>
 <%= REQUEST %> | [Row object](#row-object) or an array of Row objects, with the following attributes:<ul><li>**id** (required)</li><%= partial "snippets/addRowUpdateRow.md.erb" %></ul>
+<%= SCOPE %> | WRITE_SHEETS
 
      |     |
 -----|-----|
@@ -2879,7 +2876,6 @@ Searches all Sheets that the User can access, for the specified text.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **query** (required): text with which to perform the search. Enclose in double-quotes for an exact search.
  | **include** (optional): when specified with a value of "favoriteFlag", response indicates which returned items are favorites:<ul><li>favorite -- Folders, Reports, Sheets, Sights, Templates, and Workspaces will have the property "favorite": true</li><li>parentObjectFavorite -- Attachments, Discussions, Profile Fields, and Rows will have the property "parentObjectFavorite": true</li></ul>
@@ -2887,6 +2883,7 @@ Searches all Sheets that the User can access, for the specified text.
  | <%= PARAMETER_MODIFIEDSINCE %>
  | **scopes** (optional): comma-separated list of search filters:<ul><li>attachments</li><li>cellData</li><li>comments</li><li>folderNames</li><li>profileFields</li><li>reportNames</li><li>sheetNames</li><li>sightNames</li><li>templateNames</li><li>workspaceNames</li></ul>
 <%= RETURNS %> | [SearchResult object](#searchresult-object) that contains a maximum of 100 [SearchResultems](#searchresultitem-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## Search Sheet
 
@@ -3076,9 +3073,9 @@ Gets application constants.
 
      |     |
 -----|-----|
-<%= SCOPE %> | None required (may be called unauthenticated)
 <%= HEADERS %> | None required (may be called unauthenticated)
 <%= RETURNS %> | [ServerInfo object](#serverinfo-object)
+<%= SCOPE %> | None required (may be called unauthenticated)
 
 # Sharing
 
@@ -3995,9 +3992,9 @@ Deletes the share specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | SHARE_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | SHARE_SIGHTS
 
 ### Get Sight Share
 
@@ -4062,9 +4059,9 @@ Gets the Share specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SIGHTS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Share object](#share-object)
+<%= SCOPE %> | READ_SIGHTS
 
 ### List Sight Shares
 

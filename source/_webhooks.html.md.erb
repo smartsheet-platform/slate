@@ -580,10 +580,10 @@ Creates a new webhook.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WEBHOOKS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Webhook object](#webhook-object), limited to the following attributes:<ul><li>name (required)</li><li>callbackUrl (required)</li><li>scope (required)</li><li>scopeObjectId (required)</li><li>events (required)</li><li>version (required)</li></ul>
 <%= RETURNS %> | [Result object](#result-object), containing a [Webhook object](#webhook-object) for the newly created webhook
+<%= SCOPE %> | ADMIN_WEBHOOKS
 
 # Delete Webhook
 
@@ -651,9 +651,9 @@ Deletes the webhook specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WEBHOOKS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | ADMIN_WEBHOOKS
 
 # Get Webhook
 
@@ -728,9 +728,9 @@ Gets the webhook specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WEBHOOKS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Webhook object](#webhook-object)
+<%= SCOPE %> | ADMIN_WEBHOOKS
 
 # List Webhooks
 
@@ -816,9 +816,9 @@ Items in the response are ordered by API Client name > webhook name > creation d
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WEBHOOKS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Webhook objects](#webhook-object)
+<%= SCOPE %> | ADMIN_WEBHOOKS
 
 # Reset Shared Secret
 
@@ -889,10 +889,10 @@ This operation can be used to rotate an API client's webhooks' shared secrets at
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WEBHOOKS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>  
 <%= REQUEST %> | The request body should be empty.
 <%= RETURNS %> | [Result object](#result-object) containing the [SharedSecret object](#sharedsecret-object)
+<%= SCOPE %> | ADMIN_WEBHOOKS
 
 # Update Webhook
 
@@ -1020,7 +1020,7 @@ Updates the webhook specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WEBHOOKS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Webhook object](#webhook-object), limited to the following attributes:<ul><li>name (optional)</li><li>events (optional)</li><li>callbackUrl (optional)</li><li>enabled (optional)</li><li>version (optional)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the [Webhook object](#webhook-object) for the updated webhook
+<%= SCOPE %> | ADMIN_WEBHOOKS

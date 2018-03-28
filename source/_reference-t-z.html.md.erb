@@ -669,12 +669,12 @@ Adds a User to the organization.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **sendEmail** (optional): A Boolean flag indicating whether or not to send a welcome email. Defaults to **false**.
 <%= REQUEST %> | [User object](#user-object) with the following attributes:<ul><li>email (required)</li><li>admin (required)</li><li>licensedSheetCreator (required)</li><li>firstName (optional)</li><li>lastName (optional)</li><li>groupAdmin (optional)</li><li>resourceViewer (optional)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the newly created [User object](#user-object).
 <%= ERRORS %>  | If an error occurs because the request specified the [*alternate* email address](#alternate-email-addresses) (that is, not the primary email address) of an existing Smartsheet User (to invite the user into the Org), the [Error object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "The specified email address (u1+1@smartsheet.com) is an alternate address for a user with the primary email address of u1@smartsheet.com. Please retry using their primary address."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
+<%= SCOPE %> | ADMIN_USERS
 
 <aside class="notice">If successful, and user auto provisioning (UAP) is on, and user matches the auto provisioning rules, user is added to the org.  If UAP is off, or user does not match UAP rules, user is invited to the org and must explicitly accept the invitation to join.</aside>
 
@@ -780,11 +780,11 @@ Adds one or more alternate email addresses for the specified User.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | Array of [AlternateEmail objects](#alternateemail-object), each limited to only the **email** attribute
 <%= RETURNS %> | [Result object](#result-object) containing an array of the newly created [AlternateEmail objects](#alternateemail-object).
 <%= ERRORS %>  | If a single email address is specified in the request and an error occurs, the response contains an [Error object](#error-object).<br/><br/>If multiple email addresses are specified in the request and an error occurs, the Error object returned contains a **detail** attribute set to an array of objects, each object in the array having the following attributes:<ul><li>**email**: Problematic email address specified in the request</li><li>**errorCode**: Smartsheet [error code](#complete-error-code-list)</li><li>**message**: Message that describes the problem with the specified email address</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 1160,<br/>&#160;&#160;"message": "Invalid bulk request. See detail for more information."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"email": "altEmail1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"errorCode": 1157,<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"message": "This address is already associated with another Smartsheet account, so it cannot be added as an alternate address for this account."<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
+<%= SCOPE %> | ADMIN_USERS
 
 ### Make Alternate Email Primary
 
@@ -862,10 +862,10 @@ Makes the specified alternate email address to become the primary email address 
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= RETURNS %> | [Result object](#result-object) containing the [AlternateEmail object](#alternateemail-object) that is now the primary email address
 <%= ERRORS %> | If an error occurs because the special permission is not granted to change primary email address, contact Smartsheet (<a href="mailto:api@smartsheet.com">api@smartsheet.com</a>) for assistance to enable this feature.<br/><br/>If an error occurs because the specified user has a personal email address as the primary email address (that is. the email address domain cannot be [validated](<%= USER_AUTO_PROVISIONING_URL %>), the specified user needs to manually change the primary email address in the [Personal Settings](<%= PERSONAL_SETTINGS_MANAGE_EMAIL_URL %>).
+<%= SCOPE %> | ADMIN_USERS
 
 ### Delete Alternate Email
 
@@ -936,9 +936,9 @@ Deletes the specified alternate email address for the specified user.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | ADMIN_USERS
 
 ### Get Alternate Email
 
@@ -1009,9 +1009,9 @@ Gets the specified Alternate Email.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [AlternateEmail object](#alternateemail-object)<br/><br/>
+<%= SCOPE %> | READ_USERS
 
 ### List Alternate Emails
 
@@ -1090,9 +1090,9 @@ Gets a list of the Alternate Emails for the specified User.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [AlternateEmail objects](#alternateemail-object)<br/><br/>
+<%= SCOPE %> | READ_USERS
 
 ## Get Current User
 
@@ -1180,9 +1180,9 @@ Gets the current User.
 
      |     |
 -----|-----|
-<%= SCOPE %> | all scopes
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [UserProfile object](#userprofile-object)<br/><br/><b>Note</b>: For system administrators, the following UserProfile attributes are included in the response):<ul><li>lastLogin (only returned if the user has logged in)</li><li>sheetCount (only returned if the status attribute is ACTIVE)</li><li>customWelcomeScreenViewed (only returned when an Enterprise user has viewed the [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>))</li></ul>
+<%= SCOPE %> | all scopes
 
 ## Get User
 
@@ -1283,9 +1283,9 @@ Gets the User specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [UserProfile object](#userprofile-object)<br/><br/><b>Note</b>: For system administrators, the following UserProfile attributes are included in the response):<ul><li>status</li><li>admin</li><li>licensedSheetCreator</li><li>groupAdmin</li><li>resourceViewer</li><li>lastLogin (only returned if the user has logged in)</li><li>sheetCount (only returned if the status attribute is ACTIVE)</li><li>customWelcomeScreenViewed (only returned when an Enterprise user has viewed the [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>))</li></ul>
+<%= SCOPE %> | READ_USERS
 
 ## List Users
 
@@ -1397,13 +1397,12 @@ Gets a list of Users in the organization. To filter by email, use the optional *
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **email** (optional): Comma-separated list of email addresses on which to filter the results.
  | **include** (optional): When specified with a value of "lastLogin", response includes the **lastLogin** attribute for each [user](#user-object) if:<br/><ul><li>the request is submitted by a system administrator, and</li><li>the returned [IndexResult object](#indexresult-object) that contains a maximum of 100 [User objects](#user-object).</li></ul>
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [User objects](#user-object)<br/><br/><b>Note</b>: If the API request is submitted by a system administrator, the following User attributes are included in the response (else, they are omitted from the response):<ul><li>status</li><li>admin</li><li>licensedSheetCreator</li><li>groupAdmin</li><li>resourceViewer</li><li>lastLogin (omitted if the user has never logged in before)</li><li>sheetCount (omitted if the status attribute is not ACTIVE)</li></ul><br/><b>Note</b>: If the API request is submitted by a system administrator of an Enterprise account, and [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) is enabled, the following User attributes are included in the response (else, they are omitted from the response):<ul><li>customWelcomeScreenViewed (omitted if the user has never viewed the Custom Welcome Screen)</li></ul>
-
+<%= SCOPE %> | READ_USERS
 
 ## Remove User
 
@@ -1484,12 +1483,12 @@ Removes a User from an organization. User is transitioned to a free collaborator
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **transferTo** (required if user owns groups): The Id of the user to transfer ownership to.  If the user being removed owns groups, they are transferred to this user.  If the user owns sheets, *and* **transferSheets** is true, the removed user's sheets are transferred to this user.
   | **transferSheets** (optional): If `true`, and **transferTo** is specified, the removed user's sheets are transferred.  Else, sheets are not transferred.  Defaults to `false`.
   | **removeFromSharing** (optional): Set to `true` to remove the user from sharing for all sheets/workspaces in the organization. If not specified, User is not removed from sharing.
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | ADMIN_USERS
 
 <aside class="notice">If the <b>transferTo</b> parameter is specified and the removed user owns Groups, the user specified via the <b>transferTo</b> parameter must have Group Admin rights.</aside>
 
@@ -1602,10 +1601,10 @@ Updates the User specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_USERS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [User object](#user-object) containing at least one of the following attributes:<ul><li>admin (required)</li><li>licensedSheetCreator (required)</li><li>firstName (optional)</li><li>lastName (optional)</li><li>groupAdmin (optional)</li><li>resourceViewer (optional)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the [User object](#user-object) for the updated User
+<%= SCOPE %> | ADMIN_USERS
 
 ## Update User Profile Image
 
@@ -1667,10 +1666,10 @@ Uploads an image to the User profile.
 
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | See [Simple Uploads](#simple-uploads) for information about required headers.
 <%= REQUEST %> | Binary content for the file
 <%= RETURNS %> | [Result object](#result-object) containing the [User object](#user-object) for the updated user.
+<%= SCOPE %> | WRITE_SHEETS
 
 <aside class="notice">Uploading a profile image differs from <a href="#add-image-to-cell">Adding an Image to a Cell</a> in the following ways:<ul><li>A Content-Length header is not required</li><li>Allowable file types are limited to: gif, jpg, and png</li><li>Maximum file size is determined by the following rules:<ul><li>If you have not defined a custom size and the image is larger than 1050 x 1050 pixels, Smartsheet scales the image down to 1050 x 1050</li><li>If you have defined a custom size, Smartsheet uses that as the file size max</li></ul></li><li>If the image is not square, Smartsheet uses a solid color to pad the image</li></ul></aside>
 
@@ -1835,13 +1834,13 @@ Creates a copy of the specified Workspace.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>attachments</li><li>cellLinks</li><li>data -- includes formatting</li><li>discussions -- includes comments</li><li>filters</li><li>forms</li><li>ruleRecipients -- includes notification recipients, must also include **rules** when using this attribute</li><li>rules -- includes notifications and workflow rules</li><li>shares</li><li>all - deprecated</li></ul><i>Note</i>: Cell history is not copied, regardless of which **include** parameter values are specified.
  | **omit** (optional) -- when specified with a value of "sheetHyperlinks", excludes this category from the response
  | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created workspace:<ul><li>cellLinks</li><li>reports</li><li>sheetHyperlinks</li><li>sights</li></ul>By default, all cell links, reports, sheet hyperlinks, and Sights that reference objects in the source workspace are re-mapped to reference corresponding objects in the newly created workspace. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If "cellLinks" is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created workspace continue to point to the original source sheets.</li><li>If "reports" is specified in the <b>skipRemap</b> parameter value, the reports within the newly created workspace continue to point to the original source sheets.</li><li>If "sheetHyperlinks" is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created workspace continue to point to the original source sheets.</li><li>If "sights" is specified in the <b>skipRemap</b> parameter value, the widgets within Sights in the newly created workspace continue to point to the original source sheets / reports.</li></ul>
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following attribute:<ul><li>newName (string) - required</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Workspace object](#workspace-object) for the newly created Workspace
+<%= SCOPE %> | ADMIN_WORKSPACES
 
 ## Create Workspace
 
@@ -1933,11 +1932,10 @@ Creates a Workspace.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Workspace object](#workspace-object), limited to the following attribute:<ul><li>name (string) - required</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Workspace object](#workspace-object) for the newly created Workspace
-
+<%= SCOPE %> | ADMIN_WORKSPACES
 
 ## Delete Workspace
 
@@ -2003,9 +2001,9 @@ Deletes the specified Workspace (and its contents).
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | ADMIN_WORKSPACES
 
 ## Get Workspace
 
@@ -2106,11 +2104,11 @@ Gets the specified Workspace (and lists its contents).
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **loadAll** (optional) -- **true** or **false** (defaults to **false**)
 	| **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>ownerInfo - owner's email address and user Id for each sheet</li><li>source - the [source](#source-object) for any sheet that was created from another sheet or template</li></ul>
 <%= RETURNS %> | [Workspace object](#workspace-object), populated according to the **include** parameter
+<%= SCOPE %> | READ_SHEETS
 
 ## List Workspaces
 
@@ -2196,10 +2194,10 @@ Gets a list of Workspaces that the user has access to. The list contains an abbr
 
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>sheetVersion - current version number of each sheet, should not be combined with pagination</li></ul><%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Workspace objects](#workspace-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## Share Workspace
 
@@ -2304,10 +2302,10 @@ Updates the Workspace specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WORKSPACES
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Workspace object](#workspace-object) limited to the following attribute:<ul><li>name (string)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the updated [Workspace object](#workspace-object)
+<%= SCOPE %> | ADMIN_WORKSPACES
 
 ## <%= RELATED %>
 
