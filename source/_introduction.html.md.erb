@@ -169,12 +169,12 @@ Many API calls can be modified by including one or more of these common query st
 
 Query Parameter | Type | Description | More Info |
 -----|-----|-----|-----|
-pageSize | Number | Specifies the maximum number of items to return per page, for example, pageSize=25. | [Paging](#paging)
-page | String | Specifies which page to return, for example, page=4. | [Paging](#paging)
-includeAll | Boolean | If **true**, includes all results, for example, includeAll=true. | [Paging](#paging)
 allowPartialSuccess | Boolean | If **true**, allows bulk operations to process even if one or more operations are invalid for some reason, for example, **allowPartialSuccess=true**. | [Bulk Operations](#bulk-operations)
-numericDates | Boolean | If **true**, allows you to input or receive dates in numeric format, for example, **numericDates=true**. | [Dates and Times](#dates-and-times)
 include/exclude | String | When applicable for a specific object, various **include** or **exclude** parameters are available, for example, **include=formatting**. | Object reference or [Formatting](#formatting)
+includeAll | Boolean | If **true**, includes all results, for example, includeAll=true. | [Paging](#paging)
+numericDates | Boolean | If **true**, allows you to input or receive dates in numeric format, for example, **numericDates=true**. | [Dates and Times](#dates-and-times)
+page | String | Specifies which page to return, for example, page=4. | [Paging](#paging)
+pageSize | Number | Specifies the maximum number of items to return per page, for example, pageSize=25. | [Paging](#paging)
 
 <aside class="notice">Query strings are case sensitive. If you do not see the expected response, confirm that your query is formatted correctly.</aside>
 
@@ -762,10 +762,10 @@ Smartsheet will redirect this URL to display your app's consent page with an exp
 
 Value | Description |
 -----|-----|
-response_type<br/>(required) | Whether the endpoint returns an authorization code. Must be set to "code".
-client_id<br/>(required) | The client Id you obtained when you registered your app.
-scope<br/>(required) | Space-delimited list of [access scopes](#access-scopes) to which you are asking the user to grant access.
-state<br/>(optional) | An arbitrary string of your choosing that is returned to your app; a successful roundtrip of this string helps ensure that your app initiated the request.
+client_id | Required. The client Id you obtained when you registered your app.
+response_type | Required. Whether the endpoint returns an authorization code. Must be set to "code".
+scope | Required. Space-delimited list of [access scopes](#access-scopes) to which you are asking the user to grant access.
+state | Optional. An arbitrary string of your choosing that is returned to your app; a successful roundtrip of this string helps ensure that your app initiated the request.
 
 You can view code examples by clicking the corresponding tab in the dark-blue area in the rightmost pane. The cURL example shows a `GET`.
 
@@ -921,10 +921,10 @@ Once you’ve successfully obtained an authorization code, the next step is to e
 
 Value | Description |
 -----|-----|
-grant_type<br/>(required) | Must be set to "authorization_code".
-client_id<br/>(required) | The client Id you obtained when you registered your app.
-code<br/>(required) | Authorization code returned in the [previous step](#request-an-authorization-code).
-hash<br/>(required) | [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  The app_secret is never sent with the request. This is the `app_secret` you obtained when you [registered your app](#register-your-app-using-developer-tools).
+client_id | Required. The client Id you obtained when you registered your app.
+code | Required. Authorization code returned in the [previous step](#request-an-authorization-code).
+grant_type | Required. Must be set to "authorization_code".
+hash | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  The app_secret is never sent with the request. This is the `app_secret` you obtained when you [registered your app](#register-your-app-using-developer-tools).
 
 <aside class="notice">The "Get Access Token" request must have the <b>Content-Type</b> header set to 'application/x-www-form-urlencoded'.</aside>
 
@@ -1013,11 +1013,11 @@ Once you obtain the new tokens, you must use them in place of the old ones, whic
 
 Value | Description |
 -----|-----|
-grant_type<br/>(required)| Must be set to "refresh_token".
-client_id<br/>(required)| Client Id for your app.
-refresh_token<br/>(required)| refresh_token value that came with the access token.
-hash<br/>(required)| [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token value. To obtain an app_secret, see [Register Your App Using Developer Tools](#register-your-app-using-developer-tools).
-redirect_uri<br/>(deprecated)| If supplied, must match the redirect URL you [registered](#register-your-app-using-developer-tools) for your app.
+client_id | Required. Client Id for your app.
+grant_type | Required. Must be set to "refresh_token".
+hash | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token value. To obtain an app_secret, see [Register Your App Using Developer Tools](#register-your-app-using-developer-tools).
+refresh_token | Required. refresh_token value that came with the access token.
+redirect_uri | Deprecated. If supplied, must match the redirect URL you [registered](#register-your-app-using-developer-tools) for your app.
 
 <aside class="notice">The "Refresh Token" request must have the <b>Content-Type</b> header set to 'application/x-www-form-urlencoded'.</aside>
 
@@ -1132,9 +1132,9 @@ Index endpoints all support pagination via the following optional query string p
 
 Value | Type | Description |
 -----|-----|-----|
-pageSize 	| number  | The maximum number of items to return per page.  Unless otherwise stated for a specific endpoint, defaults to **100** if not specified.
-page		| number  | Which page to return.  Defaults to **1** if not specified.  If you specify a value greater than the total number of pages, the last page of results is returned.
 includeAll  | Boolean | If true, include all results, that is, do not paginate.  Mutually exclusive with **pageSize** and **page** (they are ignored if **includeAll**=true is specified).
+page		| number  | Which page to return.  Defaults to **1** if not specified.  If you specify a value greater than the total number of pages, the last page of results is returned.
+pageSize 	| number  | The maximum number of items to return per page.  Unless otherwise stated for a specific endpoint, defaults to **100** if not specified.
 
 <aside class="notice">Most index endpoints default to a page size of 100 results.  If you want all results at once, you must specify the <code class="prettyprint">includeAll=true</code> query string parameter.</aside>
 
