@@ -2771,10 +2771,10 @@ totalCount | number | Total number of search results
 -----|-----|-----|
 contextData | array | Additional info on search result context (row num)
 objectId | number | Search result object Id
-objectType | string | Search result object type (row, sheet, attachment, discussion, folder, report, sight, template, workspace)
+objectType | string | Search result object type (row, sheet, attachment, discussion, folder, report, Sight, template, workspace)
 parentObjectId | number | Search result parent object Id
 parentObjectName | string | Search result parent object name
-parentObjectType | string | Search result parent object type (workspace, folder, sheet, report, sight, template)
+parentObjectType | string | Search result parent object type (workspace, folder, sheet, report, Sight, template)
 text | string | Search result text excerpt
 
 ## Search Everything
@@ -3926,7 +3926,7 @@ Updates the access level of a user or group for the specified sheet.
 
 ### Delete Sight Share
 
-> Example request: delete sight share
+> Example request: delete Sight share
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/shares/{shareId} \
@@ -3991,7 +3991,7 @@ Deletes the share specified in the URL.
 
 ### Get Sight Share
 
-> Example request: get sight share
+> Example request: get Sight share
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/shares/{shareId}
@@ -4058,7 +4058,7 @@ Gets the Share specified in the URL.
 
 ### List Sight Shares
 
-> Example request: list sight shares
+> Example request: list Sight shares
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/shares
@@ -4118,7 +4118,7 @@ shares = response[:data]
 
 `GET /sights/{sightId}/shares`
 
-Gets a list of all users and groups to whom the specified sight is shared, and their access level. 
+Gets a list of all users and groups to whom the specified Sight is shared, and their access level. 
 
 <aside class="notice"><%= LIST_SHARES_RESPONSE_DESC %></aside>
 
@@ -4131,7 +4131,7 @@ Gets a list of all users and groups to whom the specified sight is shared, and t
 
 ### Share Sight
 
-> Example request: share sight
+> Example request: share Sight
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/sights/{sightId}/shares?sendEmail=true'
@@ -4176,7 +4176,7 @@ Share shareSpecification = new Share()
   .setEmail("jane.doe@smartsheet.com")
   .setAccessLevel(AccessLevel.VIEWER);
 
-// Share sight
+// Share Sight
 List<Share> addressList = smartsheet.sightResources().shareResources().shareTo(
   4583614634583940L,                    // long sightId
   (Arrays.asList(shareSpecification)),
@@ -4199,8 +4199,8 @@ response = ss_client.Sights.share_sight(
 body = {
   email: 'jane.doe@smartsheet.com',
   access_level: 'VIEWER',
-  subject: 'This sight has been shared with you!',
-  message: 'This Smartsheet sight is ready for your inspection.'
+  subject: 'This Sight has been shared with you!',
+  message: 'This Smartsheet Sight is ready for your inspection.'
 }
 
 response = smartsheet.sights.share.create(
@@ -4215,7 +4215,7 @@ response = smartsheet.sights.share.create(
 
 `POST /sights/{sightId}/shares`
 
-Shares a sight with the specified users and groups.
+Shares a Sight with the specified users and groups.
 
 <aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
 
@@ -4232,7 +4232,7 @@ Shares a sight with the specified users and groups.
 
 ### Update Sight Share
 
-> Example request: update sight share
+> Example request: update Sight share
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/shares/{shareId} \
@@ -7288,7 +7288,7 @@ htmlContent | string | HTML snippet to render title
 
 ## Copy Sight
 
-> Example request: copy sight
+> Example request: copy Sight
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/copy \
@@ -7348,7 +7348,7 @@ ContainerDestination destination = new ContainerDestination()
   .setDestinationId(3791509922310020L)
   .setNewName("newSightName");
 
-// Copy sight
+// Copy Sight
 Sight sight = smartsheet.sightResources().copySight(
   6327127650920324L,                          // long sightId
   destination
@@ -7409,7 +7409,7 @@ Creates a copy of the specified Sight.
 
 ## Delete Sight
 
-> Example request: delete sight
+> Example request: delete Sight
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId} \
@@ -7465,7 +7465,7 @@ smartsheet.sights.delete(
 
 `DELETE /sights/{sightId}`
 
-Deletes the sight specified in the URL.
+Deletes the Sight specified in the URL.
 
      |     |
 -----|-----|
@@ -7475,7 +7475,7 @@ Deletes the sight specified in the URL.
 
 ## Get Sight
 
-> Example request: get sight
+> Example request: get Sight
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId} \
@@ -7575,7 +7575,7 @@ sight = smartsheet.sights.get(
 
 `GET /sights/{sightId}`
 
-Gets the specified sight.
+Gets the specified Sight.
 
      |     |
 -----|-----|
@@ -7585,7 +7585,7 @@ Gets the specified sight.
 
 ## List Sights
 
-> Example request: list sights
+> Example request: list Sights
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights \
@@ -7671,7 +7671,7 @@ Gets a list of all Sights that the User has access to.
 
 ## Move Sight
 
-> Example request: move sight
+> Example request: move Sight
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/move \
@@ -7728,7 +7728,7 @@ ContainerDestination destination = new ContainerDestination()
   .setDestinationType(DestinationType.FOLDER)
   .setDestinationId(7960873114331012L);
 
-// Move sight
+// Move Sight
 Sight sight = smartsheet.sightResources().moveSight(
   4583173393803140L,                          // long sightId
   destination
@@ -7792,7 +7792,7 @@ Moves the specified Sight to a new location.
 
 ### Get Sight Publish Status
 
-> Example request: get sight publish status
+> Example request: get Sight publish status
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/publish \
@@ -7856,7 +7856,7 @@ Gets the Sight 'Publish' settings.
 
 ### Set Sight Publish Status
 
-> Example request: set sight publish status
+> Example request: set Sight publish status
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId}/publish \
@@ -7952,11 +7952,11 @@ Publishes or unpublishes a Sight.
 
 ## Share Sight
 
-For details about sight sharing, see [Sight Sharing](#sight-sharing).
+For details about Sight sharing, see [Sight Sharing](#sight-sharing).
 
 ## Update Sight
 
-> Example request: update sight
+> Example request: update Sight
 
 ```shell
 curl https://api.smartsheet.com/2.0/sights/{sightId} \

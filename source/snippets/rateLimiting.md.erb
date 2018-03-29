@@ -1,4 +1,5 @@
-**Handle "Rate Limit Exceeded" error**<br/>
+### Handle "Rate limit exceeded" Error
+
 To prevent abuse and undue stress on the Smartsheet servers, the API has a rate limiting feature (sometimes called throttling) that restricts users to **300** requests per minute per Access Token. 
 Certain resource intensive operations, such as attaching a file and getting cell history, count as 10 requests. 
 Smartsheet reserves the right to enforce this limit depending on the load on our systems. 
@@ -16,13 +17,15 @@ Smartsheet recommends that you design your integration to gracefully handle this
 One way of doing that would be to have your integration *sleep* for 60 seconds when this error is encountered, and then subsequently retry the request. 
 Alternatively, you might choose to implement [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) (an error handling strategy whereby you periodically retry a failed request with progressively longer wait times between retries, until either the request succeeds or the certain number of retry attempts is reached). 
 
-**Avoid executing "rapid fire" updates**<br/>
+### Avoid Executing "Rapid Fire" Updates
+
 If the only thing your integration does is execute an [Update Rows](#update-rows) request once every second for the same sheet, that would only amount to a total of 60 requests per minute -- well within rate limiting guidelines. 
 However, updating the same object in such rapid succession could result in save errors that negatively impact both your integration as well as user experience within the Smartsheet app. 
 To avoid this scenario, design your integration such that API requests are never executed with rapid-fire succession against the same Smartsheet object. 
 For maximum efficiency, consider batching up changes and submitting them in a single request using a [bulk operation](#bulk-operations) (for example, [Update Rows](#update-rows) or [Add Columns](#add-columns).
 
-**Execute requests serially**<br/>
+### Execute Requests Serially
+
 Executing multiple API requests in parallel to update a specific Smartsheet object results in reduced performance and often results in errors due to save collisions. 
 To avoid this scenario, design your integration such that API requests to update a specific Smartsheet object are always executed serially (that is, execute one request at time, not beginning the next request until the previous request has completed).
 
