@@ -19,18 +19,18 @@ A Template can be used to create a Sheet, as described in [Create Sheet from Tem
 
      |     |     |
 -----|-----|-----|
-**id** | number | Template Id
-**name** | string | Template name
-**description** | string | Template description
-**accessLevel** | string | User's permissions on the Template
-**image** | string | URL to the small preview image for this template<br/>*Only applicable to non-blank public templates*
-**largeImage** | string | URL to the large preview image for this template<br/>*Only applicable to non-blank public templates*
-**locale** | string | Locale of the template<br/>*Only applicable to public templates*
-**type** | string | Type of the template. One of "sheet" or "report"<br/>*Only applicable to public templates*
-**tags** | string[] | List of search tags for this template<br/>*Only applicable to non-blank public templates*
-**categories** | string[] | List of categories this template belongs to<br/>*Only applicable to public templates*
-**blank** | Boolean | Flag indicating whether the template is blank<br/>*Only applicable to public templates*
-**globalTemplate** | string | Type of global template. One of: "BLANK_SHEET", "TASK_LIST", or "PROJECT_SHEET"<br/>*Only applicable to blank public templates*
+id | number | Template Id
+name | string | Template name
+description | string | Template description
+accessLevel | string | User's permissions on the Template
+image | string | URL to the small preview image for this template<br/>*Only applicable to non-blank public templates*
+largeImage | string | URL to the large preview image for this template<br/>*Only applicable to non-blank public templates*
+locale | string | Locale of the template<br/>*Only applicable to public templates*
+type | string | Type of the template. One of "sheet" or "report"<br/>*Only applicable to public templates*
+tags | string[] | List of search tags for this template<br/>*Only applicable to non-blank public templates*
+categories | string[] | List of categories this template belongs to<br/>*Only applicable to public templates*
+blank | Boolean | Flag indicating whether the template is blank<br/>*Only applicable to public templates*
+globalTemplate | string | Type of global template. One of: "BLANK_SHEET", "TASK_LIST", or "PROJECT_SHEET"<br/>*Only applicable to blank public templates*
 
 ## List Public Templates
 
@@ -170,11 +170,11 @@ The Smartsheet API utilizes OAuth 2.0 for authentication and authorization. An *
 
      |     |     |
 -----|-----|-----|
-**access_token** | string | A credential that can be used by a client to access the Smartsheet API.
-**token_type** | enum | How an access token will be generated and presented. Smartsheet uses the bearer parameter, which means essentially "give access to the bearer of this token."
-**refresh_token** | string | A credential tied to the access token that can be used to obtain a fresh access token with the same permissions, without further involvement from a user.
-**expires_in** | number | Number of seconds token is valid once issued; this is currently 604799 seconds, or approx. 7 days.
-**expires_at** | timestamp | The date, time, and time zone for when the access token expires.
+access_token | string | A credential that can be used by a client to access the Smartsheet API.
+token_type | enum | How an access token will be generated and presented. Smartsheet uses the bearer parameter, which means essentially "give access to the bearer of this token."
+refresh_token | string | A credential tied to the access token that can be used to obtain a fresh access token with the same permissions, without further involvement from a user.
+expires_in | number | Number of seconds token is valid once issued; this is currently 604799 seconds, or approx. 7 days.
+expires_at | timestamp | The date, time, and time zone for when the access token expires.
 
 ## Get Access Token
 
@@ -477,65 +477,65 @@ Revokes the access token used to make this request.  The access token is no long
 
      |     |     |
 -----|-----|-----|
-**id** | number | User Id
-**email** | string | User's primary email address
-**name** | string | User's full name (read-only)
-**firstName** | string | User's first name
-**lastName** | string | User's last name
-**profileImage** | [Image](#image-object) | An [Image object](#image-object) representing the profile image associated with the User account
-**status** | string |  User status, set to one of the following values:<ul><li>ACTIVE</li><li>PENDING</li><li>DECLINED</li></ul>
-**admin** | Boolean | Indicates whether the user is a system admin (can manage users and account)
-**licensedSheetCreator** | Boolean | Indicates whether the user is a licensed user (can create and own sheets)
-**groupAdmin** | Boolean | Indicates whether the user is a group admin (can create and edit groups)
-**resourceViewer** | Boolean | Indicates whether the user is a resource viewer (can access resource views)
-**sheetCount** | number | The number of sheets owned by the current user within the organization
-**lastLogin** | timestamp | Last login time of the current user
-**customWelcomeScreenViewed** | timestamp | Timestamp of viewing an Enterprise [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) by the current user
+id | number | User Id
+email | string | User's primary email address
+name | string | User's full name (read-only)
+firstName | string | User's first name
+lastName | string | User's last name
+profileImage | [Image](#image-object) | An [Image object](#image-object) representing the profile image associated with the User account
+status | string |  User status, set to one of the following values:<ul><li>ACTIVE</li><li>PENDING</li><li>DECLINED</li></ul>
+admin | Boolean | Indicates whether the user is a system admin (can manage users and account)
+licensedSheetCreator | Boolean | Indicates whether the user is a licensed user (can create and own sheets)
+groupAdmin | Boolean | Indicates whether the user is a group admin (can create and edit groups)
+resourceViewer | Boolean | Indicates whether the user is a resource viewer (can access resource views)
+sheetCount | number | The number of sheets owned by the current user within the organization
+lastLogin | timestamp | Last login time of the current user
+customWelcomeScreenViewed | timestamp | Timestamp of viewing an Enterprise [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) by the current user
 
 ### UserProfile Object
 
      |     |     |
 -----|-----|-----|
-**id** | number | Current user's Id
-**email** | string | Current user's primary email address
-**firstName** | string | Current user's first name
-**lastName** | string | Current user's last name
-**locale** | string | Current user's locale (see [Server Information](#server-information))
-**timeZone** | string | Current user's time zone Id
-**account** | [Account](#account-object) | Account object representing the current user's customer account
-**admin** | Boolean | Indicates whether the user is a system admin (can manage users and account)
-**licensedSheetCreator** | Boolean | Indicates whether the user is a licensed user (can create and own sheets)
-**groupAdmin** | Boolean | Indicates whether the user is a group admin (can create and edit groups)
-**resourceViewer** | Boolean | Indicates whether the user is a resource viewer (can access resource views)
-**jiraAdmin** | Boolean | Indicates whether the user is a JIRA admin
-**salesforceAdmin** | Boolean | Indicates whether the user is a Salesforce admin
-**salesforceUser** | Boolean | Indicates whether the user is a registered Salesforce user
-**alternateEmails** | [AlternateEmail](#alternateemail-object)[] | An array of [AlternateEmail objects](#alternateemail-object) representing the alternate email addresses associated with the User account
-**title** | string | User's title
-**department** | string | User's department
-**company** | string | User's company
-**workPhone** | string | User's work phone number
-**mobilePhone** | string | User's mobile phone number
-**role** | string | User's role
-**profileImage** | [Image](#image-object) | An [Image object](#image-object) representing the profile image associated with the User account
-**sheetCount** | number | The number of sheets owned by the current user within the organization
-**lastLogin** | timestamp | Last login time of the current user
-**customWelcomeScreenViewed** | timestamp | Timestamp of viewing an Enterprise [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) by the current user
+id | number | Current user's Id
+email | string | Current user's primary email address
+firstName | string | Current user's first name
+lastName | string | Current user's last name
+locale | string | Current user's locale (see [Server Information](#server-information))
+timeZone | string | Current user's time zone Id
+account | [Account](#account-object) | Account object representing the current user's customer account
+admin | Boolean | Indicates whether the user is a system admin (can manage users and account)
+licensedSheetCreator | Boolean | Indicates whether the user is a licensed user (can create and own sheets)
+groupAdmin | Boolean | Indicates whether the user is a group admin (can create and edit groups)
+resourceViewer | Boolean | Indicates whether the user is a resource viewer (can access resource views)
+jiraAdmin | Boolean | Indicates whether the user is a JIRA admin
+salesforceAdmin | Boolean | Indicates whether the user is a Salesforce admin
+salesforceUser | Boolean | Indicates whether the user is a registered Salesforce user
+alternateEmails | [AlternateEmail](#alternateemail-object)[] | An array of [AlternateEmail objects](#alternateemail-object) representing the alternate email addresses associated with the User account
+title | string | User's title
+department | string | User's department
+company | string | User's company
+workPhone | string | User's work phone number
+mobilePhone | string | User's mobile phone number
+role | string | User's role
+profileImage | [Image](#image-object) | An [Image object](#image-object) representing the profile image associated with the User account
+sheetCount | number | The number of sheets owned by the current user within the organization
+lastLogin | timestamp | Last login time of the current user
+customWelcomeScreenViewed | timestamp | Timestamp of viewing an Enterprise [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) by the current user
 
 ### Account Object
 
      |     |     |
 -----|-----|-----|
-**name** | string | Account name
-**id** | number | Account Id
+name | string | Account name
+id | number | Account Id
 
 ### AlternateEmail Object
 
      |     |     |
 -----|-----|-----|
-**id** | number | AlternateEmail Id
-**email** | string | User's alternate email address
-**confirmed** | Boolean | Indicates whether the alternate email address has been confirmed
+id | number | AlternateEmail Id
+email | string | User's alternate email address
+confirmed | Boolean | Indicates whether the alternate email address has been confirmed
 
 ## Add User
 
@@ -1693,16 +1693,16 @@ Uploads an image to the User profile.
 
      |     |     |
 -----|-----|-----|
-**id** | number | Workspace Id
-**name** | string | Workspace name
-**favorite** | Boolean | Returned only if the user has marked the Workspace as a Favorite in their Home tab (value = 'true')
-**accessLevel** | string | User's permissions on the Workspace
-**permalink** | string | URL that represents a direct link to the Workspace in Smartsheet
-**sheets** | [Sheet](#sheet-object)[] | Array of Sheet objects
-**folders** | [Folder](#folder-object)[] | Array of Folder objects
-**reports** | [Report](#report-object)[] | Array of Report objects
-**sights** | [Sight](#sight-object)[] | Array of Sight objects
-**templates** | [Template](#template-object)[] | Array of Template objects
+id | number | Workspace Id
+name | string | Workspace name
+favorite | Boolean | Returned only if the user has marked the Workspace as a Favorite in their Home tab (value = 'true')
+accessLevel | string | User's permissions on the Workspace
+permalink | string | URL that represents a direct link to the Workspace in Smartsheet
+sheets | [Sheet](#sheet-object)[] | Array of Sheet objects
+folders | [Folder](#folder-object)[] | Array of Folder objects
+reports | [Report](#report-object)[] | Array of Report objects
+sights | [Sight](#sight-object)[] | Array of Sight objects
+templates | [Template](#template-object)[] | Array of Template objects
 
 ## Copy Workspace
 

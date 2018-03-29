@@ -391,61 +391,61 @@ For more information, see [Intro to Webhooks](#intro-to-webhooks).
 
      |     |     |
 -----|-----|-----|
-**nonce** | string | Random value that is distinct for each Callback
-**timestamp** | timestamp | Time that the callback was generated
-**webhookId** | number | Id of the corresponding webhook
-**scope** | string | Scope of the webhook. Currently, the only supported value is "sheet".
-**scopeObjectId** | number | Id of the object that corresponds to **scope**
-**events** | [CallbackEvent](#callbackevent-object)[] | Array of CallbackEvent objects
-**newWebhookStatus** | string | New status of the corresponding webhook <br/>Only returned for "Webhook Status Change" [callbacks](#webhook-callbacks) (null for "Event" Callbacks).
+nonce | string | Random value that is distinct for each Callback
+timestamp | timestamp | Time that the callback was generated
+webhookId | number | Id of the corresponding webhook
+scope | string | Scope of the webhook. Currently, the only supported value is "sheet".
+scopeObjectId | number | Id of the object that corresponds to **scope**
+events | [CallbackEvent](#callbackevent-object)[] | Array of CallbackEvent objects
+newWebhookStatus | string | New status of the corresponding webhook <br/>Only returned for "Webhook Status Change" [callbacks](#webhook-callbacks) (null for "Event" Callbacks).
 
 ## CallbackEvent Object
 
      |     |     |
 -----|-----|-----|
-**objectType** | string | Type of object for which event occurred. One of the following values:<ul><li>sheet</li><li>column</li><li>row</li><li>cell</li><li>attachment</li><li>discussion</li><li>comment</li></ul>
-**eventType** | string | Type of event that occurred. One of the following values:<ul><li>created</li><li>updated</li><li>deleted</li></ul>
-**id** | number | Id of the object that corresponds to **objectType**. Omitted if **objectType** is "cell". 
-**rowId** | number | Only present if **objectType** is "cell". The Id of the row where the cell is located.
-**columnId** | number | Only present if **objectType** is "cell". The Id of the column where the cell is located.
-**userId** | number | The user Id of the person who caused this event.
-**timestamp** | timestamp | Time that this event occurred. A callback may contain events with different timestamps, as multiple separate events may be aggregated into a single callback request.
-**changeAgent** | string | A comma-delimited list of values that uniquely identify the agents responsible for making the changes that caused the callback to occur. Only present if the change agent included the **Smartsheet-Change-Agent** header in the API request that changed data in Smartsheet. For more information, see [Preventing Infinite Loops](#preventing-infinite-loops). 
+objectType | string | Type of object for which event occurred. One of the following values:<ul><li>sheet</li><li>column</li><li>row</li><li>cell</li><li>attachment</li><li>discussion</li><li>comment</li></ul>
+eventType | string | Type of event that occurred. One of the following values:<ul><li>created</li><li>updated</li><li>deleted</li></ul>
+id | number | Id of the object that corresponds to **objectType**. Omitted if **objectType** is "cell". 
+rowId | number | Only present if **objectType** is "cell". The Id of the row where the cell is located.
+columnId | number | Only present if **objectType** is "cell". The Id of the column where the cell is located.
+userId | number | The user Id of the person who caused this event.
+timestamp | timestamp | Time that this event occurred. A callback may contain events with different timestamps, as multiple separate events may be aggregated into a single callback request.
+changeAgent | string | A comma-delimited list of values that uniquely identify the agents responsible for making the changes that caused the callback to occur. Only present if the change agent included the **Smartsheet-Change-Agent** header in the API request that changed data in Smartsheet. For more information, see [Preventing Infinite Loops](#preventing-infinite-loops). 
 
 ## SharedSecret Object
 
      |     |     |
 -----|-----|-----|
-**sharedSecret** | string | New value for the shared secret
+sharedSecret | string | New value for the shared secret
 
 ## Webhook Object
 
      |     |     |
 -----|-----|-----|
-**id** | number | Webhook Id
-**name** | string | Webhook name
-**apiClientId** | string | API Client Id corresponding to third-party app that created the webhook. Read-only. Only present if webhook was created by third-party app.
-**apiClientName** | string | API Client Name corresponding to third-party app that created the webhook. Read-only. Only present if webhook was created by third-party app.
-**scope** | string | Scope of the subscription. Currently, the only supported value is "sheet". Specified when a webhook is created and cannot be changed.
-**scopeObjectId** | number | Id of the object that is subscribed to. Specified when a webhook is created and cannot be changed.
-**events** | string[] | Array of the events that are subscribed to. Currently, must be an array of size 1 that contains the string value "&#42;.&#42;", which means "all objects" and "all events".
-**callbackUrl** | string | HTTPS URL where callbacks are sent.<br/><br/>**Note:** Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.
-**sharedSecret** | string | Shared secret for this webhook, randomly generated by Smartsheet. Read-only. See [Authenticating Callbacks](#authenticating-callbacks-optional) for details about how this value can be used.
-**enabled** | Boolean | Indicates whether the webhook is on (`true`) or off (`false`)
-**status** | string | Webhook status. Read-only. See [Webhook Status](#webhook-status) for list of possible values.
-**disabledDetails** | string | Details about the reason the webhook was disabled. Read-only. Only present when **enabled**=`false`.
-**version** | number | Webhook version. Currently, the only supported value is 1. This attribute is intended to ensure backward compatibility as new webhook functionality is released. For example, a webhook with a version of 1 is guaranteed to always be sent callback objects that are compatible with the version 1 release of webhooks.
-**stats** | [WebhookStats](#webhookstats-object) | Useful statistics for this webhook.  Only returned once this webhook has performed a callback attempt.  Read-only.
-**createdAt** | timestamp | Time of creation. Read-only.
-**modifiedAt** | timestamp | Time of last modification. Read-only.
+id | number | Webhook Id
+name | string | Webhook name
+apiClientId | string | API Client Id corresponding to third-party app that created the webhook. Read-only. Only present if webhook was created by third-party app.
+apiClientName | string | API Client Name corresponding to third-party app that created the webhook. Read-only. Only present if webhook was created by third-party app.
+scope | string | Scope of the subscription. Currently, the only supported value is "sheet". Specified when a webhook is created and cannot be changed.
+scopeObjectId | number | Id of the object that is subscribed to. Specified when a webhook is created and cannot be changed.
+events | string[] | Array of the events that are subscribed to. Currently, must be an array of size 1 that contains the string value "&#42;.&#42;", which means "all objects" and "all events".
+callbackUrl | string | HTTPS URL where callbacks are sent.<br/><br/>**Note:** Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.
+sharedSecret | string | Shared secret for this webhook, randomly generated by Smartsheet. Read-only. See [Authenticating Callbacks](#authenticating-callbacks-optional) for details about how this value can be used.
+enabled | Boolean | Indicates whether the webhook is on (`true`) or off (`false`)
+status | string | Webhook status. Read-only. See [Webhook Status](#webhook-status) for list of possible values.
+disabledDetails | string | Details about the reason the webhook was disabled. Read-only. Only present when **enabled**=`false`.
+version | number | Webhook version. Currently, the only supported value is 1. This attribute is intended to ensure backward compatibility as new webhook functionality is released. For example, a webhook with a version of 1 is guaranteed to always be sent callback objects that are compatible with the version 1 release of webhooks.
+stats | [WebhookStats](#webhookstats-object) | Useful statistics for this webhook.  Only returned once this webhook has performed a callback attempt.  Read-only.
+createdAt | timestamp | Time of creation. Read-only.
+modifiedAt | timestamp | Time of last modification. Read-only.
 
 ## WebhookStats Object
 
      |     |     |
 -----|-----|-----|
-**lastCallbackAttemptRetryCount** | number | The number of retries the webhook had performed as of the last callback attempt.
-**lastCallbackAttempt** | timestamp | When this webhook last made a callback attempt.
-**lastSuccessfulCallback** | timestamp | When this webhook last made a successful callback.
+lastCallbackAttemptRetryCount | number | The number of retries the webhook had performed as of the last callback attempt.
+lastCallbackAttempt | timestamp | When this webhook last made a callback attempt.
+lastSuccessfulCallback | timestamp | When this webhook last made a successful callback.
 
 # Create Webhook
 
