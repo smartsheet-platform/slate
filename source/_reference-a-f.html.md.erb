@@ -1025,8 +1025,6 @@ attachments = response[:data]
 
 Gets a list of all attachments that are on the sheet, including sheet, row, and discussion-level attachments. 
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
@@ -1137,8 +1135,6 @@ attachments = response[:data]
 
 Gets a list of all Attachments that are in the Discussion.
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
@@ -1248,8 +1244,6 @@ attachments = response[:data]
 `GET /sheets/{sheetId}/rows/{rowId}/attachments`
 
 Gets a list of all Attachments that are on the Row, including Row and Discussion-level Attachments.
-
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
      |     |
 -----|-----|
@@ -1554,8 +1548,6 @@ versions = response[:data]
 `GET /sheets/{sheetId}/attachments/{attachmentId}/versions`
 
 Gets a list of all versions of the given Attachment Id in order from newest to oldest.
-
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
      |     |
 -----|-----|
@@ -2378,8 +2370,6 @@ revisions = response[:data]
 `GET /sheets/{sheetId}/rows/{rowId}/columns/{columnId}/history`
 
 Gets the cell modification history. 
-
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
 <aside class="notice">This is a resource-intensive operation and incurs 10 additional requests against the rate limit.</aside>
 
@@ -3542,8 +3532,6 @@ columns = response[:data]
 
 Gets a list of all Columns belonging to the Sheet specified in the URL.
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
@@ -4431,8 +4419,6 @@ contacts = response[:data]
 
 Gets a list of the user's Smartsheet Contacts.
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
@@ -5292,8 +5278,6 @@ discussions = response[:data]
 
 Gets a list of *all* discussions associated with the specified sheet. Remember that discussions are containers for the conversation thread. To see the entire thread, use the **include=comments** parameter.
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
 <%= partial "snippets/getDiscussions_table.md.erb" %>
 
 ## Get Discussion
@@ -5482,8 +5466,6 @@ discussions = response[:data]
 `GET /sheets/{sheetId}/rows/{rowId}/discussions`
 
 Gets a list of all Discussions associated with the specified Row. Remember that Discussions are containers for the conversation thread. To see the entire thread, use the `include=comments` parameter.
-
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
 <%= partial "snippets/getDiscussions_table.md.erb" %>
 
@@ -5700,8 +5682,6 @@ list = response[:data]
 `GET /favorites`
 
 Gets a list of all of the user's Favorite items.
-
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
      |     |
 -----|-----|
@@ -7152,8 +7132,6 @@ folders = response[:data]
 
 Gets a list of the top-level child folders within the user's **Sheets** folder ([Home](#home)).
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
 <%= partial "snippets/listFolders_table.md.erb" %>
 
 ### List Folders (Subfolder)
@@ -7229,8 +7207,6 @@ folders = response[:data]
 
 Gets a list of the top-level child Folders within the specified Folder.
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
 <%= partial "snippets/listFolders_table.md.erb" %>
 
 ### List Folders (Workspace)
@@ -7305,8 +7281,6 @@ folders = response[:data]
 `GET /workspaces/{workspaceId}/folders`
 
 Gets a list of the top-level child Folders within the specified Workspace.
-
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
 <%= partial "snippets/listFolders_table.md.erb" %>
 

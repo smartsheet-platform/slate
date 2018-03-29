@@ -86,8 +86,6 @@ templates = response[:data]
 
 Gets a list of public Templates that the user has access to.
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
 <%= partial "snippets/listTemplates_table.md.erb" %>
 
 ## List User-created Templates
@@ -143,8 +141,6 @@ templates = response[:data]
 `GET /templates`
 
 Gets a list of user-created Templates that the user has access to.
-
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
 <%= partial "snippets/listTemplates_table.md.erb" %>
 
@@ -1393,8 +1389,6 @@ users = response[:data]
 
 Gets a list of Users in the organization. To filter by email, use the optional **email** query string parameter to specify a list of users' email addresses.
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
@@ -2189,8 +2183,6 @@ workspaces = response[:data]
 `GET /workspaces`
 
 Gets a list of Workspaces that the user has access to. The list contains an abbreviated Workspace object for each Workspaces.
-
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
      |     |
 -----|-----|

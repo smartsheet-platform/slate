@@ -401,8 +401,6 @@ groups = response[:data]
 
 Gets a list of all Groups in an organization. To fetch the members of an individual group, use the [Get Group](#get-group) operation.
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
@@ -3318,8 +3316,6 @@ Gets a list of all users and groups to whom the specified report is shared, and 
 
 <aside class="notice"><%= LIST_SHARES_RESPONSE_DESC %></aside>
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
 <%= partial "snippets/listShares_table.md.erb" %>
 
 ### Share Report
@@ -3724,8 +3720,6 @@ shares = response[:data]
 Gets a list of all users and groups to whom the specified sheet is shared, and their access level. 
 
 <aside class="notice"><%= LIST_SHARES_RESPONSE_DESC %></aside>
-
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
 <%= partial "snippets/listShares_table.md.erb" %>
 
@@ -4529,8 +4523,6 @@ shares = response[:data]
 `GET /workspaces/{workspaceId}/shares`
 
 Gets a list of all users and groups to whom the specified workspace is shared, and their access level. 
-
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
      |     |
 -----|-----|
@@ -6517,8 +6509,6 @@ Gets a list of all Sheets that the User has access to in alphabetical order by n
 
 <aside class="notice"><%= SUPPORTS_NUMERICDATES %></aside>
 
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
-
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
@@ -7671,8 +7661,6 @@ sights = response[:data]
 Gets a list of all Sights that the User has access to.
 
 <aside class="notice"><%= SUPPORTS_NUMERICDATES %></aside>
-
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
 
      |     |
 -----|-----|
