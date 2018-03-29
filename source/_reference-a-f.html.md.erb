@@ -30,60 +30,57 @@ Attachments can exist on a [comment](#comments) (that is, within a discussion), 
      |     |     |
 -----|-----|-----|
 id | number | Attachment Id
-attachmentSubType | string | Attachment sub type, valid only for either GOOGLE_DRIVE attachments or EGNYTE attachments:<ul><li>possible values for GOOGLE_DRIVE attachments: DOCUMENT, SPREADSHEET, PRESENTATION, PDF, DRAWING</li><li>possible values for EGNYTE attachments: FOLDER</li></ul>
-attachmentType | string | Attachment type (one of FILE, GOOGLE_DRIVE, LINK, BOX_COM, DROPBOX, EVERNOTE, EGNYTE, ONEDRIVE)
+attachmentSubType | string | Attachment sub type, valid only for the following:<ul><li><b>EGNYTE</b> values: <b>FOLDER</b></li><li><b>GOOGLE_DRIVE</b> values: <b>DOCUMENT</b>, <b>DRAWING</b>, <b>PDF</b>, <b>PRESENTATION</b>, or <b>SPREADSHEET</b></li></ul>
+attachmentType | string | Attachment type (one of <b>BOX_COM</b>, <b>DROPBOX</b>, <b>EGNYTE</b>, <b>EVERNOTE</b>, <b>FILE</b>, <b>GOOGLE_DRIVE</b>, <b>LINK</b>, or <b>ONEDRIVE</b>)
 createdAt | timestamp | A timestamp of when the attachment was originally added
 createdBy | [User](#user-object) | User object containing name and email of the creator of this attachment
 mimeType | string | Attachment MIME type (PNG, etc.)
 name | string | Attachment name
-parentId | number | The id of the parent 
-parentType | string | The type of object the attachment belongs to. One of "SHEET", "ROW", or "COMMENT"
-sizeInKb | number | The size of the file, if the attachmentType is FILE  
+parentId | number | The Id of the parent 
+parentType | string | The type of object the attachment belongs to (one of <b>COMMENT</b>, <b>ROW</b>, or <b>SHEET</b>)
+sizeInKb | number | The size of the file, if the attachmentType is <b>FILE</b>  
 url | string | Attachment temporary URL (files only)
 urlExpiresInMillis | number | Attachment temporary URL time to live (files only) 
 
 ## Post an Attachment
 
-Like the Smartsheet Web app, the Smartsheet API allows uploading files to Sheets, Rows and Comments. 
-You can upload a file by performing either a *simple upload* or a *multipart upload*. 
+Like the Smartsheet app, the Smartsheet API allows uploading files to sheets, rows, and comments. 
+You can upload a file by performing either a simple upload or a multipart upload.
 
 A [simple upload](#simple-uploads) allows you to add a single file attachment to the specified object. 
-For example, you can perform a simple upload to upload a file to a [sheet](#attach-file-to-sheet), [row](#attach-file-to-row), or [comment](#attach-file-to-comment). 
+For example, you can perform a simple upload to [attach a file to a sheet](#attach-file-to-sheet), [attach a file to a row](#attach-file-to-row), or [attach a file to a comment](#attach-file-to-comment). 
 
-A [multipart upload](#multipart-uploads) allows you to add a single file attachment to the specified object (that is, attach a file to a [sheet](#attach-file-to-sheet), [row](#attach-file-to-row), or [comment](#attach-file-to-comment)), or to create an object and attach a file using a single request. 
-For example, you can perform a multipart upload to [create a new Comment](#add-comment) that contains a single file attachment or to [add a new Discussion to a Sheet](#create-discussion-on-sheet) that contains a single file attachment.
+A [multipart upload](#multipart-uploads) allows you to add a single file attachment to the specified object (that is, attach a file to a sheet, row, or comment), or to create an object and attach a file using a single request. 
+For example, you can perform a multipart upload to [add a new comment](#add-comment) that contains a single file attachment or to [add a new discussion to a sheet](#create-discussion-on-sheet) that contains a single file attachment.
 
-<aside class="notice">Important Notes:<ul><li>Max file size for uploads through the API is currently limited to 30mb.</li><li>Posting an attachment is a resource-intensive operation and incurs 10 additional requests against the rate limit.</li></ul></aside>
+The max file size for uploads through the API is limited to 30mb.
+
+<aside class="notice">Posting an attachment is a resource-intensive operation and incurs 10 additional requests against the rate limit.</aside>
 
 ### Multipart Uploads
-
-A multipart upload request allows you to add a single file attachment to the specified object (that is, attach a file to a [sheet](#attach-file-to-sheet), [row](#attach-file-to-row), or [comment](#attach-file-to-comment)), or to create an object and upload a file using a single request. 
-For example, you can perform a multipart upload to [create a new Comment](#add-comment) that contains a single file attachment or to [add a new Discussion to a Sheet](#create-discussion-on-sheet) that contains a single file attachment.
-
-<aside class="notice">Most programming languages have libraries that can be used to assemble multipart requests.</aside>
 
 A multipart upload request must include the following HTTP headers:
 
      |     |
 -----|-----|
 Content-Length | The length of the request payload.
-Content-Type | Must be set to `multipart/form-data`, and include the boundary string that separates the parts in the request payload.
+Content-Type | Must be set to **multipart/form-data**, and include the boundary string that separates the parts in the request payload.
 
-The request body of a multipart upload request contains one or more *parts*, each part containing either JSON or a file to upload. 
+The request body of a multipart upload request contains one or more parts, each part containing either JSON or a file to upload. 
 The request body must contain at least one part. 
 Each part must start with the boundary string specified in the **Content-Type** request header, and must contain the following part headers:
 
      |     |
 -----|-----|
-Content-Disposition | Contains the following semicolon-delimited items:<ul><li>`form-data`</li><li>`name=`"*partname*"</li><li>`filename=`"*filename*" (only required for file parts)</li></ul><b><i>Note</i></b>: Values specified in the Content-Disposition header must be URL-encoded.
-Content-Type | The content type of the part: `application/json` for JSON objects, or the applicable MIME type for file parts
+Content-Disposition | Contains the following semicolon-delimited items:<ul><li>**form-data**</li><li>**name="*partname*"**</li><li>**filename="*filename*"** (only required for file parts)</li></ul>NOTE: Values specified in the Content-Disposition header must be URL-encoded.
+Content-Type | The content type of the part: **application/json** for JSON objects, or the applicable MIME type for file parts
 
 The last part in the request must be followed by the boundary string, followed by two hyphens.
 
 The documentation for each operation that supports multipart uploads specifies the number and names of parts that are expected for the operation. 
 File parts must have the part name "file", and documentation for operations which allow for JSON object parts specify the required part name for the JSON part.
 
-The following example shows a multipart upload request that creates a Comment containing the specified text and file attachment:
+The following example shows a multipart upload request that creates a comment containing the specified text and file attachment:
 
 `POST https://api.smartsheet.com/2.0/sheets/4509093797881732/discussions/2889925487028100/comments`  
 `Authorization: Bearer ll352u9jujauoqz4gstvsae05`  
@@ -102,20 +99,19 @@ The following example shows a multipart upload request that creates a Comment co
 *< Binary content for file >*  
 `------gU8h01zAAp3LagBr--`
 
-### Simple Uploads
+<aside class="notice">Most programming languages have libraries that can be used to assemble multipart requests.</aside>
 
-A [simple upload](#simple-uploads) allows you to add a single file attachment to the specified object. 
-For example, you can perform a simple upload to upload a file to a [sheet](#attach-file-to-sheet), [row](#attach-file-to-row), or [comment](#attach-file-to-comment). 
+### Simple Uploads
 
 To perform this kind of upload, you must set specific headers to tell Smartsheet about the file. The following three headers are required: 
 
      |     |
 -----|-----|
-Content-Disposition | `attachment` to tell the API that a file is in the body of the POST request, followed by a semicolon, followed by `filename=` and the URL-encoded filename in quotes
+Content-Disposition | **attachment** to tell the API that a file is in the body of the `POST` request, followed by a semicolon, followed by **filename=** and the URL-encoded filename in quotes
 Content-Length | Must be set to the size of the file, in bytes. For example to determine file size using in UNIX: <p>`$ ls -l ProgressReport.docx`<br/>`5463 ProgressReport.docx`</p>
 Content-Type | Can be left blank if it is not known (but must be present); Smartsheet makes its best guess based on the extension of the file. 
 
-The following example request shows a simple upload that adds a file attachment to a Sheet:
+The following example request shows a simple upload that adds a file attachment to a sheet:
 
 `POST https://api.smartsheet.com/2.0/sheets/4509093797881732/attachments`  
 `Authorization: Bearer ll352u9jujauoqz4gstvsae05`  
@@ -226,11 +222,7 @@ new_attachment = response[:result]
 
 `POST /sheets/{sheetId}/comments/{commentId}/attachments`
 
-<% SUPPORTS_MULTIPART = "This operation can be performed using a [simple upload](#simple-uploads) or a [multipart upload](#multipart-uploads). For more information, see [Post an Attachment](#post-an-attachment)." %>
-
-Attaches a file to the Comment. <%= SUPPORTS_MULTIPART %>
-
-<% NEW_ATTACHMENT = "This operation always creates a new attachment.  To upload a new version of the same attachment, use the [Attach New Version](#attach-new-version) operation." %>
+Attaches a file to the comment. <%= SUPPORTS_MULTIPART %>
 
 <%= NEW_ATTACHMENT %>
 
@@ -335,7 +327,7 @@ new_attachment = response[:result]
 
 `POST /sheets/{sheetId}/rows/{rowId}/attachments`
 
-Attaches a file to the Row. <%= SUPPORTS_MULTIPART %>
+Attaches a file to the row. <%= SUPPORTS_MULTIPART %>
 
 <%= NEW_ATTACHMENT %>
 
@@ -434,7 +426,7 @@ new_attachment = response[:result]
 
 `POST /sheets/{sheetId}/attachments`
 
-Attaches a file to the Sheet. <%= SUPPORTS_MULTIPART %>
+Attaches a file to the sheet. <%= SUPPORTS_MULTIPART %>
 
 <%= NEW_ATTACHMENT %>
 
@@ -662,7 +654,7 @@ new_attachment = response[:result]
 
 `POST /sheets/{sheetId}/rows/{rowId}/attachments`
 
-Attaches a URL to the Row.
+Attaches a URL to the row.
 
 <%= partial "snippets/attachURL_table.md.erb" %>
 
@@ -842,9 +834,9 @@ smartsheet.sheets.attachments.delete(
 
 `DELETE /sheets/{sheetId}/attachments/{attachmentId}`
 
-Deletes the Attachment specified in the URL.  
+Deletes the attachment specified in the URL.  
 
-<aside class="notice">If the Attachment has multiple versions this deletes only the specific version specified by the attachmentId (each version has a different attachment Id).</aside>
+<aside class="notice">If the attachment has multiple versions, this deletes only the version specified by the attachmentId (each version has a different attachmentId).</aside>
 
      |     |
 -----|-----|
@@ -920,12 +912,12 @@ attachment = smartsheet.sheets.attachments.get(
 
 `GET /sheets/{sheetId}/attachments/{attachmentId}`
 
-Fetches a temporary URL that allows you to download an Attachment. The `urlExpiresInMillis` attribute tells you how long the URL is valid.
+Fetches a temporary URL that allows you to download an attachment. The **urlExpiresInMillis** attribute tells you how long the URL is valid.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Attachment object](#attachment-object). For File attachments, this includes a temporary URL for downloading the file.<br/><br/>Currently, the temporary URL is set to expire in 120000 milliseconds, or 2 minutes.
+<%= RETURNS %> | [Attachment object](#attachment-object). For file attachments, this includes a temporary URL for downloading the file.<br/><br/>Currently, the temporary URL is set to expire in 120000 milliseconds, or 2 minutes.
 <%= SCOPE %> | READ_SHEETS
 
 ## List Attachments
@@ -1133,7 +1125,7 @@ attachments = response[:data]
 
 `GET /sheets/{sheetId}/discussions/{discussionId}/attachments`
 
-Gets a list of all Attachments that are in the Discussion.
+Gets a list of all attachments that are in the discussion.
 
      |     |
 -----|-----|
@@ -1243,7 +1235,7 @@ attachments = response[:data]
 
 `GET /sheets/{sheetId}/rows/{rowId}/attachments`
 
-Gets a list of all Attachments that are on the Row, including Row and Discussion-level Attachments.
+Gets a list of all attachments that are on the row, including row and discussion-level attachments.
 
      |     |
 -----|-----|
@@ -1368,7 +1360,7 @@ updated_attachment = response[:result]
 
 `POST /sheets/{sheetId}/attachments/{attachmentId}/versions`
 
-Uploads a new version of a file to a Sheet or Row. <%= SUPPORTS_MULTIPART %>
+Uploads a new version of a file to a sheet or row. <%= SUPPORTS_MULTIPART %>
 
 <aside class="notice">Uploading new versions is not supported for URL attachments.</aside>
 
@@ -1440,7 +1432,7 @@ smartsheet.sheets.attachments.delete_all_versions(
 
 `DELETE /sheets/{sheetId}/attachments/{attachmentId}/versions`
 
-Deletes all versions of the attachment corresponding to the specified Attachment Id.  For attachments with multiple versions, this effectively deletes the attachment from the object that it’s attached to.
+Deletes all versions of the attachment corresponding to the specified attachmentId.  For attachments with multiple versions, this effectively deletes the attachment from the object that it’s attached to.
 
      |     |
 -----|-----|
@@ -1547,7 +1539,7 @@ versions = response[:data]
 
 `GET /sheets/{sheetId}/attachments/{attachmentId}/versions`
 
-Gets a list of all versions of the given Attachment Id in order from newest to oldest.
+Gets a list of all versions of the given attachmentId in order from newest to oldest.
 
      |     |
 -----|-----|
@@ -1560,7 +1552,7 @@ Gets a list of all versions of the given Attachment Id in order from newest to o
 
 # Automation Rules
 
-"Automation" is a catch-all term for approvals, notifications, and update requests. You can delete, update, or retrieve various automation settings through the API. You cannot create new automation rules programmatically. 
+*Automation* is a catch-all term for approvals, notifications, and update requests. You can delete, update, or retrieve various automation settings through the API. You cannot create new automation rules programmatically. 
 
 ## <%= OBJECTS %>
 
@@ -1606,11 +1598,11 @@ createdAt | timestamp | A timestamp of when the rule was originally added.
 createdBy | [User](#user-object) | User object containing name and email of the creator of this rule.
 disabledReason | string | Machine-readable reason a rule is disabled. See table of [Disabled Reasons](#disabled-reasons-for-automation-rules). 
 disabledReasonText | string | Descriptive reason a rule is disabled.
-enabled | Boolean | If `true`, indicates that the rule is active.
+enabled | Boolean | If **true**, indicates that the rule is active.
 modifiedAt | timestamp | The datetime for when the change was made to the rule.
-modifiedBy | [User](#user-object) | User object containing the name and email of the User that made the change.
+modifiedBy | [User](#user-object) | User object containing the name and email of the user that made the change.
 name | string | Rule name as shown in the UI.
-userCanModify | Boolean | If `true`, indicates whether the current user can modify the rule.
+userCanModify | Boolean | If **true**, indicates that the current user can modify the rule.
 
 ### AutomationAction Object
 
@@ -1634,19 +1626,19 @@ userCanModify | Boolean | If `true`, indicates whether the current user can modi
 
      |     |     |
 -----|-----|-----|
-frequency | string | Must be one of the following values: `DAILY`, `HOURLY`, `IMMEDIATELY`, or `WEEKLY`.
-includeAllColumns | Boolean | If `true` (default), all columns are included in email contents.
-includeAttachments | Boolean | If `true`, includes attachments.
+frequency | string | Must be one of the following values: **DAILY**, **HOURLY**, **IMMEDIATELY**, or **WEEKLY**.
+includeAllColumns | Boolean | If **true** (default), all columns are included in email contents.
+includeAttachments | Boolean | If **true**, includes attachments.
 includedColumnIds | long[] | Specifies which columns to include in message.
-includeDiscussions | Boolean | If `true`, includes discussions.
+includeDiscussions | Boolean | If **true**, includes discussions.
 message | string | Email body.
-notifyAllSharedUsers | Boolean | If `true`, notifications are sent to all users shared to the sheet. 
+notifyAllSharedUsers | Boolean | If **true**, notifications are sent to all users shared to the sheet. 
 recipientColumnIds | long[] | Array of column Ids from which to collect email recipients.
 recipients | [Recipient](#recipient-object) | Array of Recipient objects that contains one or more [Email objects](#email-object).
 subject | string | Email subject line.
-type | string | One of three types: `APPROVAL_REQUEST_ACTION`, `NOTIFICATION_ACTION`, or `UPDATE_REQUEST_ACTION`.
+type | string | One of three types: **APPROVAL_REQUEST_ACTION**, **NOTIFICATION_ACTION**, or **UPDATE_REQUEST_ACTION**.
 
-<aside class="notice">Either recipientColumns, recipientEmails, or notifyAllSharedUsers may be specified, but not more than one per AutomationRule object.</aside>
+<aside class="notice">Either <b>recipientColumns</b>, <b>recipientEmails</b>, or <b>notifyAllSharedUsers</b> may be specified, but not more than one per AutomationRule object.</aside>
 
 ## Delete an Automation Rule
 
@@ -2050,7 +2042,7 @@ Updates an existing automation rule.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | An [AutomationRule object](#automationrule-object). When sending an AutomationRule, you must always specify `action.type` and it must match the existing rule type.
+<%= REQUEST %> | An [AutomationRule object](#automationrule-object). When sending an AutomationRule, you must always specify **action.type** and it must match the existing rule type.
 <%= RETURNS %> | [Result object](#result-object) containing the updated [AutomationRule object](#automationrule-object)
 <%= SCOPE %> | WRITE_SHEETS
 
@@ -2070,7 +2062,7 @@ NO_VALID_SELECTED_COLUMNS | All selected columns for this rule have been deleted
 
 # Cells
 
-A collection of Cells comprises each Row in a Sheet.
+A collection of cells comprises each row in a sheet.
 
 ## <%= OBJECTS %>
 
