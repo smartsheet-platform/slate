@@ -1,6 +1,6 @@
 # Groups
 
-A Group is a collection of [Group Members](#group-members).
+A group is a collection of [group members](#group-members).
 
 ## <%= OBJECTS %>
 
@@ -30,7 +30,7 @@ members | [GroupMember](#groupmember-object)[] | Array of GroupMember objects
 modifiedAt | timestamp | Time of last modification
 name | string | Group name
 owner | string | Group owner’s email address
-ownerId | number | Group owner's User Id
+ownerId | number | Group owner's user Id
 
 ## Create Group
 
@@ -159,15 +159,15 @@ new_group = smartsheet.groups.create(
 
 `POST /groups`
 
-Creates a new Group.
+Creates a new group.
 
 <aside class="notice">This operation is only available to group administrators and system administrators.</aside>
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>name (required) -- must be unique within the organization</li><li>description (optional)</li><li>members (optional) -- array of [GroupMember objects](#groupmember-object), each limited to the following attribute:<ul><li>email</li></ul></li></ul>
-<%= RETURNS %> | [Result object](#result-object), containing a [Group object](#group-object) for the newly created Group
+<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>**name** (required) -- must be unique within the organization</li><li>**description** (optional)</li><li>**members** (optional) -- array of [GroupMember objects](#groupmember-object), each limited to the following attribute:<ul><li>**email**</li></ul></li></ul>
+<%= RETURNS %> | [Result object](#result-object), containing a [Group object](#group-object) for the newly created group
 <%= SCOPE %> | ADMIN_USERS
 
 ## Delete Group
@@ -230,7 +230,7 @@ smartsheet.groups.delete(
 
 `DELETE /groups/{groupId}`
 
-Deletes the Group specified in the URL.
+Deletes the group specified in the URL.
 
 <aside class="notice">This operation is only available to group administrators and system administrators.</aside>
 
@@ -316,12 +316,12 @@ group = smartsheet.groups.get(
 
 `GET /groups/{groupId}`
 
-Gets the Group specified in the URL.
+Gets the group specified in the URL.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Group object](#group-object) that includes the list of [GroupMembers](#groupmember-object)
+<%= RETURNS %> | [Group object](#group-object) that includes the list of [GroupMember objects](#groupmember-object)
 <%= SCOPE %> | READ_USERS
 
 ## List Org Groups
@@ -399,7 +399,7 @@ groups = response[:data]
 
 `GET /groups`
 
-Gets a list of all Groups in an organization. To fetch the members of an individual group, use the [Get Group](#get-group) operation.
+Gets a list of all groups in an organization. To fetch the members of an individual group, use the [Get Group](#get-group) operation.
 
      |     |
 -----|-----|
@@ -518,21 +518,13 @@ Updates the Group specified in the URL.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>name (optional) -- must be unique within the organization</li><li>description (optional)</li><li>ownerId (optional): Id of an admin User to whom the group ownership is transferred</li></ul>
+<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>**description** (optional)</li><li>**name** (optional) -- must be unique within the organization</li><li>**ownerId** (optional): Id of an admin user to whom the group ownership is transferred</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the [Group object](#group-object) for the updated group
 <%= SCOPE %> | ADMIN_USERS
 
-## <%= RELATED %>
-
-A Group is comprised of one or more members.
-
-### Members of a Group
-
-For details about working with a Group's members, see [Group Members](#group-members).
-
 # Group Members
 
-A Group Member is a User that belongs to a [Group](#groups).
+A group member is a user that belongs to a [group](#groups).
 
 ## <%= OBJECTS %>
 
@@ -649,21 +641,21 @@ new_members = smartsheet.groups.add_members(
 
 `POST /groups/{groupId}/members`
 
-Adds one or more members to a Group.
+Adds one or more members to a group.
 
 <aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
 
 If called with a single [GroupMember object](#groupmember-object), and that group member already exists, [error code](#complete-error-code-list) **1129** is returned. If called with an array
-of [GroupMember objects](#groupmember-object) any users specified in the array that are already group members are ignored and omitted from the response.
+of [GroupMember objects](#groupmember-object), any users specified in the array that are already group members are ignored and omitted from the response.
 
 <aside class="notice">This operation is only available to group administrators and system administrators.</aside>
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | A single [GroupMember object](#groupmember-object) or an array of GroupMember objects, limited to the following attribute:<ul><li>email</li></ul>
+<%= REQUEST %> | A single [GroupMember object](#groupmember-object) or an array of GroupMember objects, limited to the following attribute:<ul><li>**email**</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the members added to the group -- either a single [GroupMember](#groupmember-object) or array of GroupMember objects, corresponding to what was specified in the request.
-<%= ERRORS %>  | If an error occurs because the request specified one or more [*alternate* email addresses](#alternate-email-addresses) (that is, not the primary email address associated with the User account), the [Error object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array has the following attributes:<ul><li>**alternateEmailAddress**: User's *alternate* email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry using their primary address u1@smartsheet.com."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
+<%= ERRORS %>  | If an error occurs because the request specified one or more [alternate email addresses](#alternate-email-addresses) (that is, not the primary email address associated with the user account), the [Error object](#error-object) returned contains a **detail** attribute set to an array of objects, each object in the array has the following attributes:<ul><li>**alternateEmailAddress**: User's alternate email address that was specified in the request</li><li>**primaryEmailAddress**: User's primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;"errorCode": 5xxx,<br/>&#160;&#160;"message": "u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry using their primary address u1@smartsheet.com."<br/>&#160;&#160;"detail": [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"alternateEmailAddress": "u1+1@smartsheet.com",<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"primaryEmailAddress": "u1@smartsheet.com"<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}
 <%= SCOPE %> | ADMIN_USERS
 
 <aside class="notice"><b>This operation is asynchronous</b>, meaning the users may not yet have sharing access to sheets for a period of time after this operation returns.  For small groups with limited sharing, the operation should complete quickly (within a few seconds).  For large groups with many shares, this operation could possibly take more than a minute to complete.</aside>
@@ -733,7 +725,7 @@ smartsheet.groups.remove_member(
 
 `DELETE /groups/{groupId}/members/{userId}`
 
-Removes a member from a Group.
+Removes a member from a group.
 
 <aside class="notice">This operation is only available to group administrators and system administrators.</aside>
 
@@ -747,7 +739,7 @@ Removes a member from a Group.
 
 # Home
 
-In the Smartsheet UI, the "Home" tab shows all objects a User has access to, including Sheets, Folders, Workspaces, Reports, and Templates.
+In the Smartsheet UI, the "Home" tab shows all objects a user has access to, including folders, reports, sheets, Sights, templates, and workspaces.
 
 ## <%= OBJECTS %>
 
@@ -866,13 +858,13 @@ contents = smartsheet.home.list
 
 `GET /home`
 
-Gets a nested list of all Home objects, including Sheets, Workspaces, Folders, Reports, Templates, and Sights, as shown on the Home tab.
+Gets a nested list of all Home objects, including folders, reports, sheets, Sights, templates, and workspaces, as shown on the "Home" tab.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>ownerInfo - owner's email address and user Id for each sheet</li><li>source - the [source](#source-object) for any sheet that was created from another sheet or template</li></ul>
-  | **exclude** (optional) -- a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>permalinks - excludes the permalink from each data object</li></ul> 
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
+  | **exclude** (optional) -- a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**permalinks** - excludes the permalink from each data object</li></ul> 
 <%= RETURNS %> | [Home object](#home-object), populated according to the **include** parameter
 <%= SCOPE %> | READ_SHEETS
 
@@ -880,7 +872,7 @@ Gets a nested list of all Home objects, including Sheets, Workspaces, Folders, R
 
 ### Home Folders
 
-For details about working with Folders in the user's **Sheets** folder (that is, at the Home level), see [Folders](#folders).
+For details about working with folders in the user's **Sheets** folder (that is, at the Home level), see [Folders](#folders).
 
 ### Home Sheets
 
@@ -888,7 +880,7 @@ For details about working with sheets in the user's **Sheets** folder (that is, 
 
 # Reports
 
-A Report is a filtered view of the data from one or more Sheets. Like a Sheet, a Report is comprised of Columns, Rows, and Cells, and may optionally contain Attachments and/or Discussions.
+A report is a filtered view of the data from one or more sheets. Like a sheet, a report is comprised of columns, rows, and cells, and may optionally contain attachments or discussions.
 
 ## <%= OBJECTS %>
 
@@ -914,7 +906,7 @@ Extends the [Sheet object](#sheet-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-sourceSheets | [Sheet](#sheet-object)[] | Array of Sheet objects (without rows), representing the sheets that rows in the report originated from.  Only included in the [Get Report](#get-report) response if the **include** parameter specifies "sourceSheets".
+sourceSheets | [Sheet](#sheet-object)[] | Array of Sheet objects (without rows), representing the sheets that rows in the report originated from.  Only included in the [Get Report](#get-report) response if the **include** parameter specifies **sourceSheets**.
 
 ### ReportCell Object
 
@@ -922,7 +914,7 @@ Extends the [Cell object](#cell-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-virtualColumnId | number | The virtual Id of the cell's column. This property refers to the cell's parent column in the Report, while the **columnId** property refers to the cell's parent column in its originating source Sheet.
+virtualColumnId | number | The virtual Id of the cell's column. This property refers to the cell's parent column in the report, while the **columnId** property refers to the cell's parent column in its originating source sheet.
 
 
 ### ReportColumn Object
@@ -932,7 +924,7 @@ Extends the [Column object](#column-object), adding the following:
      |     |     |
 -----|-----|-----|
 virtualId | number | The virtual Id of this report column
-sheetNameColumn | Boolean | Returned only for the special "Sheet Name" report column (value = 'true')
+sheetNameColumn | Boolean | Returned only for the special "Sheet Name" report column (value = **true**)
 
 A report column is a "virtual" column, in that it appears identical to source sheet columns, but is in fact a different column belonging to the report. 
 [Cells](#reportcell-object) in the report refer to this column via their **virtualColumnId** attribute, and to their actual column from their source sheet via their **columnId** attribute.
@@ -943,17 +935,17 @@ Extends the [Row object](#row-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-sheetId | number | The Id of the Sheet from which the Row originates
+sheetId | number | The Id of the sheet from which the row originates
 
 ### ReportPublish Object 
 
      |     |     |
 -----|-----|-----|
-readOnlyFullAccessibleBy | string | Indicates who can access the 'Read-Only Full' view of the published report:<ul><li>If "ALL", it is available to anyone who has the link.</li><li>If "ORG", it is available only to members of the report owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled** = true.
-readOnlyFullDefaultView | string | Indicates which view the user has set for a read-only, default view of the published report. Must be one of the following values: "CALENDAR", "CARD", or "GRID".
-readOnlyFullEnabled | Boolean | (Required) If `true`, a rich version of the report is published with the ability to download row attachments and discussions.
-readOnlyFullShowToolbar | Boolean | Indicates whether the left nav toolbar is displayed. The default, or `true`, is to display the toolbar. If `false`, hides the toolbar.
-readOnlyFullUrl | string | URL for 'Read-Only Full' view of the published report<br/>Only returned in a response if **readOnlyFullEnabled** = true.
+readOnlyFullAccessibleBy | string | Indicates who can access the 'Read-Only Full' view of the published report:<ul><li>If **ALL**, it is available to anyone who has the link.</li><li>If **ORG**, it is available only to members of the report owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled** = **true**.
+readOnlyFullDefaultView | string | Indicates which view the user has set for a read-only, default view of the published report. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
+readOnlyFullEnabled | Boolean | (Required) If **true**, a rich version of the report is published with the ability to download row attachments and discussions.
+readOnlyFullShowToolbar | Boolean | Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
+readOnlyFullUrl | string | URL for 'Read-Only Full' view of the published report<br/>Only returned in a response if **readOnlyFullEnabled** = **true**.
 
 ## Get Report
 
@@ -1093,13 +1085,13 @@ report = smartsheet.reports.get(
 
 `GET /reports/{reportId}`
 
-Gets the Report, including one page of Rows, and optionally populated with Discussions, Attachments, and source Sheets.
+Gets the report, including one page of rows, and optionally populated with attachments, discussions, and source sheets.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>discussions</li><li>attachments</li><li>[format](#formatting)</li><li>sourceSheets</li></ul> 
-  | **exclude** (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**attachments**</li><li>**discussions**</li><li>**format** -- see [Formatting](#formatting)</li><li>**sourceSheets**</li></ul> 
+  | **exclude** (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li></ul>
   | **pageSize** (optional): Number of rows per page.  If not specified, the default value is 100.  This operation can return a maximum of 500 rows per page.
   | **page** (optional): Which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
 <%= RETURNS %> | [Report object](#report-object), populated according to the specified parameters
@@ -1297,14 +1289,14 @@ File.open('output.csv', 'w') {|f| f.write(file_contents)}
 
 `GET /reports/{reportId}`
 
-Gets the Report in the format specified, based on the Report Id.  
+Gets the report in the format specified, based on the report Id.  
 
 <aside class="notice">Note: For Excel format, only .xlsx output format is supported at this time.</aside>
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
- | **Accept** -- must be set to one of the following values:<ul><li>application/vnd.ms-excel</li><li>text/csv</li></ul>
+ | **Accept** -- must be set to one of the following values:<ul><li>**application/vnd.ms-excel**</li><li>**text/csv**</li></ul>
 <%= RETURNS %> | The report file in either Excel or CSV format.
 <%= SCOPE %> | READ_SHEETS
 
@@ -1377,7 +1369,7 @@ reports = response[:data]
 
 `GET /reports`
 
-Gets a list of all Reports that the User has access to in alphabetical order by name. The list contains an abbreviated Report object for each Report.
+Gets a list of all reports that the user has access to in alphabetical order by name. The list contains an abbreviated Report object for each report.
 
 <aside class="notice"><%= SUPPORTS_NUMERICDATES %></aside>
 
@@ -1385,7 +1377,7 @@ Gets a list of all Reports that the User has access to in alphabetical order by 
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PARAMETER_MODIFIEDSINCE %>
-<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Report objects](#report-object) limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Report objects](#report-object) limited to the following attributes:<ul><li>**accessLevel**</li><li>**id**</li><li>**name**</li><li>**permalink**</li></ul>
 <%= SCOPE %> | READ_SHEETS
 
 ## Publish Report
@@ -1533,7 +1525,7 @@ status = smartsheet.reports.set_publish_status(
 
 `PUT /reports/{reportId}/publish`
 
-Sets the publish status of the Report and returns the new status, including the URL of any enabled publishing.
+Sets the publish status of the report and returns the new status, including the URL of any enabled publishing.
 
      |     |
 -----|-----|
@@ -1542,7 +1534,7 @@ Sets the publish status of the Report and returns the new status, including the 
 <%= RETURNS %> | [Result object](#result-object) containing a [ReportPublish object](#reportpublish-object)
 <%= SCOPE %> | ADMIN_SHEETS
 
-<aside class="notice">For Read Only, if you do not specify <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level 'Report Publishing' setting (if the Report owner belongs to an organization) or to "ALL" (if the Report owner does not belong to an organization).</aside>
+<aside class="notice">For Read Only, if you do not specify <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level "Report Publishing" setting (if the report owner belongs to an organization) or to <b>ALL</b> (if the report owner does not belong to an organization).</aside>
 
 ## Send Report via Email
 
@@ -1550,35 +1542,35 @@ Sets the publish status of the Report and returns the new status, including the 
 
 ## Share Report
 
-For details about Report sharing, see [Report Sharing](#report-sharing).
+For details about report sharing, see [Report Sharing](#report-sharing).
 
 ## <%= RELATED %>
 
-A Report is comprised of Columns, Rows, and Cells, and may optionally contain Attachments and/or Discussions.
+A report is comprised of columns, rows, and cells, and may optionally contain attachments or discussions.
 
 ### Report Attachments
 
-For details about working with a Report's attachments, see [Attachments](#attachments).
+For details about working with a report's attachments, see [Attachments](#attachments).
 
 ### Report Cells
 
-For details about working with a Report's cells, see [Cells](#cells).
+For details about working with a report's cells, see [Cells](#cells).
 
 ### Report Columns
 
-For details about working with a Report's columns, see [Columns](#columns).
+For details about working with a report's columns, see [Columns](#columns).
 
 ### Report Discussions
 
-For details about working with a Report's discussions, see [Discussions](#discussions).
+For details about working with a report's discussions, see [Discussions](#discussions).
 
 ### Report Rows 
 
-For details about working with a Report's rows, see [Rows](#rows).
+For details about working with a report's rows, see [Rows](#rows).
 
 # Rows
 
-A Row is a component of a Sheet or Report. Each Row is composed of a collection of Cells, and may optionally contain Discussions and/or Attachments.
+A row is a component of a sheet or report. Each row is composed of a collection of cells, and may optionally contain discussions or attachments.
 
 ## <%= OBJECTS %>
 
@@ -1613,14 +1605,14 @@ createdAt | timestamp | Time of creation
 createdBy | [User](#user-object) | User object containing name and email of the creator of this row
 discussions | [Discussion](#discussion-object)[] | Array of Discussion objects.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **discussions**.
 expanded | Boolean | Indicates whether the row is expanded or collapsed
-filteredOut | Boolean | `true` if this row is filtered out by a column filter (and thus is not displayed in the Smartsheet app), `false` if the row is not filtered out.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **filters**.
+filteredOut | Boolean | **true** if this row is filtered out by a column filter (and thus is not displayed in the Smartsheet app), **false** if the row is not filtered out.<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **filters**.
 format | string | Format descriptor (see [Formatting](#formatting)).<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this row has a non-default format applied.
-inCriticalPath | Boolean | Only returned, with a value of `true`, if the sheet is a project sheet with dependencies enabled and this row is in the critical path
-locked | Boolean | Indicates whether the row is locked. In a response, a value of `true` indicates that the row has been locked by the sheet owner or the admin.
+inCriticalPath | Boolean | Only returned, with a value of **true**, if the sheet is a project sheet with dependencies enabled and this row is in the critical path
+locked | Boolean | Indicates whether the row is locked. In a response, a value of **true** indicates that the row has been locked by the sheet owner or the admin.
 lockedForUser | Boolean | Indicates whether the row is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.
 modifiedAt | timestamp | Time of last modification
 modifiedBy | [User](#user-object) | User object containing name and email of the last person to modify this row
-permalink | string | URL that represents a direct link to the Row in Smartsheet<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **rowPermalink**.
+permalink | string | URL that represents a direct link to the row in Smartsheet<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **rowPermalink**.
 rowNumber | number | Row number within the sheet (1-based - starts at 1)
 sheetId | number | Parent sheet Id
 version | number | Sheet version number that is incremented every time a sheet is modified
@@ -1916,22 +1908,22 @@ response = smartsheet.sheets.rows.add(
 
 `POST /sheets/{sheetId}/rows`
 
-Inserts one or more rows into the Sheet specified in the URL. If you want to insert the rows in any position but the default, use [location-specifier attributes](#specify-row-location).
+Inserts one or more rows into the sheet specified in the URL. If you want to insert the rows in any position but the default, use [location-specifier attributes](#specify-row-location).
 
 <aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
 
-<aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>toTop</b>, <b>toBottom</b>, <b>parentId</b>, <b>siblingId</b>, and <b>above</b> attributes must be the same for all rows in the request).</aside>
+<aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>above</b>, <b>parentId</b>, <b>siblingId</b>, <b>toBottom</b>, or <b>toTop</b> attributes must be the same for all rows in the request).</aside>
 
-<aside class="notice">In a parent row, values of the following fields are auto-calculated based upon values in the child rows (and therefore cannot be updated using the API): Start Date, End Date, Duration, % Complete.</aside>
+<aside class="notice">In a parent row, values of the following fields are auto-calculated based upon values in the child rows (and therefore cannot be updated using the API): Duration, End Date, % Complete, Start Date.</aside>
 
      |     |
 -----|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= PARAMETERS %> | <%= PARAMETER_ALLOW_PARTIAL_SUCCESS %><BR><%= PARAMETER_OVERRIDE_VALIDATION %>
-<%= REQUEST %> | [Row object](#row-object) or an array of Row objects, with the following attributes:<ul><%= partial "snippets/addRowUpdateRow.md.erb" %></ul>
-<%= RETURNS %> | [Result object](#result-object) containing the newly created rows -- either a single [Row object](#row-object) or array of Row objects, corresponding to what was specified in the request, as well as the new version of the Sheet.
-<%= ERRORS %> | <u><b>When <code>allowPartialSuccess=false</code> (or not specified):</b></u><br/><br/>If an error occurs, the [Error object](#error-object) returned contains a **detail** attribute set to an object with the following attribute:<ul><li>**index**: the array index of the row that caused the error (0 if a single Row was passed in)</li></ul>If any error occurs, the entire request fails (no rows are added), and the Error response returned describes the first problem that was encountered. For example:<br/>{<br/>&#160;&#160;"errorCode": 1042,<br/>&#160;&#160;"message": "The cell value in column 5504245941200772 did not conform to the strict requirements for type CHECKBOX."<br/>&#160;&#160;"detail": {<br/>&#160;&#160;&#160;&#160;"index": 4<br/>&#160;&#160;}<br/>}<br/><br/><br/><u><b>When <code>allowPartialSuccess=true</code>:</b></u><br/><br/><%= PARTIAL_SUCCESS %>
-<%= SCOPE %> | WRITE_SHEETS
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %> |
+<%= PARAMETERS %> | <%= PARAMETER_ALLOW_PARTIAL_SUCCESS %><BR><%= PARAMETER_OVERRIDE_VALIDATION %> |
+<%= REQUEST %> | [Row object](#row-object) or an array of Row objects, with the following attributes:<ul><%= partial "snippets/addRowUpdateRow.md.erb" %></ul> |
+<%= RETURNS %> | [Result object](#result-object) containing the newly created rows -- either a single [Row object](#row-object) or array of Row objects, corresponding to what was specified in the request, as well as the new version of the sheet. |
+<%= ERRORS %> | <u>When <b>allowPartialSuccess=false</b> (or not specified):</u><br/><br/>If an error occurs, the [Error object](#error-object) returned contains a **detail** attribute set to an object with the following attribute:<ul><li>**index**: the array index of the row that caused the error (0 if a single Row was passed in)</li></ul>If any error occurs, the entire request fails (no rows are added), and the error response returned describes the first problem that was encountered. For example:<br/>{<br/>&#160;&#160;"errorCode": 1042,<br/>&#160;&#160;"message": "The cell value in column 5504245941200772 did not conform to the strict requirements for type CHECKBOX."<br/>&#160;&#160;"detail": {<br/>&#160;&#160;&#160;&#160;"index": 4<br/>&#160;&#160;}<br/>}<br/><br/><br/><u>When <b>allowPartialSuccess=true</b>:</u><br/><br/><%= PARTIAL_SUCCESS %> |
+<%= SCOPE %> | WRITE_SHEETS |
 
 ## Copy Rows to Another Sheet
 
@@ -2057,17 +2049,17 @@ response = smartsheet.sheets.rows.copy_to_another_sheet(
 
 `POST /sheets/{sheetId}/rows/copy`
 
-Copies Rows from the Sheet specified in the URL to (the bottom of) another sheet.
-
-<aside class="notice">Up to 5,000 row Ids can be specified in the request, but if the total number of rows in the destination sheet after the copy exceeds the Smartsheet row limit, an error response is returned.</aside>
+Copies rows from the sheet specified in the URL to (the bottom of) another sheet.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= PARAMETERS %> | **include** (optional) -- comma-separated list of row elements to copy in addition to the cell data:<ul><li>attachments</li><li>discussions</li><li>children - if specified, any child rows of the rows specified in the request are also copied to the destination sheet, and parent-child relationships amongst rows are preserved within the destination sheet; if not specified, only the rows specified in the request are copied.</li><li>**all** - specify a value of "all" to include everything (attachments, discussions, and children)</li></ul>**ignoreRowsNotFound** (optional) -- true or false: default is false. If set to true, specifying row Ids that do not exist within the source sheet does not cause an error response. If omitted or set to false, specifying row Ids that do not exist within the source sheet causes an error response (and no rows are copied).
+<%= PARAMETERS %> | **include** (optional) -- comma-separated list of row elements to copy in addition to the cell data:<ul><li>**all** - specify a value of **all** to include everything (attachments, children, and discussions)</li><li>**attachments**</li><li>**children** - if specified, any child rows of the rows specified in the request are also copied to the destination sheet, and parent-child relationships amongst rows are preserved within the destination sheet; if not specified, only the rows specified in the request are copied.</li><li>**discussions**</li></ul>**ignoreRowsNotFound** (optional) -- **true** or **false**: default is **false**. If set to **true**, specifying row Ids that do not exist within the source sheet does not cause an error response. If omitted or set to **false**, specifying row Ids that do not exist within the source sheet causes an error response (and no rows are copied).
 <%= REQUEST %> | [CopyOrMoveRowDirective object](#copyormoverowdirective-object)
 <%= RETURNS %> | [CopyOrMoveRowResult object](#copyormoverowresult-object)
 <%= SCOPE %> | WRITE_SHEETS
+
+<aside class="notice">Up to 5,000 row Ids can be specified in the request, but if the total number of rows in the destination sheet after the copy exceeds the Smartsheet row limit, an error response is returned.</aside>
 
 ## Delete Rows
 
@@ -2145,16 +2137,16 @@ smartsheet.sheets.rows.delete(
 
 `DELETE /sheets/{sheetId}/rows?ids={rowId1},{rowId2},{rowId3}`
 
-Deletes one or more rows from the Sheet specified in the URL.
+Deletes one or more rows from the sheet specified in the URL.
 
-<aside class="warning">This operation deletes ALL child Rows of the specified Rows.</aside>
+<aside class="warning">This operation deletes ALL child rows of the specified rows.</aside>
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **ids** (required) - comma-separated list of Row Ids
- | **ignoreRowsNotFound** (optional) - true or false. If set to false and any of the specified Row Ids are not found, no rows are deleted, and the "not found" [error](#complete-error-code-list) is returned.
-<%= RETURNS %> | [Result object](#result-object) containing Row Ids corresponding to all rows that were successfully deleted (including any child rows of rows specified in the URL).
+<%= PARAMETERS %> | **ids** (required) - comma-separated list of row Ids
+ | **ignoreRowsNotFound** (optional) - **true** or **false**. If set to **false** and any of the specified row Ids are not found, no rows are deleted, and the "not found" [error](#complete-error-code-list) is returned.
+<%= RETURNS %> | [Result object](#result-object) containing row Ids corresponding to all rows that were successfully deleted (including any child rows of rows specified in the URL).
 <%= SCOPE %> | WRITE_SHEETS
 
 ## Get Row
@@ -2269,19 +2261,19 @@ row = smartsheet.sheets.rows.get(
 
 `GET /sheets/{sheetId}/rows/{rowId}`
 
-Gets the Row specified in the URL.
+Gets the row specified in the URL.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><br/>See [Row Include Flags](#row-include-flags).<br/>Also supports the **columns** include flag, which adds a columns array that specifies all of the columns for the sheet. This enables you to have the full context of the cells in the row.<br/><br/>The **filters** include flag returns a **filteredOut** attribute indicating if the row should be displayed or hidden according to the sheet's filters.
-  | **exclude** (optional) -- a comma-separated list of elements to <i>not include</i> in the response.<br/><ul><li>**nonexistentCells**: excludes cells that have never contained any data</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>status</li><li>rowId</li><li>columnId</li></ul></li></ul>
-<%= RETURNS %> | [Row object](#row-object), populated according to the specified parameters
+  | **exclude** (optional) -- a comma-separated list of elements to <i>not include</i> in the response.<br/><ul><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**nonexistentCells**: excludes cells that have never contained any data</li></ul>
+<%= RETURNS %> | [Row object](#row-object) populated according to the specified parameters
 <%= SCOPE %> | READ_SHEETS
 
 ## List Rows
 
-To get the list of all Rows in a Sheet, use the [Get Sheet](#get-sheet) operation.
+To get the list of all rows in a sheet, use the [Get Sheet](#get-sheet) operation.
 
 ## Move Rows to Another Sheet
 
@@ -2410,17 +2402,18 @@ response = smartsheet.sheets.rows.move_to_another_sheet(
 
 `POST /sheets/{sheetId}/rows/move`
 
-Moves Rows from the Sheet specified in the URL to (the bottom of) another sheet.
-<aside class="notice">Up to 5,000 row Ids can be specified in the request, but if the total number of rows in the destination sheet after the move exceeds the Smartsheet row limit, an error response is returned.</aside>
-<aside class="notice">Any child rows of the rows specified in the request are also moved. Parent-child relationships amongst rows are preserved within the destination sheet.</aside>
+Moves rows from the sheet specified in the URL to (the bottom of) another sheet.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= PARAMETERS %> | **include** (optional) -- comma-separated list of row elements to move in addition to the cell data:<ul><li>attachments</li><li>discussions</li></ul>**ignoreRowsNotFound** (optional) -- true or false: default is false. If set to true, specifying row Ids that do not exist within the source sheet do not cause an error response. If omitted or set to false, specifying row Ids that do not exist within the source sheet causes an error response (and no rows are moved).
+<%= PARAMETERS %> | **include** (optional) -- comma-separated list of row elements to move in addition to the cell data:<ul><li>**attachments**</li><li>**discussions**</li></ul>**ignoreRowsNotFound** (optional) -- **true** or **false**: default is **false**. If set to **true**, specifying row Ids that do not exist within the source sheet do not cause an error response. If omitted or set to **false**, specifying row Ids that do not exist within the source sheet causes an error response (and no rows are moved).
 <%= REQUEST %> | [CopyOrMoveRowDirective object](#copyormoverowdirective-object)
 <%= RETURNS %> | [CopyOrMoveRowResult object](#copyormoverowresult-object)
 <%= SCOPE %> | WRITE_SHEETS
+
+<aside class="notice">Up to 5,000 row Ids can be specified in the request, but if the total number of rows in the destination sheet after the move exceeds the Smartsheet row limit, an error response is returned.</aside>
+<aside class="notice">Any child rows of the rows specified in the request are also moved. Parent-child relationships amongst rows are preserved within the destination sheet.</aside>
 
 ## Send Rows via Email
 
@@ -2681,33 +2674,30 @@ Updates cell values in the specified rows, expands/collapses the specified rows,
 
 <aside class="notice">If a row's position is updated, all child rows are moved with the row.</aside>
 
-<aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>toTop</b>, <b>toBottom</b>, <b>parentId</b>, <b>siblingId</b>, and <b>above</b> attributes must be the same for all rows in the request).</aside>
+<aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>above</b>, <b>parentId</b>, <b>siblingId</b>, <b>toBottom</b>, and <b>toTop</b> attributes must be the same for all rows in the request).</aside>
 
-<aside class="notice">In a parent row, values of the following fields are auto-calculated based upon values in the child rows (and therefore cannot be updated using the API): Start Date, End Date, Duration, % Complete.</aside>
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= PARAMETERS %> | <%= PARAMETER_ALLOW_PARTIAL_SUCCESS %><BR><%= PARAMETER_OVERRIDE_VALIDATION %>
-<%= REQUEST %> | [Row object](#row-object) or an array of Row objects, with the following attributes:<ul><li>**id** (required)</li><%= partial "snippets/addRowUpdateRow.md.erb" %></ul>
-<%= SCOPE %> | WRITE_SHEETS
+<aside class="notice">In a parent row, values of the following fields are auto-calculated based upon values in the child rows (and therefore cannot be updated using the API): Duration, End Date, % Complete, Start Date.</aside>
 
      |     |
 -----|-----|
-<%= RETURNS %> | [Result object](#result-object) containing an array of the updated rows. 
-<%= ERRORS %>  | <u><b>When <code>allowPartialSuccess=false</code> (or not specified):</b></u><br/><br/>If an error occurs, the [Error object](#error-object) returned contains a **detail** attribute set to an object with the following attributes:<ul><li>**index**: the array index of the row that caused the error (0 if a single Row was passed in)</li><li>**rowId**: the id of the row that caused the error (omitted if the row was missing an id)</li></ul>If any error occurs, the entire request fails (no rows are updated), and the Error response returned describes the first problem that was encountered. For example:<br/>{<br/>&#160;&#160;"errorCode": 1042,<br/>&#160;&#160;"message": "The cell value in column 5504245941200772 did not conform to the strict requirements for type CHECKBOX."<br/>&#160;&#160;"detail": {<br/>&#160;&#160;&#160;&#160;"index": 4<br/>&#160;&#160;&#160;&#160;"rowId": 6572427401553796<br/>&#160;&#160;}<br/>}<br/><br/><br/><u><b>When <code>allowPartialSuccess=true</code>:</b></u><br/><br/><%= PARTIAL_SUCCESS %>
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %> |
+<%= PARAMETERS %> | <%= PARAMETER_ALLOW_PARTIAL_SUCCESS %><BR><%= PARAMETER_OVERRIDE_VALIDATION %> |
+<%= REQUEST %> | [Row object](#row-object) or an array of Row objects, with the following attributes:<ul><li>**id** (required)</li><%= partial "snippets/addRowUpdateRow.md.erb" %></ul> |
+<%= RETURNS %> | [Result object](#result-object) containing an array of the updated rows. |
+<%= ERRORS %>  | <u>When <b>allowPartialSuccess=false</b> (or not specified):</u><br/><br/>If an error occurs, the [Error object](#error-object) returned contains a **detail** attribute set to an object with the following attributes:<ul><li>**index**: the array index of the row that caused the error (0 if a single row was passed in)</li><li>**rowId**: the id of the row that caused the error (omitted if the row was missing an Id)</li></ul>If any error occurs, the entire request fails (no rows are updated), and the error response returned describes the first problem that was encountered. For example:<br/>{<br/>&#160;&#160;"errorCode": 1042,<br/>&#160;&#160;"message": "The cell value in column 5504245941200772 did not conform to the strict requirements for type CHECKBOX."<br/>&#160;&#160;"detail": {<br/>&#160;&#160;&#160;&#160;"index": 4<br/>&#160;&#160;&#160;&#160;"rowId": 6572427401553796<br/>&#160;&#160;}<br/>}<br/><br/><br/><u>When <b>allowPartialSuccess=true</b>:</u><br/><br/><%= PARTIAL_SUCCESS %> |
+<%= SCOPE %> | WRITE_SHEETS |
 
 ## <%= RELATED %>
 
-A Row is comprised of a collection of Cells, and may optionally contain Attachments and/or Discussions.
+A row is comprised of a collection of cells, and may optionally contain attachments or discussions.
 
 ### Row Attachments
 
-For details about working with a Row's attachments, see [Attachments](#attachments).
+For details about working with a row's attachments, see [Attachments](#attachments).
 
 ### Row Cells
 
-For details about working with a Row's cells, see [Cells](#cells).
+For details about working with a row's cells, see [Cells](#cells).
 
 For details about working with images in cells, see [Cell Images](#cell-images).
 
@@ -2717,7 +2707,7 @@ For details about working with a row's discussions, see [Discussions](#discussio
 
 ### Row Include Flags
 
-Endpoints which return rows (for example, [get sheet](#get-sheet), [get row](#get-row)) support the optional **include** query string parameter. If specified, the value of the **include** parameter is 
+Endpoints which return rows (for example, [Get Sheet](#get-sheet), [Get Row](#get-row)) support the optional **include** query string parameter. If specified, the value of the **include** parameter is 
 a comma-delimited list of flags that indicate additional attributes to be included in each [Row object](#row-object) within the response.
 
 Include Flag | Description |
