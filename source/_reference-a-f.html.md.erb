@@ -3750,12 +3750,12 @@ MODIFIED_DATE | DATETIME
 
 # Comments
 
-A Discussion is a container for a number of individual Comments in a threaded conversation. For more details, see the [Discussion](#discussions) section.​
+A discussion is a container for a number of individual comments in a threaded conversation. For more details, see the [Discussion](#discussions) section.​
 
-This section describes operations on an *individual* Comment within a Discussion thread.
+This section describes operations on an *individual* comment within a discussion thread.
 
-* To retrieve all Discussions and Comments for an entire Sheet, use [List Discussions](#list-discussions) with the ​query parameter​ `include​=comments​`.
-* To retrieve all Discussions and Comments associated with a Row, use [List Row Discussions](#list-row-discussions) ​with the​ query parameter​ `include​=comments​`.
+* To retrieve all discussions and comments for an entire sheet, use [List Discussions](#list-discussions) with the ​query parameter​ **include​=comments​**.
+* To retrieve all discussions and comments associated with a row, use [List Row Discussions](#list-row-discussions) ​with the​ query parameter​ **include​=comments​**.
 
 ## <%= OBJECTS %>
 
@@ -3779,7 +3779,7 @@ This section describes operations on an *individual* Comment within a Discussion
 id | number | Comment Id
 attachments | [Attachment](#attachment-object)[] | Array of Attachment objects
 createdAt | timestamp | Time of creation
-createdBy | [User](#user-object) | User object containing name and email of the Comment's author
+createdBy | [User](#user-object) | User object containing name and email of the comment's author
 discussionId | number (optional) | Discussion Id
 modifiedAt | timestamp | Time of last modification
 text | string | Comment body
@@ -3961,17 +3961,17 @@ Adds a comment to a discussion.
 <aside class="notice">This operation supports multipart requests. Using a multipart request allows you to create a new comment and upload a file to that comment in a single step (that is, using a single request). For more information, see <a href="#multipart-uploads">Multipart Uploads</a>.</aside>
 
 <br/><br/>
-**Creating a Comment without an Attachment:**
+**Creating a Comment without an Attachment**
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Comment object](#comment-object) with the following attribute:<ul><li>text</li></ul>
+<%= REQUEST %> | [Comment object](#comment-object) with the following attribute:<ul><li>**text**</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing [Comment object](#comment-object) that was created
 <%= SCOPE %> | WRITE_SHEETS
 
 <br/><br/>
-**Creating a Comment with an Attachment:**
+**Creating a Comment with an Attachment**
 
 <%= partial "snippets/createCommentMultipart_table.md.erb" %>
 
@@ -4074,12 +4074,12 @@ updated_comment = response[:result]
 
 Updates the text of a comment. Note that only the user that created the comment is permitted to update it.
 
-**Updating a Comment:**
+**Updating a Comment**
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Comment object](#comment-object) with the following attribute:<ul><li>text</li></ul>
+<%= REQUEST %> | [Comment object](#comment-object) with the following attribute:<ul><li>**text**</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing [Comment object](#comment-object) that was updated
 <%= SCOPE %> | WRITE_SHEETS
 
@@ -4149,7 +4149,7 @@ smartsheet.sheets.comments.delete(
 
 `DELETE /sheets/{sheetId}/comments/{commentId}`
 
-Deletes the Comment specified in the URL.
+Deletes the comment specified in the URL.
 
      |     |
 -----|-----|
@@ -4225,7 +4225,7 @@ comment = smartsheet.sheets.comments.get(
 
 `GET /sheets/{sheetId}/comments/{commentId}`
 
-Gets the Comment specified in the URL.
+Gets the comment specified in the URL.
 
      |     |
 -----|-----|
@@ -4243,7 +4243,7 @@ For details about working with a comment's attachments, see [Attachments](#attac
 
 # Contacts
 
-A contact is a user's personal contact in Smartsheet (as described [here](https://help.smartsheet.com/articles/796143-managing-contacts)).
+A contact is a user's personal contact in Smartsheet (as described in the Help Center article, [Managing Contacts](https://help.smartsheet.com/articles/796143-managing-contacts)).
 
 ## <%= OBJECTS %>
 
@@ -4407,7 +4407,7 @@ contacts = response[:data]
 
 `GET /contacts`
 
-Gets a list of the user's Smartsheet Contacts.
+Gets a list of the user's Smartsheet contacts.
 
      |     |
 -----|-----|
@@ -4446,13 +4446,13 @@ Cross-sheet references that are not used by any formula are automatically delete
      |     |     |
 -----|-----|-----|
 id | long | Cross-sheet reference Id, guaranteed unique within referencing sheet.
-endColumnId | long  | Defines ending edge of range when specifying one or more columns. To specify an entire column, omit the `startRowId` and `endRowId` parameters.
-endRowId | long  | Defines ending edge of range when specifying one or more rows. To specify an entire row, omit the `startColumnId` and `endColumnId` parameters.
+endColumnId | long  | Defines ending edge of range when specifying one or more columns. To specify an entire column, omit the **startRowId** and **endRowId** parameters.
+endRowId | long  | Defines ending edge of range when specifying one or more rows. To specify an entire row, omit the **startColumnId** and **endColumnId** parameters.
 name | string | Friendly name of reference. Auto-generated unless specified in [Create Cross-sheet References](#create-cross-sheet-references).
 sourceSheetId | long | Sheet Id of source sheet.
-startColumnId | long  | Defines beginning edge of range when specifying one or more columns. To specify an entire column, omit the `startRowId` and `endRowId` parameters.
-startRowId | long  | Defines beginning edge of range when specifying one or more rows. To specify an entire row, omit the `startColumnId` and `endColumnId` parameters.
-status | string | One of the following values:<ul><li>If the request succeeded:<ul><li>OK: the reference is in a good state</li></ul></li><li>If the request failed:<ul><li>BLOCKED: a reference is downstream of a circular issue</li><li>BROKEN: the data source location was deleted (either a column, row, or sheet)</li><li>CIRCULAR: the formula reference is self referencing and cannot be resolved</li><li>DISABLED: updating of the reference is temporarily disabled due to maintenance</li><li>INVALID/UNKNOWN: the reference is new and has not been validated</li><li>NOT_SHARED: no common shared users</li></ul></ul>
+startColumnId | long  | Defines beginning edge of range when specifying one or more columns. To specify an entire column, omit the **startRowId** and **endRowId** parameters.
+startRowId | long  | Defines beginning edge of range when specifying one or more rows. To specify an entire row, omit the **startColumnId** and **endColumnId** parameters.
+status | string | One of the following values:<ul><li>If the request succeeded:<ul><li>**OK**: the reference is in a good state</li></ul></li><li>If the request failed:<ul><li>**BLOCKED**: a reference is downstream of a circular issue</li><li>**BROKEN**: the data source location was deleted (either a column, row, or sheet)</li><li>**CIRCULAR**: the formula reference is self referencing and cannot be resolved</li><li>**DISABLED**: updating of the reference is temporarily disabled due to maintenance</li><li>**INVALID/UNKNOWN**: the reference is new and has not been validated</li><li>**NOT_SHARED**: no common shared users</li></ul></ul>
 
 ## Create Cross-sheet References
 
@@ -4527,7 +4527,7 @@ Adds a cross-sheet reference between two sheets and defines the data range for f
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [CrossSheetReference object](#crosssheetreference-object) with the following attributes:<ul><li>name (optional): unique name for reference. If you omit this parameter, Smartsheet will autogenerate a name.</li><li>sourceSheetId: sheetId for data source</li><li>Either two or all of the following:<ul><li>startRowId: Defines beginning edge of range when specifying one or more rows. Must be used with endRowId.</li><li>endRowId: Defines ending edge of range when specifying one or more rows. Must be used with startRowId.</li><li>startColumnId: Defines beginning edge of range when specifying one or more columns. Must be used with endColumnId.</li><li>endColumnId: Defines ending edge of range when specifying one or more columns. Must be used with startColumnId.</li></ul></li></ul>
+<%= REQUEST %> | [CrossSheetReference object](#crosssheetreference-object) with the following attributes:<ul><li>**sourceSheetId**: sheetId for data source</li><li>Either two or all of the following:<ul><li>**endColumnId**: Defines ending edge of range when specifying one or more columns. Must be used with **startColumnId**.</li><li>**endRowId**: Defines ending edge of range when specifying one or more rows. Must be used with **startRowId**.</li><li>**startColumnId**: Defines beginning edge of range when specifying one or more columns. Must be used with **endColumnId**.</li><li>**startRowId**: Defines beginning edge of range when specifying one or more rows. Must be used with **endRowId**.</li></ul></li><li>**name** (optional): unique name for reference. If you omit this parameter, Smartsheet will autogenerate a name.</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [CrossSheetReference object](#crosssheetreference-object), corresponding to what was specified in the request.
 <%= SCOPE %> | CREATE_SHEETS
 
@@ -4662,15 +4662,15 @@ Lists all cross-sheet references for the sheet.
 
 # Dashboards
 
-Dashboards and Sights are two terms for one thing. Dashboard information is managed using the Sights endpoints and properties. For more information, see the [Sights](#sights) section.
+Dashboards and Sights(TM) are two terms for one thing. Dashboard information is managed using the Sights endpoints and properties. For more information, see the [Sights](#sights) section.
 
 # Discussions
 
-A Discussion is a container for a collection of individual [Comments](#comments) within a single thread. A Discussion can exist on a [Row](#rows) or a [Sheet](#sheets).
+A discussion is a container for a collection of individual [comments](#comments) within a single thread. A discussion can exist on a [row](#rows) or a [sheet](#sheets).
 
-In the UI, Smartsheet creates a Discussion to contain each top-level Comment and subsequent replies into a single thread.
+In the UI, Smartsheet creates a discussion to contain each top-level comment and subsequent replies into a single thread.
 
-Using the API, you can only add a Comment to a Discussion. If the Discussion doesn't already exist, you must create it first.
+Using the API, you can only add a comment to a discussion. If the discussion doesn't already exist, you must create it first.
 
 ## <%= OBJECTS %>
 
@@ -4711,7 +4711,7 @@ createdBy | [User](#user-object) | User object containing name and email of the 
 lastCommentedAt | timestamp | Time of most recent comment
 lastCommentedUser | [User](#user-object) | User object containing name and email of the author of the most recent comment
 parentId | number | Id of the directly associated row or sheet: present only when the direct association is not clear (see [List Discussions](#list-discussions))
-parentType | string | "SHEET" or "ROW": present only when the direct association is not clear (see [List Discussions](#list-discussions))
+parentType | string | **SHEET** or **ROW**: present only when the direct association is not clear (see [List Discussions](#list-discussions))
 readOnly | Boolean | Indicates whether the user can modify the discussion
 title | string | Read Only. Discussion title automatically created by duplicating the first 100 characters of the top-level comment
 
@@ -4901,15 +4901,15 @@ response = ss_client.Discussions.create_discussion_on_row_with_attachment(
 
 `POST /sheets/{sheetId}/rows/{rowId}/discussions`
 
-Creates a new Discussion on a Row.
+Creates a new discussion on a row.
 
 <aside class="notice">This operation supports multipart requests. Using a multipart request allows you to create a new discussion and upload a file to the first comment within that discussion in a single step (that is, using a single request). For more information, see <a href="#multipart-uploads">Multipart Uploads</a>.</aside>
 
 <br/>
-**Creating a Discussion without an Attachment:**
+**Creating a Discussion without an Attachment**
 <%= partial "snippets/createDiscussion_table.md.erb" %>
 <br/>
-**Creating a Discussion with an Attachment:**
+**Creating a Discussion with an Attachment**
 <%= partial "snippets/createDiscussionMultipart_table.md.erb" %>
 
 ## Create Discussion on Sheet
@@ -5088,16 +5088,16 @@ response = ss_client.Discussions.create_discussion_on_sheet_with_attachment(
 
 `POST /sheets/{sheetId}/discussions`
 
-Creates a new Discussion on a Sheet.
+Creates a new discussion on a sheet.
 
-<aside class="notice">This operation supports multipart requests. Using a multipart request allows you to create a new Discussion and upload a file to the first Comment within that Discussion in a single step (that is, using a single request). For more information, see <a href="#multipart-uploads">Multipart Uploads</a>.</aside>
+<aside class="notice">This operation supports multipart requests. Using a multipart request allows you to create a new discussion and upload a file to the first comment within that discussion in a single step (that is, using a single request). For more information, see <a href="#multipart-uploads">Multipart Uploads</a>.</aside>
 
 <br/>
-**Creating a Discussion without an Attachment:**
+**Creating a Discussion without an Attachment**
 <%= partial "snippets/createDiscussion_table.md.erb" %>
 
 <br/>
-**Creating a Discussion with an Attachment:**
+**Creating a Discussion with an Attachment**
 <%= partial "snippets/createDiscussionMultipart_table.md.erb" %>
 
 ## Delete Discussion
@@ -5347,7 +5347,7 @@ discussion = smartsheet.sheets.discussions.get(
 
 `GET /sheets/{sheetId}/discussions/{discussionId}`
 
-Gets the Discussion specified in the URL.
+Gets the discussion specified in the URL.
 
      |     |
 -----|-----|
@@ -5455,25 +5455,25 @@ discussions = response[:data]
 
 `GET /sheets/{sheetId}/rows/{rowId}/discussions`
 
-Gets a list of all Discussions associated with the specified Row. Remember that Discussions are containers for the conversation thread. To see the entire thread, use the `include=comments` parameter.
+Gets a list of all discussions associated with the specified row. Remember that discussions are containers for the conversation thread. To see the entire thread, use the **include=comments** parameter.
 
 <%= partial "snippets/getDiscussions_table.md.erb" %>
 
 ## <%= RELATED %>
 
-A Discussion is a collection of one or more Comments, each of which may contain Attachments.
+A discussion is a collection of one or more comments, each of which may contain attachments.
 
 ### Discussion Attachments
 
-For details about working with the attachments within a Discussion, see [Attachments](#attachments).
+For details about working with the attachments within a discussion, see [Attachments](#attachments).
 
 ### Discussion Comments
 
-For details about working with a Discussion's comments, see [Comments](#comments).
+For details about working with a discussion's comments, see [Comments](#comments).
 
 # Favorites
 
-Smartsheet allows users to "star" sheets, reports, folders, workspaces, Sight, and other objects on their Home tab to mark them as favorites. 
+Smartsheet allows users to "star" folders, reports, sheets, Sights, workspaces, and other objects on their Home tab to mark them as favorites. 
 These API operations allow you to access the user's favorite API-supported objects, as well as create and delete favorites.
 
 ## <%= OBJECTS %>
@@ -5491,8 +5491,8 @@ These API operations allow you to access the user's favorite API-supported objec
 
      |     |     |
 -----|-----|-----|
-objectId | number | Id of the favorited item.  If **type** is "template", only private sheet-type template Id is allowed.
-type | string | One of:<ul><li>workspace</li><li>folder</li><li>sheet</li><li>report</li><li>template</li><li>sight</li></ul>
+objectId | number | Id of the favorited item.  If **type** is **template**, only private sheet-type template Id is allowed.
+type | string | One of: **folder**, **report**, **sheet**, **sight**, **template**, or **workspace**
 
 ## Add Favorites
 
@@ -5592,14 +5592,14 @@ response = smartsheet.favorites.add(
 
 `POST /favorites`
 
-Adds one or more items to the user's list of Favorite items. <%= SUPPORTS_OPTIONAL_BULK %>
+Adds one or more items to the user's list of favorite items. <%= SUPPORTS_OPTIONAL_BULK %>
 
 If called with a single [Favorite object](#favorite-object), and that favorite already exists, [error code](#complete-error-code-list) **1129** is returned.  If called with an array of [Favorite objects](#favorite-object), any objects specified in the array that are already marked as favorites are ignored and omitted from the response.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Favorite object](#favorite-object) or an array of Favorite objects, with the following attributes:<ul><li>type</li><li>objectId</li></ul>
+<%= REQUEST %> | [Favorite object](#favorite-object) or an array of Favorite objects, with the following attributes:<ul><li>**objectId**</li><li>**type**</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing objects that were marked as favorites -- either a single [Favorite object](#favorite-object) or an array of Favorite objects, corresponding to what was specified in the request.
 <%= SCOPE %> | ADMIN_WORKSPACES
 
@@ -5669,7 +5669,7 @@ list = response[:data]
 
 `GET /favorites`
 
-Gets a list of all of the user's Favorite items.
+Gets a list of all of the user's favorite items.
 
      |     |
 -----|-----|
@@ -5739,7 +5739,7 @@ smartsheet.favorites.remove_folder(
 
 `DELETE /favorites/folder/{folderId}`
 
-Removes a single Folder from the user's list of Favorite items.
+Removes a single folder from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorite_table.md.erb" %>
 
@@ -5802,7 +5802,7 @@ smartsheet.favorites.remove_report(
 
 `DELETE /favorites/report/{reportId}`
 
-Removes a single Report from the user's list of Favorite items.
+Removes a single report from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorite_table.md.erb" %>
 
@@ -5927,7 +5927,7 @@ smartsheet.favorites.remove_sight(
 
 `DELETE /favorites/sights/{sightId}`
 
-Removes a single Sight from the user's list of Favorite items.
+Removes a single Sight from the user's list of favorite items.
 
      |     |
 -----|-----|
@@ -6254,13 +6254,13 @@ smartsheet.favorites.remove_sheets(
 
 `DELETE /favorites/sheet`
 
-Removes multiple Sheets from the user's list of Favorite items.
+Removes multiple sheets from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorites_table.md.erb" %>
 
 ### Remove Multiple Favorite Sights
 
-> Example request: remove multiple favorite sights
+> Example request: remove multiple favorite Sights
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/favorites/sight?objectIds=sightId1,sightId2' \
@@ -6469,7 +6469,7 @@ A folder can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](
      |     |     |
 -----|-----|-----|
 id | number | Folder Id
-favorite | Boolean | Returned only if the user has marked the folder as a favorite in their Home tab (value = 'true')
+favorite | Boolean | Returned only if the user has marked the folder as a favorite in their "Home" tab (value = **true**)
 folders | [Folder](#folder-object)[] | Array of Folder objects
 name | string | Folder name
 permalink | string | URL that represents a direct link to the folder in Smartsheet
@@ -6618,14 +6618,14 @@ response = smartsheet.folders.copy(
 
 `POST /folders/{folderId}/copy`
 
-Creates a copy of the specified Folder.
+Creates a copy of the specified folder.
 
      |     |    
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>attachments</li><li>cellLinks</li><li>data -- includes formatting</li><li>discussions -- includes comments</li><li>filters</li><li>forms</li><li>ruleRecipients -- includes notification recipients, must also include **rules** when using this attribute</li><li>rules -- includes notifications and workflow rules</li><li>shares</li><li>all - deprecated</li></ul><i>Note</i>: Cell history is not copied, regardless of which **include** parameter values are specified.
- | **omit** (optional) -- when specified with a value of "sheetHyperlinks", excludes this category from the response
- | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created folder:<ul><li>cellLinks</li><li>reports</li><li>sheetHyperlinks</li><li>Sights</li></ul>By default, all cell links, reports, sheet hyperlinks, and Sights that reference objects in the source folder are re-mapped to reference corresponding objects in the newly created folder. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If "cellLinks" is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created folder continue to point to the original source sheets.</li><li>If "reports" is specified in the <b>skipRemap</b> parameter value, the reports within the newly created folder continue to point to the original source sheets.</li><li>If "sheetHyperlinks" is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created folder continue to point to the original source sheets.</li><li>If "sights" is specified in the <b>skipRemap</b> parameter value, the widgets within Sights in the newly created folder continue to point to the original source sheets / reports.</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>**attachments**</li><li>**cellLinks**</li><li>**data** -- includes formatting</li><li>**discussions** -- includes comments</li><li>**filters**</li><li>**forms**</li><li>**ruleRecipients** -- includes notification recipients, must also include **rules** when using this attribute</li><li>**rules** -- includes notifications and workflow rules</li><li>**shares**</li><li>**all** - deprecated</li></ul><i>NOTE</i>: Cell history is not copied, regardless of which **include** parameter values are specified.
+ | **omit** (optional) -- when specified with a value of **sheetHyperlinks**, excludes this category from the response
+ | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created folder:<ul><li>**cellLinks**</li><li>**reports**</li><li>**sheetHyperlinks**</li><li>**sights**</li></ul>By default, all cell links, reports, sheet hyperlinks, and Sights that reference objects in the source folder are re-mapped to reference corresponding objects in the newly created folder. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If **cellLinks** is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created folder continue to point to the original source sheets.</li><li>If **reports** is specified in the <b>skipRemap</b> parameter value, the reports within the newly created folder continue to point to the original source sheets.</li><li>If **sheetHyperlinks** is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created folder continue to point to the original source sheets.</li><li>If **sights** is specified in the <b>skipRemap</b> parameter value, the widgets within Sights in the newly created folder continue to point to the original source sheets / reports.</li></ul>
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Folder object](#folder-object) for the newly created folder
 <%= SCOPE %> | ADMIN_WORKSPACES
@@ -7047,13 +7047,13 @@ folder = smartsheet.folders.get(
 
 `GET /folders/{folderId}`
 
-Gets the specified Folder (and lists its contents).
+Gets the specified folder (and lists its contents).
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>ownerInfo - owner's email address and user Id for each sheet</li><li>sheetVersion - current version number of each sheet, should not be combined with pagination</li><li>source - the [source](#source-object) for any sheet that was created from another sheet or template</li></ul>
-<%= RETURNS %> | [Folder object](#folder-object), populated according to the **include** parameter<br/><br/>Note: If no folders, sheets, reports, templates, or Sights are present in the Folder, the corresponding attribute (for example, "folders", "sheets") is not present in the response.
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
+<%= RETURNS %> | [Folder object](#folder-object), populated according to the **include** parameter<br/><br/>NOTE: If no folders, reports, sheets, Sights, or templates are present in the folder, the corresponding attribute (for example, **folders**, **sheets**) is not present in the response.
 <%= SCOPE %> | READ_SHEETS
 
 ## List Folders
@@ -7193,7 +7193,7 @@ folders = response[:data]
 
 `GET /folders/{folderId}/folders`
 
-Gets a list of the top-level child Folders within the specified Folder.
+Gets a list of the top-level child folders within the specified folder.
 
 <%= partial "snippets/listFolders_table.md.erb" %>
 
@@ -7268,7 +7268,7 @@ folders = response[:data]
 
 `GET /workspaces/{workspaceId}/folders`
 
-Gets a list of the top-level child Folders within the specified Workspace.
+Gets a list of the top-level child folders within the specified workspace.
 
 <%= partial "snippets/listFolders_table.md.erb" %>
 
@@ -7382,8 +7382,8 @@ Moves the specified folder to another location.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following required attributes:<ul><li>destinationType</li><li>destinationId</li></ul>
-<%= RETURNS %> | [Result object](#result-object) containing a [Folder object](#folder-object) for the moved Folder
+<%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following required attributes:<ul><li>**destinationId**</li><li>**destinationType**</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing a [Folder object](#folder-object) for the moved folder
 <%= SCOPE %> | ADMIN_WORKSPACES
 
 ## Update Folder
@@ -7480,6 +7480,6 @@ Updates the folder specified in the URL.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Folder object](#folder-object), limited to the following required attribute:<ul><li>name (string)</li></ul>Name does not have to be unique.
+<%= REQUEST %> | [Folder object](#folder-object), limited to the following required attribute:<ul><li>**name** (string)</li></ul>Name does not have to be unique.
 <%= RETURNS %> | [Result object](#result-object) containing the updated [Folder object](#folder-object)
 <%= SCOPE %> | ADMIN_WORKSPACES
