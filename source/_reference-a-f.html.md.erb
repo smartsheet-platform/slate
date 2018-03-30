@@ -836,13 +836,13 @@ smartsheet.sheets.attachments.delete(
 
 Deletes the attachment specified in the URL.  
 
-<aside class="notice">If the attachment has multiple versions, this deletes only the version specified by the attachmentId (each version has a different attachmentId).</aside>
-
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | WRITE_SHEETS
+
+<aside class="notice">If the attachment has multiple versions, this deletes only the version specified by the attachmentId (each version has a different attachmentId).</aside>
 
 ## Get Attachment
 
@@ -2082,19 +2082,19 @@ A collection of cells comprises each row in a sheet.
      |     |     |
 -----|-----|-----|
 columnId | number | The Id of the column that the cell is located in
-columnType | string | See type definition on the [Column object](#column-object).<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **columnType**.
+columnType | string | See **type** definition on the [Column object](#column-object).<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **columnType**.
 conditionalFormat | string | The format descriptor describing this cell's conditional format (see [Formatting](#formatting)).<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this cell has a conditional format applied.
 displayValue | string | Visual representation of cell contents, as presented to the user in the UI.  See [Cell Reference](#cell-reference).
 format | string | The format descriptor (see [Formatting](#formatting))<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this cell has a non-default format applied.
-formula | string | The  formula for a cell, if set. Note: calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = "#CIRCULAR REFERENCE".
+formula | string | The  formula for a cell, if set. NOTE: calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = "#CIRCULAR REFERENCE".
 hyperlink | [Hyperlink](#hyperlink-object) | A hyperlink to a URL, sheet, or report
 image | [Image](#image-object) | The image that the cell contains.<br/>Only returned if the cell contains an image.
 linkInFromCell | [CellLink](#celllink-object) | An inbound link from a cell in another sheet.  This cell's value mirrors the linked cell's value.
 linksOutToCells | [CellLink](#celllink-object)[] | An array of [CellLink objects](#celllink-object).  Zero or more outbound links from this cell to cells in other sheets whose values mirror this cell's value.
 objectValue | [ObjectValue](#objectvalue-object) | [Optionally included](#row-include-flags) object representation of the cell's value. Used for updating predecessor cell values.
-overrideValidation | Boolean | (Admin only) Indicates whether the cell value can contain a value outside of the validation limits (value = `true`). When using this parameter, you must also set **strict** to `false` to bypass value type checking. This property is honored for POST or PUT actions that update rows.
+overrideValidation | Boolean | (Admin only) Indicates whether the cell value can contain a value outside of the validation limits (value = **true**). When using this parameter, you must also set **strict** to **false** to bypass value type checking. This property is honored for `POST` or `PUT` actions that update rows.
 strict | Boolean | Set to **false** to enable lenient parsing. Defaults to **true**. <%= REQUEST_ONLY_ATTRIBUTE %> See [Cell Value Parsing](#cell-value-parsing) for more information about using this attribute. 
-value | string,<br/>number,<br/>or Boolean | A string, a number or a Boolean value -- depending on the cell type and the data in the cell.  Cell values larger than 4000 characters are silently truncated. An empty cell returns no value. See [Cell Reference](#cell-reference).
+value | string,<br/>number,<br/>or Boolean | A string, a number, or a Boolean value -- depending on the cell type and the data in the cell.  Cell values larger than 4000 characters are silently truncated. An empty cell returns no value. See [Cell Reference](#cell-reference).
 
 ### Cell History Object
 
@@ -2103,13 +2103,11 @@ Extends the [Cell object](#cell-object).
      |     |     |
 -----|-----|-----|
 modifiedAt | timestamp | The datetime for when the change was made to the cell
-modifiedBy | [User](#user-object) | User object containing the name and email of the User that made the change
+modifiedBy | [User](#user-object) | User object containing the name and email of the user that made the change
 
 ### CellLink Object
 
-Represents a link to a Cell in a different Sheet.
-
-<aside class="notice">If status is not "OK" (for example, there is a problem with the link), any or all of the following attributes may be null: <ul><li>sheetId</li><li>rowId</li><li>columnId</li></ul></aside>
+Represents a link to a cell in a different sheet.
 
      |     |     |
 -----|-----|-----|
@@ -2117,20 +2115,40 @@ columnId | number | Column Id of the linked cell
 rowId | number | Row Id of the linked cell
 sheetId | number | Sheet Id of the sheet that the linked cell belongs to
 sheetName | string | Sheet name of the linked cell
-status | string | One of the following values:<ul><li>**OK**: the link is in a good state</li><li>**BROKEN**: the row or sheet linked to was deleted</li><li>**INACCESSIBLE**: the sheet linked to cannot be viewed by this user</li><li>Several other values indicating unusual error conditions: **NOT_SHARED**, **BLOCKED**, **CIRCULAR**, **INVALID**, and **DISABLED**.</li></ul>
+status | string | One of the following values:<ul><li>**OK**: the link is in a good state</li><li>**BROKEN**: the row or sheet linked to was deleted</li><li>**INACCESSIBLE**: the sheet linked to cannot be viewed by this user</li><li>Several other values indicating unusual error conditions: **BLOCKED**, **CIRCULAR**, **DISABLED**, **INVALID**, or **NOT_SHARED**.</li></ul>
 
-### Hyperlink Object
+<aside class="notice">If status is not "OK" (for example, there is a problem with the link), any or all of the following attributes may be null: <b>columnId</b>, <b>rowId</b>, or <b>sheetId</b>.</aside>
 
-Represents a hyperlink to a URL, a Sheet, a Report, or a Sight.
- 
-<aside class="notice">If the Sheet, Report, or Sight that is linked to was deleted, this object may be empty (that is, all values null).</aside>
+### Duration Object
+
+Extends the [ObjectValue object](#objectvalue-object).
+
+In a project sheet, represents a value in a duration cell, or a lag value of a predecessor.
 
      |     |     |
 -----|-----|-----|
-reportId | number | If non-null, this hyperlink is a link to the Report with this Id.
-sheetId | number | If non-null, this hyperlink is a link to the Sheet with this Id.
+days | number | The number of days for this duration.
+elapsed | Boolean | If true, indicates this duration represents elapsed time, which ignores non-working time.
+hours | number | The number of hours for this duration.
+milliseconds | number | The number of milliseconds for this duration.
+minutes | number | The number of minutes for this duration.
+negative | Boolean | When used as a predecessor's lag value, indicates whether the lag is negative (if **true**), or positive (**false**). The individual duration values themselves (for example, **days**, **hours**, or **minutes**) is always positive.
+objectType | string | **DURATION**
+seconds | number | The number of seconds for this duration.
+weeks | number | The number of weeks for this duration.
+
+### Hyperlink Object
+
+Represents a hyperlink to a URL, a sheet, a report, or a Sight.
+
+     |     |     |
+-----|-----|-----|
+reportId | number | If non-null, this hyperlink is a link to the report with this Id.
+sheetId | number | If non-null, this hyperlink is a link to the sheet with this Id.
 sightId | number | If non-null, this hyperlink is a link to the Sight with this Id.
-url | string | When the hyperlink is a URL link, this property contains the URL value.<br/><br/>When the hyperlink is a Sheet/Report/Sight link (that is, **sheetId** or **reportId** or **sightId** is non-null), this property contains the permalink to the Sheet, Report, or Sight.
+url | string | When the hyperlink is a URL link, this property contains the URL value.<br/><br/>When the hyperlink is a sheet/report/Sight link (that is, **sheetId**, **reportId**, or **sightId** is non-null), this property contains the permalink to the sheet, report, or Sight.
+
+<aside class="notice">If the sheet, report, or Sight that is linked to was deleted, this object may be empty (that is, all values null).</aside>
 
 ### ObjectValue Object
 
@@ -2139,7 +2157,18 @@ This object itself is not used directly.
 
      |     |     |
 -----|-----|-----|
-objectType | string | One of DATE, DATETIME, ABSTRACT_DATETIME, CONTACT, DURATION, or PREDECESSOR_LIST
+objectType | string | One of ABSTRACT_DATETIME, CONTACT, DATE, DATETIME, DURATION, or PREDECESSOR_LIST
+
+### Predecessor Object
+
+     |     |     |
+-----|-----|-----|
+inCriticalPath | Boolean | True if this predecessor is in the critical path. Read-only.
+invalid | Boolean | True if the row referenced by **rowId** is not a valid row in this sheet, or there is a circular reference (displayed in the Smartsheet app as "#REF"). Read-only. Omitted if false.
+lag | [Duration](#duration-object) | The lag value of this predecessor. Omitted if there is no lag.
+rowId | number| The Id of the predecessor row
+rowNumber | number | The row number of the predecessor row. Omitted if **invalid** is **true**. Read-only.
+type | string | The type of the predecessor. One of **FF**, **FS**, **SF**, or **SS**.
 
 ### PredecessorList Object
 
@@ -2194,35 +2223,6 @@ In a project sheet with dependencies enabled, the **objectValue** attribute for 
 -----|-----|-----|
 objectType | string | PREDECESSOR_LIST
 predecessors | [Predecessor](#predecessor-object)[] | Array of [Predecessor objects](#predecessor-object).
-
-### Predecessor Object
-
-     |     |     |
------|-----|-----|
-inCriticalPath | Boolean | True if this predecessor is in the critical path. Read-only.
-invalid | Boolean | True if the row referenced by rowId is not a valid row in this sheet, or there is a circular reference (displayed in the Smartsheet Web app as "#REF"). Read-only. Omitted if false.
-lag | [Duration](#duration-object) | The lag value of this predecessor. Omitted if there is no lag.
-rowId | number| The Id of the predecessor row
-rowNumber | number | The row number of the predecessor row. Omitted if **invalid** is true. Read-only.
-type | string | The type of the predecessor. One of FS, FF, SS, or SF.
-
-### Duration Object
-
-Extends the [ObjectValue object](#objectvalue-object).
-
-In a project sheet, represents a value in a duration cell, or a lag value of a predecessor.
-
-     |     |     |
------|-----|-----|
-days | number | The number of days for this duration.
-elapsed | Boolean | If true, indicates this duration represents elapsed time, which ignores non-working time.
-hours | number | The number of hours for this duration.
-milliseconds | number | The number of milliseconds for this duration.
-minutes | number | The number of minutes for this duration.
-negative | Boolean | When used as a predecessor's lag value, indicates whether the lag is negative (if true), or positive (false). The individual duration values themselves (for example, **days**, **hours**, **minutes**) is always positive.
-objectType | string | DURATION
-seconds | number | The number of seconds for this duration.
-weeks | number | The number of weeks for this duration.
 
 ## Get Cell History
 
@@ -2368,14 +2368,14 @@ Gets the cell modification history.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional): when specified with a value of "columnType", response includes the **columnType** attribute for each [cell] (#cell-object)
+<%= PARAMETERS %> | **include** (optional): when specified with a value of **columnType**, response includes the **columnType** attribute for each [Cell object](#cell-object)
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Cell History objects](#cell-history-object). For more details, see [Cell Reference](#cell-reference).
 <%= SCOPE %> | READ_SHEETS
 
 ## Update Cells
 
-To update the Cells in a Sheet, use the [Update Rows](#update-rows) operation.
+To update the cells in a sheet, use the [Update Rows](#update-rows) operation.
 
 ## <%= RELATED %>
 
@@ -2384,7 +2384,7 @@ To update the Cells in a Sheet, use the [Update Rows](#update-rows) operation.
 Creating or updating cell links via the **cell.linkInFromCell** attribute is a special operation. 
 A given row or cell update operation may contain only link updates, or no link updates. 
 Attempting to mix row/cell updates with cell link updates results in error code 1115. 
-Additionally, a [cell link](#celllink-object) can only be added to an *existing* cell, so the **cell.linkInFromCell** attribute is not allowed when POSTing a new row to a sheet.
+Additionally, a [CellLink object](#celllink-object) can only be added to an existing cell, so the **cell.linkInFromCell** attribute is not allowed when POSTing a new row to a sheet.
  
 When creating a cell link, **cell.value** must be null (the data is pulled from the linked cell).
  
@@ -2398,113 +2398,113 @@ A cell may not contain both a hyperlink and a cell link, so **hyperlink** and **
 **Cell.displayValue**.  A third attribute, **Cell.objectValue** is currently used only for adding and updating predecessors.
 An empty cell returns no value.
 
-**Cell.displayValue** is always a **string** and is only returned for certain column types (see below).  It represents the formatted value as it should
+**Cell.displayValue** is always a string and is only returned for certain column types (see below).  It represents the formatted value as it should
 be displayed to an end-user.  For example, if a TEXT_NUMBER column is formatted as a US Dollar currency, its **value** may be a number
 like 1234.5678, but its **displayValue** is "$1,234.57".
 
-**Cell.value** represents a cell's raw value and can be one of the following primitive JSON types: **string**, **number**, or **Boolean**,
+**Cell.value** represents a cell's raw value and can be one of the following primitive JSON types: string, number, or Boolean,
 depending on the column type.  An empty cell returns no value. Complex types are represented as strings, formatted as described below:
 
 <% PROJECT_COLUMN_HELP_URL = "https://help.smartsheet.com/articles/765737-project-sheet-columns-start-date-end-date-duration-complete-and-predecessors" %>
 
 Column Type | Possible Types for Cell.value | Returns Cell.displayValue?
 ------------|-------------------------------|---------------------------
-ABSTRACT_DATETIME | **string**: a project date and time in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format, or a free-form text value.<br/>**number**: see [Dates and Times](#dates-and-times) for how to request dates to be returned as numbers. | No.
-CHECKBOX | **Boolean**: `true` if the checkbox is checked, `false` if unchecked, no value if the cell hasn't been touched yet.<br/>**string**: a free-form text value. | No.
-CONTACT_LIST | **string**: an email address representing a contact, or a free-form text value. | Yes: same as **value** for free-form strings; for contacts, the contact's name if any, else their email address.
-DATE | **string**: a date in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format, or a free-form text value.<br/>**number**: see [Dates and Times](#dates-and-times) for how to request dates to be returned as numbers. | No.
-DURATION | **string**: a duration value such as "4d 6h 30m" in the user's locale, or a free-form text value.<br/>See the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>) for more information on durations. | Yes: same as **value**
-PICKLIST | **string**: one of the picklist's column options, or a free-form text value.<br/>**number**: numeric values | Yes: same as **value** for strings; for number values, the number with formatting applied.
-PREDECESSOR	| **string**: a comma-delimited predecessor list such as "12FS +3d 4h, 14SS", or a free-form text value.<br/>See the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>) for more information on predecessors. | Yes: same as **value**
-TEXT_NUMBER	| **string**: free-form text values<br/>**number**: numeric values | Yes: same as **value** for strings; for number values, the number with formatting applied.
+ABSTRACT_DATETIME | string: a project date and time in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format, or a free-form text value.<br/>number: see [Dates and Times](#dates-and-times) for how to request dates to be returned as numbers. | No.
+CHECKBOX | Boolean: **true** if the checkbox is checked, **false** if unchecked, no value if the cell hasn't been touched yet.<br/>string: a free-form text value. | No.
+CONTACT_LIST | string: an email address representing a contact, or a free-form text value. | Yes: same as **value** for free-form strings; for contacts, the contact's name if any, else their email address.
+DATE | string: a date in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format, or a free-form text value.<br/>number: see [Dates and Times](#dates-and-times) for how to request dates to be returned as numbers. | No.
+DURATION | string: a duration value such as "4d 6h 30m" in the user's locale, or a free-form text value.<br/>See the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>) for more information on durations. | Yes: same as **value**
+PICKLIST | string: one of the picklist's column options, or a free-form text value.<br/>number: numeric values | Yes: same as **value** for strings; for number values, the number with formatting applied.
+PREDECESSOR	| string: a comma-delimited predecessor list such as "12FS +3d 4h, 14SS", or a free-form text value.<br/>See the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>) for more information on predecessors. | Yes: same as **value**
+TEXT_NUMBER	| string: free-form text values<br/>number: numeric values | Yes: same as **value** for strings; for number values, the number with formatting applied.
 
 **Cell.objectValue** is an object representation of a cell's value and is currently used for adding or updating predecessor cell values.
-It provides a more "programmer friendly" format for assembling predecessors. To update a cell's predecessors, set objectValue to a
+It provides a more "programmer friendly" format for assembling predecessors. To update a cell's predecessors, set **objectValue** to a
 [PredecessorList object](#predecessorlist-object) containing [Predecessor objects](#predecessor-object).
 
 #### Cell Value Parsing
 
-The flexibility in cell value data types is a powerful feature in the Smartsheet application, but at the same time, it poses a challenge
+The flexibility in cell value data types is a powerful feature in the Smartsheet application; however, it poses a challenge
 for an API in terms of parsing. Being too flexible might result in unexpected behavior. For instance, if you write code
 to post a Date value to a Smartsheet and the API operation succeeds, you might assume that the date value you sent was interpreted
 as date. What happens if you posted your date in the wrong format? Do you really want Smartsheet to keep the malformed date
-as a String value? Probably not.
+as a string value? Probably not.
  
 To address this problem, the Smartsheet API employs a simple scheme to indicate whether you want a more predictable and strict
 interface or a more flexible one. By default, a cell value is expected to conform to "strict" rules for the type of the cell's column.
 If an input value doesn't conform, the API returns [error code 1042](#400-level-error-codes).
 
 If, however, you want the same flexibility as the Smartsheet Web app, you can disable the strict rules, and we’ll do our best to make
-sense of it. To enable lenient parsing simply include `"strict" : false` in the [Cell object](#cell-object) in your request body.
+sense of it. To enable lenient parsing simply include **"strict": false** in the [Cell object](#cell-object) in your request body.
 
-<aside class="notice">How does strict cell value parsing compare to cell validation settings? Strict cell value parsing determines how string values are parsed. It is set on a per-call basis. In contrast, cell validation is part of the column definition. The overrideValidation property is restricted to sheet admins and does **not** override strict parsing.</aside>
+<aside class="notice">How does strict cell value parsing compare to cell validation settings? Strict cell value parsing determines how string values are parsed. It is set on a per-call basis. In contrast, cell validation is part of the column definition. The **overrideValidation** property is restricted to sheet admins and does *not* override strict parsing.</aside>
 
 The parsing rules for the various column types are as follows:
 
-**ABSTRACT_DATETIME**:
+**ABSTRACT_DATETIME**
 
      |     |
 -----|-----|
 Lenient | Smartsheet attempts to convert the string value to date using ISO 8601 date format, as well as several locale-specific date formats. If the value is a parsable date format, Smartsheet recognizes the date and stores it as such. All other values are simply text values.
-Strict | The value must be a string value and a valid ISO 8601 date (YYYY-MM-DD). Alternatively, if Unix time (also known as epoch time) is used, you can use the query parameter of `numericDates` set to `true` to have Smartsheet convert epoch time to human readable dates. See [Dates and Times](#dates-and-times) for more information.
+Strict | The value must be a string value and a valid ISO 8601 date (YYYY-MM-DD). Alternatively, if Unix time (also known as epoch time) is used, you can use the query parameter of **numericDates** set to **true** to have Smartsheet convert epoch time to human readable dates. See [Dates and Times](#dates-and-times) for more information.
 
-**CHECKBOX**:
+**CHECKBOX**
 
      |     |
 -----|-----|
-Lenient | Boolean values and string values of 'true' and "false" are handled the same as Strict. All other values are saved as text values.
+Lenient | Boolean values and string values of **true** and **false** are handled the same as **strict**. All other values are saved as text values.
 Strict | Only Boolean values (true or false) are valid.
 
-**CONTACT_LIST**:
+**CONTACT_LIST**
 
      |     |
 -----|-----|
-Lenient | If the value is a valid email address, Smartsheet handles it the same way as Strict. If not, Smartsheet saves the value as a text value.
-Strict | The value must be a valid email address. If "displayValue" is set, Smartsheet uses that as the name, otherwise if Smartsheet finds a match among the the Access Token owner's contacts, Smartsheet associates this cell with that existing contact.
+Lenient | If the value is a valid email address, Smartsheet handles it the same as **strict**. If not, Smartsheet saves the value as a text value.
+Strict | The value must be a valid email address. If **displayValue** is set, Smartsheet uses that as the name; otherwise, if Smartsheet finds a match among the the access token owner's contacts, Smartsheet associates this cell with that existing contact.
 
 <aside class="notice">See <a href="#contact-list-columns">Contact List Columns</a> for more information.</aside>
 
-**DATE**:
+**DATE**
 
      |     |
 -----|-----|
 Lenient | Smartsheet attempts to convert the string value to date using ISO 8601 date format, as well as several locale-specific date formats. If the value is a parsable date format, Smartsheet recognizes the date and stores it as such. All other values are simply text values.
-Strict | The value must be a string value and a valid ISO 8601 date (YYYY-MM-DD). Alternatively, if Unix time (also known as epoch time) is used, you can use the query parameter of `numericDates` set to `true` to have Smartsheet convert epoch time to human readable dates. See [Dates and Times](#dates-and-times) for more information. 
+Strict | The value must be a string value and a valid ISO 8601 date (YYYY-MM-DD). Alternatively, if Unix time (also known as epoch time) is used, you can use the query parameter of **numericDates** set to **true** to have Smartsheet convert epoch time to human readable dates. See [Dates and Times](#dates-and-times) for more information. 
 
-**DURATION**:
+**DURATION**
 
      |     |
 -----|-----|
-Lenient | Numeric values are treated as duration values in days.  String values which are valid duration strings in the user's locale are treated as durations, and any other values are treated as free-form text values.
-Strict | Only valid duration strings in the user's locale are valid.  Information on duration strings can be found in the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>).
+Lenient | Numeric values are treated as duration values in days. String values which are valid duration strings in the user's locale are treated as durations, and any other values are treated as free-form text values.
+Strict | Only valid duration strings in the user's locale are valid. Information on duration strings can be found in [Help Center](<%= PROJECT_COLUMN_HELP_URL %>).
 
-<aside class="notice">You may use the query string parameter <b>projectParseLocale</b> with a <a href="#server-information">supported locale string</a> to force parsing in the specified locale (for example, using <code>en_US</code> lets you send in English values regardless of the user's locale)</aside>
+<aside class="notice">You may use the query string parameter <b>projectParseLocale</b> with a <a href="#server-information">supported locale string</a> to force parsing in the specified locale (for example, using <b>en_US</b> lets you send in English values regardless of the user's locale).</aside>
 
-**PICKLIST**:
+**PICKLIST**
 
      |     |
 -----|-----|
 Lenient | All numeric and text values are valid. Formatted numbers are parsed like TEXT_NUMBER formatted numbers.
-Strict | The value must be a string and must be one of the options for the Picklist.
+Strict | The value must be a string and must be one of the options for the picklist.
 
-**PREDECESSOR**:
-
-     |     |
------|-----|
-N/A | Set using the objectValue attribute for the Cell object, which is inherently strict. See [Cell Reference](#cell-reference).
-
-**TEXT_NUMBER**:
+**PREDECESSOR**
 
      |     |
 -----|-----|
-Lenient | All numeric and text values are valid. Formatted numbers passed as text values, such as currencies ("$5,000"), percentages ("50%"), or decimals ("100.5") are parsed to their numeric equivalents, based on the locale of the Access Token owner,  with the proper formatting enabled for the cell.
+N/A | Set using the **objectValue** attribute for the Cell object, which is inherently strict. See [Cell Reference](#cell-reference).
+
+**TEXT_NUMBER**
+
+     |     |
+-----|-----|
+Lenient | All numeric and text values are valid. Formatted numbers passed as text values, such as currencies ("$5,000"), percentages ("50%"), or decimals ("100.5") are parsed to their numeric equivalents, based on the locale of the access token owner,  with the proper formatting enabled for the cell.
 Strict | All numeric and text values are valid and are interpreted literally.
 
 <aside class="notice">The Smartsheet application only supports numeric values in the range -9007199254740992 to 9007199254740992. If using strict parsing, any numeric value outside that range results in <a href="#complete-error-code-list">error code 1148</a>. If using lenient parsing, the value is silently converted to text.</aside>
 
 #### Contact List Columns
 
-With columns of type CONTACT_LIST, cells’ "value" and "displayValue" attributes are treated independently. 
+With columns of type **CONTACT_LIST**, the cell attributes **value** and **displayValue** are treated independently. 
 The contact’s email address is represented by **value**, while the contact’s name (and the value displayed in the cell in the Smartsheet app) is represented by **displayValue**.
  
 When creating or updating cells for a contact list column, the **displayValue** attribute works as follows:
@@ -2528,7 +2528,7 @@ For details about working with images in cells, see [Cell Images](#cell-images).
 
 # Cell Images
 
-A 'cell image' is an image that has been uploaded to a Cell within a Sheet.
+A cell image is an image that has been uploaded to a cell within a sheet.
 
 ## <%= OBJECTS %>
 
@@ -2537,7 +2537,7 @@ A 'cell image' is an image that has been uploaded to a Cell within a Sheet.
      |     |     |
 -----|-----|-----|
 id | string | Image Id
-altText | string | Alternate Text for the image
+altText | string | Alternate text for the image
 height | number | Original height (in pixels) of the uploaded image
 width | number | Original width (in pixels) of the uploaded image
 
@@ -2699,7 +2699,7 @@ new_image = response[:result]
 
 `POST /sheets/{sheetId}/rows/{rowId}/columns/{columnId}/cellimages`
 
-Uploads an image to the specified Cell within a Sheet. 
+Uploads an image to the specified cell within a sheet. 
 
      |     |
 -----|-----|
@@ -2884,13 +2884,13 @@ Get the desired row, then locate the desired cell based on the column Id.
 
 **Step 2. Obtain the image Id**
 
-Cell images are identified by an image Id, which is stored in a cell Image object. (The image Id is the "key" to the image and should be kept secure.)
+Cell images are identified by an image Id, which is stored in a cell Image object. (The image Id is the key to the image and should be kept secure.)
 
-When a user uploads an image to a cell, Smartsheet uses the original file name as the image "Alt text." This example uses that Alt text value as the local file name.
+When a user uploads an image to a cell, Smartsheet uses the original file name as the image "alt text." This example uses that alt text value as the local file name.
 
 **Step 3. Obtain a temporary image URL**
 
-The POST /imageurls command creates a temporary URL that you can use to download the image. The URL expires after a short time, which is reported in the response.
+The `POST /imageurls` command creates a temporary URL that you can use to download the image. The URL expires after a short time, which is reported in the response.
 
 **Step 4. Download the image**
 
@@ -2993,12 +2993,12 @@ image_urls = smartsheet.sheets.list_image_urls(
 
 Gets a list of URLs that can be used to retrieve the specified cell images.
 
-<aside class="notice">If an error is encountered for any of the requested images, the corresponding <b>ImageUrl</b> object in the Response contains an <b>error</b> attribute that describes the error. (See Example Response.) Certain errors are not detected until the returned URL is referenced.</aside>
+<aside class="notice">If an error is encountered for any of the requested images, the corresponding <b>ImageUrl</b> object in the response contains an <b>error</b> attribute that describes the error. (See example response in the rightmost pane.) Certain errors are not detected until the returned URL is referenced.</aside>
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | Array of [ImageUrl objects](#imageurl-object), with the following attributes:<ul><li><b>imageId</b> (required)</li><li><b>height</b> (optional)</li><li><b>width</b> (optional)</li></ul>Each image in the response is sized according to which dimensions were specified by the request:<ul><li>If neither <b>height</b> nor <b>width</b> is specified, the image is returned in its original size.</li><li>If both <b>height</b> AND <b>width</b> are specified, image is sized using those measurements.</li><li>If either <b>height</b> OR <b>width</b> is specified (that is, one or the other -- not both), the image is automatically scaled using that measurement.</li></ul>Additionally, the following rules apply:<ul><li>If the requested image size is less than or equal to the actual image size, the returned image size matches the requested size.</li><li>If the requested image size is larger than the actual image size, the returned image size matches the actual image size.</li></ul>
+<%= REQUEST %> | Array of [ImageUrl objects](#imageurl-object), with the following attributes:<ul><li><b>imageId</b> (required)</li><li><b>height</b> (optional)</li><li><b>width</b> (optional)</li></ul>Each image in the response is sized according to which dimensions were specified by the request:<ul><li>If neither <b>height</b> nor <b>width</b> is specified, the image is returned in its original size.</li><li>If both <b>height</b> and <b>width</b> are specified, image is sized using those measurements.</li><li>If either <b>height</b> or <b>width</b> is specified (that is, one or the other -- not both), the image is automatically scaled using that measurement.</li></ul>Additionally, the following rules apply:<ul><li>If the requested image size is less than or equal to the actual image size, the returned image size matches the requested size.</li><li>If the requested image size is larger than the actual image size, the returned image size matches the actual image size.</li></ul>
 <%= RETURNS %> | [ImageUrlMap object](#imageurlmap-object)
 <%= SCOPE %> | READ_SHEETS
 
@@ -3018,7 +3018,7 @@ A cell image can be updated as follows:
 
 # Columns
 
-A Column is a component of a Sheet or Report. 
+A column is a component of a sheet or report. 
 
 ## <%= OBJECTS %>
 
@@ -3040,21 +3040,21 @@ A Column is a component of a Sheet or Report.
      |     |     |
 -----|-----|-----|
 id | number | Column Id
-autoNumberFormat | [AutoNumberFormat](#autonumberformat-object) | Present when systemColumnType == AUTO_NUMBER
-contactOptions | ContactOption[] | Array of ContactOption objects to specify a pre-defined list of values for the column. Column **type** must be **CONTACT_LIST** 
+autoNumberFormat | [AutoNumberFormat](#autonumberformat-object) | Present when **systemColumnType** == **AUTO_NUMBER**
+contactOptions | [ContactOption](#contactoption-object)[] | Array of ContactOption objects to specify a pre-defined list of values for the column. Column **type** must be **CONTACT_LIST** 
 format | string | The format descriptor (see [Formatting](#formatting))<br/>Only returned if the **include** query string parameter contains **format** and this column has a non-default format applied to it.
 hidden | Boolean | Indicates whether the column is hidden
 index | number | Column index or position. This number is zero-based. 
-locked | Boolean | Indicates whether the column is locked. In a response, a value of `true` indicates that the column has been locked by the sheet owner or the admin.
-lockedForUser | Boolean | Indicates whether the column is locked for the requesting user.  This attribute may be present in a response, but cannot be specified in a request.
+locked | Boolean | Indicates whether the column is locked. In a response, a value of **true** indicates that the column has been locked by the sheet owner or the admin.
+lockedForUser | Boolean | Indicates whether the column is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.
 options | string[] | Array of the options available for the column
-primary | Boolean | Returned only if the column is the Primary Column (value = `true`)
-symbol | string | When applicable for CHECKBOX or PICKLIST column types. See [Symbol Columns](#symbol-columns).
-systemColumnType | string | When applicable, one of: <ul><li>AUTO_NUMBER</li><li>MODIFIED_DATE</li><li>MODIFIED_BY</li><li>CREATED_DATE</li><li>CREATED_BY</li></ul>See [System Columns](#system-columns).
-tags | string[] | Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li>CALENDAR_START_DATE</li><li>CALENDAR_END_DATE</li><li>GANTT_START_DATE</li><li>GANTT_END_DATE</li><li>GANTT_PERCENT_COMPLETE</li><li>GANTT_DISPLAY_LABEL</li><li>GANTT_PREDECESSOR</li><li>GANTT_DURATION</li><li>GANTT_ASSIGNED_RESOURCE</li></ul>
+primary | Boolean | Returned only if the column is the Primary Column (value = **true**)
+symbol | string | When applicable for **CHECKBOX** or **PICKLIST** column types. See [Symbol Columns](#symbol-columns).
+systemColumnType | string | When applicable, one of: **AUTO_NUMBER**, **CREATED_BY**, **CREATED_DATE**, **MODIFIED_BY**, **MODIFIED_DATE**. See [System Columns](#system-columns).
+tags | string[] | Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li>**CALENDAR_END_DATE**</li><li>**CALENDAR_START_DATE**</li><li>**GANTT_ASSIGNED_RESOURCE**</li><li>**GANTT_DISPLAY_LABEL**</li><li>**GANTT_DURATION**</li><li>**GANTT_END_DATE**</li><li>**GANTT_PERCENT_COMPLETE**</li><li>**GANTT_PREDECESSOR**</li><li>**GANTT_START_DATE**</li></ul>
 title | string | Column title
-type | string | One of:<ul><li>TEXT_NUMBER</li><li>DATE</li><li>DATETIME</li><li>CONTACT_LIST</li><li>CHECKBOX</li><li>PICKLIST</li><li>DURATION</li><li>PREDECESSOR</li><li>ABSTRACT_DATETIME</li></ul>See [Column Types](#column-types).
-validation | Boolean | Indicates whether validation has been enabled for the column (value = `true`)
+type | string | One of:<ul><li>**ABSTRACT_DATETIME**</li><li>**CHECKBOX**</li><li>**CONTACT_LIST**</li><li>**DATE**</li><li>**DATETIME**</li><li>**DURATION**</li><li>**PICKLIST**</li><li>**PREDECESSOR**</li><li>**TEXT_NUMBER**</li></ul>See [Column Types](#column-types).
+validation | Boolean | Indicates whether validation has been enabled for the column (value = **true**)
 width | number | Display width of the column in pixels
 
 ### ContactOption Object
@@ -3247,18 +3247,16 @@ new_columns = smartsheet.sheets.columns.add(
 
 `POST /sheets/{sheetId}/columns`
 
-Inserts one or more columns into the Sheet specified in the URL.
-
-<aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
-
-<aside class="notice">If multiple columns are specified in the request, the <b>index</b> attribute must be set to the same value for all columns. Columns are inserted into the sheet starting at the specified position (<b>index</b>), in the sequence that the columns appear in the request.</aside>
+Inserts one or more columns into the sheet specified in the URL. <%= SUPPORTS_MULTIPART %>
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Column object](#column-object) or an array of Column objects, with the following attributes:<ul><li>title</li><li>type</li><li>symbol (optional)</li><li>options (optional)</li><li>index (zero-based)</li><li>systemColumnType (optional)</li><li>autoNumberFormat (optional)</li><li>validation (optional)</li><li>width (optional)</li><li>locked (optional)</li></ul>
-<%= RETURNS %> | [Result object](#result-object) containing the the newly created columns -- either a single [Column object](#column-object) or an array of Column objects, corresponding to what was specified in the request.
+<%= REQUEST %> | [Column object](#column-object) or an array of Column objects, with the following attributes:<ul><li>**title**</li><li>**type**</li><li>**autoNumberFormat** (optional)</li><li>**index** (zero-based, optional)</li><li>**locked** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**validation** (optional)</li><li>**width** (optional)</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing the newly created columns -- either a single [Column object](#column-object) or an array of Column objects, corresponding to what was specified in the request.
 <%= SCOPE %> | ADMIN_SHEETS
+
+<aside class="notice">If multiple columns are specified in the request, the <b>index</b> attribute must be set to the same value for all columns. Columns are inserted into the sheet starting at the specified position (<b>index</b>), in the sequence that the columns appear in the request.</aside>
 
 ## Delete Column
 
@@ -3325,7 +3323,7 @@ smartsheet.sheets.columns.delete(
 
 `DELETE /sheets/{sheetId}/columns/{columnId}`
 
-Deletes the Column specified in the URL.
+Deletes the column specified in the URL.
 
      |     |
 -----|-----|
@@ -3419,7 +3417,7 @@ column = smartsheet.sheets.columns.get(
 
 `GET /sheets/{sheetId}/columns/{columnId}`
 
-Gets the Column specified in the URL.
+Gets the column specified in the URL.
 
      |     |
 -----|-----|
@@ -3522,7 +3520,7 @@ columns = response[:data]
 
 `GET /sheets/{sheetId}/columns`
 
-Gets a list of all Columns belonging to the Sheet specified in the URL.
+Gets a list of all columns belonging to the sheet specified in the URL.
 
      |     |
 -----|-----|
@@ -3660,7 +3658,7 @@ updated_column = response[:result]
 
 Updates properties of the column, moves the column, and/or renames the column.
 
-**Notes:**
+**NOTES:**
 
 * You cannot change the type of a Primary column.
 * While dependencies are enabled on a sheet, you can't change the type of any special calendar/Gantt columns.
@@ -3670,7 +3668,7 @@ Updates properties of the column, moves the column, and/or renames the column.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | A [Column object](#column-object) that contains the following attributes:<ul><li>index</li><li>title -- required when creating a column, optional after that</li><li>type (optional)</li><li>hidden (optional)</li><li>options (optional)</li><li>symbol (optional)</li><li>systemColumnType (optional)</li><li>autoNumberFormat (optional)</li><li>validation (optional)</li><li>width (optional)</li><li>format (optional)</li><li>locked (optional)</li><li>contactOptions (optional) -- must have set column type to CONTACT_LIST</li></ul>
+<%= REQUEST %> | A [Column object](#column-object) that contains the following attributes:<ul><li>**index**</li><li>**title** -- required when creating a column, optional after that</li><li>**autoNumberFormat** (optional)</li><li>**contactOptions** (optional) -- must have set column type to **CONTACT_LIST**</li><li>**format** (optional)</li><li>**hidden** (optional)</li><li>**locked** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**type** (optional)</li><li>**validation** (optional)</li><li>**width** (optional)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the [Column object](#column-object) that was modified
 <%= SCOPE %> | ADMIN_SHEETS
 
@@ -3685,10 +3683,10 @@ Column Type | Column.type Value | Notes |
 Checkbox 		| CHECKBOX		| Checkbox, star, and flag types
 Contact List	| CONTACT_LIST	| List containing contacts or roles for a project. **NOTE:** You can use the [contactOptions](#contactoption-object) property to specify a pre-defined list of values for the column, which can also become lanes in card view. 
 Date			| DATE			|
-Date/Time 		| ABSTRACT_DATETIME | Represents a project sheet's Start and End dates.<br/>**Only for dependency-enabled project sheets**<br/>The API does not support setting a Column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.) Additionally, the API does not support updating data in the End Date column under any circumstance, and does not support updating data in the Start Date column if Predecessor is set for that row.
-Date/Time		| DATETIME		| Used only by the following System-generated columns: <ul><li>Created (Date) (**Column.systemColumnType** = "CREATED_DATE")</li><li>Modified (Date) (**Column.systemColumnType** = "MODIFIED_DATE")</li></ul>
-Dropdown List	| PICKLIST		| Custom, RYG, Harvey Ball, Priority types, etc.
-Duration		| DURATION		| **Only for dependency-enabled project sheets**<br/>The API does not support setting a Column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.)
+Date/Time 		| ABSTRACT_DATETIME | Represents a project sheet's start and end dates.<br/>**Only for dependency-enabled project sheets**<br/>The API does not support setting a column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.) Additionally, the API does not support updating data in the "End Date" column under any circumstance, and does not support updating data in the "Start Date" column if "Predecessor" is set for that row.
+Date/Time		| DATETIME		| Used only by the following system-generated columns: <ul><li>Created (Date) (**Column.systemColumnType** = **CREATED_DATE**)</li><li>Modified (Date) (**Column.systemColumnType** = **MODIFIED_DATE**)</li></ul>
+Dropdown List	| PICKLIST		| Custom, RYG, Harvey ball, priority types, etc.
+Duration		| DURATION		| **Only for dependency-enabled project sheets**<br/>The API does not support setting a column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.)
 Predecessor		| PREDECESSOR	| Defines what must happen first in a project flow. For more information, see the [Predecessor object](#predecessor-object). **Only for dependency-enabled project sheets** 
 Text/Number		| TEXT_NUMBER	|
 
@@ -3696,8 +3694,8 @@ Text/Number		| TEXT_NUMBER	|
 
 #### Symbol Columns
 
-In addition to the basic column types above, the Smartsheet app also supports columns that display symbols. These are simply specialized columns of type PICKLIST or CHECKBOX,
-whose **[symbol](#column-object)** attribute is set to one of the values below:
+In addition to the basic column types above, the Smartsheet app also supports columns that display symbols. These are simply specialized columns of type **CHECKBOX** or **PICKLIST**,
+whose **symbol** attribute is set to one of the values below:
 
 **Symbols for CHECKBOX columns:**
 
@@ -3734,11 +3732,11 @@ STAR_RATING | <img src="images/img_pl_star6Three.png" alt="A star_rating symbol"
 VCR | <img src="images/img_pl_decisionvcr.png" alt="A VCR symbol" /> |
 WEATHER | <img src="images/img_pl_weather5.png" alt="A weather symbol" /> |
  
-<aside class="notice">The Smartsheet grid user interface presents several row attributes and features (for example, row number, attachments, discussions, row action indicator) visually as columns.  The API does not consider these to be columns, and does not return or otherwise expose them as columns.  The only columns returned by the API are user data columns.</aside>
+<aside class="notice">The Smartsheet grid user interface presents several row attributes and features visually as columns, for example, attachments, discussions, row action indicator, or row number.  The API does not consider these to be columns, and does not return or otherwise expose them as columns.  The only columns returned by the API are user data columns.</aside>
 
 #### System Columns
 
-In addition to the standard column types and symbols, Smartsheet has a number of *system columns*, which represent data that is
+In addition to the standard column types and symbols, Smartsheet has a number of system columns, which represent data that is
 filled in by Smartsheet and whose values cannot be changed by the user. These columns are represented with standard
 [column types](#column-types), with the **[Column.systemColumnType](#column-object)** attribute set to one of the following:
 
@@ -5594,9 +5592,7 @@ response = smartsheet.favorites.add(
 
 `POST /favorites`
 
-Adds one or more items to the user's list of Favorite items.
-
-<aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
+Adds one or more items to the user's list of Favorite items. <%= SUPPORTS_OPTIONAL_BULK %>
 
 If called with a single [Favorite object](#favorite-object), and that favorite already exists, [error code](#complete-error-code-list) **1129** is returned.  If called with an array of [Favorite objects](#favorite-object), any objects specified in the array that are already marked as favorites are ignored and omitted from the response.
 
