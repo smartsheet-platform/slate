@@ -1362,9 +1362,9 @@ updated_attachment = response[:result]
 
 Uploads a new version of a file to a sheet or row. <%= SUPPORTS_MULTIPART %>
 
-<aside class="notice">Uploading new versions is not supported for URL attachments.</aside>
-
 <%= partial "snippets/attachFile_table.md.erb" %>
+
+<aside class="notice">Uploading new versions is not supported for URL attachments.</aside>
 
 ### Delete All Versions
 
@@ -2993,8 +2993,6 @@ image_urls = smartsheet.sheets.list_image_urls(
 
 Gets a list of URLs that can be used to retrieve the specified cell images.
 
-<aside class="notice">If an error is encountered for any of the requested images, the corresponding <b>ImageUrl</b> object in the response contains an <b>error</b> attribute that describes the error. (See example response in the rightmost pane.) Certain errors are not detected until the returned URL is referenced.</aside>
-
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
@@ -3003,6 +3001,8 @@ Gets a list of URLs that can be used to retrieve the specified cell images.
 <%= SCOPE %> | READ_SHEETS
 
 To retrieve images, see the workflow in [Download Cell Image](#download-cell-image).
+
+<aside class="notice">If an error is encountered for any of the requested images, the corresponding <b>ImageUrl</b> object in the response contains an <b>error</b> attribute that describes the error. (See example response in the rightmost pane.) Certain errors are not detected until the returned URL is referenced.</aside>
 
 ## Remove Image from Cell
 
