@@ -1,6 +1,6 @@
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Sheet object](#sheet-object), limited to the following attributes:<ul><li>name (required) - does not have to be unique</li><li>columns (required) - array of [Column objects](#column-object), limited to the following attributes:<ul><li>title (required), must be unique within the Sheet</li><li>primary (required)</li><li>type (required)</li><li>symbol (optional)</li><li>options (optional)</li><li>systemColumnType (optional)</li><li>autoNumberFormat (optional)</li><li>width (optional)</li></ul></li></ul>
-<%= RETURNS %> | [Result object](#result-object) containing a [Sheet object](#sheet-object) for newly created Sheet, limited to the following attributes: <ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li><li>columns</li></ul>
+<%= REQUEST %> | [Sheet object](#sheet-object), limited to the following attributes:<ul><li>**name** (required) - does not have to be unique</li><li>**columns** (required) - array of [Column objects](#column-object), limited to the following attributes:<ul><li>**primary** (required)</li><li>**title** (required), must be unique within the sheet</li><li>**type** (required)</li><li>**autoNumberFormat** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**width** (optional)</li></ul></li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing a [Sheet object](#sheet-object) for newly created sheet, limited to the following attributes: <ul><li>**accessLevel**</li><li>**columns**</li><li>**id**</li><li>**name**</li><li>**permalink**</li></ul>
 <%= SCOPE %> | CREATE_SHEETS

@@ -1,7 +1,7 @@
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy from the Template or Sheet:<ul><li>data</li><li>attachments</li><li>discussions</li><li>cellLinks</li><li>forms</li></ul>
-<%= REQUEST %> | [Sheet object](#sheet-object), limited to the following attributes:<ul><li>name (required) - does not have to be unique</li><li>fromId (required) - the ID of the Template from which to create the Sheet</li></ul>
-<%= RETURNS %> | [Result object](#result-object) containing a [Sheet object](#sheet-object) for the newly created Sheet, limited to the following attributes:<ul><li>id</li><li>name</li><li>accessLevel</li><li>permalink</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy from the template or sheet:<ul><li>**attachments**</li><li>**cellLinks**</li><li>**data**</li><li>**discussions**</li><li>**forms**</li></ul>
+<%= REQUEST %> | [Sheet object](#sheet-object), limited to the following attributes:<ul><li>**fromId** (required) - the Id of the template from which to create the sheet</li><li>**name** (required) - does not have to be unique</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing a [Sheet object](#sheet-object) for the newly created sheet, limited to the following attributes:<ul><li>**accessLevel**</li><li>**id**</li><li>**name**</li><li>**permalink**</li></ul>
 <%= SCOPE %> | CREATE_SHEETS

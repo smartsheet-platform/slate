@@ -1,6 +1,6 @@
      |     |
 -----|-----|
 <%= HEADERS %> | See [Multipart Uploads](#multipart-uploads) for information about headers that are required for multipart requests.
-<%= REQUEST %> | Request body should contain *parts* with the following names:<ul><li>**comment**: JSON [Comment object](#comment-object) with the following attribute:<ul><li>text</li></ul></li><li>**file**: (optional) file to attach to the new comment</li></ul>See [Multipart Uploads](#multipart-uploads) for more information on parts.
+<%= REQUEST %> | Request body should contain parts with the following names:<ul><li>**comment**: JSON [Comment object](#comment-object) with the following attribute:<ul><li>**text**</li></ul></li><li>**file**: (optional) file to attach to the new comment</li></ul>See [Multipart Uploads](#multipart-uploads) for more information on parts.
 <%= RETURNS %> | [Result object](#result-object) containing a [Comment object](#comment-object) for the newly created comment, which in turn contains an [Attachment object](#attachment-object) for the attachment that was uploaded to the comment.
 <%= SCOPE %> | WRITE_SHEETS
