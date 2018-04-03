@@ -1298,7 +1298,7 @@ Gets the report in the format specified, based on the report Id.
 <%= RETURNS %> | The report file in either Excel or CSV format.
 <%= SCOPE %> | READ_SHEETS
 
-<aside class="notice">Note: For Excel format, only .xlsx output format is supported at this time.</aside>
+<aside class="notice">For Excel format, only .xlsx output format is supported at this time.</aside>
 
 ## List Reports
 
@@ -4873,7 +4873,7 @@ Represents individual user settings for a specific sheet.  User settings may be 
 
      |     |     |
 -----|-----|-----|
-criticalPathEnabled | Boolean | Does this user have "Show Critical Path" turned on for this sheet?  Note this setting only has an effect on project sheets with dependencies enabled.
+criticalPathEnabled | Boolean | Does this user have "Show Critical Path" turned on for this sheet?  **NOTE:** This setting only has an effect on project sheets with dependencies enabled.
 displaySummaryTasks | Boolean | Does this user have "Display Summary Tasks" turned on for this sheet?  Applies only to sheets where "Calendar View" has been configured.
 
 ### SortCriterion Object
@@ -7181,7 +7181,7 @@ readOnlyFullUrl | string | URL for 'Read-Only Full' view of the published Sight.
 id | number | Widget Id
 contents | WidgetContent object | Data that specifies the contents of the widget. <b>NOTE:</b> The type of WidgetContent object (and attributes within) depends on the value of **widget.type**.
 height | number | Number of rows that the widget occupies on the Sight
-showTitle | Boolean | **True** indicates that the client should display the widget title.  Note that this is independent of the **title** string which may be null or empty.
+showTitle | Boolean | **True** indicates that the client should display the widget title.  <b>NOTE:</b> This is independent of the **title** string which may be null or empty.
 showTitleIcon | Boolean | **True** indicates that the client should display the sheet icon in the widget title
 title | string | Title of the widget
 titleFormat | string | [FormatDescriptor](#formatting)
