@@ -2157,7 +2157,7 @@ This object itself is not used directly.
 
      |     |     |
 -----|-----|-----|
-objectType | string | One of ABSTRACT_DATETIME, CONTACT, DATE, DATETIME, DURATION, or PREDECESSOR_LIST
+objectType | string | One of **ABSTRACT_DATETIME**, **CONTACT**, **DATE**, **DATETIME**, **DURATION**, or **PREDECESSOR_LIST**
 
 ### Predecessor Object
 
@@ -2221,7 +2221,7 @@ In a project sheet with dependencies enabled, the **objectValue** attribute for 
 
      |     |     |
 -----|-----|-----|
-objectType | string | PREDECESSOR_LIST
+objectType | string | **PREDECESSOR_LIST**
 predecessors | [Predecessor](#predecessor-object)[] | Array of [Predecessor objects](#predecessor-object).
 
 ## Get Cell History
@@ -2437,7 +2437,7 @@ If an input value doesn't conform, the API returns [error code 1042](#400-level-
 If, however, you want the same flexibility as the Smartsheet Web app, you can disable the strict rules, and we’ll do our best to make
 sense of it. To enable lenient parsing simply include **"strict": false** in the [Cell object](#cell-object) in your request body.
 
-<aside class="notice">How does strict cell value parsing compare to cell validation settings? Strict cell value parsing determines how string values are parsed. It is set on a per-call basis. In contrast, cell validation is part of the column definition. The **overrideValidation** property is restricted to sheet admins and does *not* override strict parsing.</aside>
+<aside class="notice">How does strict cell value parsing compare to cell validation settings? Strict cell value parsing determines how string values are parsed. It is set on a per-call basis. In contrast, cell validation is part of the column definition. The <b>overrideValidation</b> property is restricted to sheet admins and does <i>not</i> override strict parsing.</aside>
 
 The parsing rules for the various column types are as follows:
 
@@ -3064,7 +3064,7 @@ width | number | Display width of the column in pixels
 email | string | A parsable email address.
 name | string | Can be a user's name, display name, or free text, such as a job class or TBD.
 
-<aside class="notice"> Either **name* or **email** (or both) must be specified.</aside>
+<aside class="notice"> Either <b>name</b> or <b>email</b> (or both) must be specified.</aside>
 
 ## Add Columns
 

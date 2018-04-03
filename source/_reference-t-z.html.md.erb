@@ -861,7 +861,7 @@ Makes the specified alternate email address to become the primary email address 
 <%= ERRORS %> | If an error occurs because the special permission is not granted to change primary email address, contact Smartsheet (<a href="mailto:api@smartsheet.com">api@smartsheet.com</a>) for assistance to enable this feature.<br/><br/>If an error occurs because the specified user has a personal email address as the primary email address (that is. the email address domain cannot be [validated](<%= USER_AUTO_PROVISIONING_URL %>), the specified user needs to manually change the primary email address in the [Personal Settings](<%= PERSONAL_SETTINGS_MANAGE_EMAIL_URL %>).
 <%= SCOPE %> | ADMIN_USERS
 
-<aside class="notice">The alternate email address can only be made primary if both conditions are met:<ul><li>The primary email address <a href="<%= USER_AUTO_PROVISIONING_URL %>">domain is validated</a></li><li>The alternate email address is confirmed <b>OR</b> the alternate email address <a href="<%= USER_AUTO_PROVISIONING_URL %>">domain is validated</a></li></ul></aside>
+<aside class="notice">The alternate email address can only be made primary if both conditions are met:<ul><li>The primary email address <a href="<%= USER_AUTO_PROVISIONING_URL %>">domain is validated</a></li><li>The alternate email address is confirmed or the alternate email address <a href="<%= USER_AUTO_PROVISIONING_URL %>">domain is validated</a></li></ul></aside>
 
 ### Delete Alternate Email
 
@@ -1486,7 +1486,7 @@ Removes a user from an organization. User is transitioned to a free collaborator
 
 <aside class="notice">If the <b>transferTo</b> parameter is specified and the removed user owns groups, the user specified via the <b>transferTo</b> parameter must have group admin rights.</aside>
 
-<aside class="notice">The <b>transferTo</b> and <b>transferSheets</b> parameters cannot be specified for a user who has not yet accepted an invitation to join the organization (that is, if user <b>status</b> = <b>PENDING</b>).</aside>
+<aside class="notice">The <b>transferTo</b> and <b>transferSheets</b> parameters cannot be specified for a user who has not yet accepted an invitation to join the organization (that is, if user <b>status=PENDING</b>).</aside>
 
 ## Update User
 
@@ -1665,7 +1665,7 @@ Uploads an image to the user profile.
 <%= RETURNS %> | [Result object](#result-object) containing the [User object](#user-object) for the updated user.
 <%= SCOPE %> | WRITE_SHEETS
 
-<aside class="notice">Uploading a profile image differs from <a href="#add-image-to-cell">Adding an Image to a Cell</a> in the following ways:<ul><li>A **Content-Length** header is not required</li><li>Allowable file types are limited to: gif, jpg, and png</li><li>Maximum file size is determined by the following rules:<ul><li>If you have not defined a custom size and the image is larger than 1050 x 1050 pixels, Smartsheet scales the image down to 1050 x 1050</li><li>If you have defined a custom size, Smartsheet uses that as the file size max</li></ul></li><li>If the image is not square, Smartsheet uses a solid color to pad the image</li></ul></aside>
+<aside class="notice">Uploading a profile image differs from <a href="#add-image-to-cell">Adding an Image to a Cell</a> in the following ways:<ul><li>A <b>Content-Length</b> header is not required</li><li>Allowable file types are limited to: gif, jpg, and png</li><li>Maximum file size is determined by the following rules:<ul><li>If you have not defined a custom size and the image is larger than 1050 x 1050 pixels, Smartsheet scales the image down to 1050 x 1050</li><li>If you have defined a custom size, Smartsheet uses that as the file size max</li></ul></li><li>If the image is not square, Smartsheet uses a solid color to pad the image</li></ul></aside>
 
 # Workspaces
 

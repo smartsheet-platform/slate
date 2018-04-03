@@ -50,7 +50,7 @@ You can view code examples in the programming language of your choice by clickin
 
 ## How Do I Start?
 
-This documentation provides two [Getting Started](#getting-started) tutorials that walk you through making your first API call and interpreting the response to a **GET /sheet** request. You may also want to bookmark or note the following resources:
+This documentation provides two [Getting Started](#getting-started) tutorials that walk you through making your first API call and interpreting the response to a `GET /sheet` request. You may also want to bookmark or note the following resources:
 
 * [Smartsheet Developer Portal:](https://developers.smartsheet.com) If registering, use a different email address from your paid Smartsheet account so you can test the API and make API calls
 * Developer Newsletter (subscribe while at the Developer Portal using the "Get Developer Updates" form)
@@ -100,7 +100,7 @@ The following HTTP request headers may be required, depending on the operation a
 
 Header | Definition | Example |
 -----|-----|-----|
-Authorization | Required for all endpoints, except for **POST /token**. The access token. | Bearer ll352u9jujauoqz4gstvsae05
+Authorization | Required for all endpoints, except for `POST /token`. The access token. | Bearer ll352u9jujauoqz4gstvsae05
 Content-Type | Required for POST and PUT requests. Defines the structure for the response. | application/json
 Assume-User | Optional. Allows an admin to act on behalf of, or impersonate, the user to make API calls. The email address used to identify the user must be URI-encoded. | jane.doe%40smartsheet.com
 
@@ -289,7 +289,7 @@ cell | A cell is a location within a sheet that may contain a value. A collectio
 
 ## Object Details vs List Summaries
 
-Many of the List All commands, for example, **GET /sheets**, return only an abbreviated object for each object returned. For full details, read a single item, such as **GET /sheets/{sheetId}**. In many cases, you can refine the exact object properties to be returned by using **include** and **exclude** query parameters.
+Many of the List All commands, for example, `GET /sheets`, return only an abbreviated object for each object returned. For full details, read a single item, such as `GET /sheets/{sheetId}`. In many cases, you can refine the exact object properties to be returned by using **include** and **exclude** query parameters.
 
 The JSON representation of the objects returned from the List All REST endpoints will only include a subset of the properties documented here. However, the objects returned from the Java and C# SDKs will represent the omitted properties with NULLs.
 
@@ -349,15 +349,15 @@ Many Smartsheet API operations handle sheets, rows, columns, and cells. Each is 
 
 Before you begin, you should already have an access token, which you used in the exercise above. Use the same access token for this walkthrough.
 
-1. The first thing you must have is a sheetId. To find a sheetId through the UI, with the sheet open, click "Sheet Actions" in the left toolbar and select "Properties". NOTE: use [List Sheets](#list-sheets) if you want to do this programmatically.
+**Step 1:** The first thing you must have is a sheetId. To find a sheetId through the UI, with the sheet open, click "Sheet Actions" in the left toolbar and select "Properties". **NOTE:** use [List Sheets](#list-sheets) if you want to do this programmatically.
 
   <img src="images/sheet-properties.png" alt="Image of the Sheet Properties window" />
 
-2. Copy the sheetId into the API call, **GET /sheets**, as below:
+**Step 2:** Copy the sheetId into the API call, `GET /sheets`, as below:
 
   `curl -X GET -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" "https://api.smartsheet.com/2.0/sheets/6141831453927300"`
 
-3. The sample request and response are displayed below. NOTE: while JSON doesn't have a comment feature, this sample uses comments to help you identify the objects in the response.
+**Step 3:** The sample request and response are displayed below. **NOTE:** while JSON doesn't have a comment feature, this sample uses comments to help you identify the objects in the response.
 
 <pre class="center-column">
 {
@@ -927,7 +927,7 @@ code | Required. Authorization code returned in the [previous step](#request-an-
 grant_type | Required. Must be set to "authorization_code".
 hash | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  The app_secret is never sent with the request. This is the **app_secret** you obtained when you [registered your app](#register-your-app-using-developer-tools).
 
-<aside class="notice">The "Get Access Token" request must have the <b>Content-Type</b> header set to <b>'application/x-www-form-urlencoded'</b>.</aside>
+<aside class="notice">The "Get Access Token" request must have the <b>Content-Type</b> header set to <b>application/x-www-form-urlencoded</b>.</aside>
 
 If your request is successful, the response will contain a [Token object](#token-object). You can see an example of the Token object in the dark-blue area in the rightmost pane. 
 
@@ -1020,7 +1020,7 @@ hash | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app
 refresh_token | Required. **refresh_token** value that came with the access token.
 redirect_uri | Deprecated. If supplied, must match the redirect URI you [registered](#register-your-app-using-developer-tools) for your app.
 
-<aside class="notice">The Refresh Token request must have the <b>Content-Type</b> header set to <b>'application/x-www-form-urlencoded'</b>.</aside>
+<aside class="notice">The Refresh Token request must have the <b>Content-Type</b> header set to <b>application/x-www-form-urlencoded</b>.</aside>
 
 If your request is successful, the response will contain a [Token object](#token-object). You can see an example of the Token object in the dark-blue area in the rightmost pane. 
 
@@ -1137,7 +1137,7 @@ includeAll  | Boolean | If true, include all results, that is, do not paginate. 
 page		| number  | Which page to return.  Defaults to **1** if not specified.  If you specify a value greater than the total number of pages, the last page of results is returned.
 pageSize 	| number  | The maximum number of items to return per page.  Unless otherwise stated for a specific endpoint, defaults to **100**.
 
-<aside class="notice">Most index endpoints default to a page size of 100 results.  If you want all results at once, you must specify the <code class="prettyprint">includeAll=true</code> query string parameter.</aside>
+<aside class="notice">Most index endpoints default to a page size of 100 results.  If you want all results at once, you must specify the <b>includeAll=true</b> query string parameter.</aside>
 
 ### Paged Responses
 

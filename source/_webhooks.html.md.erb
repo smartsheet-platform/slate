@@ -29,7 +29,7 @@ At a high-level, it works like this:
 		</ul> 
 		<br/>
 	</li>
-	<li><span class="customInstructionsHeading">Your application receives, acknowledges, and processes callbacks.</span><br/>Your application receives the <b>HTTP POST</b>, acknowledges the callback by responding with HTTP status 200, and processes the callback. 
+	<li><span class="customInstructionsHeading">Your application receives, acknowledges, and processes callbacks.</span><br/>Your application receives the <code>HTTP POST</code>, acknowledges the callback by responding with HTTP status 200, and processes the callback. 
 	Because the callbacks are "skinny", make one or more requests to the Smartsheet API to retrieve the actual data associated with the change.
 	</li>
 </ol>
@@ -65,7 +65,7 @@ A [Webhook object's](#webhook-object) **scope** attribute indicates the scope of
 A [Webhook object's](#webhook-object) **event** attribute indicates the set of events that a webhook is subscribed to (that is, which events trigger a callback).
 
 * Events are represented as a dot-separated string in the format "*object*.*event*", where an asterisk (&#42;) can be used to represent "all objects" or "all events".
-* Currently, "&#42;.&#42;" is the only supported value for the **events** attribute. This indicates a subscription to all objects in the scope, and all events for those objects.
+* Currently, <b>&#42;.&#42;</b> is the only supported value for the **events** attribute. This indicates a subscription to all objects in the scope, and all events for those objects.
 
 <span class="customSubHeading">Example</span>
 
@@ -142,8 +142,6 @@ and the webhook that initiated the verification request is disabled as described
 
 A [Webhook](#webhook-object) object's **enabled** attribute indicates whether a webhook is enabled or disabled, while the **status** attribute describes the *reason* that the webhook is enabled or disabled.
 
-<aside class="notice"><b>NOTE:</b><ul><li>When a Webhook object's <b>enabled</b> attribute is set to <b>true</b>, Smartsheet is monitoring for the specified events and sends a <a href="#event-callbacks">callback</a> to the <b>callbackUrl</b> when the events occur.</li><li>When a Webhook object's <b>enabled</b> attribute is set to <b>false</b>, Smartsheet is not monitoring for the specified events and does not send a callback to the <b>callbackUrl</b> when the events occur. Depending on the value of the <b>status</b> attribute, it may be possible to (re-)enable the webhook. (See below for details).</li></ul></aside>
-
 The following table lists all possible combinations of **enabled** and **status** attribute values.
 
 Webhook.enabled | Webhook.status | Meaning | Notes
@@ -156,6 +154,8 @@ false  | DISABLED_SCOPE_INACCESSIBLE | Webhook has been disabled because its own
 false  | DISABLED_VERIFICATION_FAILED | Webhook verification has failed. |  Owner can re-enable the webhook by using the [Update Webhook](#update-webhook) operation to set **enabled** to **true**. Once the subscriber successfully acknowledges the [verification request](#webhook-verification), the webhook is enabled.
 true  | ENABLED | Webhook is active. | 
 false | NEW_NOT_VERIFIED | Webhook has been created but is not enabled because it has not yet been verified. |  Owner can re-enable the webhook by using the [Update Webhook](#update-webhook) operation to set **enabled** to **true**. Once the subscriber successfully acknowledges the [verification request](#webhook-verification), the webhook is enabled.
+
+<aside class="notice"><b>NOTES:</b><ul><li>When a Webhook object's <b>enabled</b> attribute is set to <b>true</b>, Smartsheet is monitoring for the specified events and sends a <a href="#event-callbacks">callback</a> to the <b>callbackUrl</b> when the events occur.</li><li>When a Webhook object's <b>enabled</b> attribute is set to <b>false</b>, Smartsheet is not monitoring for the specified events and does not send a callback to the <b>callbackUrl</b> when the events occur. Depending on the value of the <b>status</b> attribute, it may be possible to (re-)enable the webhook. (See below for details).</li></ul></aside>
 
 # Webhook Callbacks
 
@@ -576,14 +576,14 @@ new_webhook = response[:result]
 
 Creates a new webhook. 
 
-<aside class="notice">A webhook is not enabled by default when it is created. Once you've created a webhook, you can enable it by using the <a href="#update-webhook">Update Webhook</a> operation to set <b>enabled</b> to <b>true</b>.</aside>
-
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Webhook object](#webhook-object), limited to the following attributes:<ul><li>**callbackUrl** (required)</li><li>**events** (required)</li><li>**name** (required)</li><li>**scope** (required)</li><li>**scopeObjectId** (required)</li><li>**version** (required)</li></ul>
 <%= RETURNS %> | [Result object](#result-object), containing a [Webhook object](#webhook-object) for the newly created webhook
 <%= SCOPE %> | ADMIN_WEBHOOKS
+
+<aside class="notice">A webhook is not enabled by default when it is created. Once you've created a webhook, you can enable it by using the <a href="#update-webhook">Update Webhook</a> operation to set <b>enabled</b> to <b>true</b>.</aside>
 
 # Delete Webhook
 
@@ -1014,13 +1014,14 @@ updated_webhook = response[:result]
 
 Updates the webhook specified in the URL.
 
-<aside class="notice"><b>Enabling a webhook</b><br/><br/>When setting a webhook's <b>enabled</b> to <b>true</b> using this operation, the behavior and result depend on the webhook's <b>status</b> and may result in a webhook <a href="#webhook-verification">verification</a> being triggered, or in some cases, an error being returned.  See <a href="#webhook-status">Webhook Status</a> for more details.</aside>
-
-<!--aside class="notice"><b>Enabling a webhook</b><ul><li>If <b>Webhook.enabled</b>=<code>false</code> and <a href="#webhook-status"><b>Webhook.status</b></a> is any value other than "DISABLED_APP_REVOKED", "DISABLED_SCOPE_INACCESSIBLE", or "DISABLED_ADMINISTRATIVE", using this operation to set <b>Webhook.enabled</b>=<code>true</code> triggers the <a href="#webhook-verification">verification</a> process.</li><li>Verification must be successfully completed in order for the webhook to become enabled.</li></ul></aside-->
-
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= REQUEST %> | [Webhook object](#webhook-object), limited to the following attributes:<ul><li>**callbackUrl** (optional)</li><li>**enabled** (optional)</li><li>**events** (optional)</li><li>**name** (optional)</li><li>**version** (optional)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the [Webhook object](#webhook-object) for the updated webhook
 <%= SCOPE %> | ADMIN_WEBHOOKS
+
+<aside class="notice"><b>Enabling a webhook</b><br/><br/>When setting a webhook's <b>enabled</b> to <b>true</b> using this operation, the behavior and result depend on the webhook's <b>status</b> and may result in a webhook <a href="#webhook-verification">verification</a> being triggered, or in some cases, an error being returned.  See <a href="#webhook-status">Webhook Status</a> for more details.</aside>
+
+<!--aside class="notice"><b>Enabling a webhook</b><ul><li>If <b>Webhook.enabled</b>=<code>false</code> and <a href="#webhook-status"><b>Webhook.status</b></a> is any value other than "DISABLED_APP_REVOKED", "DISABLED_SCOPE_INACCESSIBLE", or "DISABLED_ADMINISTRATIVE", using this operation to set <b>Webhook.enabled</b>=<code>true</code> triggers the <a href="#webhook-verification">verification</a> process.</li><li>Verification must be successfully completed in order for the webhook to become enabled.</li></ul></aside-->
+
