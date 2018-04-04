@@ -1375,7 +1375,7 @@ Gets a list of all reports that the user has access to in alphabetical order by 
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PARAMETER_MODIFIEDSINCE %>
-<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Report objects](#report-object) limited to the following attributes:<ul><li>**accessLevel**</li><li>**id**</li><li>**name**</li><li>**permalink**</li></ul>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Report objects](#report-object) limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**name**</li><li>**permalink**</li></ul>
 <%= SCOPE %> | READ_SHEETS
 
 <aside class="notice"><%= SUPPORTS_NUMERICDATES %></aside>
@@ -2752,16 +2752,16 @@ Search a specific sheet or search across all sheets that a user can access.
 
      |     |     |
 -----|-----|-----|
-results | [SearchResultItem](#searchresultitem-object)[] | Array of SearchResultItem objects
-totalCount | number | Total number of search results
+**results** | [SearchResultItem](#searchresultitem-object)[] | Array of SearchResultItem objects
+**totalCount** | number | Total number of search results
 
 ### SearchResultItem Object
 
      |     |     |
 -----|-----|-----|
 **objectId** | number | Search result object Id
-**objectType** | string | Search result object type (attachment, discussion, folder, report, row, sheet, Sight, template, workspace)
 **parentObjectId** | number | Search result parent object Id
+**objectType** | string | Search result object type (attachment, discussion, folder, report, row, sheet, Sight, template, workspace)
 **parentObjectType** | string | Search result parent object type (folder, report, sheet, Sight, template, workspace)
 **contextData** | array | Additional info on search result context (row num)
 **parentObjectName** | string | Search result parent object name
@@ -2866,7 +2866,7 @@ Searches all sheets that the user can access, for the specified text.
  | **include** (optional): when specified with a value of **favoriteFlag**, response indicates which returned items are favorites:<ul><li>**favorite** -- folders, reports, sheets, Sights, templates, and workspaces will have the property **favorite: true**</li><li>**parentObjectFavorite** -- attachments, discussions, profile fields, and rows will have the property **parentObjectFavorite: true**</li></ul>
  | **location** (optional): when specified with a value of **personalWorkspace**, limits the response to only those items in the user's workspaces.
  | <%= PARAMETER_MODIFIEDSINCE %>
- | **scopes** (optional): comma-separated list of search filters:<ul><li>attachments</li><li>cellData</li><li>comments</li><li>folderNames</li><li>profileFields</li><li>reportNames</li><li>sheetNames</li><li>sightNames</li><li>templateNames</li><li>workspaceNames</li></ul>
+ | **scopes** (optional): comma-separated list of search filters:<ul><li><b>attachments</b></li><li><b>cellData</b></li><li><b>comments</b></li><li><b>folderNames</b></li><li><b>profileFields</b></li><li><b>reportNames</b></li><li><b>sheetNames</b></li><li><b>sightNames</b></li><li><b>templateNames</b></li><li><b>workspaceNames</b></li></ul>
 <%= RETURNS %> | [SearchResult object](#searchresult-object) that contains a maximum of 100 [SearchResultems](#searchresultitem-object)
 <%= SCOPE %> | READ_SHEETS
 
