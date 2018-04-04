@@ -18,10 +18,10 @@ Object that describes how the the System Column type of "AUTO_NUMBER" is auto-ge
 
      |     |     |
 -----|-----|-----|
-fill | string | Indicates zero-padding. Must be between 0 and 10 "0" (zero) characters.
-prefix | string | The prefix. Can include the date tokens:<ul><li>{YY}</li><li>{YYYY}</li><li>{MM}</li><li>{DD}</li></ul>
-startingNumber | number | The starting number for the auto-id
-suffix | string | The suffix. Can include the date tokens:<ul><li>{YY}</li><li>{YYYY}</li><li>{MM}</li><li>{DD}</li></ul>
+**fill** | string | Indicates zero-padding. Must be between 0 and 10 "0" (zero) characters.
+**prefix** | string | The prefix. Can include the date tokens:<ul><li>{YY}</li><li>{YYYY}</li><li>{MM}</li><li>{DD}</li></ul>
+**startingNumber** | number | The starting number for the auto-id
+**suffix** | string | The suffix. Can include the date tokens:<ul><li>{YY}</li><li>{YYYY}</li><li>{MM}</li><li>{DD}</li></ul>
 
 ## BulkItemFailure Object
 
@@ -43,9 +43,9 @@ Object that contains information about an item that failed to be added or update
 
      |     |     |
 -----|-----|-----|
-error | [Error object](#error-object) | The error caused by the failed item
-index | number | The index of the failed item in the bulk request array
-rowId | number | The id of the [Row](#row-object) that failed.<br/>*Applicable only to bulk row operations* 
+**rowId** | number | The id of the [Row](#row-object) that failed.<br/>*Applicable only to bulk row operations* 
+**error** | [Error object](#error-object) | The error caused by the failed item
+**index** | number | The index of the failed item in the bulk request array
 
 ## ContainerDestination Object
 
@@ -63,9 +63,9 @@ Object that describes the destination container when a Sheet or Folder is moved,
 
      |     |     |
 -----|-----|-----|
-destinationId | number | Id of the destination container (when copying or moving a Sheet or a Folder). Required if **destinationType** is "folder" or "workspace" If **destinationType** is "home", this value must be null.
-destinationType | string | Type of the destination container (when copying or moving a Sheet or a Folder). One of the following values:<ul><li>home</li><li>workspace</li><li>folder</li></ul>
-newName | string | Name of the newly created object (when creating a copy of a Sheet, Folder, Sight, or Workspace). This attribute is not supported for "move" operations (that is, a moved Sheet, Folder, Sight, or Workspace retains its original name).
+**destinationId** | number | Id of the destination container (when copying or moving a Sheet or a Folder). Required if **destinationType** is "folder" or "workspace" If **destinationType** is "home", this value must be null.
+**destinationType** | string | Type of the destination container (when copying or moving a Sheet or a Folder). One of the following values:<ul><li>home</li><li>workspace</li><li>folder</li></ul>
+**newName** | string | Name of the newly created object (when creating a copy of a Sheet, Folder, Sight, or Workspace). This attribute is not supported for "move" operations (that is, a moved Sheet, Folder, Sight, or Workspace retains its original name).
  
 ## Error Object
 
@@ -81,9 +81,9 @@ newName | string | Name of the newly created object (when creating a copy of a S
 
      |     |     |
 -----|-----|-----|
-errorCode | number | Custom error code from Smartsheet. See the <a href="#complete-error-code-list">Complete Error Code List</a>.
-message | string | Descriptive message.
-refId | string | Id of the specific error occurrence. Please include this information when contacting Smartsheet support.
+**refId** | string | Id of the specific error occurrence. Please include this information when contacting Smartsheet support.
+**errorCode** | number | Custom error code from Smartsheet. See the <a href="#complete-error-code-list">Complete Error Code List</a>.
+**message** | string | Descriptive message.
 
 ## IndexResult Object
 
@@ -121,11 +121,11 @@ Object returned for all `PUT` operations and `POST` operations (and for some oth
 
      |     |     |
 -----|-----|-----|
-failedItems | [BulkItemFailure](#bulkitemfailure-object)[] | Array of BulkItemFailure objects which represents the items that failed to be added or updated. See [Partial Success](#partial-success) for more information.<br/>*Applicable only for bulk operations that support partial success*
-message | string | Message that indicates the outcome of the request. (One of SUCCESS or PARTIAL_SUCCESS)
-result | Object | Object that was created or updated (if applicable)
-resultCode | number | 0 (zero) if successful, 3 for partial success of a bulk operation.
-version | number | New version of the Sheet.<br/>*Applicable only for operations which update sheet data* 
+**failedItems** | [BulkItemFailure](#bulkitemfailure-object)[] | Array of BulkItemFailure objects which represents the items that failed to be added or updated. See [Partial Success](#partial-success) for more information.<br/>*Applicable only for bulk operations that support partial success*
+**message** | string | Message that indicates the outcome of the request. (One of SUCCESS or PARTIAL_SUCCESS)
+**result** | Object | Object that was created or updated (if applicable)
+**resultCode** | number | 0 (zero) if successful, 3 for partial success of a bulk operation.
+**version** | number | New version of the Sheet.<br/>*Applicable only for operations which update sheet data* 
 
 # Complete Error Code List
 
@@ -420,21 +420,21 @@ Contains all of the lookup tables that the format descriptor indexes refer to.
 
      |     |
 -----|-----|
-bold | Possible values: **none** or **on**
-color | Color hex values. <br/><br/>**NOTE:** **none** is the default value for all colors.  Applications must handle this value and use app-defined colors (typically this is Black for text color and White for background color)
-currency | Currency codes and symbols
-decimalCount | All allowed decimal count values
-defaults | A format descriptor where each element describes the formats the Smartsheet Web app displays for format values that have not been set.
-fontFamily | Font families with additional font information
-fontSize | Font sizes in points
-horizontalAlign | Horizontal alignment, possible values:<ul><li>**center**</li><li>**default**</li><li>**left**</li><li>**right**</li></ul>**NOTE:** **default** is the default value, which is equivalent to **left**.
-italic | Possible values: **none** or **on**
-numberFormat | Possible values:<ul><li>**CURRENCY**</li><li>**none**</li><li>**NUMBER**</li><li>**PERCENT**</li></ul>
-strikethrough | Possible values: **none** or **on**
-textWrap | Possible values: **none** or **on**
-thousandsSeparator | Possible values: **none** or **on**
-underline | Possible values: **none** or **on**
-verticalAlign | Vertical alignment, possible values:<ul><li>**bottom**</li><li>**default**</li><li>**middle**</li><li>**top**</li></ul>**NOTE:** **default** is the default value, which is equivalent to **top**.
+**defaults** | A format descriptor where each element describes the formats the Smartsheet Web app displays for format values that have not been set.
+**bold** | Possible values: **none** or **on**
+**color** | Color hex values. <br/><br/>**NOTE:** **none** is the default value for all colors.  Applications must handle this value and use app-defined colors (typically this is Black for text color and White for background color)
+**currency** | Currency codes and symbols
+**decimalCount** | All allowed decimal count values
+**fontFamily** | Font families with additional font information
+**fontSize** | Font sizes in points
+**horizontalAlign** | Horizontal alignment, possible values:<ul><li>**default**</li><li>**center**</li><li>**left**</li><li>**right**</li></ul>**NOTE:** **default** is the default value, which is equivalent to **left**.
+**italic** | Possible values: **none** or **on**
+**numberFormat** | Possible values:<ul><li>**none**</li><li>**CURRENCY**</li><li>**NUMBER**</li><li>**PERCENT**</li></ul>
+**strikethrough** | Possible values: **none** or **on**
+**textWrap** | Possible values: **none** or **on**
+**thousandsSeparator** | Possible values: **none** or **on**
+**underline** | Possible values: **none** or **on**
+**verticalAlign** | Vertical alignment, possible values:<ul><li>**default**</li><li>**bottom**</li><li>**middle**</li><li>**top**</li></ul>**NOTE:** **default** is the default value, which is equivalent to **top**.
 
 <aside class="notice">Indexes and their values are guaranteed never to change or be removed for a given major API version.  However, new values could potentially be added to the ends of lookup tables.<br/><br/>Because of this possibility, your code should handle the case where a cell might contain a format index value greater than the size of a lookup table your app has loaded.  Your application should check for that case and reload the format tables if necessary.</aside>
 
@@ -455,8 +455,8 @@ verticalAlign | Vertical alignment, possible values:<ul><li>**bottom**</li><li>*
 
      |     |     |
 -----|-----|-----|
-name | string | Name of the font family (for example, "Arial")
-traits | array | Platform-independent traits of the font family. One of the following values: **serif** or **sans-serif**
+**name** | string | Name of the font family (for example, "Arial")
+**traits** | array | Platform-independent traits of the font family. One of the following values: **serif** or **sans-serif**
 
 ### Currency Object
 
@@ -473,8 +473,8 @@ traits | array | Platform-independent traits of the font family. One of the foll
 
      |     |     |
 -----|-----|-----|
-code | string | The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code (for example, "EUR")
-symbol | string | The currency symbol (for example, "€")
+**code** | string | The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code (for example, "EUR")
+**symbol** | string | The currency symbol (for example, "€")
 
 ## Get Formatting
 

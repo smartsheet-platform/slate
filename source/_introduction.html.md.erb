@@ -100,9 +100,9 @@ The following HTTP request headers may be required, depending on the operation a
 
 Header | Definition | Example |
 -----|-----|-----|
-Authorization | Required for all endpoints, except for `POST /token`. The access token. | Bearer ll352u9jujauoqz4gstvsae05
-Content-Type | Required for POST and PUT requests. Defines the structure for the response. | application/json
-Assume-User | Optional. Allows an admin to act on behalf of, or impersonate, the user to make API calls. The email address used to identify the user must be URI-encoded. | jane.doe%40smartsheet.com
+**Authorization** | Required for all endpoints, except for `POST /token`. The access token. | Bearer ll352u9jujauoqz4gstvsae05
+**Content-Type** | Required for POST and PUT requests. Defines the structure for the response. | application/json
+**Assume-User** | Optional. Allows an admin to act on behalf of, or impersonate, the user to make API calls. The email address used to identify the user must be URI-encoded. | jane.doe%40smartsheet.com
 
 ### Query Strings
 
@@ -169,12 +169,12 @@ Many API calls can be modified by including one or more of these common query st
 
 Query Parameter | Type | Description | More Info |
 -----|-----|-----|-----|
-allowPartialSuccess | Boolean | If **true**, allows bulk operations to process even if one or more operations are invalid for some reason, for example, **allowPartialSuccess=true**. | [Bulk Operations](#bulk-operations)
-include/exclude | String | When applicable for a specific object, various **include** or **exclude** parameters are available, for example, **include=format**. | Object reference or [Formatting](#formatting)
-includeAll | Boolean | If **true**, includes all results, for example, **includeAll=true**. | [Paging](#paging)
-numericDates | Boolean | If **true**, allows you to input or receive dates in numeric format, for example, **numericDates=true**. | [Dates and Times](#dates-and-times)
-page | String | Specifies which page to return, for example, **page=4**. | [Paging](#paging)
-pageSize | Number | Specifies the maximum number of items to return per page, for example, **pageSize=25**. | [Paging](#paging)
+**allowPartialSuccess** | Boolean | If **true**, allows bulk operations to process even if one or more operations are invalid for some reason, for example, **allowPartialSuccess=true**. | [Bulk Operations](#bulk-operations)
+**include** or **exclude** | String | When applicable for a specific object, various **include** or **exclude** parameters are available, for example, **include=format**. | Object reference or [Formatting](#formatting)
+**includeAll** | Boolean | If **true**, includes all results, for example, **includeAll=true**. | [Paging](#paging)
+**numericDates** | Boolean | If **true**, allows you to input or receive dates in numeric format, for example, **numericDates=true**. | [Dates and Times](#dates-and-times)
+**page** | String | Specifies which page to return, for example, **page=4**. | [Paging](#paging)
+**pageSize** | Number | Specifies the maximum number of items to return per page, for example, **pageSize=25**. | [Paging](#paging)
 
 <aside class="notice">Query strings are case sensitive. If you do not see the expected response, confirm that your query is formatted correctly.</aside>
 
@@ -570,11 +570,11 @@ The **accessLevel** attribute has one of the following values:
 
 Value | Description |
 -----|-----|
-ADMIN | The user can edit and share the resource, and can alter the structure of the resource as well.
-EDITOR | The user can edit the resource, but cannot alter the structure of, delete, or share the resource.
-EDITOR_SHARE | The same as **EDITOR**, but with the ability to share the resource to other users.
-OWNER | The user has complete control over the resource.
-VIEWER | The user has read-only access to the resource.
+**ADMIN** | The user can edit and share the resource, and can alter the structure of the resource as well.
+**EDITOR** | The user can edit the resource, but cannot alter the structure of, delete, or share the resource.
+**EDITOR_SHARE** | The same as **EDITOR**, but with the ability to share the resource to other users.
+**OWNER** | The user has complete control over the resource.
+**VIEWER** | The user has read-only access to the resource.
 
 <aside class="notice">Smartsheet also uses <a href="#access-scopes">access scopes</a>. Access levels describe the actual permissions a specific user has for a specific sheet or other resource. Access scopes describe the general categories of access requested by a third-party app.</aside>
 
@@ -673,22 +673,22 @@ The access scopes are as follows:
 
 Access Scope | Description |
 -----|-----|
-ADMIN_SHEETS | Modify sheet structure, including column definition, publish state, etc.
-ADMIN_SIGHTS | Modify Sight structure.
-ADMIN_USERS | Add and remove users from your Smartsheet organization; create groups and manage membership.
-ADMIN_WEBHOOKS | Create, delete, and update webhooks; get all webhooks; reset shared secret. 
-ADMIN_WORKSPACES | Create and manage workspaces and folders, including sharing.
-CREATE_SHEETS | Create new sheets.
-CREATE_SIGHTS | Create new Sights.
-DELETE_SHEETS | Delete sheets.
-DELETE_SIGHTS | Delete Sight.
-READ_CONTACTS | Retrieve contacts.
-READ_SHEETS | Read all sheet data, including attachments, discussions, and cell data.
-READ_SIGHTS | Read all Sight data.
-READ_USERS | Retrieve users and groups for your Smartsheet organization.
-SHARE_SHEETS | Share sheets, including sending sheets as attachments.
-SHARE_SIGHTS | Share Sight.
-WRITE_SHEETS | Insert and modify sheet data, including attachments, discussions, and cell data.
+**ADMIN_SHEETS** | Modify sheet structure, including column definition, publish state, etc.
+**ADMIN_SIGHTS** | Modify Sight structure.
+**ADMIN_USERS** | Add and remove users from your Smartsheet organization; create groups and manage membership.
+**ADMIN_WEBHOOKS** | Create, delete, and update webhooks; get all webhooks; reset shared secret. 
+**ADMIN_WORKSPACES** | Create and manage workspaces and folders, including sharing.
+**CREATE_SHEETS** | Create new sheets.
+**CREATE_SIGHTS** | Create new Sights.
+**DELETE_SHEETS** | Delete sheets.
+**DELETE_SIGHTS** | Delete Sight.
+**READ_CONTACTS** | Retrieve contacts.
+**READ_SHEETS** | Read all sheet data, including attachments, discussions, and cell data.
+**READ_SIGHTS** | Read all Sight data.
+**READ_USERS** | Retrieve users and groups for your Smartsheet organization.
+**SHARE_SHEETS** | Share sheets, including sending sheets as attachments.
+**SHARE_SIGHTS** | Share Sight.
+**WRITE_SHEETS** | Insert and modify sheet data, including attachments, discussions, and cell data.
 
 <aside class="notice"><b>Additional Info:</b><ul><li>When you request an authorization code, you specify all of the access scopes you need for your app. Smartsheet encodes those permissions into the auth code and subsequent access token.</li><li>Your app must request at least one access scope, but should only request the scopes necessary.</li><li>Once your app attains a valid access token, it can execute a <a href="#get-current-user">Get Current User</a> operation, regardless of which access scopes were requested.</li></ul></aside>
 
@@ -763,10 +763,10 @@ Smartsheet will redirect this URL to display your app's consent page with an exp
 
 Value | Description |
 -----|-----|
-client_id | Required. The client Id you obtained when you registered your app.
-response_type | Required. Indicates whether the endpoint returns an authorization code. Must be set to "code".
-scope | Required. Space-delimited list of [access scopes](#access-scopes) to which you are asking the user to grant access.
-state | Optional. An arbitrary string of your choosing that is returned to your app; a successful roundtrip of this string helps ensure that your app initiated the request.
+**client_id** | Required. The client Id you obtained when you registered your app.
+**response_type** | Required. Indicates whether the endpoint returns an authorization code. Must be set to "code".
+**scope** | Required. Space-delimited list of [access scopes](#access-scopes) to which you are asking the user to grant access.
+**state** | Optional. An arbitrary string of your choosing that is returned to your app; a successful roundtrip of this string helps ensure that your app initiated the request.
 
 You can view code examples by clicking the corresponding tab in the dark-blue area in the rightmost pane. The cURL example shows a `GET`.
 
@@ -812,9 +812,9 @@ If the user clicks "Allow", Smartsheet redirects the user to the callback URL wi
 
 Value | Description |
 -----|-----|
-code | Authorization code required to obtain access token, such as 'sample6p9qisx6a'.
-expires_in | Number of milliseconds code is valid once issued; this is currently 599135 milliseconds, or approx. 10 minutes--you must obtain an access token within that time.
-state | The same value for **state** that you sent when you requested the authorization code.
+**code** | Authorization code required to obtain access token, such as 'sample6p9qisx6a'.
+**expires_in** | Number of milliseconds code is valid once issued; this is currently 599135 milliseconds, or approx. 10 minutes--you must obtain an access token within that time.
+**state** | The same value for **state** that you sent when you requested the authorization code.
 
 At this point, you should verify the **state** value matches what you sent to the user when you requested the authorization code. This helps you determine that the response came from the user and not a malicious script. If the values do not match, you should reject the response.
 
@@ -826,8 +826,8 @@ If the user clicks "Deny", Smartsheet redirects the user to the callback URL wit
 
 Value | Description |
 -----|-----|
-error | "access_denied".
-state | The same value for **state** that you sent when you requested the authorization code.
+**error** | "access_denied".
+**state** | The same value for **state** that you sent when you requested the authorization code.
 
 For other error conditions, see the list of [OAuth Error Types](#oauth-error-types).
 
@@ -922,10 +922,10 @@ Once you’ve successfully obtained an authorization code, the next step is to e
 
 Value | Description |
 -----|-----|
-client_id | Required. The client Id you obtained when you registered your app.
-code | Required. Authorization code returned in the [previous step](#request-an-authorization-code).
-grant_type | Required. Must be set to "authorization_code".
-hash | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  The app_secret is never sent with the request. This is the **app_secret** you obtained when you [registered your app](#register-your-app-using-developer-tools).
+**client_id** | Required. The client Id you obtained when you registered your app.
+**code** | Required. Authorization code returned in the [previous step](#request-an-authorization-code).
+**grant_type** | Required. Must be set to "authorization_code".
+**hash** | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  The app_secret is never sent with the request. This is the **app_secret** you obtained when you [registered your app](#register-your-app-using-developer-tools).
 
 <aside class="notice">The "Get Access Token" request must have the <b>Content-Type</b> header set to <b>application/x-www-form-urlencoded</b>.</aside>
 
@@ -1014,11 +1014,11 @@ Once you obtain the new tokens, you must use them in place of the old ones, whic
 
 Value | Description |
 -----|-----|
-client_id | Required. Client Id for your app.
-grant_type | Required. Must be set to **refresh_token**.
-hash | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token value. To obtain an **app_secret**, see [Register Your App Using Developer Tools](#register-your-app-using-developer-tools).
-refresh_token | Required. **refresh_token** value that came with the access token.
-redirect_uri | Deprecated. If supplied, must match the redirect URI you [registered](#register-your-app-using-developer-tools) for your app.
+**client_id** | Required. Client Id for your app.
+**grant_type** | Required. Must be set to **refresh_token**.
+**hash** | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token value. To obtain an **app_secret**, see [Register Your App Using Developer Tools](#register-your-app-using-developer-tools).
+**refresh_token** | Required. **refresh_token** value that came with the access token.
+**redirect_uri** | Deprecated. If supplied, must match the redirect URI you [registered](#register-your-app-using-developer-tools) for your app.
 
 <aside class="notice">The Refresh Token request must have the <b>Content-Type</b> header set to <b>application/x-www-form-urlencoded</b>.</aside>
 
@@ -1028,12 +1028,12 @@ If your request is successful, the response will contain a [Token object](#token
 
 Value | Description |
 -----|-----|
-invalid_client | The client information is invalid. Ensure your client id is correct.
-invalid_grant | The authorization code or refresh token is invalid or expired or the hash value does not match the app secret and/or code.
-invalid_request | The request parameters are invalid or missing.
-invalid_scope | One or more of the requested access scopes is invalid. Please check the list of [access scopes](#access-scopes).
-unsupported_grant_type | **grant_type** must equal **authorization_code** or **refresh_token**.
-unsupported_response_type | **response_type** must be set to **code**.
+**invalid_client** | The client information is invalid. Ensure your client id is correct.
+**invalid_grant** | The authorization code or refresh token is invalid or expired or the hash value does not match the app secret and/or code.
+**invalid_request** | The request parameters are invalid or missing.
+**invalid_scope** | One or more of the requested access scopes is invalid. Please check the list of [access scopes](#access-scopes).
+**unsupported_grant_type** | **grant_type** must equal **authorization_code** or **refresh_token**.
+**unsupported_response_type** | **response_type** must be set to **code**.
 
 # Work at Scale 
 
@@ -1133,9 +1133,9 @@ Index endpoints all support pagination via the following optional query string p
 
 Value | Type | Description |
 -----|-----|-----|
-includeAll  | Boolean | If true, include all results, that is, do not paginate.  Mutually exclusive with **page** and **pageSize** (they are ignored if **includeAll=true** is specified).
-page		| number  | Which page to return.  Defaults to **1** if not specified.  If you specify a value greater than the total number of pages, the last page of results is returned.
-pageSize 	| number  | The maximum number of items to return per page.  Unless otherwise stated for a specific endpoint, defaults to **100**.
+**includeAll**  | Boolean | If true, include all results, that is, do not paginate.  Mutually exclusive with **page** and **pageSize** (they are ignored if **includeAll=true** is specified).
+**page**		| number  | Which page to return.  Defaults to **1** if not specified.  If you specify a value greater than the total number of pages, the last page of results is returned.
+**pageSize** 	| number  | The maximum number of items to return per page.  Unless otherwise stated for a specific endpoint, defaults to **100**.
 
 <aside class="notice">Most index endpoints default to a page size of 100 results.  If you want all results at once, you must specify the <b>includeAll=true</b> query string parameter.</aside>
 
