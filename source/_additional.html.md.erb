@@ -355,22 +355,22 @@ To set or read formatting programmatically, Smartsheet uses a compact format str
 
 **Position** | **Lookup Property** | **Example Value** | **Format String**
 -----|-----|-----|-----|
-0 | fontFamily | 0 = Arial, default | `"0,,,,,,,,,,,,,,,"`
-1 | fontSize | 0 = 8 pt, default | `",0,,,,,,,,,,,,,,"`
-2 | bold | 1 = on | `",,1,,,,,,,,,,,,,"`
-3 | italic | 1 = on | `",,,1,,,,,,,,,,,,"`
-4 | underline | 1 = on | `",,,,1,,,,,,,,,,,"`
-5 | strikethrough | 1 = on | `",,,,,1,,,,,,,,,,"`
-6 | horizontalAlign | 2 = center | `",,,,,,2,,,,,,,,,"`
-7 | verticalAlign | 2 = middle | `",,,,,,,2,,,,,,,,"`
-8 | color (text) | 4 = #FEEEF0 | `",,,,,,,,4,,,,,,,"`
-9 | color (background) | 8 = #E6F5FE | `",,,,,,,,,8,,,,,,"` 
-10 | color (taskbar) | 9 = #F3E5FA | `",,,,,,,,,,9,,,,,"`
-11 | currency | 13 = USD | `",,,,,,,,,,,13,,,,"`
-12 | decimalCount | 3 = three decimal places | `",,,,,,,,,,,,3,,,"`
-13 | thousandsSeparator | 1 = on | `",,,,,,,,,,,,,1,,"`
-14 | numberFormat | 2 = currency | `",,,,,,,,,,,,,,2,"`
-15 | textWrap | 1 = on | `",,,,,,,,,,,,,,,1"`
+0 | **fontFamily** | 0 = Arial, default | `"0,,,,,,,,,,,,,,,"`
+1 | **fontSize** | 0 = 8 pt, default | `",0,,,,,,,,,,,,,,"`
+2 | **bold** | 1 = on | `",,1,,,,,,,,,,,,,"`
+3 | **italic** | 1 = on | `",,,1,,,,,,,,,,,,"`
+4 | **underline** | 1 = on | `",,,,1,,,,,,,,,,,"`
+5 | **strikethrough** | 1 = on | `",,,,,1,,,,,,,,,,"`
+6 | **horizontalAlign** | 2 = center | `",,,,,,2,,,,,,,,,"`
+7 | **verticalAlign** | 2 = middle | `",,,,,,,2,,,,,,,,"`
+8 | **color** (text) | 4 = #FEEEF0 | `",,,,,,,,4,,,,,,,"`
+9 | **color** (background) | 8 = #E6F5FE | `",,,,,,,,,8,,,,,,"` 
+10 | **color** (taskbar) | 9 = #F3E5FA | `",,,,,,,,,,9,,,,,"`
+11 | **currency** | 13 = USD | `",,,,,,,,,,,13,,,,"`
+12 | **decimalCount** | 3 = three decimal places | `",,,,,,,,,,,,3,,,"`
+13 | **thousandsSeparator** | 1 = on | `",,,,,,,,,,,,,1,,"`
+14 | **numberFormat** | 2 = currency | `",,,,,,,,,,,,,,2,"`
+15 | **textWrap** | 1 = on | `",,,,,,,,,,,,,,,1"`
 
 <aside class="notice">Formats that have not been explicitly set are omitted in the descriptor string. For example, a cell that has been set to bold and italic, but has no other formats applied to it, has a format descriptor of <code>",,1,1,,,,,,,,,,,,"</code>.</aside>
 

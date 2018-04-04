@@ -257,7 +257,7 @@ Gets an access token, as part of the OAuth process. For more information, see [O
  | **code** (required) -- authorization code returned during the OAuth flow.
  | **grant_type** (required) -- must be set to "authorization_code"
  | **hash** (required) -- [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  The **app_secret** is never sent with the request.
- %= RETURNS %> | [Token object](#token-object) containing an access token and a refresh token.
+ <%= RETURNS %> | [Token object](#token-object) containing an access token and a refresh token.
 
 ## Refresh Access Token
 
@@ -346,7 +346,7 @@ Refreshes an access token, as part of the OAuth process. For more information, s
  | **grant_type** (required) -- must be set to "refresh_token"
  | **hash** (required) -- [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token value
  | **refresh_token** (required) -- **refresh_token** value that came with the access token
- %= RETURNS %> | [Token object](#token-object) containing an access token and a refresh token.
+ <%= RETURNS %> | [Token object](#token-object) containing an access token and a refresh token.
 
 ## Revoke Access Token
 
