@@ -4,7 +4,7 @@
 
 ## AutoNumberFormat Object
 
-> Example AutoNumberFormat Object:
+> Example: AutoNumberFormat object
 
 ```json
 {
@@ -18,14 +18,14 @@ Object that describes how the the System Column type of "AUTO_NUMBER" is auto-ge
 
      |     |     |
 -----|-----|-----|
-**prefix** | string | The prefix. Can include the date tokens:<ul><li>{YY}</li><li>{YYYY}</li><li>{MM}</li><li>{DD}</li></ul>
-**suffix** | string | The suffix. Can include the date tokens:<ul><li>{YY}</li><li>{YYYY}</li><li>{MM}</li><li>{DD}</li></ul>
 **fill** | string | Indicates zero-padding. Must be between 0 and 10 "0" (zero) characters.
+**prefix** | string | The prefix. Can include the date tokens:<ul><li>{YY}</li><li>{YYYY}</li><li>{MM}</li><li>{DD}</li></ul>
 **startingNumber** | number | The starting number for the auto-id
+**suffix** | string | The suffix. Can include the date tokens:<ul><li>{YY}</li><li>{YYYY}</li><li>{MM}</li><li>{DD}</li></ul>
 
 ## BulkItemFailure Object
 
-> Example BulkItemFailure Object:
+> Example: BulkItemFailure object
 
 ```json
 {
@@ -43,14 +43,13 @@ Object that contains information about an item that failed to be added or update
 
      |     |     |
 -----|-----|-----|
-**index** | number | The index of the failed item in the bulk request array
 **rowId** | number | The id of the [Row](#row-object) that failed.<br/>*Applicable only to bulk row operations* 
-**error** | [Error Object](#error-object) | The error caused by the failed item
-
+**error** | [Error object](#error-object) | The error caused by the failed item
+**index** | number | The index of the failed item in the bulk request array
 
 ## ContainerDestination Object
 
-> Example ContainerDestination Object:
+> Example: ContainerDestination object
 
 ```json
 { 
@@ -64,13 +63,13 @@ Object that describes the destination container when a Sheet or Folder is moved,
 
      |     |     |
 -----|-----|-----|
-**destinationType** | string | Type of the destination container (when copying or moving a Sheet or a Folder). One of the following values:<ul><li>home</li><li>workspace</li><li>folder</li></ul>
 **destinationId** | number | Id of the destination container (when copying or moving a Sheet or a Folder). Required if **destinationType** is "folder" or "workspace" If **destinationType** is "home", this value must be null.
+**destinationType** | string | Type of the destination container (when copying or moving a Sheet or a Folder). One of the following values:<ul><li>home</li><li>workspace</li><li>folder</li></ul>
 **newName** | string | Name of the newly created object (when creating a copy of a Sheet, Folder, Sight, or Workspace). This attribute is not supported for "move" operations (that is, a moved Sheet, Folder, Sight, or Workspace retains its original name).
  
 ## Error Object
 
-> Example Error Object:
+> Example: Error object
 
 ```json
 {
@@ -82,13 +81,13 @@ Object that describes the destination container when a Sheet or Folder is moved,
 
      |     |     |
 -----|-----|-----|
+**refId** | string | Id of the specific error occurrence. Please include this information when contacting Smartsheet support.
 **errorCode** | number | Custom error code from Smartsheet. See the <a href="#complete-error-code-list">Complete Error Code List</a>.
 **message** | string | Descriptive message.
-**refId** | string | Id of the specific error occurrence. Please include this information when contacting Smartsheet support.
 
 ## IndexResult Object
 
-> Example IndexResult Object:
+> Example: IndexResult object
 
 ```json
 {
@@ -106,7 +105,7 @@ Object returned for all `GET` operations against index endpoints.  This object p
 
 ## Result Object
 
-> Example Result Object:
+> Example: Result object
 
 ```json
 {
@@ -122,11 +121,11 @@ Object returned for all `PUT` operations and `POST` operations (and for some oth
 
      |     |     |
 -----|-----|-----|
+**failedItems** | [BulkItemFailure](#bulkitemfailure-object)[] | Array of BulkItemFailure objects which represents the items that failed to be added or updated. See [Partial Success](#partial-success) for more information.<br/>*Applicable only for bulk operations that support partial success*
 **message** | string | Message that indicates the outcome of the request. (One of SUCCESS or PARTIAL_SUCCESS)
-**resultCode** | number | 0 (zero) if successful, 3 for partial success of a bulk operation.
 **result** | Object | Object that was created or updated (if applicable)
+**resultCode** | number | 0 (zero) if successful, 3 for partial success of a bulk operation.
 **version** | number | New version of the Sheet.<br/>*Applicable only for operations which update sheet data* 
-**failedItems** | [BulkItemFailure](#bulkitemfailure-object)[] | Array of BulkItemFailure Objects which represents the items that failed to be added or updated. See [Partial Success](#partial-success) for more information.<br/>*Applicable only for bulk operations that support partial success*
 
 # Complete Error Code List
 
@@ -356,32 +355,32 @@ To set or read formatting programmatically, Smartsheet uses a compact format str
 
 **Position** | **Lookup Property** | **Example Value** | **Format String**
 -----|-----|-----|-----|
-0 | fontFamily | 0 = Arial, default | `"0,,,,,,,,,,,,,,,"`
-1 | fontSize | 0 = 8 pt, default | `",0,,,,,,,,,,,,,,"`
-2 | bold | 1 = on | `",,1,,,,,,,,,,,,,"`
-3 | italic | 1 = on | `",,,1,,,,,,,,,,,,"`
-4 | underline | 1 = on | `",,,,1,,,,,,,,,,,"`
-5 | strikethrough | 1 = on | `",,,,,1,,,,,,,,,,"`
-6 | horizontalAlign | 2 = center | `",,,,,,2,,,,,,,,,"`
-7 | verticalAlign | 2 = middle | `",,,,,,,2,,,,,,,,"`
-8 | color (text) | 4 = #FEEEF0 | `",,,,,,,,4,,,,,,,"`
-9 | color (background) | 8 = #E6F5FE | `",,,,,,,,,8,,,,,,"` 
-10 | color (taskbar) | 9 = #F3E5FA | `",,,,,,,,,,9,,,,,"`
-11 | currency | 13 = USD | `",,,,,,,,,,,13,,,,"`
-12 | decimalCount | 3 = three decimal places | `",,,,,,,,,,,,3,,,"`
-13 | thousandsSeparator | 1 = on | `",,,,,,,,,,,,,1,,"`
-14 | numberFormat | 2 = currency | `",,,,,,,,,,,,,,2,"`
-15 | textWrap | 1 = on | `",,,,,,,,,,,,,,,1"`
+0 | **fontFamily** | 0 = Arial, default | `"0,,,,,,,,,,,,,,,"`
+1 | **fontSize** | 0 = 8 pt, default | `",0,,,,,,,,,,,,,,"`
+2 | **bold** | 1 = on | `",,1,,,,,,,,,,,,,"`
+3 | **italic** | 1 = on | `",,,1,,,,,,,,,,,,"`
+4 | **underline** | 1 = on | `",,,,1,,,,,,,,,,,"`
+5 | **strikethrough** | 1 = on | `",,,,,1,,,,,,,,,,"`
+6 | **horizontalAlign** | 2 = center | `",,,,,,2,,,,,,,,,"`
+7 | **verticalAlign** | 2 = middle | `",,,,,,,2,,,,,,,,"`
+8 | **color** (text) | 4 = #FEEEF0 | `",,,,,,,,4,,,,,,,"`
+9 | **color** (background) | 8 = #E6F5FE | `",,,,,,,,,8,,,,,,"` 
+10 | **color** (taskbar) | 9 = #F3E5FA | `",,,,,,,,,,9,,,,,"`
+11 | **currency** | 13 = USD | `",,,,,,,,,,,13,,,,"`
+12 | **decimalCount** | 3 = three decimal places | `",,,,,,,,,,,,3,,,"`
+13 | **thousandsSeparator** | 1 = on | `",,,,,,,,,,,,,1,,"`
+14 | **numberFormat** | 2 = currency | `",,,,,,,,,,,,,,2,"`
+15 | **textWrap** | 1 = on | `",,,,,,,,,,,,,,,1"`
 
 <aside class="notice">Formats that have not been explicitly set are omitted in the descriptor string. For example, a cell that has been set to bold and italic, but has no other formats applied to it, has a format descriptor of <code>",,1,1,,,,,,,,,,,,"</code>.</aside>
 
-<aside class="notice">Use <b>GET /serverinfo</b> to return the <a href="#formattables-object">FormatTables Object</a>, which tells you both the default settings and what formatting options are available.</aside>
+<aside class="notice">Use <code>GET /serverinfo</code> to return the <a href="#formattables-object">FormatTables object</a>, which tells you both the default settings and what formatting options are available.</aside>
 
 ## <%= OBJECTS %>
 
 ### FormatTables Object
 
-> Example FormatTables Object:
+> Example: FormatTables object
 
 ```json
 {
@@ -422,26 +421,26 @@ Contains all of the lookup tables that the format descriptor indexes refer to.
      |     |
 -----|-----|
 **defaults** | A format descriptor where each element describes the formats the Smartsheet Web app displays for format values that have not been set.
-**fontFamily** | Font families with additional font information
-**fontSize** | Font sizes in points
-**bold** | Possible values:<ul><li>none</li><li>on</li></ul>
-**italic** | Possible values:<ul><li>none</li><li>on</li></ul>
-**underline** | Possible values:<ul><li>none</li><li>on</li></ul>
-**strikethrough** | Possible values:<ul><li>none</li><li>on</li></ul>
-**horizontalAlign** | Horizontal alignment, possible values:<ul><li>default</li><li>left</li><li>center</li><li>right</li></ul>Note: "default" is the default value, which is equivalent to "left".
-**verticalAlign** | Vertical alignment, possible values:<ul><li>default</li><li>top</li><li>middle</li><li>bottom</li></ul>Note: "default" is the default value, which is equivalent to "top".
-**color** | Color hex values. <br/><br/>Note: "none" is the default value for all colors.  Applications must handle this value and use app-defined colors (typically this is Black for text color and White for background color)
+**bold** | Possible values: **none** or **on**
+**color** | Color hex values. <br/><br/>**NOTE:** **none** is the default value for all colors.  Applications must handle this value and use app-defined colors (typically this is Black for text color and White for background color)
 **currency** | Currency codes and symbols
 **decimalCount** | All allowed decimal count values
-**thousandsSeparator** | Possible values:<ul><li>none</li><li>on</li></ul>
-**numberFormat** | Possible values:<ul><li>none</li><li>NUMBER</li><li>CURRENCY</li><li>PERCENT</li></ul>
-**textWrap** | Possible values:<ul><li>none</li><li>on</li></ul>
+**fontFamily** | Font families with additional font information
+**fontSize** | Font sizes in points
+**horizontalAlign** | Horizontal alignment, possible values:<ul><li>**default**</li><li>**center**</li><li>**left**</li><li>**right**</li></ul>**NOTE:** **default** is the default value, which is equivalent to **left**.
+**italic** | Possible values: **none** or **on**
+**numberFormat** | Possible values:<ul><li>**none**</li><li>**CURRENCY**</li><li>**NUMBER**</li><li>**PERCENT**</li></ul>
+**strikethrough** | Possible values: **none** or **on**
+**textWrap** | Possible values: **none** or **on**
+**thousandsSeparator** | Possible values: **none** or **on**
+**underline** | Possible values: **none** or **on**
+**verticalAlign** | Vertical alignment, possible values:<ul><li>**default**</li><li>**bottom**</li><li>**middle**</li><li>**top**</li></ul>**NOTE:** **default** is the default value, which is equivalent to **top**.
 
 <aside class="notice">Indexes and their values are guaranteed never to change or be removed for a given major API version.  However, new values could potentially be added to the ends of lookup tables.<br/><br/>Because of this possibility, your code should handle the case where a cell might contain a format index value greater than the size of a lookup table your app has loaded.  Your application should check for that case and reload the format tables if necessary.</aside>
 
 ### FontFamily Object
 
-> Example FontFamily Object:
+> Example: FontFamily object
 
 ```json
 {
@@ -457,11 +456,11 @@ Contains all of the lookup tables that the format descriptor indexes refer to.
      |     |     |
 -----|-----|-----|
 **name** | string | Name of the font family (for example, "Arial")
-**traits** | array | Platform-independent traits of the font family. One of the following values:<ul><li>serif</li><li>sans-serif</li>
+**traits** | array | Platform-independent traits of the font family. One of the following values: **serif** or **sans-serif**
 
 ### Currency Object
 
-> Example Currency Object:
+> Example: Currency object
 
 ```json
 {
@@ -497,4 +496,4 @@ Should you encounter issues with the Smartsheet API while building an integratio
 2. Examine the Request that your code is sending (including the HTTP verb, URI, headers, and Request body) and the Response that it's receiving back from Smartsheet (including the HTTP status code, headers, and response body).
   * If you've implemented Request / Response logging in your application, inspect the full trace of Request and Response in the log file. Compare the Request that your application is logging with the (successful) Request from cURL or Postman, and update your code to correct any discrepancies.
   * Alternatively, you may choose to use a tool like [Fiddler](https://www.telerik.com/fiddler) or [Charles HTTP Proxy](https://www.charlesproxy.com/) to inspect the full trace of Request and Response as it goes across the wire. Compare the Request trace that your application generates with the (successful) Request from cURL or Postman, and update your code to correct any discrepancies.
-3. Check for capitalization errors. Note that URL endpoints are all lower case, while object properties and query parameters are camelCase.
+3. Check for capitalization errors. **NOTE:** URL endpoints are all lower case, while object properties and query parameters are camelCase.

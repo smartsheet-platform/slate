@@ -1,4 +1,4 @@
-> Example Request: Change Update Request
+> Example request: change update request
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/updaterequests/{updateRequestId} \
@@ -94,13 +94,13 @@ update_request = smartsheet.update_requests.update(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/createScheduledUpdateRequest_response.md.erb" %>
 
 `PUT /sheets/{sheetId}/updaterequests/{updateRequestId}`
 
-Changes the specified Update Request for the Sheet.
+Changes the specified update request for the sheet.
 
 <aside class="notice">Making changes to update requests that do not have future scheduled delivery is not allowed.</aside>
 
