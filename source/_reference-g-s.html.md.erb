@@ -2435,9 +2435,10 @@ To specify a location for new or updated rows other than the defaults, use the t
 
 Note the following restrictions:
 
+* Use only one location-specifier attribute per request, unless you use **parentId** and **toBottom** or **siblingId** and **above**.  
+* If you specify multiple rows in the request, all rows must have the same location-specifier attributes.
 * If you specify the **parentId** attribute, you cannot also specify the **siblingId** attribute. 
 * If you specify the **siblingId** attribute, you cannot also specify the **parentId**, **toTop**, or **toBottom** attributes.
-* If multiple rows are specified in the request, all rows must have the same location-specifier attributes.
 * If you want to indent or outdent multiple rows, use the **parentId** attribute.
 
 Destination | Row Attributes | Examples
