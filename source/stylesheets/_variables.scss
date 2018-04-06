@@ -35,10 +35,10 @@ $main-bg: #FBFBFB !default;
 
 $aside-notice-bg: #e3edf2;
 $aside-warning-bg: #FFF5F5;
-$aside-success-bg: #E8FAEE; 
-$aside-notice-border: #5bc0de; 
-$aside-warning-border: #d9534f; 
-$aside-success-border: #50af51; 
+$aside-success-bg: #E8FAEE;
+$aside-notice-border: #5bc0de;
+$aside-warning-border: #d9534f;
+$aside-success-border: #50af51;
 
 $banner-bg: #393939;
 
@@ -51,7 +51,7 @@ $sb-thumb-color: grey; // darken($code-annotation-bg, 0.2);
 // TEXT COLORS
 ////////////////////
 $main-text: #000 !default; // main content text color
-$nav-text: #fff !default;
+$nav-text: $main-text;
 $nav-active-text: #fff !default;
 $nav-active-parent-text: #000000 !default; // parent links of the current section
 $lang-select-text: #fff !default; // color of unselected language tab text
