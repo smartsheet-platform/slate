@@ -1,4 +1,4 @@
-> Example Request: Send Sheet
+> Example request: send sheet
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/emails \
@@ -144,7 +144,7 @@ response = smartsheet.sheets.send_via_email(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -155,11 +155,11 @@ response = smartsheet.sheets.send_via_email(
 
 `POST /sheets/{sheetId}/emails`
 
-Sends the Sheet as a PDF attachment via email to the designated recipients.
+Sends the sheet as a PDF attachment via email to the designated recipients.
 
      |     |
 -----|-----|
-<%= SCOPE %> | SHARE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [SheetEmail Object](#sheetemail-object)
-<%= RETURNS %> | [Result Object](#result-object)
+<%= REQUEST %> | [SheetEmail object](#sheetemail-object)
+<%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | SHARE_SHEETS

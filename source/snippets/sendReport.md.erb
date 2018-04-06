@@ -1,4 +1,4 @@
-> Example Request: Send Report
+> Example request: send report
 
 ```shell
 curl https://api.smartsheet.com/2.0/reports/{reportId}/emails \
@@ -143,7 +143,7 @@ response = smartsheet.reports.send_via_email(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -154,11 +154,11 @@ response = smartsheet.reports.send_via_email(
 
 `POST /reports/{reportId}/emails`
 
-Sends the Report as a PDF attachment via email to the designated recipients.
+Sends the report as a PDF attachment via email to the designated recipients.
 
      |     |
 -----|-----|
-<%= SCOPE %> | SHARE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [SheetEmail Object](#sheetemail-object)
-<%= RETURNS %> | [Result Object](#result-object)
+<%= REQUEST %> | [SheetEmail object](#sheetemail-object)
+<%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | SHARE_SHEETS

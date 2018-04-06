@@ -1,4 +1,4 @@
-> Example Request: Delete Update Request
+> Example request: delete update request
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/updaterequests/{updateRequestId} \
@@ -51,7 +51,7 @@ smartsheet.update_requests.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -62,6 +62,6 @@ smartsheet.update_requests.delete(
 
 `DELETE /sheets/{sheetId}/updaterequests/{updateRequestId}`
 
-Terminates the future scheduled delivery of the Update Request specified in the URL.
+Terminates the future scheduled delivery of the update request specified in the URL.
 
 <%= partial "snippets/deleteUpdateRequest_table.md.erb" %>
