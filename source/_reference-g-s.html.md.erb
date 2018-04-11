@@ -5187,6 +5187,8 @@ Creates a sheet from scratch in the user's **Sheets** folder ([Home](#home)). Fo
 
 <%= partial "snippets/createSheet_table.md.erb" %>
 
+<aside class="notice">You cannot create a Gantt-enabled sheet through an API call. You must create Gantt Charts in the UI.</aside>
+
 ### Create Sheet in Folder
 
 > Example request: create sheet in folder
@@ -5340,6 +5342,8 @@ new_sheet = response[:result]
 Creates a sheet from scratch in the specified folder.
 
 <%= partial "snippets/createSheet_table.md.erb" %>
+
+<aside class="notice">You cannot create a Gantt-enabled sheet through an API call. You must create Gantt Charts in the UI.</aside>
 
 ### Create Sheet in Workspace 
 
@@ -5495,6 +5499,8 @@ new_sheet = response[:result]
 Creates a sheet from scratch at the top-level of the specified workspace. For subfolders, use [Create Sheet in Folder](#create-sheet-in-folder).
 
 <%= partial "snippets/createSheet_table.md.erb" %>
+
+<aside class="notice">You cannot create a Gantt-enabled sheet through an API call. You must create Gantt Charts in the UI.</aside>
 
 ## Create Sheet from Template
 
