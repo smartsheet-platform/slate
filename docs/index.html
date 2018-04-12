@@ -1776,6 +1776,14 @@
               <ul class="toc-list-subhead">
                   <li>
                     <a href="#event-callbacks" class="toc-h2 toc-link" data-title="Event Callbacks">Event Callbacks</a>
+                        <ul class="toc-list-subhead">
+                            <li>
+                                <a href="#callback-acknowledgement" class="toc-h3 toc-link" data-title="Callback Acknowledgement">Callback Acknowledgement</a>
+                            </li>
+                            <li>
+                                <a href="#retry-logic" class="toc-h3 toc-link" data-title="Retry Logic">Retry Logic</a>
+                            </li>
+                        </ul>
                   </li>
                   <li>
                     <a href="#status-change-callbacks" class="toc-h2 toc-link" data-title="Status Change Callbacks">Status Change Callbacks</a>
@@ -1839,7 +1847,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2018-04-05
+<p>Updated 2018-04-12
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -2692,7 +2700,7 @@ Smartsheet will redirect this URL to display your app&#39;s consent page with an
 </tr>
 <tr>
 <td><strong>scope</strong></td>
-<td>Required. Space-delimited list of <a href="#access-scopes">access scopes</a> to which you are asking the user to grant access.</td>
+<td>Required. Space-delimited list of <a href="#access-scopes">access scopes</a> to which you are asking the user to grant access. <strong>NOTE:</strong> No access scopes are necessary if you simply need to validate that the user has a Smartsheet account.</td>
 </tr>
 <tr>
 <td><strong>state</strong></td>
@@ -5444,6 +5452,8 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 </tr>
 </tbody></table>
 
+<aside class="notice">For users of Smartsheet for Slack, note that Slack notifications are not returned.</aside> 
+
 <h2 id='update-an-automation-rule'>Update an Automation Rule</h2>
 
 <blockquote>
@@ -7028,7 +7038,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <tr>
 <td><strong>tags</strong></td>
 <td>string[]</td>
-<td>Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li><strong>CALENDAR_END_DATE</strong></li><li><strong>CALENDAR_START_DATE</strong></li><li><strong>GANTT_ASSIGNED_RESOURCE</strong></li><li><strong>GANTT_DISPLAY_LABEL</strong></li><li><strong>GANTT_DURATION</strong></li><li><strong>GANTT_END_DATE</strong></li><li><strong>GANTT_PERCENT_COMPLETE</strong></li><li><strong>GANTT_PREDECESSOR</strong></li><li><strong>GANTT_START_DATE</strong></li></ul></td>
+<td>Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li><strong>CALENDAR_END_DATE</strong></li><li><strong>CALENDAR_START_DATE</strong></li><li><strong>GANTT_ALLOCATION</strong></li><li><strong>GANTT_ASSIGNED_RESOURCE</strong></li><li><strong>GANTT_DISPLAY_LABEL</strong></li><li><strong>GANTT_DURATION</strong></li><li><strong>GANTT_END_DATE</strong></li><li><strong>GANTT_PERCENT_COMPLETE</strong></li><li><strong>GANTT_PREDECESSOR</strong></li><li><strong>GANTT_START_DATE</strong></li></ul></td>
 </tr>
 <tr>
 <td><strong>title</strong></td>
@@ -12996,7 +13006,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 <tr>
 <td>Errors</td>
-<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a> (that is, not the primary email address associated with the user account), the <a href="#error-object">Error object</a> returned contains a <strong>detail</strong> attribute set to an array of objects, each object in the array has the following attributes:<ul><li><strong>alternateEmailAddress</strong>: User&#39;s alternate email address that was specified in the request</li><li><strong>primaryEmailAddress</strong>: User&#39;s primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;&quot;errorCode&quot;: 5xxx,<br/>&#160;&#160;&quot;message&quot;: &quot;u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry using their primary address u1@smartsheet.com.&quot;<br/>&#160;&#160;&quot;detail&quot;: [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&quot;alternateEmailAddress&quot;: &quot;u1+1@smartsheet.com&quot;,<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&quot;primaryEmailAddress&quot;: &quot;u1@smartsheet.com&quot;<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}</td>
+<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a>, please retry using the primary email address.</td>
 </tr>
 <tr>
 <td>Access Scope</td>
@@ -15416,9 +15426,10 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 <p>Note the following restrictions:</p>
 
 <ul>
+<li>Use only one location-specifier attribute per request, unless you use <strong>parentId</strong> and <strong>toBottom</strong> or <strong>siblingId</strong> and <strong>above</strong>.<br></li>
+<li>If you specify multiple rows in the request, all rows must have the same location-specifier attributes.</li>
 <li>If you specify the <strong>parentId</strong> attribute, you cannot also specify the <strong>siblingId</strong> attribute. </li>
 <li>If you specify the <strong>siblingId</strong> attribute, you cannot also specify the <strong>parentId</strong>, <strong>toTop</strong>, or <strong>toBottom</strong> attributes.</li>
-<li>If multiple rows are specified in the request, all rows must have the same location-specifier attributes.</li>
 <li>If you want to indent or outdent multiple rows, use the <strong>parentId</strong> attribute.</li>
 </ul>
 
@@ -17363,7 +17374,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Errors</td>
-<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a> (that is, not the primary email address associated with the User account), the <a href="#complete-error-code-list">Error object</a> returned contains a <strong>detail</strong> attribute set to an array of objects, each object in the array having the following attributes:<ul><li><strong>alternateEmailAddress</strong>: User&#39;s alternate email address that was specified in the request</li><li><strong>primaryEmailAddress</strong>: User&#39;s primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;&quot;errorCode&quot;: 5xxx,<br/>&#160;&#160;&quot;message&quot;: &quot;u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry sharing directly to u1@smartsheet.com.&quot;<br/>&#160;&#160;&quot;detail&quot;: [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&quot;alternateEmailAddress&quot;: &quot;u1+1@smartsheet.com&quot;,<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&quot;primaryEmailAddress&quot;: &quot;u1@smartsheet.com&quot;<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}</td>
+<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a>, please retry using the primary email address.</td>
 </tr>
 <tr>
 <td>Access Scope</td>
@@ -17866,7 +17877,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Errors</td>
-<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a> (that is, not the primary email address associated with the User account), the <a href="#complete-error-code-list">Error object</a> returned contains a <strong>detail</strong> attribute set to an array of objects, each object in the array having the following attributes:<ul><li><strong>alternateEmailAddress</strong>: User&#39;s alternate email address that was specified in the request</li><li><strong>primaryEmailAddress</strong>: User&#39;s primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;&quot;errorCode&quot;: 5xxx,<br/>&#160;&#160;&quot;message&quot;: &quot;u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry sharing directly to u1@smartsheet.com.&quot;<br/>&#160;&#160;&quot;detail&quot;: [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&quot;alternateEmailAddress&quot;: &quot;u1+1@smartsheet.com&quot;,<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&quot;primaryEmailAddress&quot;: &quot;u1@smartsheet.com&quot;<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}</td>
+<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a>, please retry using the primary email address.</td>
 </tr>
 <tr>
 <td>Access Scope</td>
@@ -18344,7 +18355,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Errors</td>
-<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a> (that is, not the primary email address associated with the user account), the <a href="#error-object">Error object</a> returned contains a <strong>detail</strong> attribute set to an array of objects, each object in the array having the following attributes:<ul><li><strong>alternateEmailAddress</strong>: User&#39;s alternate email address that was specified in the request</li><li><strong>primaryEmailAddress</strong>: User&#39;s primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;&quot;errorCode&quot;: 5xxx,<br/>&#160;&#160;&quot;message&quot;: &quot;u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry sharing directly to u1@smartsheet.com.&quot;<br/>&#160;&#160;&quot;detail&quot;: [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&quot;alternateEmailAddress&quot;: &quot;u1+1@smartsheet.com&quot;,<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&quot;primaryEmailAddress&quot;: &quot;u1@smartsheet.com&quot;<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}</td>
+<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a>, please retry using the primary email address.</td>
 </tr>
 <tr>
 <td>Access Scope</td>
@@ -18833,7 +18844,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Errors</td>
-<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a> (that is, not the primary email address associated with the user account), the <a href="#error-object">Error object</a> returned contains a <strong>detail</strong> attribute set to an array of objects, each object in the array having the following attributes:<ul><li><strong>alternateEmailAddress</strong>: User&#39;s alternate email address that was specified in the request</li><li><strong>primaryEmailAddress</strong>: User&#39;s primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;&quot;errorCode&quot;: 5xxx,<br/>&#160;&#160;&quot;message&quot;: &quot;u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry sharing directly to u1@smartsheet.com.&quot;<br/>&#160;&#160;&quot;detail&quot;: [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&quot;alternateEmailAddress&quot;: &quot;u1+1@smartsheet.com&quot;,<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&quot;primaryEmailAddress&quot;: &quot;u1@smartsheet.com&quot;<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}</td>
+<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a>, please retry using the primary email address.</td>
 </tr>
 <tr>
 <td>Access Scope</td>
@@ -19723,6 +19734,8 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <td>CREATE_SHEETS</td>
 </tr>
 </tbody></table>
+
+<aside class="notice">While you cannot create a Gantt-enabled sheet directly through an API call, you can use an existing Gantt-enabled sheet to either <a href="#copy-sheet">Copy Sheet</a> or <a href="#create-sheet-from-template">Create Sheet from Template</a>.</aside>
 <h3 id='create-sheet-in-folder'>Create Sheet in Folder</h3>
 <blockquote>
 <p>Example request: create sheet in folder</p>
@@ -19908,6 +19921,8 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <td>CREATE_SHEETS</td>
 </tr>
 </tbody></table>
+
+<aside class="notice">While you cannot create a Gantt-enabled sheet directly through an API call, you can use an existing Gantt-enabled sheet to either <a href="#copy-sheet">Copy Sheet</a> or <a href="#create-sheet-from-template">Create Sheet from Template</a>.</aside>
 <h3 id='create-sheet-in-workspace'>Create Sheet in Workspace</h3>
 <blockquote>
 <p>Example request: create sheet in workspace</p>
@@ -20094,6 +20109,8 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <td>CREATE_SHEETS</td>
 </tr>
 </tbody></table>
+
+<aside class="notice">While you cannot create a Gantt-enabled sheet directly through an API call, you can use an existing Gantt-enabled sheet to either <a href="#copy-sheet">Copy Sheet</a> or <a href="#create-sheet-from-template">Create Sheet from Template</a>.</aside>
 <h2 id='create-sheet-from-template'>Create Sheet from Template</h2><h3 id='create-sheet-in-quot-sheets-quot-folder-from-template'>Create Sheet in &quot;Sheets&quot; Folder from Template</h3>
 <blockquote>
 <p>Example request: create sheet in &quot;Sheets&quot; folder from template</p>
@@ -21904,11 +21921,11 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
 </tr>
 <tr>
-<td>Parameters</td>
+<td>Request Body</td>
 <td><a href="#sortspecifier-object">SortSpecifier</a> with the following attribute:<ul><li><strong>sortCriteria</strong> -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul></td>
 </tr>
 <tr>
-<td></td>
+<td>Parameters</td>
 <td>(Optional) Any of the relevant parameters or query parameters listed for <a href="#get-sheet">Get Sheet</a></td>
 </tr>
 <tr>
@@ -22141,6 +22158,11 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td><strong>accessLevel</strong></td>
 <td>string</td>
 <td>User&#39;s permissions on the Sight. Valid values: <ul><li><strong>ADMIN</strong></li><li><strong>OWNER</strong></li><li><strong>VIEWER</strong></li></ul></td>
+</tr>
+<tr>
+<td><strong>backgroundColor</strong></td>
+<td>hex</td>
+<td>The hex color, for instance #E6F5FE</td>
 </tr>
 <tr>
 <td><strong>columnCount</strong></td>
@@ -24459,7 +24481,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Errors</td>
-<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a> (that is, not the primary email address associated with the user account), the <a href="#complete-error-code-list">Error object</a> returned contains a <strong>detail</strong> attribute set to an array of objects, each object in the array having the following attributes:<ul><li><strong>alternateEmailAddress</strong>: User&#39;s alternate email address that was specified in the request</li><li><strong>primaryEmailAddress</strong>: User&#39;s primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&nbsp;&nbsp;&nbsp;&quot;errorCode&quot;: 5xxx,<br/>&nbsp;&nbsp;&nbsp;&quot;message&quot;: &quot;u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry sharing directly to u1@smartsheet.com.&quot;<br/>&nbsp;&nbsp;&nbsp;&quot;detail&quot;: [<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;alternateEmailAddress&quot;: &quot;u1+1@smartsheet.com&quot;,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;primaryEmailAddress&quot;: &quot;u1@smartsheet.com&quot;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;&nbsp;]<br/>}</td>
+<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a>, please retry using the primary email address.</td>
 </tr>
 <tr>
 <td>Access Scope</td>
@@ -24907,7 +24929,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Errors</td>
-<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a> (that is, not the primary email address associated with the user account), the <a href="#complete-error-code-list">Error object</a> returned contains a <strong>detail</strong> attribute set to an array of objects, each object in the array having the following attributes:<ul><li><strong>alternateEmailAddress</strong>: User&#39;s alternate email address that was specified in the request</li><li><strong>primaryEmailAddress</strong>: User&#39;s primary email address that must instead be specified for the operation</li></ul>For example:<br/>{<br/>&#160;&#160;&quot;errorCode&quot;: 5xxx,<br/>&#160;&#160;&quot;message&quot;: &quot;u1+1@smartsheet.com is an alternate address of the user u1@smartsheet.com. Please retry sharing directly to u1@smartsheet.com.&quot;<br/>&#160;&#160;&quot;detail&quot;: [<br/>&#160;&#160;&#160;&#160;&#160;&#160;{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&quot;alternateEmailAddress&quot;: &quot;u1+1@smartsheet.com&quot;,<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&quot;primaryEmailAddress&quot;: &quot;u1@smartsheet.com&quot;<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#160;]<br/>}</td>
+<td>If an error occurs because the request specified one or more <a href="#alternate-email-addresses">alternate email addresses</a>, please retry using the primary email address.</td>
 </tr>
 <tr>
 <td>Access Scope</td>
@@ -28920,7 +28942,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <li>Currently, <b>&#42;.&#42;</b> is the only supported value for the <strong>events</strong> attribute. This indicates a subscription to all objects in the scope, and all events for those objects.</li>
 </ul>
 
-<p><span class="customSubHeading">Example</span></p>
+<h4 id='example'>Example</h4>
 
 <p>Consider a <a href="#webhook-object">Webhook object</a> with the following attribute values:</p>
 
@@ -28940,7 +28962,7 @@ The following diagram illustrates the process of creating and enabling a webhook
 
 <p><img src="images/v4-CreateAndEnableWebhook.png" alt="Workflow to create a webhook" /></p>
 
-<p><span class="customSubHeading">Step-by-Step:</span></p>
+<h4 id='step-by-step'>Step-by-Step:</h4>
 
 <p>The process occurs synchronously:</p>
 
@@ -29071,6 +29093,13 @@ and the webhook that initiated the verification request is disabled as described
 <p>A Subscriber has the ability to verify the integrity of a callback payload (that is, ensure that the message was not tampered with en route) and authenticate the identity of its sender (that is, ensure that the callback did indeed originate from Smartsheet). 
 For more information, see <a href="#authenticating-callbacks-optional">Authenticating Callbacks</a>.</p>
 
+<p><strong>NOTES:</strong></p>
+
+<ul>
+<li>Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.</li>
+<li>The callbackURL must use one of the following ports: 443 (default for HTTPS), 8000, 8008, 8080, or 8443. </li>
+</ul>
+
 <h2 id='event-callbacks'>Event Callbacks</h2>
 
 <blockquote>
@@ -29106,11 +29135,11 @@ For more information, see <a href="#authenticating-callbacks-optional">Authentic
 
 <aside class="warning">Any events that occur while a webhook is disabled are not communicated via callback if/when webhook is enabled.</aside>
 
-<p><span class="customSubHeading">Callback Acknowledgement</span></p>
+<h3 id='callback-acknowledgement'>Callback Acknowledgement</h3>
 
 <p>The subscriber must respond to an event callback with a 200 <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#2xx_Success">HTTP status code</a> to acknowledge that the callback was received. </p>
 
-<p><span class="customSubHeading">Retry Logic</span></p>
+<h3 id='retry-logic'>Retry Logic</h3>
 
 <p>If the subscriber fails to respond with a 200 status, depending on the response, Smartsheet may retry delivery up to 14 times. (The first 7 retry attempts occur with a frequency that&#39;s determined using exponential backoff; thereafter, retry attempts occur once every three hours until all retries have been exhausted.)</p>
 
@@ -29474,7 +29503,7 @@ Use this information to implement error handling logic according to the followin
 <tr>
 <td><strong>callbackUrl</strong></td>
 <td>string</td>
-<td>HTTPS URL where callbacks are sent.<br/><br/><strong>NOTE:</strong> Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.</td>
+<td>HTTPS URL where callbacks are sent.<br/><br/><strong>NOTES:</strong><br/><br/>Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.<br/><br/>The callbackURL must use one of the following ports: 443 (default for HTTPS), 8000, 8008, 8080, or 8443.</td>
 </tr>
 <tr>
 <td><strong>createdAt</strong></td>
