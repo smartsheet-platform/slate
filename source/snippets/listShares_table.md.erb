@@ -1,6 +1,6 @@
      |     |
 -----|-----|
-<%= SCOPE %> | READ_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional): when specified with a value of `workspaceShares`, response contains both <i>item-level</i> shares ([<b>scope</b>](#share-object)='ITEM') and <i>workspace-level</i> shares ([<b>scope</b>](#share-object)='WORKSPACE').<br/><br/><%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Share Objects](#share-object)<br/><br/>**NOTE:** If the response contains an *item-level* share (**scope**='ITEM') and a *workspace-level* share (**scope**='WORKSPACE') for the same user or group, the **id** of those two [Share Objects](#share-object) is identical, but the **scope** attribute value can be used to disambiguate the two.
+<%= PARAMETERS %> | **include** (optional): when specified with a value of **workspaceShares**, response contains both item-level [shares](#share-object) (**scope=ITEM**) and workspace-level shares (**scope=WORKSPACE**).<br/><br/><%= PAGING_PARAMETERS %>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Share objects](#share-object)<br/><br/>**NOTE:** If the response contains an item-level share (**scope=ITEM**) and a workspace-level share (**scope=WORKSPACE**) for the same user or group, the **id** of those two [Share objects](#share-object) is identical, but the **scope** attribute value can be used to disambiguate the two.
+<%= SCOPE %> | READ_SHEETS

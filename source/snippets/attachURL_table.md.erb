@@ -1,23 +1,23 @@
      |     |
 -----|-----|
-<%= SCOPE %> | WRITE_SHEETS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Attachment Object](#attachment-object) limited to the following attributes:<ul><li>name</li><li>description (applicable when attaching to sheet or row only)</li><li>url</li><li>attachmentType</li><li>attachmentSubType</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing an [Attachment Object](#attachment-object) for the newly created attachment
+<%= REQUEST %> | [Attachment object](#attachment-object) limited to the following attributes:<ul><li>**attachmentSubType**</li><li>**attachmentType**</li><li>**description** (applicable when attaching to sheet or row only)</li><li>**name**</li><li>**url**</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing an [Attachment object](#attachment-object) for the newly created attachment
+<%= SCOPE %> | WRITE_SHEETS
 
 The URL can be any of the following:
 <ul>
 <li>Normal URL (attachmentType "LINK")</li>
-<li>Google Drive URL (attachmentType "GOOGLE_DRIVE")</li>
 <li>Box.com URL (attachmentType "BOX_COM")</li>
 <li>Dropbox URL (attachmentType "DROPBOX")</li>
-<li>Evernote URL (attachmentType "EVERNOTE")</li>
 <li>Egnyte URL (attachmentType "EGNYTE")</li>
+<li>Evernote URL (attachmentType "EVERNOTE")</li>
+<li>Google Drive URL (attachmentType "GOOGLE_DRIVE")</li>
 <li>OneDrive URL (attachmentType "ONEDRIVE")</li>
 </ul>
 
-<aside class="notice">For GOOGLE_DRIVE attachments that are Google Docs, the <b>attachmentSubType</b> attribute can be optionally included to indicate the type of a file.  Valid values are: "DOCUMENT", "SPREADSHEET", "PRESENTATION", "PDF", "DRAWING".</aside>
+<aside class="notice">For <b>GOOGLE_DRIVE</b> attachments that are Google Docs, the <b>attachmentSubType</b> attribute can be optionally included to indicate the type of a file.  Valid values are: <b>DOCUMENT</b>, <b>DRAWING</b>, <b>PDF</b>, <b>PRESENTATION</b>, <b>SPREADSHEET</b></aside>
 
-<aside class="notice">For EGNYTE attachments which are Folders, the <b>attachmentSubType</b> attribute must be included with a value of "FOLDER".</aside>
+<aside class="notice">For EGNYTE attachments which are folders, the <b>attachmentSubType</b> attribute must be included with a value of <b>FOLDER</b>.</aside>
 
-<aside class="notice">When the attachment type is BOX_COM, DROPBOX, ONEDRIVE, EGNYTE (without an <b>attachmentSubType</b> specified), or GOOGLE_DRIVE (without an <b>attachmentSubType</b> specified), the mimeType is derived by the file extension specified on the <b>name</b> attribute.</aside>
+<aside class="notice">When the attachment type is <b>BOX_COM</b>, <b>DROPBOX</b>, <b>EGNYTE</b> (without an <b>attachmentSubType</b> specified), <b>GOOGLE_DRIVE</b> (without an <b>attachmentSubType</b> specified), or <b>ONEDRIVE</b>, the <b>mimeType</b> is derived by the file extension specified on the <b>name</b> attribute.</aside>

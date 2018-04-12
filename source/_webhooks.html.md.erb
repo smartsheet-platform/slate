@@ -11,7 +11,7 @@ At a high-level, it works like this:
 		<ul>
 			<li>Which Smartsheet object to monitor for events</li>
 			<li>Which events in that object should trigger a callback</li>
-			<li>The HTTPS URL (that is, "<b>callback URL</b>") where Smartsheet should send callbacks when any of the specified events occur within the scope of the specified Smartsheet object. (Note: Smartsheet webhooks do not support callbacks to servers using self-signed certificates)</li>
+			<li>The HTTPS URL (that is, "callback URL") where Smartsheet should send callbacks when any of the specified events occur within the scope of the specified Smartsheet object. (<b>NOTE:</b> Smartsheet webhooks do not support callbacks to servers using self-signed certificates)</li>
 		</ul> 
 		<br/>
 		
@@ -23,9 +23,9 @@ At a high-level, it works like this:
 		</ul>
 		<br/>
 	</li>
-	<li><span class="customInstructionsHeading">When any of the specified events occur within an object that is being monitored by a webhook, Smartsheet sends an <code>HTTP POST</code> (that is, "callback") to the <b>callback URL</b> that is associated with the Webhook.</span><br/>
+	<li><span class="customInstructionsHeading">When any of the specified events occur within an object that is being monitored by a webhook, Smartsheet sends an <b>HTTP POST</b> (that is, "callback") to the callback URL that is associated with the webhook.</span><br/>
 		<ul>
-			<li><i>Note:</i> The callback payload is a "skinny" payload -- it indicates which objects changed and the type of events that occurred, but does not contain any data from the objects themselves.</li>
+			<li><i>NOTE:</i> The callback payload is a "skinny" payload -- it indicates which objects changed and the type of events that occurred, but does not contain any data from the objects themselves.</li>
 		</ul> 
 		<br/>
 	</li>
@@ -44,67 +44,67 @@ Webhooks can be created and managed via [Direct API Access](#webhooks-reference)
 
 A webhook that is created via Direct API Access:
 
-* is owned by the User who created it
-* can be managed only by the User who created it
-* is not affected if the access token that was used to create it is revoked, as long as the User remains active
+* is owned by the user who created it
+* can be managed only by the user who created it
+* is not affected if the access token that was used to create it is revoked, as long as the user remains active
 
 A webhook that is created by a [third-party app](#third-party-app-development):
 
-* is owned by the User who authorized the third-party app (and is associated with the third-party app)
-* can be managed by the third-party app (as long as it maintains authorization) OR by the User who owns it
+* is owned by the user who authorized the third-party app (and is associated with the third-party app)
+* can be managed by the third-party app (as long as it maintains authorization) or by the user who owns it
 * is permanently disabled if the third-party app's permissions are revoked
 
 ## Webhook Scope & Events
 
 A webhook monitors the specified **scope** for the specified **events**. 
 
-A [Webhook's](#webhook-object) **scope** attribute indicates the scope of the subscription. It is specified when [creating a webhook](#create-webhook), and cannot subsequently be changed. 
+A [Webhook object's](#webhook-object) **scope** attribute indicates the scope of the subscription. It is specified when [creating a webhook](#create-webhook), and cannot subsequently be changed. 
 
-* Currently, "sheet" is the only supported value for the **scope** attribute. 
+* Currently, **sheet** is the only supported value for the **scope** attribute. 
 
-A [Webhook's](#webhook-object) **event** attribute indicates the set of events that a webhook is subscribed to (that is, which events trigger a callback).
+A [Webhook object's](#webhook-object) **event** attribute indicates the set of events that a webhook is subscribed to (that is, which events trigger a callback).
 
 * Events are represented as a dot-separated string in the format "*object*.*event*", where an asterisk (&#42;) can be used to represent "all objects" or "all events".
-* Currently, "&#42;.&#42;" is the only supported value for the **events** attribute. This indicates a subscription to all objects in the scope, and all events for those objects.
+* Currently, <b>&#42;.&#42;</b> is the only supported value for the **events** attribute. This indicates a subscription to all objects in the scope, and all events for those objects.
 
-<span class="customSubHeading">Example</span>
+#### Example
 
-Consider a [Webhook](#webhook-object) with the following attribute values:
+Consider a [Webhook object](#webhook-object) with the following attribute values:
 
 * **scopeObjectId** = 12345678901234
 * **scope** = "sheet" 
 * **events** = "&#42;.&#42;" 
 
-This webhook monitors the specified Sheet (id: 12345678901234) for all types of events. For example, if a row is added to the sheet, cell values are updated in the sheet, a column is deleted from the sheet, etc., a callback is sent to the webhook's **callbackUrl**.
+This webhook monitors the specified sheet (id: 12345678901234) for all types of events. For example, if a row is added to the sheet, cell values are updated in the sheet, a column is deleted from the sheet, etc., a callback is sent to the webhook's **callbackUrl**.
 
 # Creating a Webhook
 
 An API client can create a webhook by using the [Create Webhook](#create-webhook) operation. A newly created webhook is disabled by default.
 After successfully creating a webhook, the API client must subsequently initiate and complete the [verification process](#webhook-verification) before the webhook is enabled. 
-The following diagram illustrates the process of creating and enabling a Webhook. 
+The following diagram illustrates the process of creating and enabling a webhook. 
 
-<img src="images/v4-CreateAndEnableWebhook.png" alt="Workflow to create a Webhook" />
+<img src="images/v4-CreateAndEnableWebhook.png" alt="Workflow to create a webhook" />
 
-<span class="customSubHeading">Step-by-Step:</span>
+#### Step-by-Step:
 
 The process occurs synchronously:
 
-1. API Client submits a [Create Webhook](#create-webhook) request.
+1. API client submits a [Create Webhook](#create-webhook) request.
 
-2. Smartsheet creates the webhook, but does not initially enable the webhook (`enabled: false` and `status: "NEW_NOT_VERIFIED"`).
+2. Smartsheet creates the webhook, but does not initially enable the webhook (**enabled: false** and **status: "NEW_NOT_VERIFIED"**).
 
-3. To initiate the verification process, the API Client submits an [Update Webhook](#update-webhook) request to specify `enabled: true`. (*Note*: The API Client does not receive a response to this request until the Verification process (steps 4 and 5) has completed.)
+3. To initiate the verification process, the API client submits an [Update Webhook](#update-webhook) request to specify **enabled: true**. (**NOTE:** The API client does not receive a response to this request until the verification process (steps 4 and 5) has completed.)
 
-4. When Smartsheet receives the request to enable the webhook, it sends a [Verification Request](#webhook-verification) to the Subscriber (that is, to the `callbackUrl` that the API Client specified in the **Create Webhook** request). 
-The request specifies a unique random value in the **Smartsheet-Hook-Challenge** header and contains only `challenge` and `webhookId` in the request body. The `challenge` value is a repeat of the header value for API clients that don't interpret header values.
+4. When Smartsheet receives the request to enable the webhook, it sends a [verification request](#webhook-verification) to the subscriber (that is, to the **callbackUrl** that the API client specified in the Create Webhook request). 
+The request specifies a unique random value in the **Smartsheet-Hook-Challenge** header and contains only **challenge** and **webhookId** in the request body. The **challenge** value is a repeat of the header value for API clients that don't interpret header values.
 
-5. The Subscriber responds to the Verification Request by echoing back the same unique random value in the **Smartsheet-Hook-Response** header of the response. For API clients that don't interpret header values, you can also send a JSON body with a `smartsheetHookResponse` attribute and the same value that would have been in the header. 
+5. The subscriber responds to the verification request by echoing back the same unique random value in the **Smartsheet-Hook-Response** header of the response. For API clients that don't interpret header values, you can also send a JSON body with a **smartsheetHookResponse** attribute and the same value that would have been in the header. 
 
-6. Once the Subscriber has successfully acknowledged the Verification Request, Smartsheet enables the webhook and responds to the API Client's **Update Webhook** request to confirm that the webhook has been enabled (`enabled: true` and `status: "ENABLED"`). 
+6. Once the subscriber has successfully acknowledged the verification request, Smartsheet enables the webhook and responds to the API client's Update Webhook request to confirm that the webhook has been enabled (**enabled: true** and **status: "ENABLED"**). 
 
 ## Webhook Verification
 
-> Verification Request (from Smartsheet):
+> Verification request (from Smartsheet):
 
 ```test
 POST [callbackUrl]
@@ -115,7 +115,7 @@ Smartsheet-Hook-Challenge: d78dd1d3-01ce-4481-81de-92b4f3aa5ab1
 }
 ```
 
-> Verification Response (by Subscriber):
+> Verification response (by subscriber):
 
 ```test
 HTTP status: 200 OK
@@ -125,52 +125,57 @@ Smartsheet-Hook-Response: d78dd1d3-01ce-4481-81de-92b4f3aa5ab1
 }
 ```
 
-When an API Client attempts to enable a webhook, Smartsheet sends a verification request to the webhook's **callbackUrl** to verify that the Subscriber expects and is able to successfully receive callbacks. 
-The request specifies a unique random value in the **Smartsheet-Hook-Challenge** header and contains a JSON object in the request body with only `challenge` and `webhookId` attributes in the request body. The `challenge` attribute is a repeat of the header value for API clients that don't interpret header values.
+When an API client attempts to enable a webhook, Smartsheet sends a verification request to the webhook's **callbackUrl** to verify that the subscriber expects and is able to successfully receive callbacks. 
+The request specifies a unique random value in the **Smartsheet-Hook-Challenge** header and contains a JSON object in the request body with only **challenge** and **webhookId** attributes in the request body. The **challenge** attribute is a repeat of the header value for API clients that don't interpret header values.
 
-* To verify the webhook, the Subscriber's response to the Verification Request must return a 200 HTTP status code and must echo back the same unique random value in the **Smartsheet-Hook-Response** header of the response or with a JSON `smartsheetHookResponse` attribute. Once Smartsheet receives this verification response, the webhook is enabled (`enabled: true` and `status: "ENABLED"`).
+* To verify the webhook, the subscriber's response to the verification request must return a 200 HTTP status code and must echo back the same unique random value in the **Smartsheet-Hook-Response** header of the response or with a JSON **smartsheetHookResponse** attribute. Once Smartsheet receives this verification response, the webhook is enabled (**enabled: true** and **status: "ENABLED"**).
 
-* If the Subscriber does not successfully respond to the verification request, the webhook remains disabled (`enabled: false` and `status: "DISABLED_VERIFICATION_FAILED"`).
+* If the subscriber does not successfully respond to the verification request, the webhook remains disabled (**enabled: false** and **status: "DISABLED_VERIFICATION_FAILED"**).
 
 When a webhook is initially [created through the API](#create-webhook), the response contains the webhook's Id.  If you wish to guarantee that your server only receives callbacks for webhooks that you created,
-you can check the verification request's `webhookId` attribute against your list of created webhook Ids.  If the Id is not in the list, return a response with a non-200 status code (for example, 403 Forbidden),
+you can check the verification request's **webhookId** attribute against your list of created webhook Ids.  If the Id is not in the list, return a response with a non-200 status code (for example, 403 Forbidden),
 and the webhook that initiated the verification request is disabled as described above.
 
-<aside class="notice"><b>IMPORTANT</b>: ONGOING VERIFICATION. Once a webhook has been enabled, Smartsheet sends a verification request to the webhook's <b>callbackUrl</b> once every 100 callbacks. The Subscriber should respond to the verification request as described above -- failure to do so results in the webhook being disabled (<code>enabled: false</code> and <code>status: "DISABLED_VERIFICATION_FAILED"</code>).</aside>
+<aside class="notice"><b>IMPORTANT:</b> ONGOING VERIFICATION. Once a webhook has been enabled, Smartsheet sends a verification request to the webhook's <b>callbackUrl</b> once every 100 callbacks. The subscriber should respond to the verification request as described above -- failure to do so results in the webhook being disabled (<b>enabled: false</b> and <b>status: "DISABLED_VERIFICATION_FAILED"</b>).</aside>
 
 # Webhook Status
 
 A [Webhook](#webhook-object) object's **enabled** attribute indicates whether a webhook is enabled or disabled, while the **status** attribute describes the *reason* that the webhook is enabled or disabled.
 
-<aside class="notice"><b>Note:</b><ul><li>When a Webhook's <b>enabled</b> attribute is set to <code>true</code>, Smartsheet is monitoring for the specified events and sends a <a href="#event-callbacks">callback</a> to the <b>callbackUrl</b> when the events occur.</li><li>When a Webhook's <b>enabled</b> attribute is set to <code>false</code>, Smartsheet is NOT monitoring for the specified events and does NOT send a callback to the <b>callbackUrl</b> when the events occur. Depending on the value of the <b>status</b> attribute, it may be possible to (re-)enable the Webhook. (See below for details).</li></ul></aside>
-
 The following table lists all possible combinations of **enabled** and **status** attribute values.
 
 Webhook.enabled | Webhook.status | Meaning | Notes
 ----- | ----- | ------ | -----
-true  | ENABLED | Webhook is active. | 
-false | NEW_NOT_VERIFIED | Webhook has been created but is not enabled because it has not yet been verified. |  Owner can re-enable the webhook by using the [Update Webhook](#update-webhook) operation to set **enabled** to `true`. Once the subscriber successfully acknowledges the [verification request](#webhook-verification), the webhook is enabled.
-false  | DISABLED_BY_OWNER | Webhook has been disabled by the owner. | Owner can re-enable the webhook by using the [Update Webhook](#update-webhook) operation to set **enabled** to `true`. Once the subscriber successfully acknowledges the [verification request](#webhook-verification), the webhook is enabled.
-false  | DISABLED_VERIFICATION_FAILED | Webhook verification has failed. |  Owner can re-enable the webhook by using the [Update Webhook](#update-webhook) operation to set **enabled** to `true`. Once the subscriber successfully acknowledges the [verification request](#webhook-verification), the webhook is enabled.
-false  | DISABLED_CALLBACK_FAILED | Webhook has been disabled because callback was not successfully delivered to the Callback URL. |  Owner can re-enable the webhook by using the [Update Webhook](#update-webhook) operation to set **enabled** to `true`. Once the subscriber successfully acknowledges the [verification request](#webhook-verification), the webhook is enabled.
-false  | DISABLED_APP_REVOKED | Webhook has been disabled because the third-party app associated with the webhook has had its access revoked. | This is a terminal state (that is, webhook in this state cannot be re-enabled, and attempts to do so result in error code 1153). If the third-party app's access is subsequently restored, it must create new webhooks.
-false  | DISABLED_SCOPE_INACCESSIBLE | Webhook has been disabled because its owner lost access to the corresponding data in Smartsheet (either because the object was deleted or sharing permissions were revoked). | Webhook is automatically re-enabled if access to data is restored (for example, if deleted object is restored or sharing permissions are restored).
-false  | DISABLED_ADMINISTRATIVE | Webhook has been disabled by Smartsheet support. | A webhook in this state can only be re-enabled by Smartsheet (contact <a href="mailto:api@smartsheet.com">api@smartsheet.com</a>).  Attempting to re-enable a webhook in this state results in error code 1154.
+false  | **DISABLED_ADMINISTRATIVE** | Webhook has been disabled by Smartsheet support. | A webhook in this state can only be re-enabled by Smartsheet (contact <a href="mailto:api@smartsheet.com">api@smartsheet.com</a>).  Attempting to re-enable a webhook in this state results in error code 1154.
+false  | **DISABLED_APP_REVOKED** | Webhook has been disabled because the third-party app associated with the webhook has had its access revoked. | This is a terminal state (that is, webhook in this state cannot be re-enabled, and attempts to do so result in error code 1153). If the third-party app's access is subsequently restored, it must create new webhooks.
+false  | **DISABLED_BY_OWNER** | Webhook has been disabled by the owner. | Owner can re-enable the webhook by using the [Update Webhook](#update-webhook) operation to set **enabled** to **true**. Once the subscriber successfully acknowledges the [verification request](#webhook-verification), the webhook is enabled.
+false  | **DISABLED_CALLBACK_FAILED** | Webhook has been disabled because callback was not successfully delivered to the callback URL. |  Owner can re-enable the webhook by using the [Update Webhook](#update-webhook) operation to set **enabled** to **true**. Once the subscriber successfully acknowledges the [verification request](#webhook-verification), the webhook is enabled.
+false  | **DISABLED_SCOPE_INACCESSIBLE** | Webhook has been disabled because its owner lost access to the corresponding data in Smartsheet (either because the object was deleted or sharing permissions were revoked). | Webhook is automatically re-enabled if access to data is restored (for example, if deleted object is restored or sharing permissions are restored).
+false  | **DISABLED_VERIFICATION_FAILED** | Webhook verification has failed. |  Owner can re-enable the webhook by using the [Update Webhook](#update-webhook) operation to set **enabled** to **true**. Once the subscriber successfully acknowledges the [verification request](#webhook-verification), the webhook is enabled.
+true  | **ENABLED** | Webhook is active. | 
+false | **NEW_NOT_VERIFIED** | Webhook has been created but is not enabled because it has not yet been verified. |  Owner can re-enable the webhook by using the [Update Webhook](#update-webhook) operation to set **enabled** to **true**. Once the subscriber successfully acknowledges the [verification request](#webhook-verification), the webhook is enabled.
+
+<aside class="notice"><b>NOTES:</b><ul><li>When a Webhook object's <b>enabled</b> attribute is set to <b>true</b>, Smartsheet is monitoring for the specified events and sends a <a href="#event-callbacks">callback</a> to the <b>callbackUrl</b> when the events occur.</li><li>When a Webhook object's <b>enabled</b> attribute is set to <b>false</b>, Smartsheet is not monitoring for the specified events and does not send a callback to the <b>callbackUrl</b> when the events occur. Depending on the value of the <b>status</b> attribute, it may be possible to (re-)enable the webhook. (See below for details).</li></ul></aside>
 
 # Webhook Callbacks
 
-A "callback" is the notification that Smartsheet sends to a webhook's **callbackUrl**. There are two types of callbacks:
+A callback is the notification that Smartsheet sends to a webhook's **callbackUrl**. There are two types of callbacks:
 
-* [**Event** callback](#event-callbacks): Alerts the subscriber when the specified events have occurred in Smartsheet. This is the most common type of callback.
+* [Event callback](#event-callbacks): Alerts the subscriber when the specified events have occurred in Smartsheet. This is the most common type of callback.
 
-* [**Status Change** callback](#status-change-callbacks): Alerts the subscriber that a webhook has been automatically disabled due to loss of access or automatically re-enabled due to restoration of access.
+* [Status Change callback](#status-change-callbacks): Alerts the subscriber that a webhook has been automatically disabled due to loss of access or automatically re-enabled due to restoration of access.
 
 A Subscriber has the ability to verify the integrity of a callback payload (that is, ensure that the message was not tampered with en route) and authenticate the identity of its sender (that is, ensure that the callback did indeed originate from Smartsheet). 
 For more information, see [Authenticating Callbacks](#authenticating-callbacks-optional).
 
+**NOTES:**
+
+* Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.
+* The callbackURL must use one of the following ports: 443 (default for HTTPS), 8000, 8008, 8080, or 8443. 
+
 ## Event Callbacks
 
-> Example - Event callback (row created):
+> Example: event callback (row created)
 
 ```json
 {
@@ -198,17 +203,17 @@ For more information, see [Authenticating Callbacks](#authenticating-callbacks-o
 }
 ```
 
-Smartsheet sends an Event callback to notify the Subscriber when the specified events occur in Smartsheet.
+Smartsheet sends an event callback to notify the subscriber when the specified events occur in Smartsheet.
 
-<aside class="warning">Any events that occur while a webhook is disabled are NOT communicated via callback if/when webhook is enabled.</aside>
+<aside class="warning">Any events that occur while a webhook is disabled are not communicated via callback if/when webhook is enabled.</aside>
 
-<span class="customSubHeading">Callback Acknowledgement</span>
+### Callback Acknowledgement
 
-The Subscriber must respond to an event callback with a 200 [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#2xx_Success) to acknowledge that the callback was received. 
+The subscriber must respond to an event callback with a 200 [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#2xx_Success) to acknowledge that the callback was received. 
 
-<span class="customSubHeading">Retry Logic</span>
+### Retry Logic
 
-If the Subscriber fails to respond with a 200 status, depending on the response, Smartsheet may retry delivery up to 14 times. (The first 7 retry attempts occur with a frequency that's determined using exponential backoff; thereafter, retry attempts occur once every three hours until all retries have been exhausted.)
+If the subscriber fails to respond with a 200 status, depending on the response, Smartsheet may retry delivery up to 14 times. (The first 7 retry attempts occur with a frequency that's determined using exponential backoff; thereafter, retry attempts occur once every three hours until all retries have been exhausted.)
 
 Subscriber response | Is retried?
 ----- | -----
@@ -220,12 +225,12 @@ HTTP 500 through 599 | Yes
 Any other HTTP status | No
 Request timeout | Yes
 
-If the response is not retriable or retry attempts have been exhausted, the webhook is disabled (`enabled: false` and `status: "DISABLED_CALLBACK_FAILED"`).
+If the response is not retriable or retry attempts have been exhausted, the webhook is disabled (**enabled: false** and **status: "DISABLED_CALLBACK_FAILED"**).
 A webhook in this state can be re-enabled if the subscriber completes the verification process. (See [Webhook Status](#webhook-status) for details.)
 
 ## Status Change Callbacks
 
-> Status Change callback (access lost):
+> Status change callback (access lost):
 
 ```json
 {
@@ -238,7 +243,7 @@ A webhook in this state can be re-enabled if the subscriber completes the verifi
 }
 ```
 
-> Status Change callback (access restored):
+> Status change callback (access restored):
 
 ```json
 {
@@ -252,11 +257,11 @@ A webhook in this state can be re-enabled if the subscriber completes the verifi
 ```
 
 If a webhook's owner loses access to the object that a webhook is monitoring (either because the object was deleted or the webhook owner's access to the object was revoked in Smartsheet), 
-Smartsheet automatically disables the webhook and sends a Status Change callback to alert the Subscriber of this change in status. 
+Smartsheet automatically disables the webhook and sends a status change callback to alert the subscriber of this change in status. 
 The **newWebhookStatus** attribute indicates that the webhook is now disabled (because the scope is inaccessible).
 
 If the webhook owner's access to the object is subsequently restored, 
-Smartsheet automatically re-enables the webhook and sends a Status Change callback to alert the Subscriber of this change in status. 
+Smartsheet automatically re-enables the webhook and sends a status change callback to alert the subscriber of this change in status. 
 The **newWebhookStatus** attribute indicates that the webhook is now enabled.
 
 ## Authenticating Callbacks (optional)
@@ -280,7 +285,7 @@ private String calculateHmac(String sharedSecret, String callbackBody)throws Gen
 }
 ```
 
-A Subscriber has the ability to verify the integrity of a callback payload (that is, ensure that the message was not tampered with en route) and authenticate the identity of its sender (that is, ensure that the callback did indeed originate from Smartsheet).
+A subscriber has the ability to verify the integrity of a callback payload (that is, ensure that the message was not tampered with en route) and authenticate the identity of its sender (that is, ensure that the callback did indeed originate from Smartsheet).
 
 When you create a new [webhook](#webhook-object), it is assigned a randomly generated **sharedSecret** value.  The shared secret is used by Smartsheet to sign callback payloads, and should not be shared with any third parties.
 
@@ -298,7 +303,7 @@ If the values match, you can be sure the request originated from Smartsheet and 
 
 # Preventing Infinite Loops
 
-> Example Request: Smartsheet-Change-Agent header
+> Example request: Smartsheet-Change-Agent header
 
 ```shell
 
@@ -341,7 +346,7 @@ response = smartsheet.sheets.rows.update(
 It's possible that an application which subscribes to callbacks (using webhooks) might react to those callbacks by using the API to make additional changes in Smartsheet. 
 But, consider the following scenario:
 
-1. **App1** creates a Webhook to monitor **Sheet-A** for changes, specifying an **App-1** URL as the **callbackUrl** for the Webhook.
+1. **App1** creates a webhook to monitor **Sheet-A** for changes, specifying an **App-1** URL as the **callbackUrl** for the webhook.
 
 2. **App-1** updates **Sheet-A** using the API.
 
@@ -356,10 +361,10 @@ Here's how it works:
 
 * An API client includes the **Smartsheet-Change-Agent** header in any API request that adds, updates, or deletes data in Smartsheet.
   * The header value should be set to a string that the API client recognizes as identifying itself.
-* If any [Event callbacks](#event-callbacks) fire as a result of an API request that contains the **Smartsheet-Change-Agent** header, the value of the **Smartsheet-Change-Agent** header is included in the [callback](#callbackevent-object) in the value of the **changeAgent** attribute.
-* If a webhook Subscriber receives a [callback](#callbackevent-object) that contains the **changeAgent** attribute, it should evaluate the attribute value:
-  * If the attribute value's comma-delimited list contains the Subscriber API client's change agent value, this indicates that the change which triggered the callback **WAS** caused by the Subscriber itself, and the Subscriber can choose to ignore the callback, thus preventing an infinite loop.
-  * Else, the change which triggered the callback was **NOT** caused by the Subscriber itself, and if the Subscriber is going to subsequently react to the callback by making a change in Smartsheet (via API request), the API client should append a comma and its own identifier to the original attribute value, and pass that value through using the **Smartsheet-Change-Agent** header of the API request. Doing so protects against cross-system infinite loops.
+* If any [event callbacks](#event-callbacks) fire as a result of an API request that contains the **Smartsheet-Change-Agent** header, the value of the **Smartsheet-Change-Agent** header is included in the [callback](#callbackevent-object) in the value of the **changeAgent** attribute.
+* If a webhook subscriber receives a [callback](#callbackevent-object) that contains the **changeAgent** attribute, it should evaluate the attribute value:
+  * If the attribute value's comma-delimited list contains the subscriber API client's change agent value, this indicates that the change which triggered the callback *was* caused by the subscriber itself, and the subscriber can choose to ignore the callback, thus preventing an infinite loop.
+  * Else, the change which triggered the callback was *not* caused by the subscriber itself, and if the subscriber is going to subsequently react to the callback by making a change in Smartsheet (via API request), the API client should append a comma and its own identifier to the original attribute value, and pass that value through using the **Smartsheet-Change-Agent** header of the API request. Doing so protects against cross-system infinite loops.
 
 <aside class="notice">The <b>Smartsheet-Change-Agent</b> header value has a maximum length of 512 characters. If its length exceeds 512 characters, the excess is trimmed from the front of the string, so that the most recent agent information remains.</aside>
 
@@ -377,7 +382,7 @@ HTTP status code | Smartsheet errorCode | Smartsheet message | Recommended Actio
 400 | 1151 | Scope '{0}', object id {1} was not found. | Do not retry without fixing the problem.
 400 | 1152 | Only URLs with a protocol of 'https' are supported for attribute '{0}'. | Do not retry without fixing the problem.
 403 | 1153 | This webhook cannot be enabled because access was revoked for the application that created it. | <span class="doNotRetry">Do not retry.</span>
-403 | 1154 | Please contact api@smartsheet.com in order to enable this Webhook. | <span class="doNotRetry">Do not retry.</span>
+403 | 1154 | Please contact api@smartsheet.com in order to enable this webhook. | <span class="doNotRetry">Do not retry.</span>
 
 # <span class="customTOCSectionHeading">Webhooks Reference</span>
 
@@ -391,26 +396,26 @@ For more information, see [Intro to Webhooks](#intro-to-webhooks).
 
      |     |     |
 -----|-----|-----|
-**nonce** | string | Random value that is distinct for each Callback
-**timestamp** | timestamp | Time that the callback was generated
-**webhookId** | number | Id of the corresponding Webhook
-**scope** | string | Scope of the Webhook. Currently, the only supported value is "sheet".
 **scopeObjectId** | number | Id of the object that corresponds to **scope**
-**events** | [CallbackEvent](#callbackevent-object)[] | Array of CallbackEvent Objects
-**newWebhookStatus** | string | New status of the corresponding Webhook <br/>Only returned for "Webhook Status Change" [callbacks](#webhook-callbacks) (null for "Event" Callbacks).
+**webhookId** | number | Id of the corresponding webhook
+**events** | [CallbackEvent](#callbackevent-object)[] | Array of CallbackEvent objects
+**newWebhookStatus** | string | New status of the corresponding webhook <br/>Only returned for webhook status change [callbacks](#webhook-callbacks) (null for event callbacks).
+**nonce** | string | Random value that is distinct for each callback
+**scope** | string | Scope of the webhook. Currently, the only supported value is **sheet**.
+**timestamp** | timestamp | Time that the callback was generated
 
 ## CallbackEvent Object
 
      |     |     |
 -----|-----|-----|
-**objectType** | string | Type of object for which event occurred. One of the following values:<ul><li>sheet</li><li>column</li><li>row</li><li>cell</li><li>attachment</li><li>discussion</li><li>comment</li></ul>
-**eventType** | string | Type of event that occurred. One of the following values:<ul><li>created</li><li>updated</li><li>deleted</li></ul>
-**id** | number | Id of the object that corresponds to **objectType**. Omitted if **objectType** is "cell". 
-**rowId** | number | Only present if **objectType** is "cell". The Id of the row where the cell is located.
-**columnId** | number | Only present if **objectType** is "cell". The Id of the column where the cell is located.
+**id** | number | Id of the object that corresponds to **objectType**. Omitted if **objectType** is **cell**. 
+**columnId** | number | Only present if **objectType** is **cell**. The Id of the column where the cell is located.
+**rowId** | number | Only present if **objectType** is **cell**. The Id of the row where the cell is located.
 **userId** | number | The user Id of the person who caused this event.
-**timestamp** | timestamp | Time that this event occurred. A callback may contain events with different timestamps, as multiple separate events may be aggregated into a single callback request.
+**objectType** | string | Type of object for which event occurred. One of the following values:<ul><li>**attachment**</li><li>**cell**</li><li>**column**</li><li>**comment**</li><li>**discussion**</li><li>**row**</li><li>**sheet**</li></ul>
 **changeAgent** | string | A comma-delimited list of values that uniquely identify the agents responsible for making the changes that caused the callback to occur. Only present if the change agent included the **Smartsheet-Change-Agent** header in the API request that changed data in Smartsheet. For more information, see [Preventing Infinite Loops](#preventing-infinite-loops). 
+**eventType** | string | Type of event that occurred. One of the following values: **created**, **deleted**, **updated**
+**timestamp** | timestamp | Time that this event occurred. A callback may contain events with different timestamps, as multiple separate events may be aggregated into a single callback request.
 
 ## SharedSecret Object
 
@@ -423,33 +428,33 @@ For more information, see [Intro to Webhooks](#intro-to-webhooks).
      |     |     |
 -----|-----|-----|
 **id** | number | Webhook Id
-**name** | string | Webhook name
-**apiClientId** | string | API Client Id corresponding to third-party app that created the Webhook. Read-only. Only present if webhook was created by third-party app.
-**apiClientName** | string | API Client Name corresponding to third-party app that created the Webhook. Read-only. Only present if webhook was created by third-party app.
-**scope** | string | Scope of the subscription. Currently, the only supported value is "sheet". Specified when a webhook is created and cannot be changed.
+**apiClientId** | string | API client Id corresponding to third-party app that created the webhook. Read-only. Only present if webhook was created by third-party app.
 **scopeObjectId** | number | Id of the object that is subscribed to. Specified when a webhook is created and cannot be changed.
-**events** | string[] | Array of the events that are subscribed to. Currently, must be an array of size 1 that contains the string value "&#42;.&#42;", which means "all objects" and "all events".
-**callbackUrl** | string | HTTPS URL where callbacks are sent.<br/><br/>**Note:** Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.
-**sharedSecret** | string | Shared secret for this webhook, randomly generated by Smartsheet. Read-only. See [Authenticating Callbacks](#authenticating-callbacks-optional) for details about how this value can be used.
-**enabled** | Boolean | Flag indicating whether the Webhook is on (`true`) or off (`false`)
-**status** | string | Webhook status. Read-only. See [Webhook Status](#webhook-status) for list of possible values.
-**disabledDetails** | string | Details about the reason the Webhook was disabled. Read-only. Only present when **enabled**=`false`.
-**version** | number | Webhook version. Currently, the only supported value is 1. This attribute is intended to ensure backward compatibility as new webhook functionality is released. For example, a webhook with a version of 1 is guaranteed to always be sent callback objects that are compatible with the version 1 release of webhooks.
-**stats** | [WebhookStats](#webhookstats-object) | Useful statistics for this webhook.  Only returned once this webhook has performed a callback attempt.  Read-only.
+**apiClientName** | string | API client name corresponding to third-party app that created the webhook. Read-only. Only present if webhook was created by third-party app.
+**callbackUrl** | string | HTTPS URL where callbacks are sent.<br/><br/>**NOTES:**<br/><br/>Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.<br/><br/>The callbackURL must use one of the following ports: 443 (default for HTTPS), 8000, 8008, 8080, or 8443. 
 **createdAt** | timestamp | Time of creation. Read-only.
+**disabledDetails** | string | Details about the reason the webhook was disabled. Read-only. Only present when **enabled=false**.
+**enabled** | Boolean | Indicates whether the webhook is on (**true**) or off (**false**)
+**events** | string[] | Array of the events that are subscribed to. Currently, must be an array of size 1 that contains the string value "&#42;.&#42;", which means "all objects" and "all events".
 **modifiedAt** | timestamp | Time of last modification. Read-only.
+**name** | string | Webhook name
+**scope** | string | Scope of the subscription. Currently, the only supported value is **sheet**. Specified when a webhook is created and cannot be changed.
+**sharedSecret** | string | Shared secret for this webhook, randomly generated by Smartsheet. Read-only. See [Authenticating Callbacks](#authenticating-callbacks-optional) for details about how this value can be used.
+**stats** | [WebhookStats](#webhookstats-object) | Useful statistics for this webhook.  Only returned once this webhook has performed a callback attempt.  Read-only.
+**status** | string | Webhook status. Read-only. See [Webhook Status](#webhook-status) for list of possible values.
+**version** | number | Webhook version. Currently, the only supported value is 1. This attribute is intended to ensure backward compatibility as new webhook functionality is released. For example, a webhook with a version of 1 is guaranteed to always be sent callback objects that are compatible with the version 1 release of webhooks.
 
 ## WebhookStats Object
 
      |     |     |
 -----|-----|-----|
-**lastCallbackAttemptRetryCount** | number | The number of retries the webhook had performed as of the last callback attempt.
 **lastCallbackAttempt** | timestamp | When this webhook last made a callback attempt.
+**lastCallbackAttemptRetryCount** | number | The number of retries the webhook had performed as of the last callback attempt.
 **lastSuccessfulCallback** | timestamp | When this webhook last made a successful callback.
 
 # Create Webhook
 
-> Example Request: Create Webhook
+> Example request: create webhook
 
 ```shell
 curl https://api.smartsheet.com/2.0/webhooks \
@@ -549,7 +554,7 @@ response = smartsheet.webhooks.create(
 new_webhook = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -574,20 +579,20 @@ new_webhook = response[:result]
 
 `POST /webhooks`
 
-Creates a new Webhook. 
-
-<aside class="notice">A Webhook is not enabled by default when it is created. Once you've created a Webhook, you can enable it by using the <a href="#update-webhook">Update Webhook</a> operation to set <b>enabled</b> to <code>true</code>.</aside>
+Creates a new webhook. 
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WEBHOOKS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Webhook Object](#webhook-object), limited to the following attributes:<ul><li>name (required)</li><li>callbackUrl (required)</li><li>scope (required)</li><li>scopeObjectId (required)</li><li>events (required)</li><li>version (required)</li></ul>
-<%= RETURNS %> | [Result Object](#result-object), containing a [Webhook Object](#webhook-object) for the newly created Webhook
+<%= REQUEST %> | [Webhook object](#webhook-object), limited to the following attributes:<ul><li>**callbackUrl** (required)</li><li>**events** (required)</li><li>**name** (required)</li><li>**scope** (required)</li><li>**scopeObjectId** (required)</li><li>**version** (required)</li></ul>
+<%= RETURNS %> | [Result object](#result-object), containing a [Webhook object](#webhook-object) for the newly created webhook
+<%= SCOPE %> | ADMIN_WEBHOOKS
+
+<aside class="notice">A webhook is not enabled by default when it is created. Once you've created a webhook, you can enable it by using the <a href="#update-webhook">Update Webhook</a> operation to set <b>enabled</b> to <b>true</b>.</aside>
 
 # Delete Webhook
 
-> Example Request: Delete Webhook
+> Example request: delete webhook
 
 ```shell
 curl https://api.smartsheet.com/2.0/webhooks/{webhookId} \
@@ -634,7 +639,7 @@ smartsheet.webhooks.delete(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -645,19 +650,19 @@ smartsheet.webhooks.delete(
 
 `DELETE /webhooks/{webhookId}`
 
-Deletes the Webhook specified in the URL.
+Deletes the webhook specified in the URL.
 
-<aside class="notice">Using this operation permanently deletes the specified Webhook. To temporarily disable a webhook, use the <a href="#update-webhook">Update Webhook</a> operation to set <b>enabled</b> to <code>false</code>.</aside>
+<aside class="notice">Using this operation permanently deletes the specified webhook. To temporarily disable a webhook, use the <a href="#update-webhook">Update Webhook</a> operation to set <b>enabled</b> to <b>false</b>.</aside>
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WEBHOOKS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result Object](#result-object)
+<%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | ADMIN_WEBHOOKS
 
 # Get Webhook
 
-> Example Request: Get Webhook
+> Example request: get webhook
 
 ```shell
 curl https://api.smartsheet.com/2.0/webhooks/{webhookId} \
@@ -703,7 +708,7 @@ Webhook = smartsheet.webhooks.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -724,17 +729,17 @@ Webhook = smartsheet.webhooks.get(
 
 `GET /webhooks/{webhookId}`
 
-Gets the Webhook specified in the URL.
+Gets the webhook specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WEBHOOKS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Webhook Object](#webhook-object)
+<%= RETURNS %> | [Webhook object](#webhook-object)
+<%= SCOPE %> | ADMIN_WEBHOOKS
 
 # List Webhooks
 
-> Example Request: List Webhooks
+> Example request: list webhooks
 
 ```shell
 curl https://api.smartsheet.com/2.0/webhooks \
@@ -782,7 +787,7 @@ response = smartsheet.webhooks.list
 webhooks = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -810,19 +815,19 @@ webhooks = response[:data]
 
 `GET /webhooks`
 
-Gets the list of all Webhooks that the user owns (if a [user-generated token](#authentication-and-access-tokens) was used to make the request) 
-or the list of all Webhooks associated with the third-party app (if a [third-party app](#third-party-app-development) made the request). 
-Items in the response are ordered by API Client name > Webhook name > creation date.
+Gets the list of all webhooks that the user owns (if a [user-generated token](#authentication-and-access-tokens) was used to make the request) 
+or the list of all webhooks associated with the third-party app (if a [third-party app](#third-party-app-development) made the request). 
+Items in the response are ordered by API cient name > webhook name > creation date.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WEBHOOKS
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [IndexResult Object](#indexresult-object) containing an array of [Webhook Objects](#webhook-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Webhook objects](#webhook-object)
+<%= SCOPE %> | ADMIN_WEBHOOKS
 
 # Reset Shared Secret
 
-> Example Request: Reset Shared Secret
+> Example request: reset shared secret
 
 ```shell
 curl https://api.smartsheet.com/2.0/webhooks/{webhookId}/resetsharedsecret \
@@ -871,7 +876,7 @@ response = smartsheet.webhooks.reset_shared_secret(
 updated_secret = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -883,20 +888,20 @@ updated_secret = response[:result]
 
 `POST /webhooks/{webhookId}/resetsharedsecret`
 
-Resets the shared secret for the specified Webhook. For more information about how a shared secret is used, see [Authenticating Callbacks](#authenticating-callbacks-optional).
+Resets the shared secret for the specified webhook. For more information about how a shared secret is used, see [Authenticating Callbacks](#authenticating-callbacks-optional).
 
 This operation can be used to rotate an API client's webhooks' shared secrets at periodic intervals to provide additional security.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WEBHOOKS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>  
 <%= REQUEST %> | The request body should be empty.
-<%= RETURNS %> | [Result Object](#result-object) containing the [SharedSecret Object](#sharedsecret-object)
+<%= RETURNS %> | [Result object](#result-object) containing the [SharedSecret object](#sharedsecret-object)
+<%= SCOPE %> | ADMIN_WEBHOOKS
 
 # Update Webhook
 
-> Example Request: Update Webhook
+> Example request: update webhook
 
 ```shell
 curl https://api.smartsheet.com/2.0/webhooks/{webhookId} \
@@ -985,7 +990,7 @@ response = smartsheet.webhooks.update(
 updated_webhook = response[:result]
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -1012,15 +1017,16 @@ updated_webhook = response[:result]
 
 `PUT /webhooks/{webhookId}`
 
-Updates the Webhook specified in the URL.
-
-<aside class="notice"><b>Enabling a Webhook</b><br/><br/>When setting a webhook's <b>enabled</b> to <code>true</code> using this operation, the behavior and result depend on the webhook's <b>status</b> and may result in a webhook <a href="#webhook-verification">verification</a> being triggered, or in some cases, an error being returned.  See <a href="#webhook-status">Webhook Status</a> for more details.</aside>
-
-<!--aside class="notice"><b>Enabling a Webhook</b><ul><li>If <b>Webhook.enabled</b>=<code>false</code> and <a href="#webhook-status"><b>Webhook.status</b></a> is any value other than "DISABLED_APP_REVOKED", "DISABLED_SCOPE_INACCESSIBLE", or "DISABLED_ADMINISTRATIVE", using this operation to set <b>Webhook.enabled</b>=<code>true</code> triggers the <a href="#webhook-verification">verification</a> process.</li><li>Verification must be successfully completed in order for the Webhook to become enabled.</li></ul></aside-->
+Updates the webhook specified in the URL.
 
      |     |
 -----|-----|
-<%= SCOPE %> | ADMIN_WEBHOOKS
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Webhook Object](#webhook-object), limited to the following attributes:<ul><li>name (optional)</li><li>events (optional)</li><li>callbackUrl (optional)</li><li>enabled (optional)</li><li>version (optional)</li></ul>
-<%= RETURNS %> | [Result Object](#result-object) containing the [Webhook Object](#webhook-object) for the updated webhook
+<%= REQUEST %> | [Webhook object](#webhook-object), limited to the following attributes:<ul><li>**callbackUrl** (optional)</li><li>**enabled** (optional)</li><li>**events** (optional)</li><li>**name** (optional)</li><li>**version** (optional)</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing the [Webhook object](#webhook-object) for the updated webhook
+<%= SCOPE %> | ADMIN_WEBHOOKS
+
+<aside class="notice"><b>Enabling a webhook</b><br/><br/>When setting a webhook's <b>enabled</b> to <b>true</b> using this operation, the behavior and result depend on the webhook's <b>status</b> and may result in a webhook <a href="#webhook-verification">verification</a> being triggered, or in some cases, an error being returned.  See <a href="#webhook-status">Webhook Status</a> for more details.</aside>
+
+<!--aside class="notice"><b>Enabling a webhook</b><ul><li>If <b>Webhook.enabled</b>=<code>false</code> and <a href="#webhook-status"><b>Webhook.status</b></a> is any value other than "DISABLED_APP_REVOKED", "DISABLED_SCOPE_INACCESSIBLE", or "DISABLED_ADMINISTRATIVE", using this operation to set <b>Webhook.enabled</b>=<code>true</code> triggers the <a href="#webhook-verification">verification</a> process.</li><li>Verification must be successfully completed in order for the webhook to become enabled.</li></ul></aside-->
+

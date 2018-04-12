@@ -1,4 +1,4 @@
-> Example Request: Get Update Request
+> Example request: get update request
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/updaterequests/{updateRequestId} \
@@ -50,12 +50,12 @@ update_request = smartsheet.update_requests.get(
 )
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/getUpdateRequest_response.md.erb" %>
 
 `GET /sheets/{sheetId}/updaterequests/{updateRequestId}`
 
-Gets the specified Update Request for the Sheet that has a future schedule.
+Gets the specified update request for the sheet that has a future schedule.
 
 <%= partial "snippets/getUpdateRequest_table.md.erb" %>

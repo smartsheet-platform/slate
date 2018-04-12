@@ -20,27 +20,33 @@ under the License.
 // Use these settings to help adjust the appearance of Slate
 // BACKGROUND COLORS
 ////////////////////
+// Smartsheet Branding Colors:
+$core_blue: #0e2947;
+$lead_blue: #1d9de0;
+$warning_color: #e05e1d; // Not specified in branding, complimentary color
+
+
 $nav-bg: #f5f5f5 !default;
 $examples-bg: #000000 !default;// #2E3336 !default;
 $code-bg: #000000 !default; // #1E2224 !default;
 $code-annotation-bg: #3e4956 !default;
 $nav-subitem-bg: #e0e0e0 !default;
-$nav-active-bg: #2467AF !default;
+$nav-active-bg: $lead_blue !default;
 $nav-active-parent-bg: #d8d8d8 !default; // parent links of the current section
 $lang-select-border: #000 !default;
 $lang-select-bg: #1E2224 !default;
-$lang-select-active-bg: #38719a; // feel free to change this to blue or something
+$lang-select-active-bg: $lead_blue; // feel free to change this to blue or something
 $lang-select-pressed-bg: #111 !default; // color of language tab bg when mouse is pressed
 $main-bg: #FBFBFB !default;
 
-$aside-notice-bg: #e3edf2;
-$aside-warning-bg: #FFF5F5;
+$aside-notice-bg: lighten($core_blue, 75%);
+$aside-warning-bg: lighten($warning_color, 40%);
 $aside-success-bg: #E8FAEE;
-$aside-notice-border: #5bc0de;
-$aside-warning-border: #d9534f;
+$aside-notice-border: $core_blue;
+$aside-warning-border: $warning_color;
 $aside-success-border: #50af51;
 
-$banner-bg: #393939;
+$banner-bg: $core_blue;
 
 $table-odd-bg: #fff;
 $table-even-bg: #f8f8f8;
@@ -58,7 +64,7 @@ $lang-select-text: #fff !default; // color of unselected language tab text
 $lang-select-active-text: #fff !default; // color of selected language tab text
 $lang-select-pressed-text: #fff !default; // color of language tab text when mouse is pressed
 $nav-hover-text: #4c555a;
-$content-link-text: #2467af;
+$content-link-text: darken($lead_blue, 10%);
 
 // SIZES
 ////////////////////
@@ -95,6 +101,8 @@ $phone-width: $tablet-width - $nav-width !default; // min width before reverting
 ////////////////////
 $nav-footer-border-color: #666 !default;
 $search-box-border-color: #666 !default;
+
+
 
 $nav-bar-height: 60px;  // SS Menu, etc.
 ////////////////////////////////////////////////////////////////////////////////

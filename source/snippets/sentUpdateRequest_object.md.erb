@@ -3,14 +3,14 @@
      |     |     |
 -----|-----|-----|
 **id** | number | Id of the sent update request. 
-**updateRequestId** | number | Id of the originating update request.
-**sentAt** | timestamp | The date and time for when the sent update request was sent to the recipient.
-**sentBy** | [User](#user-object) | User Object containing name and email of the sender.
-**status** | string | The status of the sent update request. It must be one of the following values:<ul><li><b>PENDING</b>: The request has not been responded by the recipient.</li><li><b>CANCELED</b>: The request was canceled.</li><li><b>COMPLETE</b>: The request has been responded by the recipient.</li></ul>
-**rowIds** | number[] | Ids of rows update is requested.
 **columnIds** | number[] | Ids of columns included in the request.
-**includeAttachments** | Boolean | A flag to indicate whether or not the Attachments were included in the email.
-**includeDiscussions** | Boolean | A flag to indicate whether or not the Discussions were included in the email.
-**sentTo** | [Recipient](#recipient-object) | Recipient Object.
-**subject** | string | The subject of the email.
+**rowIds** | number[] | Ids of rows update is requested.
+**updateRequestId** | number | Id of the originating update request.
+**includeAttachments** | Boolean | Indicates whether the attachments were included in the email.
+**includeDiscussions** | Boolean | Indicates whether the discussions were included in the email.
 **message** | string | The message of the email. Max 10000 characters.
+**sentAt** | timestamp | The date and time for when the sent update request was sent to the recipient.
+**sentBy** | [User](#user-object) | User object containing name and email of the sender.
+**sentTo** | [Recipient](#recipient-object) | Recipient object.
+**status** | string | The status of the sent update request. It must be one of the following values:<ul><li><b>CANCELED</b>: The request was canceled.</li><li><b>COMPLETE</b>: The request has been responded by the recipient.</li><li><b>PENDING</b>: The request has not been responded by the recipient.</li></ul>
+**subject** | string | The subject of the email.

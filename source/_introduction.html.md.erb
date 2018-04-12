@@ -50,10 +50,10 @@ You can view code examples in the programming language of your choice by clickin
 
 ## How Do I Start?
 
-This documentation provides two [Getting Started](#getting-started) tutorials that walk you through making your first API call and interpreting the response to a GET sheet request. You may also want to bookmark or note the following resources:
+This documentation provides two [Getting Started](#getting-started) tutorials that walk you through making your first API call and interpreting the response to a `GET /sheet` request. You may also want to bookmark or note the following resources:
 
 * [Smartsheet Developer Portal:](https://developers.smartsheet.com) If registering, use a different email address from your paid Smartsheet account so you can test the API and make API calls
-* Developer Newsletter (subscribe while at the Developer Portal using the *Get Developer Updates* form)
+* Developer Newsletter (subscribe while at the Developer Portal using the "Get Developer Updates" form)
 * [StackOverflow](https://stackoverflow.com/questions/tagged/smartsheet-api) using the "smartsheet-api" tag
 * Contact us at [api@smartsheet.com](mailto:api@smartsheet.com)
 
@@ -67,9 +67,9 @@ To get a list of sheets, use the following:
 
  `GET https://api.smartsheet.com/2.0/sheets`
  
-This returns a list of Sheet Objects, where each Sheet has an “id” attribute.
+This returns a list of Sheet objects, where each sheet has an **id** attribute.
 
-To get details on the sheet with id 123456, use the following:
+To get details on the sheet with **id 123456**, use the following:
  
  `GET https://api.smartsheet.com/2.0/sheets/123456`
 
@@ -100,13 +100,13 @@ The following HTTP request headers may be required, depending on the operation a
 
 Header | Definition | Example |
 -----|-----|-----|
-*Authorization* | Required for all endpoints, except for POST /token. The access token. | Bearer ll352u9jujauoqz4gstvsae05
-*Content-Type* | Required for POST and PUT requests. Defines the structure for the response. | application/json
-*Assume-User* | Optional. Allows an admin to act on behalf of, or impersonate, the user to make API calls. The email address used to identify the user must be URI-encoded. | jane.doe%40smartsheet.com
+**Authorization** | Required for all endpoints, except for `POST /token`. The access token. | Bearer ll352u9jujauoqz4gstvsae05
+**Content-Type** | Required for POST and PUT requests. Defines the structure for the response. | application/json
+**Assume-User** | Optional. Allows an admin to act on behalf of, or impersonate, the user to make API calls. The email address used to identify the user must be URI-encoded. | jane.doe%40smartsheet.com
 
 ### Query Strings
 
-> Example Request: List Sheets with Query Strings
+> Example request: list sheets with query strings
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets?include=attachments,source&includeAll=true \
@@ -169,18 +169,18 @@ Many API calls can be modified by including one or more of these common query st
 
 Query Parameter | Type | Description | More Info |
 -----|-----|-----|-----|
-pageSize | Number | Specifies the maximum number of items to return per page, for example, pageSize=25. | [Paging](#paging)
-page | String | Specifies which page to return, for example, page=4. | [Paging](#paging)
-includeAll | Boolean | If true, includes all results, for example, includeAll=true. | [Paging](#paging)
-allowPartialSuccess | Boolean | If true, allows bulk operations to process even if one or more operations are invalid for some reason, for example, allowPartialSuccess=true. | [Bulk Operations](#bulk-operations)
-numericDates | Boolean | If true, allows you to input or receive dates in numeric format, for example, numericDates=true. | [Dates and Times](#dates-and-times)
-include/exclude | String | When applicable for a specific object, various include or exclude parameters are available, for example, include=formatting. | Object reference or [Formatting](#formatting)
+**allowPartialSuccess** | Boolean | If **true**, allows bulk operations to process even if one or more operations are invalid for some reason, for example, **allowPartialSuccess=true**. | [Bulk Operations](#bulk-operations)
+**include** or **exclude** | String | When applicable for a specific object, various **include** or **exclude** parameters are available, for example, **include=format**. | Object reference or [Formatting](#formatting)
+**includeAll** | Boolean | If **true**, includes all results, for example, **includeAll=true**. | [Paging](#paging)
+**numericDates** | Boolean | If **true**, allows you to input or receive dates in numeric format, for example, **numericDates=true**. | [Dates and Times](#dates-and-times)
+**page** | String | Specifies which page to return, for example, **page=4**. | [Paging](#paging)
+**pageSize** | Number | Specifies the maximum number of items to return per page, for example, **pageSize=25**. | [Paging](#paging)
 
 <aside class="notice">Query strings are case sensitive. If you do not see the expected response, confirm that your query is formatted correctly.</aside>
 
 ## Authentication and Access Tokens
 
-> Example Request: Authentication and Access Tokens
+> Example request: authentication and access tokens
 
 ```shell
 curl https://api.smartsheet.com/2.0/users/me \
@@ -238,7 +238,7 @@ require 'smartsheet'
 }
 ```
 
-> Example Response:
+> Example response
 
 ```json
 {
@@ -249,14 +249,15 @@ require 'smartsheet'
 }
 ```
 
-The Smartsheet API uses OAuth 2.0 for Authentication and Authorization. An HTTP header containing an Access Token is required to authenticate each request. 
+The Smartsheet API uses OAuth 2.0 for authentication and authorization. An HTTP header containing an access token is required to authenticate each request. 
 
 If you want to get started quickly, or are developing a standalone application that can run with your credentials, follow these instructions:
 
-1. Click the Account button in the upper-right corner of your Smartsheet screen and click Personal Settings. Click the "API Access" tab.
-2. Click the "Generate new access token" button to obtain an access token.
+1. Click the "Account" button in the upper-right corner of the Smartsheet screen, and then click "Personal Settings".
+2. Click the "API Access" tab.
+3. Click the "Generate new access token" button to obtain an access token.
 
-The access token must be sent with every API call in an HTTP authorization header (except for the requests to Get Access Token or Refresh Access Token). Once you have an Access Token, include it in the **Authorization** header for every request you make:
+The access token must be sent with every API call in an HTTP authorization header (except for the requests to Get Access Token or Refresh Access Token). Once you have an access token, include it in the **Authorization** header for every request you make:
 
 `Authorization: Bearer ll352u9jujauoqz4gstvsae05`
 
@@ -271,9 +272,9 @@ The header name is **Authorization** and the value of the header is **Bearer ll3
 The Smartsheet API returns all dates and times in the [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) time zone in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format, that is, YYYY-MM-DDTHH:MM:SSZ.  If a date/time needs to be
 displayed to an end-user in their local time zone, you must do the conversion using the user's time zone, which you can obtain by [getting the current user](#get-current-user).
 
-You can optionally choose to receive and send dates/times in numeric format, as milliseconds since the UNIX epoch (midnight on January 1, 1970 in UTC time), using the query string parameter **numericDates** with a value of `true`. This query parameter works for any API request. 
+You can optionally choose to receive and send dates/times in numeric format, as milliseconds since the UNIX epoch (midnight on January 1, 1970 in UTC time), using the query string parameter **numericDates** with a value of **true**. This query parameter works for any API request. 
 
-<aside class="notice">Note that some SDK methods use language-specific Date objects, which require different date formats.</aside>
+<aside class="notice">Some SDK methods use language-specific Date objects, which require different date formats.</aside>
 
 ## Sheets/Columns/Rows/Cells
 
@@ -281,14 +282,14 @@ Sheets are composed of rows, columns, and cells. A cell is identified by the Id 
 
 UI Element | Description | More Info
 -----|-----|-----|
-Sheet | A Sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [Folder](#folders), or in a [Workspace](#workspaces). It is comprised of Columns, Rows, and Cells, and may optionally contain Attachments and/or Discussions. | [Sheet Object](#sheet-object)
-Column | A Column Object *defines* the type of the column, but does not actually contain cells. The Column Id identifies the cells in a row. | [Column Object,](#column-object) [Column types](#column-types)
-Row | A Row is a component of a Sheet or Report. Each Row is composed of a collection of Cells, and may optionally contain Attachments and/or Discussions. | [Row Object](#row-object)
-Cell | A Cell is a location within a Sheet that may contain a value. A collection of Cells comprises each Row in a Sheet. | [Cell Object,](#cell-object) [Cell reference](#cell-reference)
+sheet | A sheet can exist in a user's [Home](#home) folder, in a [folder](#folders), or in a [workspace](#workspaces). It is comprised of columns, rows, and cells, and may optionally contain attachments or discussions. | [Sheet object](#sheet-object)
+column | A Column object *defines* the type of the column, but does not actually contain cells. The Column Id identifies the cells in a row. | [Column object](#column-object), [Column types](#column-types)
+row | A row is a component of a sheet or report. Each row is composed of a collection of cells, and may optionally contain attachments or discussions. | [Row object](#row-object)
+cell | A cell is a location within a sheet that may contain a value. A collection of cells comprises each row in a sheet. | [Cell object](#cell-object), [Cell reference](#cell-reference)
 
 ## Object Details vs List Summaries
 
-Many of the List All commands, for example, GET /sheets, return only an abbreviated object for each object returned. For full details, read a single item, such as GET /sheets/{sheetId}. In many cases, you can refine the exact object properties to be returned by using include= and exclude= query parameters.
+Many of the List All commands, for example, `GET /sheets`, return only an abbreviated object for each object returned. For full details, read a single item, such as `GET /sheets/{sheetId}`. In many cases, you can refine the exact object properties to be returned by using **include** and **exclude** query parameters.
 
 The JSON representation of the objects returned from the List All REST endpoints will only include a subset of the properties documented here. However, the objects returned from the Java and C# SDKs will represent the omitted properties with NULLs.
 
@@ -301,7 +302,7 @@ Also, make sure your code does not depend on the order in which JSON objects are
 
 ## Make Your First API Call
 
-Before you write any code, try executing API requests using a tool like [cURL](https://curl.haxx.se/) or [Postman](https://www.getpostman.com/). By taking your code out of the equation, you can isolate troubleshooting to the raw Request and Response.
+Before you write any code, try executing API requests using a tool like [cURL](https://curl.haxx.se/) or [Postman](https://www.getpostman.com/). By taking your code out of the equation, you can isolate troubleshooting to the raw request and response.
 
 You must use an access token. See instructions at [Authentication and Access Tokens](#authentication-and-access-tokens). In the examples below, replace this sample token, "ll352u9jujauoqz4gstvsae05", with your actual token value.
 
@@ -342,27 +343,27 @@ The JSON result should look something like this (after formatting):
 
 ## How to Read a Sheet Response
 
-Many Smartsheet API operations handle sheets, rows, columns, and cells. Each is identified by an Id and it is important to understand the relationship between these objects. Typically you loop through the columns to determine the Id of the columns you are interested in. Then you loop through the rows and contained cells to find actual values. The annotated sample response below illustrates these concepts by calling a very simple sheet called Employee Roster.
+Many Smartsheet API operations handle sheets, rows, columns, and cells. Each is identified by an Id and it is important to understand the relationship between these objects. Typically you loop through the columns to determine the Id of the columns you are interested in. Then you loop through the rows and contained cells to find actual values. The annotated sample response below illustrates these concepts by calling a very simple sheet called "Employee Roster".
 
 <img src="images/Employee_roster.png" alt="Basic sheet with 2 rows and 2 columns" />
 
 Before you begin, you should already have an access token, which you used in the exercise above. Use the same access token for this walkthrough.
 
-1. The first thing you must have is a sheetId. To find a sheetId through the UI, with the sheet open, click Sheet Actions in the left toolbar and select Properties. Note: use [List Sheets](#list-sheets) if you want to do this programmatically.
+**Step 1:** The first thing you must have is a sheetId. To find a sheetId through the UI, with the sheet open, click "Sheet Actions" in the left toolbar and select "Properties". **NOTE:** use [List Sheets](#list-sheets) if you want to do this programmatically.
 
   <img src="images/sheet-properties.png" alt="Image of the Sheet Properties window" />
 
-2. Copy the sheetId into the API call, GET Sheets, as below:
+**Step 2:** Copy the sheetId into the API call, `GET /sheets`, as below:
 
   `curl -X GET -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" "https://api.smartsheet.com/2.0/sheets/6141831453927300"`
 
-3. The sample request and response are displayed below. NOTE: while JSON doesn't have a comment feature, this sample uses comments to help you identify the objects in the response.
+**Step 3:** The sample request and response are displayed below. **NOTE:** while JSON doesn't have a comment feature, this sample uses comments to help you identify the objects in the response.
 
 <pre class="center-column">
 {
   "id": 6141831453927300,                 // This is the Id of the entire sheet
   "name": "My first sheet",
-    "columns": [{                         // Each Column Object associates column
+    "columns": [{                         // Each Column object associates column
                                           // Id to title and defines the
                                           // column details
 
@@ -382,13 +383,13 @@ Before you begin, you should already have an access token, which you used in the
       "width": 150
     }
   ],
-  "rows": [{                              // A Row Object
+  "rows": [{                              // A Row object
     "id": 564480076736388,                // Use the row Id to make updates
     "rowNumber": 1,
     "expanded": true,
     "createdAt": "2017-05-12T16:52:38Z",
     "modifiedAt": "2017-05-22T20:40:14Z",
-      "cells": [{                         // Each row contains an array of Cells,
+      "cells": [{                         // Each row contains an array of cells,
                                           // which have the actual content
 
         "columnId": 2517104256673668,     // The column Id can be interpreted by
@@ -549,11 +550,11 @@ Smartsheet has Software Development Kits (SDKs) providing a higher level interfa
 
 Language | SDK | Sample application
 -----|-----|-----|
-| C# | [smartsheet-csharp-sdk](https://github.com/smartsheet-platform/smartsheet-csharp-sdk) | [csharp-read-write-sheet](https://github.com/smartsheet-samples/csharp-read-write-sheet)
-| Java | [smartsheet-java-sdk](https://github.com/smartsheet-platform/smartsheet-java-sdk) | [java-read-write-sheet](https://github.com/smartsheet-samples/java-read-write-sheet)
-| Node.js | [smartsheet-javascript-sdk](https://github.com/smartsheet-platform/smartsheet-javascript-sdk) | [node-read-write-sheet](https://github.com/smartsheet-samples/node-read-write-sheet)
-| Python | [smartsheet-python-sdk](https://github.com/smartsheet-platform/smartsheet-python-sdk) | [python-read-write-sheet](https://github.com/smartsheet-samples/python-read-write-sheet)
-| Ruby | [smartsheet-ruby-sdk](https://github.com/smartsheet-platform/smartsheet-ruby-sdk) | [ruby-read-write-sheet](https://github.com/smartsheet-samples/ruby-read-write-sheet)
+C# | [smartsheet-csharp-sdk](https://github.com/smartsheet-platform/smartsheet-csharp-sdk) | [csharp-read-write-sheet](https://github.com/smartsheet-samples/csharp-read-write-sheet)
+Java | [smartsheet-java-sdk](https://github.com/smartsheet-platform/smartsheet-java-sdk) | [java-read-write-sheet](https://github.com/smartsheet-samples/java-read-write-sheet)
+Node.js | [smartsheet-javascript-sdk](https://github.com/smartsheet-platform/smartsheet-javascript-sdk) | [node-read-write-sheet](https://github.com/smartsheet-samples/node-read-write-sheet)
+Python | [smartsheet-python-sdk](https://github.com/smartsheet-platform/smartsheet-python-sdk) | [python-read-write-sheet](https://github.com/smartsheet-samples/python-read-write-sheet)
+Ruby | [smartsheet-ruby-sdk](https://github.com/smartsheet-platform/smartsheet-ruby-sdk) | [ruby-read-write-sheet](https://github.com/smartsheet-samples/ruby-read-write-sheet)
 
 In addition to the sample application provided for each SDK, you can always view code examples in this document by clicking the corresponding tab in the dark-blue area in the rightmost pane.
 
@@ -563,23 +564,23 @@ To use an SDK for development work, follow the instructions in the SDK readme to
 
 ## Access Levels
 
-Sheets, Workspaces, and Templates have an **accessLevel** attribute that describes the current user's access level to that object. 
+Sheets, templates, and workspaces have an **accessLevel** attribute that describes the current user's access level to that object. 
 This corresponds directly to the sharing and access controls of Smartsheet that are available through the Smartsheet UI. 
 The **accessLevel** attribute has one of the following values:
 
 Value | Description |
 -----|-----|
-ADMIN | The user can edit and share the resource, and can alter the structure of the resource as well.
-EDITOR | The user can edit the resource, but cannot alter the structure of, delete or share the resource.
-EDITOR_SHARE | The same as EDITOR, but with the ability to share the resource to other users.
-OWNER | The user has complete control over the resource.
-VIEWER | The user has read-only access to the resource.
+**ADMIN** | The user can edit and share the resource, and can alter the structure of the resource as well.
+**EDITOR** | The user can edit the resource, but cannot alter the structure of, delete, or share the resource.
+**EDITOR_SHARE** | The same as **EDITOR**, but with the ability to share the resource to other users.
+**OWNER** | The user has complete control over the resource.
+**VIEWER** | The user has read-only access to the resource.
 
-<aside class="notice">Smartsheet also uses <a href="#access-scopes">Access Scopes</a>. Access Levels describe the actual permissions a specific user has for a specific sheet or other resource. Access Scopes describe the general categories of access requested by a third-party app.</aside>
+<aside class="notice">Smartsheet also uses <a href="#access-scopes">access scopes</a>. Access levels describe the actual permissions a specific user has for a specific sheet or other resource. Access scopes describe the general categories of access requested by a third-party app.</aside>
 
 ## Assume User
 
-> Example: Assume User
+> Example: assume user
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets \
@@ -624,7 +625,7 @@ smartsheet.sheets.list(
 )
 ```
 
-Allows an admin to act on behalf of, or impersonate, the user to make API calls. You might do this to troubleshoot a user problem or cover for vacations and sick time. The With cURL, the email address used to identify the user must be URI-encoded.
+Allows an admin to act on behalf of, or impersonate, the user to make API calls. You might do this to troubleshoot a user problem or cover for vacations and sick time. As with cURL, the email address used to identify the user must be URI-encoded.
 
 # Third-party App Development
 
@@ -634,62 +635,62 @@ Apps connect to Smartsheet using [OAuth 2.0](https://oauth.net/2/) to authentica
 
 Before you can start using OAuth 2.0 with your app, Smartsheet needs the following information:
 
-1. You must [register](https://developers.smartsheet.com/register) with Smartsheet to get a developer account. The developer account gives you access to Developer Tools, which is where you manage your app.
-2. In Developer Tools, complete your developer profile. This profile is public and anyone can access it to learn about you and your apps.
-3. In Developer Tools, register your app so Smartsheet can assign a client Id and a client secret to the app.
-4. Review the list of Access Scopes. You'll need to choose which ones your app needs to get to a user's Smartsheet data, and then ask the user to consent to that access.
+1. You must [register](https://developers.smartsheet.com/register) with Smartsheet to get a developer account. The developer account gives you access to "Developer Tools", which is where you manage your app.
+2. In "Developer Tools", complete your developer profile. This profile is public and anyone can access it to learn about you and your apps.
+3. In "Developer Tools", register your app so Smartsheet can assign a client Id and a client secret to the app.
+4. Review the list of access scopes. You'll need to choose which ones your app needs to get to a user's Smartsheet data, and then ask the user to consent to that access.
 
 After you've worked through these steps, you'll be ready to implement the [OAuth Flow](#oauth-flow).
 
 ### Open Developer Tools
 
 1. Log in to Smartsheet with your developer account.
-2. Click the **Account** button in the upper-right corner of your Smartsheet screen, and then click **Developer Tools**.
+2. Click the "Account" button in the upper-right corner of your Smartsheet screen, and then click "Developer Tools".
 3. Do one of the following:
-  * If you need to register an app, click **Create New App**.
-  * If you need to manage an app, click **view/edit** for the app.
+  * If you need to register an app, click "Create New App".
+  * If you need to manage an app, click "view/edit" for the app.
 
 ### Register Your App Using Developer Tools
 
 1. Log in to Smartsheet with your developer account.
-2. Click the **Account** button in the upper-right corner of your Smartsheet screen, and then click **Developer Tools**.
-3. In the Create New App form, provide the following information:
+2. Click the "Account" button in the upper-right corner of your Smartsheet screen, and then click "Developer Tools".
+3. In the "Create New App" form, provide the following information:
   * Name: the name the user sees to identify your app
   * Description: a brief description intended for the user
   * URL: the URL to launch your app, or the landing page if not a web app
   * Contact/support: support information for the user
   * Redirect URL: also known as a callback URL. The URL within your application that will receive the OAuth 2.0 credentials
  
-After you click **Save**, Smartsheet assigns a client Id and secret to your app. Make a note of these Ids for the next steps; however, you can always look them up again in Developer Tools.
+After you click "Save", Smartsheet assigns a client Id and secret to your app. Make a note of these Ids for the next steps; however, you can always look them up again in "Developer Tools".
 
 ### Access Scopes
 
-To access a user's Smartsheet data, your application must explicitly ask the user for permission. You do this by using Access Scopes, which enable your app to communicate to the user what type of operations it is performing. 
-Access Scopes do not override existing [access level restrictions](#access-levels). 
-For example, having the Access Scope of WRITE_SHEETS does not allow your app to update a sheet on which the user has VIEWER access level.
+To access a user's Smartsheet data, your application must explicitly ask the user for permission. You do this by using access scopes, which enable your app to communicate to the user what type of operations it is performing. 
+Access scopes do not override existing [access-level restrictions](#access-levels). 
+For example, having the access scope of **WRITE_SHEETS** does not allow your app to update a sheet on which the user has **VIEWER** access level.
  
-The Access Scopes are as follows:
+The access scopes are as follows:
 
 Access Scope | Description |
 -----|-----|
-ADMIN_SHEETS | Modify sheet structure, including column definition, publish state, etc.
-ADMIN_SIGHTS | Modify Sight structure.
-ADMIN_USERS | Add and remove users from your Smartsheet organization; create groups and manage membership.
-ADMIN_WEBHOOKS | Create, delete, and update webhooks; get all webhooks; reset shared secret. 
-ADMIN_WORKSPACES | Create and manage workspaces and folders, including sharing.
-CREATE_SHEETS | Create new sheets.
-CREATE_SIGHTS | Create new Sights.
-DELETE_SHEETS | Delete sheets.
-DELETE_SIGHTS | Delete Sight.
-READ_CONTACTS | Retrieve contacts.
-READ_SHEETS | Read all sheet data, including attachments, discussions, and cell data.
-READ_SIGHTS | Read all Sight data.
-READ_USERS | Retrieve users and groups for your Smartsheet organization.
-SHARE_SHEETS | Share sheets, including sending sheets as attachments.
-SHARE_SIGHTS | Share Sight.
-WRITE_SHEETS | Insert and modify sheet data, including attachments, discussions, and cell data.
+**ADMIN_SHEETS** | Modify sheet structure, including column definition, publish state, etc.
+**ADMIN_SIGHTS** | Modify Sight structure.
+**ADMIN_USERS** | Add and remove users from your Smartsheet organization; create groups and manage membership.
+**ADMIN_WEBHOOKS** | Create, delete, and update webhooks; get all webhooks; reset shared secret. 
+**ADMIN_WORKSPACES** | Create and manage workspaces and folders, including sharing.
+**CREATE_SHEETS** | Create new sheets.
+**CREATE_SIGHTS** | Create new Sights.
+**DELETE_SHEETS** | Delete sheets.
+**DELETE_SIGHTS** | Delete Sight.
+**READ_CONTACTS** | Retrieve contacts.
+**READ_SHEETS** | Read all sheet data, including attachments, discussions, and cell data.
+**READ_SIGHTS** | Read all Sight data.
+**READ_USERS** | Retrieve users and groups for your Smartsheet organization.
+**SHARE_SHEETS** | Share sheets, including sending sheets as attachments.
+**SHARE_SIGHTS** | Share Sight.
+**WRITE_SHEETS** | Insert and modify sheet data, including attachments, discussions, and cell data.
 
-<aside class="notice"><b>Additional Info:</b><ul><li>When you request an authorization code, you specify all of the Access Scopes you need for your app. Smartsheet encodes those permissions into the auth code and subsequent access token.</li><li>Your app must request at least one Access Scope, but should only request the scopes necessary.</li><li>Once your app attains a valid access token, it can execute a <a href="#get-current-user">Get Current User</a> operation, regardless of which Access Scopes were requested.</li></ul></aside>
+<aside class="notice"><b>Additional Info:</b><ul><li>When you request an authorization code, you specify all of the access scopes you need for your app. Smartsheet encodes those permissions into the auth code and subsequent access token.</li><li>Your app must request at least one access scope, but should only request the scopes necessary.</li><li>Once your app attains a valid access token, it can execute a <a href="#get-current-user">Get Current User</a> operation, regardless of which access scopes were requested.</li></ul></aside>
 
 ## OAuth Flow
 
@@ -762,10 +763,10 @@ Smartsheet will redirect this URL to display your app's consent page with an exp
 
 Value | Description |
 -----|-----|
-response_type<br/>(required) | Whether the endpoint returns an authorization code. Must be set to "code".
-client_id<br/>(required) | The client Id you obtained when you registered your app.
-scope<br/>(required) | Space-delimited list of [access scopes](#access-scopes) to which you are asking the user to grant access.
-state<br/>(optional) | An arbitrary string of your choosing that is returned to your app; a successful roundtrip of this string helps ensure that your app initiated the request.
+**client_id** | Required. The client Id you obtained when you registered your app.
+**response_type** | Required. Indicates whether the endpoint returns an authorization code. Must be set to "code".
+**scope** | Required. Space-delimited list of [access scopes](#access-scopes) to which you are asking the user to grant access. **NOTE:** No access scopes are necessary if you simply need to validate that the user has a Smartsheet account.
+**state** | Optional. An arbitrary string of your choosing that is returned to your app; a successful roundtrip of this string helps ensure that your app initiated the request.
 
 You can view code examples by clicking the corresponding tab in the dark-blue area in the rightmost pane. The cURL example shows a `GET`.
 
@@ -777,7 +778,7 @@ At this point, the user can authorize your app to access their Smartsheet accoun
 
 <img src="images/developer_tools3.png" alt="Dialog box to allow or deny scopes">
 
-After the user clicks **Allow** or **Deny**, you'll receive a response from Smartsheet outlined in the next sections.
+After the user clicks "Allow" or "Deny", you'll receive a response from Smartsheet outlined in the next sections.
 
 ### If the User Clicks Allow
 
@@ -807,26 +808,26 @@ After the user clicks **Allow** or **Deny**, you'll receive a response from Smar
 'http://localhost:3000/callback?code=sample6p9qisx6a&expires_in=599080&state=MY_STATE'
 ```
 
-If the user clicks **Allow**, Smartsheet redirects the user to the callback URL with the following parameters:
+If the user clicks "Allow", Smartsheet redirects the user to the callback URL with the following parameters:
 
 Value | Description |
 -----|-----|
-code | Authorization code required to obtain access token, such as 'sample6p9qisx6a'.
-expires_in | Number of milliseconds code is valid once issued; this is currently 599135 milliseconds, or approx. 10 minutes--you must obtain an access token within that time.
-state | The same value for `state` that you sent when you requested the authorization code.
+**code** | Authorization code required to obtain access token, such as 'sample6p9qisx6a'.
+**expires_in** | Number of milliseconds code is valid once issued; this is currently 599135 milliseconds, or approx. 10 minutes--you must obtain an access token within that time.
+**state** | The same value for **state** that you sent when you requested the authorization code.
 
-At this point, you should verify the `state` value matches what you sent to the user when you requested the authorization code. This helps you determine that the response came from the user and not a malicious script. If the values do not match, you should reject the response.
+At this point, you should verify the **state** value matches what you sent to the user when you requested the authorization code. This helps you determine that the response came from the user and not a malicious script. If the values do not match, you should reject the response.
 
 For other error conditions, see the list of [OAuth Error Types](#oauth-error-types).
 
 ### If the User Clicks Deny
 
-If the user clicks **Deny**, Smartsheet redirects the user to the callback URL with the following parameters:
+If the user clicks "Deny", Smartsheet redirects the user to the callback URL with the following parameters:
 
 Value | Description |
 -----|-----|
-error | "access_denied".
-state | The same value for `state` that you sent when you requested the authorization code.
+**error** | "access_denied".
+**state** | The same value for **state** that you sent when you requested the authorization code.
 
 For other error conditions, see the list of [OAuth Error Types](#oauth-error-types).
 
@@ -921,14 +922,14 @@ Once you’ve successfully obtained an authorization code, the next step is to e
 
 Value | Description |
 -----|-----|
-grant_type<br/>(required) | Must be set to "authorization_code".
-client_id<br/>(required) | The client Id you obtained when you registered your app.
-code<br/>(required) | Authorization code returned in the [previous step](#request-an-authorization-code).
-hash<br/>(required) | [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  The app_secret is never sent with the request. This is the `app_secret` you obtained when you [registered your app](#register-your-app-using-developer-tools).
+**client_id** | Required. The client Id you obtained when you registered your app.
+**code** | Required. Authorization code returned in the [previous step](#request-an-authorization-code).
+**grant_type** | Required. Must be set to "authorization_code".
+**hash** | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  The app_secret is never sent with the request. This is the **app_secret** you obtained when you [registered your app](#register-your-app-using-developer-tools).
 
-<aside class="notice">The "Get Access Token" request must have the <b>Content-Type</b> header set to 'application/x-www-form-urlencoded'.</aside>
+<aside class="notice">The "Get Access Token" request must have the <b>Content-Type</b> header set to <b>application/x-www-form-urlencoded</b>.</aside>
 
-If your request is successful, the response will contain a [Token Object](#token-object). You can see an example of the Token Object in the dark-blue area in the rightmost pane. 
+If your request is successful, the response will contain a [Token object](#token-object). You can see an example of the Token object in the dark-blue area in the rightmost pane. 
 
 For possible error conditions, see the list of [OAuth Error Types](#oauth-error-types).
 
@@ -1013,26 +1014,26 @@ Once you obtain the new tokens, you must use them in place of the old ones, whic
 
 Value | Description |
 -----|-----|
-grant_type<br/>(required)| Must be set to "refresh_token".
-client_id<br/>(required)| Client Id for your app.
-refresh_token<br/>(required)| refresh_token value that came with the access token.
-hash<br/>(required)| [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token value. To obtain an app_secret, see [Register Your App Using Developer Tools](#register-your-app-using-developer-tools).
-redirect_uri<br/>(deprecated)| If supplied, must match the redirect URL you [registered](#register-your-app-using-developer-tools) for your app.
+**client_id** | Required. Client Id for your app.
+**grant_type** | Required. Must be set to **refresh_token**.
+**hash** | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token value. To obtain an **app_secret**, see [Register Your App Using Developer Tools](#register-your-app-using-developer-tools).
+**refresh_token** | Required. **refresh_token** value that came with the access token.
+**redirect_uri** | Deprecated. If supplied, must match the redirect URI you [registered](#register-your-app-using-developer-tools) for your app.
 
-<aside class="notice">The "Refresh Token" request must have the <b>Content-Type</b> header set to 'application/x-www-form-urlencoded'.</aside>
+<aside class="notice">The Refresh Token request must have the <b>Content-Type</b> header set to <b>application/x-www-form-urlencoded</b>.</aside>
 
-If your request is successful, the response will contain a [Token Object](#token-object). You can see an example of the Token Object in the dark-blue area in the rightmost pane. 
+If your request is successful, the response will contain a [Token object](#token-object). You can see an example of the Token object in the dark-blue area in the rightmost pane. 
 
 ### OAuth Error Types
 
 Value | Description |
 -----|-----|
-invalid_client | The client information is invalid. Ensure your client id is correct.
-invalid_grant | The authorization code or refresh token is invalid or expired or the hash value does not match the app secret and/or code.
-invalid_request | The request parameters are invalid or missing.
-invalid_scope | One or more of the requested access scopes are invalid. Please check the list of [access scopes](#access-scopes).
-unsupported_grant_type | grant_type must equal "authorization_code" or "refresh_token".
-unsupported_response_type | response_type must be set to "code".
+**invalid_client** | The client information is invalid. Ensure your client id is correct.
+**invalid_grant** | The authorization code or refresh token is invalid or expired or the hash value does not match the app secret and/or code.
+**invalid_request** | The request parameters are invalid or missing.
+**invalid_scope** | One or more of the requested access scopes is invalid. Please check the list of [access scopes](#access-scopes).
+**unsupported_grant_type** | **grant_type** must equal **authorization_code** or **refresh_token**.
+**unsupported_response_type** | **response_type** must be set to **code**.
 
 # Work at Scale 
 
@@ -1043,33 +1044,33 @@ multiple objects in a single request. For example, if you want to update 10 rows
 
 ### Optional Bulk Operations
 
-Several endpoints support *optional* bulk `POST` operations which exist alongside the standard single-object `POST`.  For these endpoints, you may pass in either a single object or an array of objects.
-Depending on what was passed in, the [Result Object](#result-object) returned contains either a single object or an array.  An example optional bulk operation is [POST /favorites](#add-favorites): you can
-pass in a single [Favorite Object](#favorite-object) to create a single favorite, or an array of Favorite objects to create multiple favorites in a single request.  Endpoints which support bulk operations are
+Several endpoints support optional bulk `POST` operations which exist alongside the standard single-object `POST`.  For these endpoints, you may pass in either a single object or an array of objects.
+Depending on what was passed in, the [Result object](#result-object) returned contains either a single object or an array.  An example optional bulk operation is [POST /favorites](#add-favorites): you can
+pass in a single [Favorite object](#favorite-object) to create a single favorite, or an array of Favorite objects to create multiple favorites in a single request.  Endpoints which support bulk operations are
 noted as such in the API reference documentation.
 
 **NOTE**: Most `POST` operations fail when attempting to create a single object which already exists (for example, favorites, shares, group members).  However, for the corresponding bulk operations, these endpoints do *not*
-return an error if one or more items in the array already exist.  Existing items are simply ignored, and the [Result Object](#result-object) returned omits them.
+return an error if one or more items in the array already exist.  Existing items are simply ignored, and the [Result object](#result-object) returned omits them.
 
 ### Partial Success
 
 In general, the default behavior for bulk operations is to fail outright if any of the objects in the request are invalid for some reason.  If successful, Smartsheet creates/updates/deletes all objects in the request;
 if not, no objects are changed.
 
-However, there are some operations that support *partial success*, which means the operation still succeeds even if one or more of the objects in the request fails for some reason (for example, an object is invalid). Here is another example: if you want to update more than one row, you send more than one row object in your request. If a row object is invalid, that row update will fail, but the other row updates will succeed.  Partial success is 
+However, there are some operations that support partial success, which means the operation still succeeds even if one or more of the objects in the request fails for some reason (for example, an object is invalid). Here is another example: if you want to update more than one row, you send more than one row object in your request. If a row object is invalid, that row update will fail, but the other row updates will succeed.  Partial success is 
 *not* the default mode for an operation and you must explicitly enable it by using a query string parameter.  This is noted in the documentation for operations that support partial success.
 
 <%= PARTIAL_SUCCESS %>
 
 ## Paging
 
-The Smartsheet API contains a number of *index endpoints* (typically denoted in the documentation with titles beginning with "Get All" or "List") which return arrays of objects.
+The Smartsheet API contains a number of index endpoints (typically denoted in the documentation with titles beginning with "Get All" or "List") which return arrays of objects.
 Examples include `GET` [/users](#list-users), [/sheets](#list-sheets), [/sheets/{sheetId}/columns](#list-columns), and many others.  These endpoints all support pagination, meaning
 you can retrieve paged subsets of results, enabling you to process potentially large result sets in smaller chunks.
 
 ### Paging Query String Parameters
 
-> Example Request: List Sheets with Pagination Query Strings
+> Example request: list sheets with pagination query strings
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets?include=attachments,source&includeAll=true \
@@ -1132,15 +1133,15 @@ Index endpoints all support pagination via the following optional query string p
 
 Value | Type | Description |
 -----|-----|-----|
-**pageSize** 	| number  | The maximum number of items to return per page.  Unless otherwise stated for a specific endpoint, defaults to **100** if not specified.
+**includeAll**  | Boolean | If true, include all results, that is, do not paginate.  Mutually exclusive with **page** and **pageSize** (they are ignored if **includeAll=true** is specified).
 **page**		| number  | Which page to return.  Defaults to **1** if not specified.  If you specify a value greater than the total number of pages, the last page of results is returned.
-**includeAll**  | Boolean | If true, include all results, that is, do not paginate.  Mutually exclusive with **pageSize** and **page** (they are ignored if **includeAll**=true is specified).
+**pageSize** 	| number  | The maximum number of items to return per page.  Unless otherwise stated for a specific endpoint, defaults to **100**.
 
-<aside class="notice">Most index endpoints default to a page size of 100 results.  If you want all results at once, you must specify the <code class="prettyprint">includeAll=true</code> query string parameter.</aside>
+<aside class="notice">Most index endpoints default to a page size of 100 results.  If you want all results at once, you must specify the <b>includeAll=true</b> query string parameter.</aside>
 
 ### Paged Responses
 
-Index endpoints all return paged responses via an **IndexResult** Object which provides paging metadata that can be used to navigate the full set of pages in the result set:
+Index endpoints all return paged responses via an IndexResult object, which provides paging metadata that can be used to navigate the full set of pages in the result set:
 
 <%= partial "snippets/indexResult_object.md.erb" %>
 

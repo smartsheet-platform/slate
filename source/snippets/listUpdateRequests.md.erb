@@ -1,4 +1,4 @@
-> Example Request: List Update Requests
+> Example request: list update requests
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/updaterequests \
@@ -47,14 +47,12 @@ response = smartsheet.update_requests.list(
 update_requests = response[:data]
 ```
 
-> Example Response:
+> Example response
 
 <%= partial "snippets/listUpdateRequests_response.md.erb" %>
 
 `GET /sheets/{sheetId}/updaterequests`
 
-Gets a summarized list of all Update Requests that have future schedules associated with the specified Sheet.
-
-<aside class="notice"><%= SUPPORTS_PAGING %></aside>
+Gets a summarized list of all update requests that have future schedules associated with the specified sheet.
 
 <%= partial "snippets/listUpdateRequests_table.md.erb" %>
