@@ -67,7 +67,7 @@ A [Webhook object's](#webhook-object) **event** attribute indicates the set of e
 * Events are represented as a dot-separated string in the format "*object*.*event*", where an asterisk (&#42;) can be used to represent "all objects" or "all events".
 * Currently, <b>&#42;.&#42;</b> is the only supported value for the **events** attribute. This indicates a subscription to all objects in the scope, and all events for those objects.
 
-<span class="customSubHeading">Example</span>
+#### Example
 
 Consider a [Webhook object](#webhook-object) with the following attribute values:
 
@@ -85,7 +85,7 @@ The following diagram illustrates the process of creating and enabling a webhook
 
 <img src="images/v4-CreateAndEnableWebhook.png" alt="Workflow to create a webhook" />
 
-<span class="customSubHeading">Step-by-Step:</span>
+#### Step-by-Step:
 
 The process occurs synchronously:
 
@@ -168,6 +168,11 @@ A callback is the notification that Smartsheet sends to a webhook's **callbackUr
 A Subscriber has the ability to verify the integrity of a callback payload (that is, ensure that the message was not tampered with en route) and authenticate the identity of its sender (that is, ensure that the callback did indeed originate from Smartsheet). 
 For more information, see [Authenticating Callbacks](#authenticating-callbacks-optional).
 
+**NOTES:**
+
+* Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.
+* The callbackURL must use one of the following ports: 443 (default for HTTPS), 8000, 8008, 8080, or 8443. 
+
 ## Event Callbacks
 
 > Example: event callback (row created)
@@ -202,11 +207,11 @@ Smartsheet sends an event callback to notify the subscriber when the specified e
 
 <aside class="warning">Any events that occur while a webhook is disabled are not communicated via callback if/when webhook is enabled.</aside>
 
-<span class="customSubHeading">Callback Acknowledgement</span>
+### Callback Acknowledgement
 
 The subscriber must respond to an event callback with a 200 [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#2xx_Success) to acknowledge that the callback was received. 
 
-<span class="customSubHeading">Retry Logic</span>
+### Retry Logic
 
 If the subscriber fails to respond with a 200 status, depending on the response, Smartsheet may retry delivery up to 14 times. (The first 7 retry attempts occur with a frequency that's determined using exponential backoff; thereafter, retry attempts occur once every three hours until all retries have been exhausted.)
 
@@ -426,7 +431,7 @@ For more information, see [Intro to Webhooks](#intro-to-webhooks).
 **apiClientId** | string | API client Id corresponding to third-party app that created the webhook. Read-only. Only present if webhook was created by third-party app.
 **scopeObjectId** | number | Id of the object that is subscribed to. Specified when a webhook is created and cannot be changed.
 **apiClientName** | string | API client name corresponding to third-party app that created the webhook. Read-only. Only present if webhook was created by third-party app.
-**callbackUrl** | string | HTTPS URL where callbacks are sent.<br/><br/>**NOTE:** Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.
+**callbackUrl** | string | HTTPS URL where callbacks are sent.<br/><br/>**NOTES:**<br/><br/>Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.<br/><br/>The callbackURL must use one of the following ports: 443 (default for HTTPS), 8000, 8008, 8080, or 8443. 
 **createdAt** | timestamp | Time of creation. Read-only.
 **disabledDetails** | string | Details about the reason the webhook was disabled. Read-only. Only present when **enabled=false**.
 **enabled** | Boolean | Indicates whether the webhook is on (**true**) or off (**false**)
