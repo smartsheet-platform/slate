@@ -57,7 +57,7 @@ $sb-thumb-color: grey; // darken($code-annotation-bg, 0.2);
 // TEXT COLORS
 ////////////////////
 $main-text: #000 !default; // main content text color
-$nav-text: #fff !default;
+$nav-text: $main-text;
 $nav-active-text: #fff !default;
 $nav-active-parent-text: #000000 !default; // parent links of the current section
 $lang-select-text: #fff !default; // color of unselected language tab text
