@@ -16,8 +16,7 @@
     idx = lunr(function () {
       var index = this;
       index.ref("id");
-      index.field("title", { boost: 10 });
-      index.field("body");
+      index.field("title");
       index.pipeline.reset();
       index.pipeline.add(
         lunr.trimmer,
@@ -32,12 +31,10 @@
     var headerSelector = "h1, h2, h3";
     $(headerSelector).each(function() {
       var title = $(this);
-      var body = title.nextUntil(headerSelector);
 
       index.add({
         id: title.prop("id"),
-        title: title.text(),
-        body: body.text()
+        title: title.text()
       });
     });
   }
