@@ -1,7 +1,7 @@
 //= require ../lib/_jquery
 //= require ../lib/_imagesloaded.min
 
-function _trace(msg) { 
+function _trace(msg) {
   // console.log(msg)
 }
 
@@ -30,7 +30,7 @@ _trace("* Loading " + window.location);
     $(".toc-wrapper").removeClass('open');
     $("#nav-button").removeClass('open');
   };
-  
+
   function loadToc($toc, tocLinkSelector, tocListSelector, scrollOffset) {
     _trace("In loadTOC");
     var headerHeights = {};
@@ -57,7 +57,7 @@ _trace("* Loading " + window.location);
       var currentTop = $(".content_body").scrollTop() + scrollOffset;
 
       var best = null;
- 
+
       for (var name in headerHeights) {
         if ((headerHeights[name] < currentTop && headerHeights[name] > headerHeights[best]) || best === null) {
           best = name;
@@ -82,15 +82,7 @@ _trace("* Loading " + window.location);
         $best.siblings(tocListSelector).addClass("active");
         $toc.find(tocListSelector).filter(":not(.active)").slideUp(150);
         $toc.find(tocListSelector).filter(".active").slideDown(150);
-        if (window.history.pushState && loaded) {
-          if (currentTop > scrollOffset + 10 ) {
-            _trace("Pushing state: " + best);
-            window.history.pushState(null, "", best);
-          } else {
-            _trace("Pushing state: " + window.location.pathname + window.location.search);
-            window.history.pushState(null, "", window.location.pathname + window.location.search);
-          }
-        }
+
         // TODO remove classnames
         document.title = $best.data("title") + " – " + originalTitle;
       }
