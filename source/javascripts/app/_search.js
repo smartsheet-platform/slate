@@ -4,38 +4,39 @@
 (function() {
   "use strict";
 
-  var content, searchResults;
+  var idx, content, searchResults;
   var highlightOpts = { element: "span", className: "search-highlight" };
-  var searchDelay = 0;
+  var searchDelay = 150;
   var timeoutHandle = 0;
 
-  var index = new lunr.Index();
-
-  index.ref("id");
-  index.field("title", { boost: 10 });
-  index.field("body");
-  index.pipeline.add(lunr.trimmer, lunr.stopWordFilter);
-
-  $(populate);
+  $(createIndex);
   $(bind);
 
-  function populate() {
-    $("h1, h2").each(function() {
+  function createIndex() {
+    idx = lunr(function () {
+      var index = this;
+      index.ref("id");
+      index.field("title");
+      index.pipeline.reset();
+      index.pipeline.add(
+        lunr.trimmer,
+        lunr.stemmer
+      );
+
+      populate(index);
+    });
+  }
+
+  function populate(index) {
+    var headerSelector = "h1, h2, h3";
+    $(headerSelector).each(function() {
       var title = $(this);
-      var body = title.nextUntil("h1, h2");
+
       index.add({
         id: title.prop("id"),
-        title: title.text(),
-        body: body.text()
+        title: title.text()
       });
     });
-
-    determineSearchDelay();
-  }
-  function determineSearchDelay() {
-    if (index.tokenStore.length > 5000) {
-      searchDelay = 300;
-    }
   }
 
   function bind() {
@@ -65,7 +66,7 @@
     if (event.keyCode === 27) searchInput.value = "";
 
     if (searchInput.value) {
-      var results = index.search(searchInput.value).filter(function(r) {
+      var results = idx.search(searchInput.value).filter(function(r) {
         return r.score > 0.0001;
       });
 
