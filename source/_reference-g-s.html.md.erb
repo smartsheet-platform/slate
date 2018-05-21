@@ -2018,7 +2018,7 @@ CopyOrMoveRowResult results = smartsheet.sheetResources().rowResources().copyRow
 response = ss_client.Sheets.copy_rows(
   4583173393803140,               # sheet_id of rows to be copied
   ss_client.models.CopyOrMoveRowDirective({
-    'row_ids': [145417762563972, 8026717110462340]
+    'row_ids': [145417762563972, 8026717110462340],
     'to': ss_client.models.CopyOrMoveRowDestination({
       'sheet_id': 2258256056870788
     })
