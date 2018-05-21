@@ -627,6 +627,8 @@ smartsheet.sheets.list(
 
 Allows an admin to act on behalf of, or impersonate, the user to make API calls. You might do this to troubleshoot a user problem or cover for vacations and sick time. As with cURL, the email address used to identify the user must be URI-encoded.
 
+<aside class="notice">You must manually generate a token to assume user.</aside>
+
 # Third-party App Development
 
 Apps connect to Smartsheet using [OAuth 2.0](https://oauth.net/2/) to authenticate and authorize users. If you are building an app, this documentation will walk you through the steps you need to authenticate your users. The Smartsheet [SDKs](#sdks-and-sample-code) contain APIs for OAuth 2.0.
