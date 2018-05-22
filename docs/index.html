@@ -1851,7 +1851,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2018-05-18
+<p>Updated 2018-05-22
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -2519,6 +2519,8 @@ The <strong>accessLevel</strong> attribute has one of the following values:</p>
 <span class="p">)</span>
 </code></pre>
 <p>Allows an admin to act on behalf of, or impersonate, the user to make API calls. You might do this to troubleshoot a user problem or cover for vacations and sick time. As with cURL, the email address used to identify the user must be URI-encoded.</p>
+
+<aside class="notice">You must manually generate a token to assume user.</aside>
 <h1 id='third-party-app-development'>Third-party App Development</h1>
 <p>Apps connect to Smartsheet using <a href="https://oauth.net/2/">OAuth 2.0</a> to authenticate and authorize users. If you are building an app, this documentation will walk you through the steps you need to authenticate your users. The Smartsheet <a href="#sdks-and-sample-code">SDKs</a> contain APIs for OAuth 2.0.</p>
 <h2 id='first-steps'>First Steps</h2>
@@ -2578,7 +2580,7 @@ For example, having the access scope of <strong>WRITE_SHEETS</strong> does not a
 </tr>
 <tr>
 <td><strong>ADMIN_SIGHTS</strong></td>
-<td>Modify Sight structure.</td>
+<td>Modify Sights/dashboards structure.</td>
 </tr>
 <tr>
 <td><strong>ADMIN_USERS</strong></td>
@@ -2598,7 +2600,7 @@ For example, having the access scope of <strong>WRITE_SHEETS</strong> does not a
 </tr>
 <tr>
 <td><strong>CREATE_SIGHTS</strong></td>
-<td>Create new Sights.</td>
+<td>Create new Sights/dashboards.</td>
 </tr>
 <tr>
 <td><strong>DELETE_SHEETS</strong></td>
@@ -2606,7 +2608,7 @@ For example, having the access scope of <strong>WRITE_SHEETS</strong> does not a
 </tr>
 <tr>
 <td><strong>DELETE_SIGHTS</strong></td>
-<td>Delete Sight.</td>
+<td>Delete Sights/dashboards.</td>
 </tr>
 <tr>
 <td><strong>READ_CONTACTS</strong></td>
@@ -2618,7 +2620,7 @@ For example, having the access scope of <strong>WRITE_SHEETS</strong> does not a
 </tr>
 <tr>
 <td><strong>READ_SIGHTS</strong></td>
-<td>Read all Sight data.</td>
+<td>Read all Sights/dashboards data.</td>
 </tr>
 <tr>
 <td><strong>READ_USERS</strong></td>
@@ -2630,7 +2632,7 @@ For example, having the access scope of <strong>WRITE_SHEETS</strong> does not a
 </tr>
 <tr>
 <td><strong>SHARE_SIGHTS</strong></td>
-<td>Share Sight.</td>
+<td>Share Sights/dashboards.</td>
 </tr>
 <tr>
 <td><strong>WRITE_SHEETS</strong></td>
@@ -13245,7 +13247,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>ownerInfo</strong> - owner&#39;s email address and user Id for each sheet</li><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another sheet or template</li></ul></td>
+<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another sheet or template</li></ul></td>
 </tr>
 <tr>
 <td></td>
@@ -14759,7 +14761,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </code></pre><pre class="highlight python tab-python"><code><span class="n">response</span> <span class="o">=</span> <span class="n">ss_client</span><span class="o">.</span><span class="n">Sheets</span><span class="o">.</span><span class="n">copy_rows</span><span class="p">(</span>
   <span class="mi">4583173393803140</span><span class="p">,</span>               <span class="c"># sheet_id of rows to be copied</span>
   <span class="n">ss_client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">CopyOrMoveRowDirective</span><span class="p">({</span>
-    <span class="s">'row_ids'</span><span class="p">:</span> <span class="p">[</span><span class="mi">145417762563972</span><span class="p">,</span> <span class="mi">8026717110462340</span><span class="p">]</span>
+    <span class="s">'row_ids'</span><span class="p">:</span> <span class="p">[</span><span class="mi">145417762563972</span><span class="p">,</span> <span class="mi">8026717110462340</span><span class="p">],</span>
     <span class="s">'to'</span><span class="p">:</span> <span class="n">ss_client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">CopyOrMoveRowDestination</span><span class="p">({</span>
       <span class="s">'sheet_id'</span><span class="p">:</span> <span class="mi">2258256056870788</span>
     <span class="p">})</span>
@@ -19126,6 +19128,11 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <td>number</td>
 <td>A number that is incremented every time a sheet is modified</td>
 </tr>
+<tr>
+<td><strong>workspace</strong></td>
+<td><a href="#workspace-object">Workspace</a></td>
+<td>A Workspace object containing the workspace Id and name.<br/>Only returned if the <a href="#get-sheet"><strong>include</strong></a> query string parameter contains <strong>ownerInfo</strong>.</td>
+</tr>
 </tbody></table>
 <h3 id='criteria-object'>Criteria Object</h3>
 <blockquote>
@@ -20780,7 +20787,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- a comma-separated list of elements to include in the response.<br/>Supports all <a href="#row-include-flags">Row Include Flags</a> with the following differences:<ul><li><strong>attachments</strong>: includes the metadata for sheet-level and row-level attachments</li><li><strong>crossSheetReferences</strong>: includes the cross-sheet references</li><li><strong>discussions</strong>: includes sheet-level and row-level discussions</li><li><strong>filters</strong>: includes <a href="#row-object">row.filteredOut</a> attribute</li><li><strong>filterDefinitions</strong>: includes type of filter, operators used, and criteria</li><li><strong>format</strong>: includes column, row, and cell formatting</li><li><strong>ownerInfo</strong>: includes owner&#39;s email address and user Id</li></ul>Also supports the <strong>source</strong> include flag, which adds the <a href="#source-object">Source object</a> indicating which sheet or template the sheet was created from, if any.</td>
+<td><strong>include</strong> (optional) -- a comma-separated list of elements to include in the response.<br/>Supports all <a href="#row-include-flags">Row Include Flags</a> with the following differences:<ul><li><strong>attachments</strong>: includes the metadata for sheet-level and row-level attachments</li><li><strong>crossSheetReferences</strong>: includes the cross-sheet references</li><li><strong>discussions</strong>: includes sheet-level and row-level discussions</li><li><strong>filters</strong>: includes <a href="#row-object">row.filteredOut</a> attribute</li><li><strong>filterDefinitions</strong>: includes type of filter, operators used, and criteria</li><li><strong>format</strong>: includes column, row, and cell formatting</li><li><strong>ownerInfo</strong>: includes the workspace and the owner&#39;s email address and user Id</li></ul>Also supports the <strong>source</strong> include flag, which adds the <a href="#source-object">Source object</a> indicating which sheet or template the sheet was created from, if any.</td>
 </tr>
 <tr>
 <td></td>
@@ -21214,7 +21221,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>ownerInfo</strong> - owner&#39;s email address and user Id for each sheet</li><li><strong>sheetVersion</strong> - current version number of each sheet, should not be combined with pagination</li><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another sheet or template</li></ul></td>
+<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>sheetVersion</strong> - current version number of each sheet, should not be combined with pagination</li><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another sheet or template</li></ul></td>
 </tr>
 <tr>
 <td></td>
@@ -21226,7 +21233,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Returns</td>
-<td><a href="#indexresult-object">IndexResult object</a> containing an array of <a href="#sheet-object">Sheet objects</a> limited to the following attributes:<ul><li><strong>id</strong></li><li><strong>accessLevel</strong></li><li><strong>createdAt</strong></li><li><strong>modifiedAt</strong></li><li><strong>name</strong></li><li><strong>owner</strong> (included only if <strong>ownerInfo</strong> is specified with the <strong>include</strong> parameter)</li><li><strong>ownerId</strong> (included only if <strong>ownerInfo</strong> is specified with the <strong>include</strong> parameter)</li><li><strong>permalink</strong></li><li><strong>source</strong> (included only if <strong>source</strong> is specified with the <strong>include</strong> parameter)</li></ul></td>
+<td><a href="#indexresult-object">IndexResult object</a> containing an array of <a href="#sheet-object">Sheet objects</a> limited to the following attributes:<ul><li><strong>id</strong></li><li><strong>accessLevel</strong></li><li><strong>createdAt</strong></li><li><strong>modifiedAt</strong></li><li><strong>name</strong></li><li><strong>permalink</strong></li><li><strong>source</strong> (included only if <strong>source</strong> is specified with the <strong>include</strong> parameter)</li></ul></td>
 </tr>
 <tr>
 <td>Access Scope</td>
@@ -26330,7 +26337,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Returns</td>
-<td><a href="#indexresult-object">IndexResult object</a> containing an array of <a href="#user-object">User objects</a><br/><br/><b>NOTE:</b> If the API request is submitted by a system administrator, the following User object attributes are included in the response (else, they are omitted from the response):<ul><li><strong>admin</strong></li><li><strong>groupAdmin</strong></li><li><strong>lastLogin</strong> (omitted if the user has never logged in before)</li><li><strong>licensedSheetCreator</strong></li><li><strong>resourceViewer</strong></li><li><strong>sheetCount</strong> (omitted if the <strong>status</strong> attribute is not <strong>ACTIVE</strong>)</li><li><strong>status</strong></li></ul><br/><b>NOTE:</b> If the API request is submitted by a system administrator of an Enterprise account, and <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only-#welcomescreen">Custom Welcome Screen</a> is enabled, the following User object attributes are included in the response (else, they are omitted from the response):<ul><li><strong>customWelcomeScreenViewed</strong> (omitted if the user has never viewed the Custom Welcome Screen)</li></ul></td>
+<td><a href="#indexresult-object">IndexResult object</a> containing an array of <a href="#user-object">User objects</a><br/><br/><b>NOTE:</b> If the API request is submitted by a system administrator, the following User object attributes are included in the response (else, they are omitted from the response):<ul><li><strong>admin</strong></li><li><strong>groupAdmin</strong></li><li><strong>licensedSheetCreator</strong></li><li><strong>resourceViewer</strong></li><li><strong>sheetCount</strong> (omitted if the <strong>status</strong> attribute is not <strong>ACTIVE</strong>)</li><li><strong>status</strong></li></ul><br/><b>NOTE:</b> If the API request is submitted by a system administrator of an Enterprise account, and <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only-#welcomescreen">Custom Welcome Screen</a> is enabled, the following User object attributes are included in the response (else, they are omitted from the response):<ul><li><strong>customWelcomeScreenViewed</strong> (omitted if the user has never viewed the Custom Welcome Screen)</li></ul></td>
 </tr>
 <tr>
 <td>Access Scope</td>
