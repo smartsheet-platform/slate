@@ -863,7 +863,7 @@ Gets a nested list of all Home objects, including folders, reports, sheets, Sigh
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
   | **exclude** (optional) -- a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**permalinks** - excludes the permalink from each data object</li></ul> 
 <%= RETURNS %> | [Home object](#home-object), populated according to the **include** parameter
 <%= SCOPE %> | READ_SHEETS
@@ -2018,7 +2018,7 @@ CopyOrMoveRowResult results = smartsheet.sheetResources().rowResources().copyRow
 response = ss_client.Sheets.copy_rows(
   4583173393803140,               # sheet_id of rows to be copied
   ss_client.models.CopyOrMoveRowDirective({
-    'row_ids': [145417762563972, 8026717110462340]
+    'row_ids': [145417762563972, 8026717110462340],
     'to': ss_client.models.CopyOrMoveRowDestination({
       'sheet_id': 2258256056870788
     })
@@ -4788,6 +4788,7 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 **totalRowCount** | number | The total number of rows in the sheet
 **userSettings** | [SheetUserSettings](#sheetusersettings-object) | A SheetUserSettings object containing the current user's sheet-specific settings.
 **version** | number | A number that is incremented every time a sheet is modified
+**workspace** | [Workspace](#workspace-object) | A Workspace object containing the workspace Id and name.<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **ownerInfo**.
 
 ### Criteria Object
 
@@ -6111,7 +6112,7 @@ Gets the sheet specified in the URL. Returns the sheet, including rows, and opti
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ownerInfo**: includes owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which sheet or template the sheet was created from, if any.
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which sheet or template the sheet was created from, if any.
   | **exclude** (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**nonexistentCells**: excludes cells that have never contained any data</li></ul>
   | **columnIds** (optional): a comma-separated list of column Ids. The response contains only the specified columns in the "columns" array, and individual rows' "cells" array only contains cells in the specified columns.
   | **ifVersionAfter** (optional): If version specified is still the current sheet version, then returns an abbreviated Sheet object with only the sheet **version** property. Otherwise, if the sheet has been modified, returns the complete Sheet object. Intended to allow clients with a cached copy to make sure they have the latest version.
@@ -6506,10 +6507,10 @@ Gets a list of all sheets that the user has access to in alphabetical order by n
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
  | <%= PARAMETER_MODIFIEDSINCE %>
  | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Sheet objects](#sheet-object) limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**createdAt**</li><li>**modifiedAt**</li><li>**name**</li><li>**owner** (included only if **ownerInfo** is specified with the **include** parameter)</li><li>**ownerId** (included only if **ownerInfo** is specified with the **include** parameter)</li><li>**permalink**</li><li>**source** (included only if **source** is specified with the **include** parameter)</li></ul>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Sheet objects](#sheet-object) limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**createdAt**</li><li>**modifiedAt**</li><li>**name**</li><li>**permalink**</li><li>**source** (included only if **source** is specified with the **include** parameter)</li></ul>
 <%= SCOPE %> | READ_SHEETS
 
 <aside class="notice"><%= SUPPORTS_NUMERICDATES %></aside>

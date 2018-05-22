@@ -627,6 +627,8 @@ smartsheet.sheets.list(
 
 Allows an admin to act on behalf of, or impersonate, the user to make API calls. You might do this to troubleshoot a user problem or cover for vacations and sick time. As with cURL, the email address used to identify the user must be URI-encoded.
 
+<aside class="notice">You must manually generate a token to assume user.</aside>
+
 # Third-party App Development
 
 Apps connect to Smartsheet using [OAuth 2.0](https://oauth.net/2/) to authenticate and authorize users. If you are building an app, this documentation will walk you through the steps you need to authenticate your users. The Smartsheet [SDKs](#sdks-and-sample-code) contain APIs for OAuth 2.0.
@@ -674,20 +676,20 @@ The access scopes are as follows:
 Access Scope | Description |
 -----|-----|
 **ADMIN_SHEETS** | Modify sheet structure, including column definition, publish state, etc.
-**ADMIN_SIGHTS** | Modify Sight structure.
+**ADMIN_SIGHTS** | Modify Sights/dashboards structure.
 **ADMIN_USERS** | Add and remove users from your Smartsheet organization; create groups and manage membership.
 **ADMIN_WEBHOOKS** | Create, delete, and update webhooks; get all webhooks; reset shared secret. 
 **ADMIN_WORKSPACES** | Create and manage workspaces and folders, including sharing.
 **CREATE_SHEETS** | Create new sheets.
-**CREATE_SIGHTS** | Create new Sights.
+**CREATE_SIGHTS** | Create new Sights/dashboards.
 **DELETE_SHEETS** | Delete sheets.
-**DELETE_SIGHTS** | Delete Sight.
+**DELETE_SIGHTS** | Delete Sights/dashboards.
 **READ_CONTACTS** | Retrieve contacts.
 **READ_SHEETS** | Read all sheet data, including attachments, discussions, and cell data.
-**READ_SIGHTS** | Read all Sight data.
+**READ_SIGHTS** | Read all Sights/dashboards data.
 **READ_USERS** | Retrieve users and groups for your Smartsheet organization.
 **SHARE_SHEETS** | Share sheets, including sending sheets as attachments.
-**SHARE_SIGHTS** | Share Sight.
+**SHARE_SIGHTS** | Share Sights/dashboards.
 **WRITE_SHEETS** | Insert and modify sheet data, including attachments, discussions, and cell data.
 
 <aside class="notice"><b>Additional Info:</b><ul><li>When you request an authorization code, you specify all of the access scopes you need for your app. Smartsheet encodes those permissions into the auth code and subsequent access token.</li><li>Your app must request at least one access scope, but should only request the scopes necessary.</li><li>Once your app attains a valid access token, it can execute a <a href="#get-current-user">Get Current User</a> operation, regardless of which access scopes were requested.</li></ul></aside>
