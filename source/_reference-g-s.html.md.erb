@@ -912,7 +912,18 @@ curl  https://api.smartsheet.com/2.0/sheets/import?sheetName=MarketingProgressRe
 ```
 
 ```ruby
-# To do
+# Sample 1: Import from file
+smartsheet.sheets.import_from_file(
+  file: sample_csv,
+  file_type: :csv,
+  file_length: sample_csv.size,
+  params: {sheetName: 'MarketingProgressReport', headerRowIndex: 0, primaryColumnIndex: 0})
+
+# Sample 2: Import from file path
+smartsheet.sheets.import_from_file_path(
+  path: 'D:\sample.csv',
+  file_type: :csv,
+  params: {sheetName: 'MarketingProgressReport', headerRowIndex: 0, primaryColumnIndex: 0})
 ```
 
 > Example response
@@ -979,7 +990,20 @@ curl  https://api.smartsheet.com/2.0/folders/{folderId}/sheets/import?sheetName=
 ```
 
 ```ruby
-# To do
+# Sample 1: Import from file into folder
+smartsheet.sheets.import_from_file_into_folder(
+  folder_id: 8999900887877508,
+  file: sample_csv,
+  file_type: :csv,
+  file_length: sample_csv.size,
+  params: {sheetName: 'MarketingProgressReport', headerRowIndex: 0, primaryColumnIndex: 0})
+
+# Sample 2: Import from file path into folder
+smartsheet.sheets.import_from_file_path_into_folder(
+  folder_id: 89999300887877508,
+  path: 'D:\sample.csv',
+  file_type: :csv,
+  params: {sheetName: 'MarketingProgressReport', headerRowIndex: 0, primaryColumnIndex: 0})
 ```
 
 > Example response
@@ -1046,7 +1070,20 @@ curl  https://api.smartsheet.com/2.0/workspaces/{workspaceId}/sheets/import?shee
 ```
 
 ```ruby
-# To do
+# Sample 1: Import from file into workspace
+smartsheet.sheets.import_from_file_into_workspace(
+  workspace_id: 4124946017347460,
+  file: sample_csv,
+  file_type: :csv,
+  file_length: sample_csv.size,
+  params: {sheetName: 'MarketingProgressReport', headerRowIndex: 0, primaryColumnIndex: 0})
+
+# Sample 2: Import from file path into workspace
+smartsheet.sheets.import_from_file_path_into_workspace(
+  workspace_id: 4124946017347460,
+  path: 'D:\sample.csv',
+  file_type: :csv,
+  params: {sheetName: 'MarketingProgressReport', headerRowIndex: 0, primaryColumnIndex: 0})
 ```
 
 > Example response
