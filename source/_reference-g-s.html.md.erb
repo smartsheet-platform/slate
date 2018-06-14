@@ -880,7 +880,7 @@ For details about working with sheets in the user's **Sheets** folder (that is, 
 
 # Import
 
-Import CSV or Excel data into either a new sheet or overwrite data in an existing sheet.
+Import CSV or Excel data into a new sheet.
 
 ## Import Sheet from Excel / CSV
 
@@ -1117,72 +1117,6 @@ Imports CSV or Excel data into a new sheet in the specified workspace.
 <%= REQUEST %> | Binary content for the file
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
-
-<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
-
-## Import and Replace Existing Sheet
-
-> Example request: Import and replace existing sheet
-
-```shell
-curl  https://api.smartsheet.com/2.0/sheets/{sheetId}/import?sheetName=MarketingProgressReport&headerRowIndex=0&primaryColumnIndex=0 \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Disposition: attachment" \
--H "Content-Type: text/csv" \
--X POST \
---data-binary @ProgressReport.csv
-```
-
-```javascript
-// To do
-```
-
-```csharp
-// To do
-```
-
-```java
-// To do
-```
-
-```python
-# To do
-```
-
-```ruby
-# To do
-```
-
-> Example response
-
-```json
-{
-  "message": "SUCCESS",
-  "resultCode": 0,
-  "result": {
-      "id": 9271131230488452,
-      "name": "MarketingProgressReport",
-      "type": "sheet",
-      "accessLevel": "OWNER",
-      "permalink": "https://app.smartsheet.com/b/home?lx=eGUIdBiqQXj7yxLaCINt3g"
-  }
-}
-```
-
-`POST /sheets/{sheetId}/import`
-
-Imports CSV or Excel data into an existing sheet and replaces the contents.
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %>
-  | <%= HEADER_CT_DISP %>
-  | One of the following:<ul><li>For CSV files, use: <%= HEADER_CT_CSV %></li><li>For XLSX files, use: <%= HEADER_CT_XLSX %></li></ul>
-<%= PARAMETERS %> | **headerRowIndex** (optional) --  a zero-based integer indicating the row number to use for column names. Rows before this are omitted. If not specified, the default values are Column1, Column2, etc.
-  | **primaryColumnIndex** (optional) -- a zero-based integer indicating the column to designate as primary. If not specified, the default value is 0.
-<%= REQUEST %> | Binary content for the file
-<%= RETURNS %> | [Result object](#result-object)
-<%= SCOPE %> | WRITE_SHEETS
 
 <aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
 
