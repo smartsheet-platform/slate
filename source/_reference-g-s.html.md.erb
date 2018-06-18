@@ -896,7 +896,41 @@ curl  https://api.smartsheet.com/2.0/sheets/import?sheetName=MarketingProgressRe
 ```
 
 ```javascript
-// To do
+// Sample 1: Import sheet from CSV
+// Set options
+var options = {
+  queryParameters: {
+      sheetName: 'MarketingProgressReport'
+  },
+  path: "D:/ProgressReport.csv"
+};
+
+// Import CSV as sheet
+smartsheet.sheets.importCsvSheet(options)
+  .then(function(attachment) {
+      console.log(attachment);
+  })
+  .catch(function(error) {
+      console.log(error);
+  });
+
+// Sample 2: Import sheet from XLSX
+// Set options
+var options = {
+  queryParameters: {
+    sheetName: 'MarketingProgressReport'
+  },
+  path: "D:/ProgressReport.xlsx"
+};
+
+// Import XLSX as sheet
+smartsheet.sheets.importXlsxSheet(options)
+  .then(function(attachment) {
+    console.log(attachment);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
@@ -974,7 +1008,43 @@ curl  https://api.smartsheet.com/2.0/folders/{folderId}/sheets/import?sheetName=
 ```
 
 ```javascript
-// To do
+// Sample 1: Import CSV into folder
+// Set options
+var options = {
+  folderId: 8999900887877508, 
+  queryParameters: {
+    sheetName: 'MarketingProgressReport'
+  },
+  path: "D:/ProgressReport.csv"
+};
+
+// Import CSV as sheet into folder
+smartsheet.sheets.importCsvSheetIntoFolder(options)
+  .then(function(attachment) {
+    console.log(attachment);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+
+//Sample 2: Import XLSX into folder
+// Set options
+var options = {
+  folderId: 8999900887877508, 
+  queryParameters: {
+    sheetName: 'MarketingProgressReport'
+  },
+  path: "D:/ProgressReport.xlsx"
+};
+
+// Import XLSX as sheet into Folder
+smartsheet.sheets.importXlsxSheetIntoFolder(options)
+  .then(function(attachment) {
+    console.log(attachment);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
@@ -1054,7 +1124,43 @@ curl  https://api.smartsheet.com/2.0/workspaces/{workspaceId}/sheets/import?shee
 ```
 
 ```javascript
-// To do
+// Sample 1: Import CSV into workspace
+// Set options
+var options = {
+  workspaceId: 4124946017347460,
+  queryParameters: {
+    sheetName: 'MarketingProgressReport'
+  },
+  path: "D:/ProgressReport.csv"
+};
+
+// Import CSV as sheet into workspace
+smartsheet.sheets.importCsvSheetIntoWorkspace(options)
+  .then(function(attachment) {
+    console.log(attachment);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+
+// Sample 2: Import XLSX into workspace
+// Set options
+var options = {
+  workspaceId: 4124946017347460,
+  queryParameters: {
+    sheetName: 'MarketingProgressReport'
+  },
+  path: "D:/ProgressReport.xlsx"
+};
+
+// Import XLSX as sheet into workspace
+smartsheet.sheets.importXlsxSheetIntoWorkspace(options)
+  .then(function(attachment) {
+    console.log(attachment);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
