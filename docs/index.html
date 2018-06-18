@@ -955,6 +955,20 @@
               </ul>
           </li>
           <li>
+            <a href="#import" class="toc-h1 toc-link" data-title="Import">Import</a>
+              <ul class="toc-list-subhead">
+                  <li>
+                    <a href="#import-sheet-from-excel-csv" class="toc-h2 toc-link" data-title="Import Sheet from Excel / CSV">Import Sheet from Excel / CSV</a>
+                  </li>
+                  <li>
+                    <a href="#import-sheet-into-folder" class="toc-h2 toc-link" data-title="Import Sheet into Folder">Import Sheet into Folder</a>
+                  </li>
+                  <li>
+                    <a href="#import-sheet-into-workspace" class="toc-h2 toc-link" data-title="Import Sheet into Workspace">Import Sheet into Workspace</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#reports" class="toc-h1 toc-link" data-title="Reports">Reports</a>
               <ul class="toc-list-subhead">
                   <li>
@@ -1851,7 +1865,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2018-05-22
+<p>Updated 2018-06-18
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -13267,8 +13281,307 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 <p>For details about working with folders in the user&#39;s <strong>Sheets</strong> folder (that is, at the Home level), see <a href="#folders">Folders</a>.</p>
 <h3 id='home-sheets'>Home Sheets</h3>
 <p>For details about working with sheets in the user&#39;s <strong>Sheets</strong> folder (that is, at the Home level), see <a href="#sheets">Sheets</a>.</p>
+<h1 id='import'>Import</h1>
+<p>Import CSV or Excel data into a new sheet.</p>
+<h2 id='import-sheet-from-excel-csv'>Import Sheet from Excel / CSV</h2>
+
+<blockquote>
+<p>Example request: Import sheet</p>
+</blockquote>
+
+<pre class="highlight shell tab-shell"><code>curl  https://api.smartsheet.com/2.0/sheets/import?sheetName<span class="o">=</span>MarketingProgressReport&amp;headerRowIndex<span class="o">=</span>0&amp;primaryColumnIndex<span class="o">=</span>0 <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
+-H <span class="s2">"Content-Disposition: attachment"</span> <span class="se">\</span>
+-H <span class="s2">"Content-Type: text/csv"</span> <span class="se">\</span>
+-X POST <span class="se">\</span>
+--data-binary @ProgressReport.csv
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// To do</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// To do</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// To do</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># To do</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># Sample 1: Import from file</span>
+<span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">import_from_file</span><span class="p">(</span>
+  <span class="ss">file: </span><span class="n">sample_csv</span><span class="p">,</span>
+  <span class="ss">file_type: :csv</span><span class="p">,</span>
+  <span class="ss">file_length: </span><span class="n">sample_csv</span><span class="p">.</span><span class="nf">size</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span><span class="ss">sheetName: </span><span class="s1">'MarketingProgressReport'</span><span class="p">,</span> <span class="ss">headerRowIndex: </span><span class="mi">0</span><span class="p">,</span> <span class="ss">primaryColumnIndex: </span><span class="mi">0</span><span class="p">})</span>
+
+<span class="c1"># Sample 2: Import from file path</span>
+<span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">import_from_file_path</span><span class="p">(</span>
+  <span class="ss">path: </span><span class="s1">'D:\sample.csv'</span><span class="p">,</span>
+  <span class="ss">file_type: :csv</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span><span class="ss">sheetName: </span><span class="s1">'MarketingProgressReport'</span><span class="p">,</span> <span class="ss">headerRowIndex: </span><span class="mi">0</span><span class="p">,</span> <span class="ss">primaryColumnIndex: </span><span class="mi">0</span><span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>Example response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"resultCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9271131230488452</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MarketingProgressReport"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sheet"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"accessLevel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OWNER"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"permalink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.smartsheet.com/b/home?lx=eGUIdBiqQXj7yxLaCINt3g"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><code>POST /sheets/import</code></p>
+
+<p>Imports CSV or Excel data into a new sheet in the top-level &quot;sheets&quot; folder.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Headers</td>
+<td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
+</tr>
+<tr>
+<td></td>
+<td>Content-Disposition: attachment</td>
+</tr>
+<tr>
+<td></td>
+<td>One of the following:<ul><li>For CSV files, use: Content-Type: text/csv</li><li>For XLSX files, use: Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</li></ul></td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td><strong>sheetName</strong> (required) -- desired name of the sheet.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>headerRowIndex</strong> (optional) --  a zero-based integer indicating the row number to use for column names. Rows before this are omitted. If not specified, the default values are Column1, Column2, etc.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>primaryColumnIndex</strong> (optional) -- a zero-based integer indicating the column to designate as primary. If not specified, the default value is 0.</td>
+</tr>
+<tr>
+<td>Request Body</td>
+<td>Binary content for the file</td>
+</tr>
+<tr>
+<td>Returns</td>
+<td><a href="#result-object">Result object</a></td>
+</tr>
+<tr>
+<td>Access Scope</td>
+<td>CREATE_SHEETS</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
+
+<h2 id='import-sheet-into-folder'>Import Sheet into Folder</h2>
+
+<blockquote>
+<p>Example request: Import sheet into folder</p>
+</blockquote>
+
+<pre class="highlight shell tab-shell"><code>curl  https://api.smartsheet.com/2.0/folders/<span class="o">{</span>folderId<span class="o">}</span>/sheets/import?sheetName<span class="o">=</span>MarketingProgressReport&amp;headerRowIndex<span class="o">=</span>0&amp;primaryColumnIndex<span class="o">=</span>0 <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
+-H <span class="s2">"Content-Disposition: attachment"</span> <span class="se">\</span>
+-H <span class="s2">"Content-Type: text/csv"</span> <span class="se">\</span>
+-X POST <span class="se">\</span>
+--data-binary @ProgressReport.csv
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// To do</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// To do</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// To do</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># To do</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># Sample 1: Import from file into folder</span>
+<span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">import_from_file_into_folder</span><span class="p">(</span>
+  <span class="ss">folder_id: </span><span class="mi">8999900887877508</span><span class="p">,</span>
+  <span class="ss">file: </span><span class="n">sample_csv</span><span class="p">,</span>
+  <span class="ss">file_type: :csv</span><span class="p">,</span>
+  <span class="ss">file_length: </span><span class="n">sample_csv</span><span class="p">.</span><span class="nf">size</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span><span class="ss">sheetName: </span><span class="s1">'MarketingProgressReport'</span><span class="p">,</span> <span class="ss">headerRowIndex: </span><span class="mi">0</span><span class="p">,</span> <span class="ss">primaryColumnIndex: </span><span class="mi">0</span><span class="p">})</span>
+
+<span class="c1"># Sample 2: Import from file path into folder</span>
+<span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">import_from_file_path_into_folder</span><span class="p">(</span>
+  <span class="ss">folder_id: </span><span class="mi">89999300887877508</span><span class="p">,</span>
+  <span class="ss">path: </span><span class="s1">'D:\sample.csv'</span><span class="p">,</span>
+  <span class="ss">file_type: :csv</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span><span class="ss">sheetName: </span><span class="s1">'MarketingProgressReport'</span><span class="p">,</span> <span class="ss">headerRowIndex: </span><span class="mi">0</span><span class="p">,</span> <span class="ss">primaryColumnIndex: </span><span class="mi">0</span><span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>Example response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"resultCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9271131230488452</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MarketingProgressReport"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sheet"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"accessLevel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OWNER"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"permalink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.smartsheet.com/b/home?lx=eGUIdBiqQXj7yxLaCINt3g"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><code>POST /folders/{folderId}/sheets/import</code></p>
+
+<p>Imports CSV or Excel data into a new sheet in the specified folder.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Headers</td>
+<td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
+</tr>
+<tr>
+<td></td>
+<td>Content-Disposition: attachment</td>
+</tr>
+<tr>
+<td></td>
+<td>One of the following:<ul><li>For CSV files, use: Content-Type: text/csv</li><li>For XLSX files, use: Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</li></ul></td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td><strong>sheetName</strong> (required) -- desired name of the sheet.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>headerRowIndex</strong> (optional) --  a zero-based integer indicating the row number to use for column names. Rows before this are omitted. If not specified, the default values are Column1, Column2, etc.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>primaryColumnIndex</strong> (optional) -- a zero-based integer indicating the column to designate as primary. If not specified, the default value is 0.</td>
+</tr>
+<tr>
+<td>Request Body</td>
+<td>Binary content for the file</td>
+</tr>
+<tr>
+<td>Returns</td>
+<td><a href="#result-object">Result object</a></td>
+</tr>
+<tr>
+<td>Access Scope</td>
+<td>CREATE_SHEETS</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
+
+<h2 id='import-sheet-into-workspace'>Import Sheet into Workspace</h2>
+
+<blockquote>
+<p>Example request: Import sheet into workspace</p>
+</blockquote>
+
+<pre class="highlight shell tab-shell"><code>curl  https://api.smartsheet.com/2.0/workspaces/<span class="o">{</span>workspaceId<span class="o">}</span>/sheets/import?sheetName<span class="o">=</span>MarketingProgressReport&amp;headerRowIndex<span class="o">=</span>0&amp;primaryColumnIndex<span class="o">=</span>0 <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
+-H <span class="s2">"Content-Disposition: attachment"</span> <span class="se">\</span>
+-H <span class="s2">"Content-Type: text/csv"</span> <span class="se">\</span>
+-X POST <span class="se">\</span>
+--data-binary @ProgressReport.csv
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// To do</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// To do</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// To do</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># To do</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># Sample 1: Import from file into workspace</span>
+<span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">import_from_file_into_workspace</span><span class="p">(</span>
+  <span class="ss">workspace_id: </span><span class="mi">4124946017347460</span><span class="p">,</span>
+  <span class="ss">file: </span><span class="n">sample_csv</span><span class="p">,</span>
+  <span class="ss">file_type: :csv</span><span class="p">,</span>
+  <span class="ss">file_length: </span><span class="n">sample_csv</span><span class="p">.</span><span class="nf">size</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span><span class="ss">sheetName: </span><span class="s1">'MarketingProgressReport'</span><span class="p">,</span> <span class="ss">headerRowIndex: </span><span class="mi">0</span><span class="p">,</span> <span class="ss">primaryColumnIndex: </span><span class="mi">0</span><span class="p">})</span>
+
+<span class="c1"># Sample 2: Import from file path into workspace</span>
+<span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">import_from_file_path_into_workspace</span><span class="p">(</span>
+  <span class="ss">workspace_id: </span><span class="mi">4124946017347460</span><span class="p">,</span>
+  <span class="ss">path: </span><span class="s1">'D:\sample.csv'</span><span class="p">,</span>
+  <span class="ss">file_type: :csv</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span><span class="ss">sheetName: </span><span class="s1">'MarketingProgressReport'</span><span class="p">,</span> <span class="ss">headerRowIndex: </span><span class="mi">0</span><span class="p">,</span> <span class="ss">primaryColumnIndex: </span><span class="mi">0</span><span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>Example response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"resultCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9271131230488452</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MarketingProgressReport"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sheet"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"accessLevel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OWNER"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"permalink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.smartsheet.com/b/home?lx=eGUIdBiqQXj7yxLaCINt3g"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><code>POST /workspaces/{workspaceId}/sheets/import</code></p>
+
+<p>Imports CSV or Excel data into a new sheet in the specified workspace.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Headers</td>
+<td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
+</tr>
+<tr>
+<td></td>
+<td>Content-Disposition: attachment</td>
+</tr>
+<tr>
+<td></td>
+<td>One of the following:<ul><li>For CSV files, use: Content-Type: text/csv</li><li>For XLSX files, use: Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</li></ul></td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td><strong>sheetName</strong> (required) -- desired name of the sheet.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>headerRowIndex</strong> (optional) --  a zero-based integer indicating the row number to use for column names. Rows before this are omitted. If not specified, the default values are Column1, Column2, etc.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>primaryColumnIndex</strong> (optional) -- a zero-based integer indicating the column to designate as primary. If not specified, the default value is 0.</td>
+</tr>
+<tr>
+<td>Request Body</td>
+<td>Binary content for the file</td>
+</tr>
+<tr>
+<td>Returns</td>
+<td><a href="#result-object">Result object</a></td>
+</tr>
+<tr>
+<td>Access Scope</td>
+<td>CREATE_SHEETS</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
+
 <h1 id='reports'>Reports</h1>
+
 <p>A report is a filtered view of the data from one or more sheets. Like a sheet, a report is comprised of columns, rows, and cells, and may optionally contain attachments and discussions.</p>
+
 <h2 id='objects-15'>Objects</h2><h3 id='report-object'>Report Object</h3>
 <blockquote>
 <p>Example: Report object</p>
