@@ -942,20 +942,24 @@ smartsheet.sheets.importXlsxSheet(options)
 ```
 
 ```python
-# To do
+imported_sheet = ss_client.Sheets.import_xlsx_sheet(
+  'D:/ProgressReport.xlsx',
+  'MarketingProgressReport',  # sheet_name
+  header_row_index=0
+)
 ```
 
 ```ruby
 # Sample 1: Import from file
 smartsheet.sheets.import_from_file(
-  file: sample_csv,
+  file: ProgressReport.csv,
   file_type: :csv,
-  file_length: sample_csv.size,
+  file_length: ProgressReport.size,
   params: {sheetName: 'MarketingProgressReport', headerRowIndex: 0, primaryColumnIndex: 0})
 
 # Sample 2: Import from file path
 smartsheet.sheets.import_from_file_path(
-  path: 'D:\sample.csv',
+  path: 'D:\ProgressReport.csv',
   file_type: :csv,
   params: {sheetName: 'MarketingProgressReport', headerRowIndex: 0, primaryColumnIndex: 0})
 ```
@@ -1056,7 +1060,12 @@ smartsheet.sheets.importXlsxSheetIntoFolder(options)
 ```
 
 ```python
-# To do
+imported_sheet = ss_client.Folders.import_xlsx_sheet(
+  8999900887877508,           # folder_id
+  'D:/ProgressReport.xlsx',
+  'MarketingProgressReport',  # sheet_name
+  header_row_index=0
+)
 ```
 
 ```ruby
@@ -1108,7 +1117,7 @@ Imports CSV or XLSX data into a new sheet in the specified folder.
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
 
-<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
 
 ## Import Sheet into Workspace
 
@@ -1172,7 +1181,12 @@ smartsheet.sheets.importXlsxSheetIntoWorkspace(options)
 ```
 
 ```python
-# To do
+imported_sheet = ss_client.Workspaces.import_xlsx_sheet(
+  4124946017347460,           # workspace_id
+  'D:/ProgressReport.xlsx',
+  'MarketingProgressReport',  # sheet_name
+  header_row_index=0
+)
 ```
 
 ```ruby
@@ -1224,7 +1238,7 @@ Imports CSV or XLSX data into a new sheet in the specified workspace.
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
 
-<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
 
 # Reports
 
