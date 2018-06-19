@@ -880,9 +880,9 @@ For details about working with sheets in the user's **Sheets** folder (that is, 
 
 # Import
 
-Import CSV or Excel data into a new sheet.
+Import CSV or XLSX data into a new sheet. 
 
-## Import Sheet from Excel / CSV
+## Import Sheet from CSV / XLSX
 
 > Example request: Import sheet
 
@@ -978,7 +978,7 @@ smartsheet.sheets.import_from_file_path(
 
 `POST /sheets/import`
 
-Imports CSV or Excel data into a new sheet in the top-level "sheets" folder.
+Imports CSV or XLSX data into a new sheet in the top-level "sheets" folder.
 
      |     |
 -----|-----|
@@ -992,7 +992,7 @@ Imports CSV or Excel data into a new sheet in the top-level "sheets" folder.
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
 
-<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
 
 ## Import Sheet into Folder
 
@@ -1094,7 +1094,7 @@ smartsheet.sheets.import_from_file_path_into_folder(
 
 `POST /folders/{folderId}/sheets/import`
 
-Imports CSV or Excel data into a new sheet in the specified folder.
+Imports CSV or XLSX data into a new sheet in the specified folder.
 
      |     |
 -----|-----|
@@ -1210,7 +1210,7 @@ smartsheet.sheets.import_from_file_path_into_workspace(
 
 `POST /workspaces/{workspaceId}/sheets/import`
 
-Imports CSV or Excel data into a new sheet in the specified workspace.
+Imports CSV or XLSX data into a new sheet in the specified workspace.
 
      |     |
 -----|-----|
