@@ -938,7 +938,12 @@ smartsheet.sheets.importXlsxSheet(options)
 ```
 
 ```java
-// To do
+Sheet sheet = smartsheet.sheetResources().importXlsx(
+  "D:/ProgressReport.xlsx",
+  "MarketingProgressReport",
+  0,      // headerRowIndex
+  0       // primaryColumnIndex
+);
 ```
 
 ```python
@@ -1056,7 +1061,13 @@ smartsheet.sheets.importXlsxSheetIntoFolder(options)
 ```
 
 ```java
-// To do
+Sheet sheet = smartsheet.sheetResources().importXlsxInFolder(
+  8999900887877508L,           // long folderId
+  "D:/ProgressReport.xlsx",
+  "MarketingProgressReport",
+  0,                          // headerRowIndex
+  0                           // primaryColumnIndex
+);
 ```
 
 ```python
@@ -1177,7 +1188,13 @@ smartsheet.sheets.importXlsxSheetIntoWorkspace(options)
 ```
 
 ```java
-// To do
+Sheet sheet = smartsheet.sheetResources().importXlsxInWorkspace(
+  4124946017347460L,           // long workspaceId
+  "D:/ProgressReport.xlsx",
+  "MarketingProgressReport",
+  0,                          // headerRowIndex
+  0                           // primaryColumnIndex
+);
 ```
 
 ```python
