@@ -934,7 +934,12 @@ smartsheet.sheets.importXlsxSheet(options)
 ```
 
 ```csharp
-// To do
+Sheet sheet = smartsheet.SheetResources.ImportXlsSheet(
+  "D:/ProgressReport.xlsx",
+  null,         // sheetName defaults to file name unless specified
+  0,            // headerRowIndex
+  null          // primaryColumnIndex
+);
 ```
 
 ```java
@@ -1057,7 +1062,13 @@ smartsheet.sheets.importXlsxSheetIntoFolder(options)
 ```
 
 ```csharp
-// To do
+Sheet sheet = smartsheet.FolderResources.SheetResources.ImportXlsSheet(
+  8999900887877508,       // folderId
+  "D:/ProgressReport.xlsx",
+  null,                   // sheetName defaults to file name unless specified
+  0,                      // headerRowIndex
+  null                    // primaryColumnIndex
+);
 ```
 
 ```java
@@ -1184,7 +1195,13 @@ smartsheet.sheets.importXlsxSheetIntoWorkspace(options)
 ```
 
 ```csharp
-// To do
+Sheet sheet = smartsheet.WorkspaceResources.SheetResources.ImportXlsSheet(
+  4124946017347460,       // workspaceId
+  "D:/ProgressReport.xlsx",
+  null,                   // sheetName defaults to file name unless specified
+  0,                      // headerRowIndex
+  null                    // primaryColumnIndex
+);
 ```
 
 ```java
