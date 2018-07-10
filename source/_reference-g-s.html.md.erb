@@ -7090,6 +7090,310 @@ For details about sending update requests, see [Create Update Request](#create-u
 
 For details about sheet sharing, see [Sheet Sharing](#sheet-sharing).
 
+## Sheet Summary
+
+### Add Fields
+
+> Example request: add fields
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X POST \
+-d '{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'
+```
+
+```javascript
+// Not yet implemented
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+# Not yet implemented
+```
+
+> Example response
+
+```json
+```
+
+POST /sheets/{sheetId}/sort`
+
+Sorts the rows of a sheet, either in ascending or descending order.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
+<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
+<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
+<%= SCOPE %> | WRITE_SHEETS
+
+### Add Image to Sheet Summary
+
+> Example request: add image to sheet summary
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X POST \
+-d '{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'
+```
+
+```javascript
+// Not yet implemented
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+# Not yet implemented
+```
+
+> Example response
+
+```json
+```
+
+POST /sheets/{sheetId}/sort`
+
+Sorts the rows of a sheet, either in ascending or descending order.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
+<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
+<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
+<%= SCOPE %> | WRITE_SHEETS
+
+### Delete Fields
+
+> Example request: delete fields
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X POST \
+-d '{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'
+```
+
+```javascript
+// Not yet implemented
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+# Not yet implemented
+```
+
+> Example response
+
+```json
+```
+
+POST /sheets/{sheetId}/sort`
+
+Sorts the rows of a sheet, either in ascending or descending order.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
+<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
+<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
+<%= SCOPE %> | WRITE_SHEETS
+
+### Get Fields
+
+> Example request: get fields
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X POST \
+-d '{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'
+```
+
+```javascript
+// Not yet implemented
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+# Not yet implemented
+```
+
+> Example response
+
+```json
+```
+
+POST /sheets/{sheetId}/sort`
+
+Sorts the rows of a sheet, either in ascending or descending order.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
+<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
+<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
+<%= SCOPE %> | WRITE_SHEETS
+
+### Get Sheet Summary
+
+> Example request: get sheet summary
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/profile \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+```
+
+```javascript
+// Not yet implemented
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+# Not yet implemented
+```
+
+> Example response
+
+```json
+{
+  "fields": [
+    {
+      "type": "TEXT_NUMBER",
+      "objectValue": "Sally Smart",
+      "id": 4583173393803140,
+      "index": 2,
+      "title": "Author"
+    }
+  ]
+}
+```
+
+`GET /sheets/{sheetId}/profile`
+
+Returns object containing array of fields.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
+<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
+<%= RETURNS %> | [SheetProfile object](#sheetprofile-object) containing an array of [ProfileFields objects](#profilefields-object)
+<%= SCOPE %> | READ_SHEETS
+
+### Update Fields
+
+> Example request: update fields
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X POST \
+-d '{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'
+```
+
+```javascript
+// Not yet implemented
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+# Not yet implemented
+```
+
+> Example response
+
+```json
+```
+
+POST /sheets/{sheetId}/sort`
+
+Sorts the rows of a sheet, either in ascending or descending order.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
+<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
+<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
+<%= SCOPE %> | WRITE_SHEETS
+
 ## Sort Rows in Sheet
 
 > Example request: sort rows in sheet
