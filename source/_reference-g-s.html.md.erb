@@ -7092,6 +7092,8 @@ For details about sheet sharing, see [Sheet Sharing](#sheet-sharing).
 
 ## Sheet Summary
 
+A sheet summary allows users to define, organize, and report on custom project and business metadata.
+
 ### Add Fields
 
 > Example request: add fields
@@ -7244,11 +7246,8 @@ Sorts the rows of a sheet, either in ascending or descending order.
 > Example request: get fields
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/json" \
--X POST \
--d '{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/profile/fields \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
 ```
 
 ```javascript
@@ -7276,7 +7275,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
 ```json
 ```
 
-POST /sheets/{sheetId}/sort`
+`GET /sheets/{sheetId}/profile/fields`
 
 Sorts the rows of a sheet, either in ascending or descending order.
 
@@ -7340,8 +7339,8 @@ Returns object containing array of fields.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
-<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><ul><li>**format**: includes format info for profile fields (and rows/cells)</li><li>**writerInfo**: includes createdBy and modifiedBy attributes for profile fields and rows</li></ul>
+  | **exclude** (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li>**displayValue**: excludes displayValue info for profile fields (and rows/cells)</li><li>**image**: excludes image attributes for profile fields (and rows/cells)</li><li>**imageAltText**: excludes alt text for profile fields (and rows/cells)</li></ul>
 <%= RETURNS %> | [SheetProfile object](#sheetprofile-object) containing an array of [ProfileFields objects](#profilefields-object)
 <%= SCOPE %> | READ_SHEETS
 
