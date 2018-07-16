@@ -958,7 +958,7 @@
             <a href="#import" class="toc-h1 toc-link" data-title="Import">Import</a>
               <ul class="toc-list-subhead">
                   <li>
-                    <a href="#import-sheet-from-excel-csv" class="toc-h2 toc-link" data-title="Import Sheet from Excel / CSV">Import Sheet from Excel / CSV</a>
+                    <a href="#import-sheet-from-csv-xlsx" class="toc-h2 toc-link" data-title="Import Sheet from CSV / XLSX">Import Sheet from CSV / XLSX</a>
                   </li>
                   <li>
                     <a href="#import-sheet-into-folder" class="toc-h2 toc-link" data-title="Import Sheet into Folder">Import Sheet into Folder</a>
@@ -1865,7 +1865,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2018-06-18
+<p>Updated 2018-07-13
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -13282,8 +13282,8 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 <h3 id='home-sheets'>Home Sheets</h3>
 <p>For details about working with sheets in the user&#39;s <strong>Sheets</strong> folder (that is, at the Home level), see <a href="#sheets">Sheets</a>.</p>
 <h1 id='import'>Import</h1>
-<p>Import CSV or Excel data into a new sheet.</p>
-<h2 id='import-sheet-from-excel-csv'>Import Sheet from Excel / CSV</h2>
+<p>Import CSV or XLSX data into a new sheet. </p>
+<h2 id='import-sheet-from-csv-xlsx'>Import Sheet from CSV / XLSX</h2>
 
 <blockquote>
 <p>Example request: Import sheet</p>
@@ -13295,20 +13295,68 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 -H <span class="s2">"Content-Type: text/csv"</span> <span class="se">\</span>
 -X POST <span class="se">\</span>
 --data-binary @ProgressReport.csv
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// To do</span>
-</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// To do</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">// To do</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="c"># To do</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Sample 1: Import sheet from CSV</span>
+<span class="c1">// Set options</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">queryParameters</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">sheetName</span><span class="p">:</span> <span class="s1">'MarketingProgressReport'</span>
+  <span class="p">},</span>
+  <span class="na">path</span><span class="p">:</span> <span class="s2">"D:/ProgressReport.csv"</span>
+<span class="p">};</span>
+
+<span class="c1">// Import CSV as sheet</span>
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">importCsvSheet</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">attachment</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">attachment</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+
+<span class="c1">// Sample 2: Import sheet from XLSX</span>
+<span class="c1">// Set options</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">queryParameters</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">sheetName</span><span class="p">:</span> <span class="s1">'MarketingProgressReport'</span>
+  <span class="p">},</span>
+  <span class="na">path</span><span class="p">:</span> <span class="s2">"D:/ProgressReport.xlsx"</span>
+<span class="p">};</span>
+
+<span class="c1">// Import XLSX as sheet</span>
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">importXlsxSheet</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">attachment</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">attachment</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="n">Sheet</span> <span class="n">sheet</span> <span class="p">=</span> <span class="n">smartsheet</span><span class="p">.</span><span class="n">SheetResources</span><span class="p">.</span><span class="nf">ImportXlsSheet</span><span class="p">(</span>
+  <span class="s">"D:/ProgressReport.xlsx"</span><span class="p">,</span>
+  <span class="k">null</span><span class="p">,</span>         <span class="c1">// sheetName defaults to file name unless specified</span>
+  <span class="m">0</span><span class="p">,</span>            <span class="c1">// headerRowIndex</span>
+  <span class="k">null</span>          <span class="c1">// primaryColumnIndex</span>
+<span class="p">);</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">Sheet</span> <span class="n">sheet</span> <span class="o">=</span> <span class="n">smartsheet</span><span class="o">.</span><span class="na">sheetResources</span><span class="o">().</span><span class="na">importXlsx</span><span class="o">(</span>
+  <span class="s">"D:/ProgressReport.xlsx"</span><span class="o">,</span>
+  <span class="s">"MarketingProgressReport"</span><span class="o">,</span>
+  <span class="mi">0</span><span class="o">,</span>      <span class="c1">// headerRowIndex</span>
+  <span class="mi">0</span>       <span class="c1">// primaryColumnIndex</span>
+<span class="o">);</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">imported_sheet</span> <span class="o">=</span> <span class="n">ss_client</span><span class="o">.</span><span class="n">Sheets</span><span class="o">.</span><span class="n">import_xlsx_sheet</span><span class="p">(</span>
+  <span class="s">'D:/ProgressReport.xlsx'</span><span class="p">,</span>
+  <span class="s">'MarketingProgressReport'</span><span class="p">,</span>  <span class="c"># sheet_name</span>
+  <span class="n">header_row_index</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># Sample 1: Import from file</span>
 <span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">import_from_file</span><span class="p">(</span>
-  <span class="ss">file: </span><span class="n">sample_csv</span><span class="p">,</span>
+  <span class="ss">file: </span><span class="no">ProgressReport</span><span class="p">.</span><span class="nf">csv</span><span class="p">,</span>
   <span class="ss">file_type: :csv</span><span class="p">,</span>
-  <span class="ss">file_length: </span><span class="n">sample_csv</span><span class="p">.</span><span class="nf">size</span><span class="p">,</span>
+  <span class="ss">file_length: </span><span class="no">ProgressReport</span><span class="p">.</span><span class="nf">size</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span><span class="ss">sheetName: </span><span class="s1">'MarketingProgressReport'</span><span class="p">,</span> <span class="ss">headerRowIndex: </span><span class="mi">0</span><span class="p">,</span> <span class="ss">primaryColumnIndex: </span><span class="mi">0</span><span class="p">})</span>
 
 <span class="c1"># Sample 2: Import from file path</span>
 <span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">import_from_file_path</span><span class="p">(</span>
-  <span class="ss">path: </span><span class="s1">'D:\sample.csv'</span><span class="p">,</span>
+  <span class="ss">path: </span><span class="s1">'D:\ProgressReport.csv'</span><span class="p">,</span>
   <span class="ss">file_type: :csv</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span><span class="ss">sheetName: </span><span class="s1">'MarketingProgressReport'</span><span class="p">,</span> <span class="ss">headerRowIndex: </span><span class="mi">0</span><span class="p">,</span> <span class="ss">primaryColumnIndex: </span><span class="mi">0</span><span class="p">})</span>
 </code></pre>
@@ -13332,7 +13380,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 
 <p><code>POST /sheets/import</code></p>
 
-<p>Imports CSV or Excel data into a new sheet in the top-level &quot;sheets&quot; folder.</p>
+<p>Imports CSV or XLSX data into a new sheet in the top-level &quot;sheets&quot; folder.</p>
 
 <table><thead>
 <tr>
@@ -13378,7 +13426,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 </tbody></table>
 
-<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
 
 <h2 id='import-sheet-into-folder'>Import Sheet into Folder</h2>
 
@@ -13392,10 +13440,63 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 -H <span class="s2">"Content-Type: text/csv"</span> <span class="se">\</span>
 -X POST <span class="se">\</span>
 --data-binary @ProgressReport.csv
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// To do</span>
-</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// To do</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">// To do</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="c"># To do</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Sample 1: Import CSV into folder</span>
+<span class="c1">// Set options</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">folderId</span><span class="p">:</span> <span class="mi">8999900887877508</span><span class="p">,</span> 
+  <span class="na">queryParameters</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">sheetName</span><span class="p">:</span> <span class="s1">'MarketingProgressReport'</span>
+  <span class="p">},</span>
+  <span class="na">path</span><span class="p">:</span> <span class="s2">"D:/ProgressReport.csv"</span>
+<span class="p">};</span>
+
+<span class="c1">// Import CSV as sheet into folder</span>
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">importCsvSheetIntoFolder</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">attachment</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">attachment</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+
+<span class="c1">//Sample 2: Import XLSX into folder</span>
+<span class="c1">// Set options</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">folderId</span><span class="p">:</span> <span class="mi">8999900887877508</span><span class="p">,</span> 
+  <span class="na">queryParameters</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">sheetName</span><span class="p">:</span> <span class="s1">'MarketingProgressReport'</span>
+  <span class="p">},</span>
+  <span class="na">path</span><span class="p">:</span> <span class="s2">"D:/ProgressReport.xlsx"</span>
+<span class="p">};</span>
+
+<span class="c1">// Import XLSX as sheet into Folder</span>
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">importXlsxSheetIntoFolder</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">attachment</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">attachment</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="n">Sheet</span> <span class="n">sheet</span> <span class="p">=</span> <span class="n">smartsheet</span><span class="p">.</span><span class="n">FolderResources</span><span class="p">.</span><span class="n">SheetResources</span><span class="p">.</span><span class="nf">ImportXlsSheet</span><span class="p">(</span>
+  <span class="m">8999900887877508</span><span class="p">,</span>       <span class="c1">// folderId</span>
+  <span class="s">"D:/ProgressReport.xlsx"</span><span class="p">,</span>
+  <span class="k">null</span><span class="p">,</span>                   <span class="c1">// sheetName defaults to file name unless specified</span>
+  <span class="m">0</span><span class="p">,</span>                      <span class="c1">// headerRowIndex</span>
+  <span class="k">null</span>                    <span class="c1">// primaryColumnIndex</span>
+<span class="p">);</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">Sheet</span> <span class="n">sheet</span> <span class="o">=</span> <span class="n">smartsheet</span><span class="o">.</span><span class="na">sheetResources</span><span class="o">().</span><span class="na">importXlsxInFolder</span><span class="o">(</span>
+  <span class="mi">8999900887877508L</span><span class="o">,</span>           <span class="c1">// long folderId</span>
+  <span class="s">"D:/ProgressReport.xlsx"</span><span class="o">,</span>
+  <span class="s">"MarketingProgressReport"</span><span class="o">,</span>
+  <span class="mi">0</span><span class="o">,</span>                          <span class="c1">// headerRowIndex</span>
+  <span class="mi">0</span>                           <span class="c1">// primaryColumnIndex</span>
+<span class="o">);</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">imported_sheet</span> <span class="o">=</span> <span class="n">ss_client</span><span class="o">.</span><span class="n">Folders</span><span class="o">.</span><span class="n">import_xlsx_sheet</span><span class="p">(</span>
+  <span class="mi">8999900887877508</span><span class="p">,</span>           <span class="c"># folder_id</span>
+  <span class="s">'D:/ProgressReport.xlsx'</span><span class="p">,</span>
+  <span class="s">'MarketingProgressReport'</span><span class="p">,</span>  <span class="c"># sheet_name</span>
+  <span class="n">header_row_index</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># Sample 1: Import from file into folder</span>
 <span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">import_from_file_into_folder</span><span class="p">(</span>
   <span class="ss">folder_id: </span><span class="mi">8999900887877508</span><span class="p">,</span>
@@ -13431,7 +13532,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 
 <p><code>POST /folders/{folderId}/sheets/import</code></p>
 
-<p>Imports CSV or Excel data into a new sheet in the specified folder.</p>
+<p>Imports CSV or XLSX data into a new sheet in the specified folder.</p>
 
 <table><thead>
 <tr>
@@ -13477,7 +13578,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 </tbody></table>
 
-<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
 
 <h2 id='import-sheet-into-workspace'>Import Sheet into Workspace</h2>
 
@@ -13491,10 +13592,63 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 -H <span class="s2">"Content-Type: text/csv"</span> <span class="se">\</span>
 -X POST <span class="se">\</span>
 --data-binary @ProgressReport.csv
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// To do</span>
-</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// To do</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">// To do</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="c"># To do</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Sample 1: Import CSV into workspace</span>
+<span class="c1">// Set options</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">workspaceId</span><span class="p">:</span> <span class="mi">4124946017347460</span><span class="p">,</span>
+  <span class="na">queryParameters</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">sheetName</span><span class="p">:</span> <span class="s1">'MarketingProgressReport'</span>
+  <span class="p">},</span>
+  <span class="na">path</span><span class="p">:</span> <span class="s2">"D:/ProgressReport.csv"</span>
+<span class="p">};</span>
+
+<span class="c1">// Import CSV as sheet into workspace</span>
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">importCsvSheetIntoWorkspace</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">attachment</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">attachment</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+
+<span class="c1">// Sample 2: Import XLSX into workspace</span>
+<span class="c1">// Set options</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">workspaceId</span><span class="p">:</span> <span class="mi">4124946017347460</span><span class="p">,</span>
+  <span class="na">queryParameters</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">sheetName</span><span class="p">:</span> <span class="s1">'MarketingProgressReport'</span>
+  <span class="p">},</span>
+  <span class="na">path</span><span class="p">:</span> <span class="s2">"D:/ProgressReport.xlsx"</span>
+<span class="p">};</span>
+
+<span class="c1">// Import XLSX as sheet into workspace</span>
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">importXlsxSheetIntoWorkspace</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">attachment</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">attachment</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="n">Sheet</span> <span class="n">sheet</span> <span class="p">=</span> <span class="n">smartsheet</span><span class="p">.</span><span class="n">WorkspaceResources</span><span class="p">.</span><span class="n">SheetResources</span><span class="p">.</span><span class="nf">ImportXlsSheet</span><span class="p">(</span>
+  <span class="m">4124946017347460</span><span class="p">,</span>       <span class="c1">// workspaceId</span>
+  <span class="s">"D:/ProgressReport.xlsx"</span><span class="p">,</span>
+  <span class="k">null</span><span class="p">,</span>                   <span class="c1">// sheetName defaults to file name unless specified</span>
+  <span class="m">0</span><span class="p">,</span>                      <span class="c1">// headerRowIndex</span>
+  <span class="k">null</span>                    <span class="c1">// primaryColumnIndex</span>
+<span class="p">);</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">Sheet</span> <span class="n">sheet</span> <span class="o">=</span> <span class="n">smartsheet</span><span class="o">.</span><span class="na">sheetResources</span><span class="o">().</span><span class="na">importXlsxInWorkspace</span><span class="o">(</span>
+  <span class="mi">4124946017347460L</span><span class="o">,</span>           <span class="c1">// long workspaceId</span>
+  <span class="s">"D:/ProgressReport.xlsx"</span><span class="o">,</span>
+  <span class="s">"MarketingProgressReport"</span><span class="o">,</span>
+  <span class="mi">0</span><span class="o">,</span>                          <span class="c1">// headerRowIndex</span>
+  <span class="mi">0</span>                           <span class="c1">// primaryColumnIndex</span>
+<span class="o">);</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">imported_sheet</span> <span class="o">=</span> <span class="n">ss_client</span><span class="o">.</span><span class="n">Workspaces</span><span class="o">.</span><span class="n">import_xlsx_sheet</span><span class="p">(</span>
+  <span class="mi">4124946017347460</span><span class="p">,</span>           <span class="c"># workspace_id</span>
+  <span class="s">'D:/ProgressReport.xlsx'</span><span class="p">,</span>
+  <span class="s">'MarketingProgressReport'</span><span class="p">,</span>  <span class="c"># sheet_name</span>
+  <span class="n">header_row_index</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># Sample 1: Import from file into workspace</span>
 <span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">import_from_file_into_workspace</span><span class="p">(</span>
   <span class="ss">workspace_id: </span><span class="mi">4124946017347460</span><span class="p">,</span>
@@ -13530,7 +13684,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 
 <p><code>POST /workspaces/{workspaceId}/sheets/import</code></p>
 
-<p>Imports CSV or Excel data into a new sheet in the specified workspace.</p>
+<p>Imports CSV or XLSX data into a new sheet in the specified workspace.</p>
 
 <table><thead>
 <tr>
@@ -13576,7 +13730,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 </tbody></table>
 
-<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
 
 <h1 id='reports'>Reports</h1>
 

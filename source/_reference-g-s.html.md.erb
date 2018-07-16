@@ -880,9 +880,9 @@ For details about working with sheets in the user's **Sheets** folder (that is, 
 
 # Import
 
-Import CSV or Excel data into a new sheet.
+Import CSV or XLSX data into a new sheet. 
 
-## Import Sheet from Excel / CSV
+## Import Sheet from CSV / XLSX
 
 > Example request: Import sheet
 
@@ -896,32 +896,80 @@ curl  https://api.smartsheet.com/2.0/sheets/import?sheetName=MarketingProgressRe
 ```
 
 ```javascript
-// To do
+// Sample 1: Import sheet from CSV
+// Set options
+var options = {
+  queryParameters: {
+      sheetName: 'MarketingProgressReport'
+  },
+  path: "D:/ProgressReport.csv"
+};
+
+// Import CSV as sheet
+smartsheet.sheets.importCsvSheet(options)
+  .then(function(attachment) {
+      console.log(attachment);
+  })
+  .catch(function(error) {
+      console.log(error);
+  });
+
+// Sample 2: Import sheet from XLSX
+// Set options
+var options = {
+  queryParameters: {
+    sheetName: 'MarketingProgressReport'
+  },
+  path: "D:/ProgressReport.xlsx"
+};
+
+// Import XLSX as sheet
+smartsheet.sheets.importXlsxSheet(options)
+  .then(function(attachment) {
+    console.log(attachment);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
-// To do
+Sheet sheet = smartsheet.SheetResources.ImportXlsSheet(
+  "D:/ProgressReport.xlsx",
+  null,         // sheetName defaults to file name unless specified
+  0,            // headerRowIndex
+  null          // primaryColumnIndex
+);
 ```
 
 ```java
-// To do
+Sheet sheet = smartsheet.sheetResources().importXlsx(
+  "D:/ProgressReport.xlsx",
+  "MarketingProgressReport",
+  0,      // headerRowIndex
+  0       // primaryColumnIndex
+);
 ```
 
 ```python
-# To do
+imported_sheet = ss_client.Sheets.import_xlsx_sheet(
+  'D:/ProgressReport.xlsx',
+  'MarketingProgressReport',  # sheet_name
+  header_row_index=0
+)
 ```
 
 ```ruby
 # Sample 1: Import from file
 smartsheet.sheets.import_from_file(
-  file: sample_csv,
+  file: ProgressReport.csv,
   file_type: :csv,
-  file_length: sample_csv.size,
+  file_length: ProgressReport.size,
   params: {sheetName: 'MarketingProgressReport', headerRowIndex: 0, primaryColumnIndex: 0})
 
 # Sample 2: Import from file path
 smartsheet.sheets.import_from_file_path(
-  path: 'D:\sample.csv',
+  path: 'D:\ProgressReport.csv',
   file_type: :csv,
   params: {sheetName: 'MarketingProgressReport', headerRowIndex: 0, primaryColumnIndex: 0})
 ```
@@ -944,7 +992,7 @@ smartsheet.sheets.import_from_file_path(
 
 `POST /sheets/import`
 
-Imports CSV or Excel data into a new sheet in the top-level "sheets" folder.
+Imports CSV or XLSX data into a new sheet in the top-level "sheets" folder.
 
      |     |
 -----|-----|
@@ -958,7 +1006,7 @@ Imports CSV or Excel data into a new sheet in the top-level "sheets" folder.
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
 
-<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
 
 ## Import Sheet into Folder
 
@@ -974,19 +1022,72 @@ curl  https://api.smartsheet.com/2.0/folders/{folderId}/sheets/import?sheetName=
 ```
 
 ```javascript
-// To do
+// Sample 1: Import CSV into folder
+// Set options
+var options = {
+  folderId: 8999900887877508, 
+  queryParameters: {
+    sheetName: 'MarketingProgressReport'
+  },
+  path: "D:/ProgressReport.csv"
+};
+
+// Import CSV as sheet into folder
+smartsheet.sheets.importCsvSheetIntoFolder(options)
+  .then(function(attachment) {
+    console.log(attachment);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+
+//Sample 2: Import XLSX into folder
+// Set options
+var options = {
+  folderId: 8999900887877508, 
+  queryParameters: {
+    sheetName: 'MarketingProgressReport'
+  },
+  path: "D:/ProgressReport.xlsx"
+};
+
+// Import XLSX as sheet into Folder
+smartsheet.sheets.importXlsxSheetIntoFolder(options)
+  .then(function(attachment) {
+    console.log(attachment);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
-// To do
+Sheet sheet = smartsheet.FolderResources.SheetResources.ImportXlsSheet(
+  8999900887877508,       // folderId
+  "D:/ProgressReport.xlsx",
+  null,                   // sheetName defaults to file name unless specified
+  0,                      // headerRowIndex
+  null                    // primaryColumnIndex
+);
 ```
 
 ```java
-// To do
+Sheet sheet = smartsheet.sheetResources().importXlsxInFolder(
+  8999900887877508L,           // long folderId
+  "D:/ProgressReport.xlsx",
+  "MarketingProgressReport",
+  0,                          // headerRowIndex
+  0                           // primaryColumnIndex
+);
 ```
 
 ```python
-# To do
+imported_sheet = ss_client.Folders.import_xlsx_sheet(
+  8999900887877508,           # folder_id
+  'D:/ProgressReport.xlsx',
+  'MarketingProgressReport',  # sheet_name
+  header_row_index=0
+)
 ```
 
 ```ruby
@@ -1024,7 +1125,7 @@ smartsheet.sheets.import_from_file_path_into_folder(
 
 `POST /folders/{folderId}/sheets/import`
 
-Imports CSV or Excel data into a new sheet in the specified folder.
+Imports CSV or XLSX data into a new sheet in the specified folder.
 
      |     |
 -----|-----|
@@ -1038,7 +1139,7 @@ Imports CSV or Excel data into a new sheet in the specified folder.
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
 
-<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
 
 ## Import Sheet into Workspace
 
@@ -1054,19 +1155,72 @@ curl  https://api.smartsheet.com/2.0/workspaces/{workspaceId}/sheets/import?shee
 ```
 
 ```javascript
-// To do
+// Sample 1: Import CSV into workspace
+// Set options
+var options = {
+  workspaceId: 4124946017347460,
+  queryParameters: {
+    sheetName: 'MarketingProgressReport'
+  },
+  path: "D:/ProgressReport.csv"
+};
+
+// Import CSV as sheet into workspace
+smartsheet.sheets.importCsvSheetIntoWorkspace(options)
+  .then(function(attachment) {
+    console.log(attachment);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+
+// Sample 2: Import XLSX into workspace
+// Set options
+var options = {
+  workspaceId: 4124946017347460,
+  queryParameters: {
+    sheetName: 'MarketingProgressReport'
+  },
+  path: "D:/ProgressReport.xlsx"
+};
+
+// Import XLSX as sheet into workspace
+smartsheet.sheets.importXlsxSheetIntoWorkspace(options)
+  .then(function(attachment) {
+    console.log(attachment);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
-// To do
+Sheet sheet = smartsheet.WorkspaceResources.SheetResources.ImportXlsSheet(
+  4124946017347460,       // workspaceId
+  "D:/ProgressReport.xlsx",
+  null,                   // sheetName defaults to file name unless specified
+  0,                      // headerRowIndex
+  null                    // primaryColumnIndex
+);
 ```
 
 ```java
-// To do
+Sheet sheet = smartsheet.sheetResources().importXlsxInWorkspace(
+  4124946017347460L,           // long workspaceId
+  "D:/ProgressReport.xlsx",
+  "MarketingProgressReport",
+  0,                          // headerRowIndex
+  0                           // primaryColumnIndex
+);
 ```
 
 ```python
-# To do
+imported_sheet = ss_client.Workspaces.import_xlsx_sheet(
+  4124946017347460,           # workspace_id
+  'D:/ProgressReport.xlsx',
+  'MarketingProgressReport',  # sheet_name
+  header_row_index=0
+)
 ```
 
 ```ruby
@@ -1104,7 +1258,7 @@ smartsheet.sheets.import_from_file_path_into_workspace(
 
 `POST /workspaces/{workspaceId}/sheets/import`
 
-Imports CSV or Excel data into a new sheet in the specified workspace.
+Imports CSV or XLSX data into a new sheet in the specified workspace.
 
      |     |
 -----|-----|
@@ -1118,7 +1272,7 @@ Imports CSV or Excel data into a new sheet in the specified workspace.
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
 
-<aside class="notice">Both <b>sheetName</b> and the file name must use ASCII characters.</aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
 
 # Reports
 
