@@ -3260,7 +3260,7 @@ Searches all sheets that the user can access, for the specified text.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **query** (required): text with which to perform the search. Enclose in double-quotes for an exact search.
- | **include** (optional): when specified with a value of **favoriteFlag**, response indicates which returned items are favorites:<ul><li>**favorite** -- folders, reports, sheets, Sights, templates, and workspaces will have the property **favorite: true**</li><li>**parentObjectFavorite** -- attachments, discussions, profile fields, and rows will have the property **parentObjectFavorite: true**</li></ul>
+ | **include** (optional): when specified with a value of **favoriteFlag**, response indicates which returned items are favorites:<ul><li>**favorite** -- folders, reports, sheets, Sights, templates, and workspaces will have the property **favorite: true**</li><li>**parentObjectFavorite** -- attachments, discussions, summary fields, and rows will have the property **parentObjectFavorite: true**</li></ul>
  | **location** (optional): when specified with a value of **personalWorkspace**, limits the response to only those items in the user's workspaces.
  | <%= PARAMETER_MODIFIEDSINCE %>
  | **scopes** (optional): comma-separated list of search filters:<ul><li><b>attachments</b></li><li><b>cellData</b></li><li><b>comments</b></li><li><b>folderNames</b></li><li><b>profileFields</b></li><li><b>reportNames</b></li><li><b>sheetNames</b></li><li><b>sightNames</b></li><li><b>templateNames</b></li><li><b>workspaceNames</b></li></ul>
@@ -7400,7 +7400,7 @@ Sorts the rows of a sheet, either in ascending or descending order.
 > Example request: get fields
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/profile/fields \
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
 ```
 
@@ -7429,7 +7429,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/profile/fields \
 ```json
 ```
 
-`GET /sheets/{sheetId}/profile/fields`
+`GET /sheets/{sheetId}/summary/fields`
 
 Sorts the rows of a sheet, either in ascending or descending order.
 
@@ -7446,7 +7446,7 @@ Sorts the rows of a sheet, either in ascending or descending order.
 > Example request: get sheet summary
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/profile \
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
 ```
 
@@ -7486,15 +7486,15 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/profile \
 }
 ```
 
-`GET /sheets/{sheetId}/profile`
+`GET /sheets/{sheetId}/summary`
 
 Returns object containing array of fields.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><ul><li>**format**: includes format info for profile fields (and rows/cells)</li><li>**writerInfo**: includes createdBy and modifiedBy attributes for profile fields and rows</li></ul>
-  | **exclude** (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li>**displayValue**: excludes displayValue info for profile fields (and rows/cells)</li><li>**image**: excludes image attributes for profile fields (and rows/cells)</li><li>**imageAltText**: excludes alt text for profile fields (and rows/cells)</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><ul><li>**format**: includes format info for summary fields (and rows/cells)</li><li>**writerInfo**: includes createdBy and modifiedBy attributes for summary fields and rows</li></ul>
+  | **exclude** (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li>**displayValue**: excludes displayValue info for summary fields (and rows/cells)</li><li>**image**: excludes image attributes for summary fields (and rows/cells)</li><li>**imageAltText**: excludes alt text for summary fields (and rows/cells)</li></ul>
 <%= RETURNS %> | [SheetProfile object](#sheetprofile-object) containing an array of [ProfileFields objects](#profilefields-object)
 <%= SCOPE %> | READ_SHEETS
 
