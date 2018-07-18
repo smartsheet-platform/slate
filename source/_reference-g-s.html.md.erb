@@ -7293,7 +7293,7 @@ For details about sheet sharing, see [Sheet Sharing](#sheet-sharing).
 
 ## Sheet Summary
 
-A sheet summary allows users to define, organize, and report on custom project and business metadata.
+A sheet summary allows users to define, organize, and report on custom project and business metadata. Sheet summary is only available to customers with business or enterprise plans.
 
 ### Add Image to Sheet Summary
 
@@ -7349,11 +7349,11 @@ Sorts the rows of a sheet, either in ascending or descending order.
 > Example request: add summary fields
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: application/json" \
 -X POST \
--d '{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'
+-d '[{"type": "TEXT_NUMBER", "objectValue": "Sally Smart", "index": 2, "title": "Author"}]'
 ```
 
 ```javascript
@@ -7379,19 +7379,35 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
 > Example response
 
 ```json
+{
+	"message": "SUCCESS",
+	"resultCode": 0,
+	"result": [{
+		"id": 1125905009534852,
+		"index": 3,
+		"title": "Owner",
+		"type": "TEXT_NUMBER",
+		"locked": false,
+		"lockedForUser": false,
+		"objectValue": "Jake Browning",
+		"displayValue": "Jake Browning",
+		"strict": true
+	}],
+	"version": 4
+}
 ```
 
-POST /sheets/{sheetId}/sort`
+`POST /sheets/{sheetId}/summary/fields`
 
-Sorts the rows of a sheet, either in ascending or descending order.
+Creates one or more summary fields for the specified sheet.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
-<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
-<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
-<%= SCOPE %> | WRITE_SHEETS
+<%= REQUEST %> | Array of [SummaryField](#summaryfield-object) objects
+<%= PARAMETERS %> | (Optional) **renameIfConflict**: Set to **true** if you want to override the requirement for unique summary field names. Repeated names will be adjusted by appending "(1)" or similar after the field name.
+<%= RETURNS %> | Array of [SheetSummary](#sheetsummary-object) objects
+<%= SCOPE %> | ADMIN_SHEETS
 
 ### Delete Summary Fields
 
@@ -7447,7 +7463,7 @@ Sorts the rows of a sheet, either in ascending or descending order.
 > Example request: get sheet summary
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary \
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary?include=writerInfo \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
 ```
 
@@ -7489,13 +7505,13 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary \
 
 `GET /sheets/{sheetId}/summary`
 
-Returns object containing array of fields.
+Returns object containing array of summary fields.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><ul><li>**format**: includes format info for summary fields (and rows/cells)</li><li>**writerInfo**: includes createdBy and modifiedBy attributes for summary fields and rows</li></ul>
-  | **exclude** (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li>**displayValue**: excludes displayValue info for summary fields (and rows/cells)</li><li>**image**: excludes image attributes for summary fields (and rows/cells)</li><li>**imageAltText**: excludes alt text for summary fields (and rows/cells)</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><ul><li>**format**: includes format info for cells, rows, and summary fields</li><li>**writerInfo**: includes createdBy and modifiedBy attributes for rows and summary fields</li></ul>
+  | **exclude** (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li>**displayValue**: excludes displayValue info for cells, rows, and summary fields</li><li>**image**: excludes image attributes for cells and summary fields</li><li>**imageAltText**: excludes alt text for cells and summary fields</li></ul>
 <%= RETURNS %> | [SheetSummary object](#sheetsummary-object) containing an array of [SummaryField objects](#summaryfield-object)
 <%= SCOPE %> | READ_SHEETS
 
@@ -7531,19 +7547,36 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 > Example response
 
 ```json
+{
+	"pageNumber": 1,
+	"pageSize": 100,
+	"totalPages": 1,
+	"totalCount": 1,
+	"data": [{
+		"id": 3729823422015364,
+		"index": 0,
+		"title": "aaa",
+		"type": "TEXT_NUMBER",
+		"locked": false,
+		"lockedForUser": false,
+		"createdAt": "2017-01-06T17:54:17Z",
+		"modifiedAt": "2017-01-06T17:54:17Z"
+	}]
+}
 ```
 
 `GET /sheets/{sheetId}/summary/fields`
 
-Sorts the rows of a sheet, either in ascending or descending order.
+Returns object containing array of summary fields. Allows for pagination of results.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
-<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
-<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
-<%= SCOPE %> | WRITE_SHEETS
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><ul><li>**format**: includes format info for cells, rows, and summary fields</li><li>**writerInfo**: includes createdBy and modifiedBy attributes for rows and summary fields</li></ul>
+  | **exclude** (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li>**displayValue**: excludes displayValue info for cells, rows, and summary fields</li><li>**image**: excludes image attributes for cells and summary fields</li><li>**imageAltText**: excludes alt text for cells and summary fields</li></ul>
+  | <%= PAGING_PARAMETERS %>
+<%= RETURNS %> | [SheetSummary object](#sheetsummary-object) containing an array of [SummaryField objects](#summaryfield-object)
+<%= SCOPE %> | READ_SHEETS
 
 ### Update Summary Fields
 
