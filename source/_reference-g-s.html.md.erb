@@ -3158,10 +3158,10 @@ Search a specific sheet or search across all sheets that a user can access.
 -----|-----|-----|
 **objectId** | number | Search result object Id
 **parentObjectId** | number | Search result parent object Id
-**objectType** | string | Search result object type (attachment, discussion, folder, report, row, sheet, Sight, template, workspace)
-**parentObjectType** | string | Search result parent object type (folder, report, sheet, Sight, template, workspace)
 **contextData** | array | Additional info on search result context (row num)
+**objectType** | string | Search result object type (attachment, discussion, folder, report, row, sheet, Sight, summaryField, template, workspace)
 **parentObjectName** | string | Search result parent object name
+**parentObjectType** | string | Search result parent object type (folder, report, sheet, Sight, template, workspace)
 **text** | string | Search result text excerpt
 
 ## Search Everything
@@ -5171,6 +5171,7 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 **effectiveAttachmentOptions** | array | Array of enum strings (see [Attachment.attachmentType](#attachment-object)) indicating the allowable attachment options for the current user and sheet
 **favorite** | Boolean | Returned only if the user has marked this sheet as a favorite in their Home tab (value = **true**)
 **ganttEnabled** | Boolean | Indicates whether "Gantt View" is enabled
+**hasSummaryFields** || Boolean | Indicates whether a sheet summary is present
 **modifiedAt** | timestamp | Time that the sheet was modified
 **name** | string | Sheet name
 **owner** | string | Email address of the sheet owner
@@ -5181,7 +5182,9 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 **rows** | [Row](#row-object)[] | Array of Row objects
 **showParentRowsForFilters** | Boolean | Returned only if there are column filters on the sheet.  Value = **true** if "show parent rows" is enabled for the filters.
 **source** | [Source](#source-object) | A Source object indicating the sheet or template from which this sheet was created
+**summary** | [SheetSummary](#sheetsummary-object) | A SheetSummary object containing a list of fields and their values defined for the sheet.
 **totalRowCount** | number | The total number of rows in the sheet
+**userPermissions** | [SheetUserPermissions](#sheetuserpermissions-object) | A SheetUserPermissions object indicating what summary operations are possible for the current user
 **userSettings** | [SheetUserSettings](#sheetusersettings-object) | A SheetUserSettings object containing the current user's sheet-specific settings.
 **version** | number | A number that is incremented every time a sheet is modified
 **workspace** | [Workspace](#workspace-object) | A Workspace object containing the workspace Id and name.<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **ownerInfo**.
@@ -7248,55 +7251,6 @@ For details about sheet sharing, see [Sheet Sharing](#sheet-sharing).
 
 A sheet summary allows users to define, organize, and report on custom project and business metadata.
 
-### Add Fields
-
-> Example request: add fields
-
-```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/json" \
--X POST \
--d '{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'
-```
-
-```javascript
-// Not yet implemented
-```
-
-```csharp
-// Not yet implemented
-```
-
-```java
-// Not yet implemented
-```
-
-```python
-# Not yet implemented
-```
-
-```ruby
-# Not yet implemented
-```
-
-> Example response
-
-```json
-```
-
-POST /sheets/{sheetId}/sort`
-
-Sorts the rows of a sheet, either in ascending or descending order.
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %>
-<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
-<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
-<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
-<%= SCOPE %> | WRITE_SHEETS
-
 ### Add Image to Sheet Summary
 
 > Example request: add image to sheet summary
@@ -7346,9 +7300,9 @@ Sorts the rows of a sheet, either in ascending or descending order.
 <%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
 <%= SCOPE %> | WRITE_SHEETS
 
-### Delete Fields
+### Add Summary Fields
 
-> Example request: delete fields
+> Example request: add summary fields
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
@@ -7395,13 +7349,16 @@ Sorts the rows of a sheet, either in ascending or descending order.
 <%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
 <%= SCOPE %> | WRITE_SHEETS
 
-### Get Fields
+### Delete Summary Fields
 
-> Example request: get fields
+> Example request: delete summary fields
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X POST \
+-d '{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'
 ```
 
 ```javascript
@@ -7429,7 +7386,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 ```json
 ```
 
-`GET /sheets/{sheetId}/summary/fields`
+POST /sheets/{sheetId}/sort`
 
 Sorts the rows of a sheet, either in ascending or descending order.
 
@@ -7495,12 +7452,58 @@ Returns object containing array of fields.
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><ul><li>**format**: includes format info for summary fields (and rows/cells)</li><li>**writerInfo**: includes createdBy and modifiedBy attributes for summary fields and rows</li></ul>
   | **exclude** (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li>**displayValue**: excludes displayValue info for summary fields (and rows/cells)</li><li>**image**: excludes image attributes for summary fields (and rows/cells)</li><li>**imageAltText**: excludes alt text for summary fields (and rows/cells)</li></ul>
-<%= RETURNS %> | [SheetProfile object](#sheetprofile-object) containing an array of [ProfileFields objects](#profilefields-object)
+<%= RETURNS %> | [SheetSummary object](#sheetsummary-object) containing an array of [SummaryField objects](#summaryfield-object)
 <%= SCOPE %> | READ_SHEETS
 
-### Update Fields
+### Get Summary Fields
 
-> Example request: update fields
+> Example request: get summary fields
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+```
+
+```javascript
+// Not yet implemented
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+# Not yet implemented
+```
+
+> Example response
+
+```json
+```
+
+`GET /sheets/{sheetId}/summary/fields`
+
+Sorts the rows of a sheet, either in ascending or descending order.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
+<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
+<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
+<%= SCOPE %> | WRITE_SHEETS
+
+### Update Summary Fields
+
+> Example request: update summary fields
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
