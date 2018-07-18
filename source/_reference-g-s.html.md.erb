@@ -5338,7 +5338,6 @@ Represents individual user settings for a specific sheet.  User settings may be 
 **symbol** | string | When applicable for **PICKLIST** column type. See [Symbol Columns](#symbol-columns).
 **title** | string | Arbitrary name, must be unique within summary
 **type** | string | One of:<ul><li>**ABSTRACT_DATETIME**</li><li>**CHECKBOX**</li><li>**CONTACT_LIST**</li><li>**DATE**</li><li>**DATETIME**</li><li>**DURATION**</li><li>**PICKLIST**</li><li>**PREDECESSOR**</li><li>**TEXT_NUMBER**</li></ul>See [Column Types](#column-types).
-**updateAction** | string | Indicates action to perform on each field. One of:<ul><li>**ADD**</li><li>**DELETE**</li><li>**UPDATE**</li></ul>
 **validation** | Boolean | Indicates whether summary field values are restricted to the type
 
 ## Copy Sheet
@@ -7300,11 +7299,13 @@ A sheet summary allows users to define, organize, and report on custom project a
 > Example request: add image to sheet summary
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields/{fieldId}/images?altText=my%20image \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/json" \
+-H "Content-Type: image/jpeg" \
+-H 'Content-Disposition: attachment; filename="picture.jpg"' \
+-H "Content-Length: FILE_SIZE" \
 -X POST \
--d '{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'
+--data-binary @picture.jpg
 ```
 
 ```javascript
@@ -7330,18 +7331,32 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
 > Example response
 
 ```json
+{
+	"message": "SUCCESS",
+	"resultCode": 0,
+	"result": [{
+		"id": 6039340093597572,
+		"rowNumber": 6,
+		"siblingId": 1535740466227076,
+		"expanded": true,
+		"createdAt": "2017-08-28T21:29:16Z",
+		"modifiedAt": "2017-08-30T08:10:47Z",
+		"cells": []
+	}],
+	"version": 19
+}
 ```
 
-POST /sheets/{sheetId}/sort`
+`POST /sheets/{sheetId}/summary/fields/{fieldId}/images`
 
-Sorts the rows of a sheet, either in ascending or descending order.
+Adds an image to the summary field.
 
      |     |
 -----|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %>
-<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
-<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
-<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
+<%= HEADERS %> | See [Simple Uploads](#simple-uploads) for information about required headers.
+<%= PARAMETERS %> | **altText** (optional): url-encoded alternate text for the image<BR><%= PARAMETER_OVERRIDE_VALIDATION %>
+<%= REQUEST %> | Binary content for the file
+<%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | WRITE_SHEETS
 
 ### Add Summary Fields
@@ -7414,11 +7429,9 @@ Creates one or more summary fields for the specified sheet.
 > Example request: delete summary fields
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields?ids={fieldId1},{fieldId2},{fieldId3} \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/json" \
--X POST \
--d '{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'
+-X DELETE
 ```
 
 ```javascript
@@ -7444,19 +7457,27 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
 > Example response
 
 ```json
+{
+  "message": "SUCCESS",    
+  "resultCode": 0,
+  "result": [
+    207098194749316,
+    100091196549967,
+    450360473006272
+  ]
+}
 ```
 
-POST /sheets/{sheetId}/sort`
+DELETE /sheets/{sheetId}/summary/fields?ids={fieldId1},{fieldId2},{fieldId3}`
 
-Sorts the rows of a sheet, either in ascending or descending order.
+Deletes summary fields from the specified sheet.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
-<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
-<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
-<%= SCOPE %> | WRITE_SHEETS
+<%= PARAMETERS %> | (Optional) **ignoreSummaryFieldsNotFound**: If **true**, the operation will succeed even if some fieldIds are not found.
+<%= RETURNS %> | [Result object](#result-object) containing fieldIds corresponding to all summary fields that were successfully deleted.
+<%= SCOPE %> | ADMIN_SHEETS
 
 ### Get Sheet Summary
 
@@ -7583,11 +7604,11 @@ Returns object containing array of summary fields. Allows for pagination of resu
 > Example request: update summary fields
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: application/json" \
--X POST \
--d '{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'
+-X PUT \
+-d '[{"type": "TEXT_NUMBER", "objectValue": "Sally Smart", "index": 2, "title": "Author"}]'
 ```
 
 ```javascript
@@ -7613,19 +7634,34 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
 > Example response
 
 ```json
+{
+	"message": "SUCCESS",
+	"resultCode": 0,
+	"result": [{
+		"id": 6755404543747972,
+		"index": 1,
+		"title": "Department Head",
+		"type": "TEXT_NUMBER",
+		"locked": false,
+		"lockedForUser": false,
+		"objectValue": "Chris Peterson",
+		"displayValue": "Chris Peterson"
+	}],
+	"version": 8
+}
 ```
 
-POST /sheets/{sheetId}/sort`
+`PUT /sheets/{sheetId}/summary/fields`
 
-Sorts the rows of a sheet, either in ascending or descending order.
+Updates the summary fields for the given sheet.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= REQUEST %> | [SortSpecifier](#sortspecifier-object) with the following attribute:<ul><li>**sortCriteria** -- <a href="#sortcriterion-object">SortCriterion</a> array in priority order. Specifies sort order.</li></ul>
-<%= PARAMETERS %> | (Optional) Any of the relevant parameters or query parameters listed for [Get Sheet](#get-sheet)
-<%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
-<%= SCOPE %> | WRITE_SHEETS
+<%= REQUEST %> | Array of [SummaryField](#summaryfield-object) objects
+<%= PARAMETERS %> | (Optional) **renameIfConflict**: Set to **true** if you want to override the requirement for unique summary field names. Repeated names will be adjusted by appending "(1)" or similar after the field name.
+<%= RETURNS %> | Array of [SheetSummary](#sheetsummary-object) objects
+<%= SCOPE %> | ADMIN_SHEETS
 
 ## Sort Rows in Sheet
 
