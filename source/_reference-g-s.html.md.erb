@@ -5182,7 +5182,7 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 **rows** | [Row](#row-object)[] | Array of Row objects
 **showParentRowsForFilters** | Boolean | Returned only if there are column filters on the sheet.  Value = **true** if "show parent rows" is enabled for the filters.
 **source** | [Source](#source-object) | A Source object indicating the sheet or template from which this sheet was created
-**summary** | [SheetSummary](#sheetsummary-object) | A SheetSummary object containing a list of fields and their values defined for the sheet.
+**summary** | [SheetSummary](#sheetsummary-object) | A SheetSummary object containing a list of defined fields and values for the sheet.
 **totalRowCount** | number | The total number of rows in the sheet
 **userPermissions** | [SheetUserPermissions](#sheetuserpermissions-object) | A SheetUserPermissions object indicating what summary operations are possible for the current user
 **userSettings** | [SheetUserSettings](#sheetusersettings-object) | A SheetUserSettings object containing the current user's sheet-specific settings.
@@ -5268,6 +5268,22 @@ Represents the project settings dependencies for a specific sheet.  Project sett
 **readWriteShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readWriteUrl** | string | URL for 'Edit by Anyone' view of the published sheet<br/>Only returned in a response if **readWriteEnabled = true**.
 
+### SheetSummary Object
+
+Represents the entire summary, or a list of defined fields and values, for a specific sheet.
+
+     |     |     |
+-----|-----|-----|
+**fields** | SummaryField[] | Array of summary (or metadata) fields defined on the sheet.
+
+### SheetUserPermissions Object
+
+Describes the current user's editing permissions for a specific sheet.
+
+     |     |     |
+-----|-----|-----|
+**summaryPermissions** | string | One of <ul><li>**ADMIN**: full control over fields</li><li>**READ_DELETE**: sheet is owned by an individual account that doesn't have summary capabilities. If a summary exists, the only possible operations are GET and DELETE fields.</li><li>**READ_ONLY**</li><li>**READ_WRITE**: can edit values of existing fields, but not create or delete fields, nor modify field type.</li></ul>
+
 ### SheetUserSettings Object
 
 Represents individual user settings for a specific sheet.  User settings may be updated even on sheets where the current user only has read access (for example, viewer permissions or a read-only sheet).
@@ -5296,6 +5312,32 @@ Represents individual user settings for a specific sheet.  User settings may be 
 -----|-----|-----|
 **id** | number | Id of the sheet or template from which the enclosing sheet was created
 **type** | string | **sheet** or **template**
+
+### SummaryField Object
+
+     |     |     |
+-----|-----|-----|
+**id** | number | SummaryField Id
+**contactOptions** | [ContactOption](#contactoption-object)[] | Array of ContactOption objects to specify a pre-defined list of values for the column. Column **type** must be **CONTACT_LIST** 
+**createdAt** | timestamp | Time of creation
+**createdBy** | [User](#user-object) | User object containing name and email of the summaryField's author
+**displayValue** | string | Visual representation of cell contents, as presented to the user in the UI.  See [Cell Reference](#cell-reference).
+**format** | string | The format descriptor (see [Formatting](#formatting))<br/>Only returned if the **include** query string parameter contains **format** and this column has a non-default format applied to it.
+**formula** | string | The  formula for a cell, if set. NOTE: calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = "#CIRCULAR REFERENCE".
+**hyperlink** | [Hyperlink](#hyperlink-object) | A hyperlink to a URL, sheet, or report
+**image** | [Image](#image-object) | The image that the cell contains.<br/>Only returned if the cell contains an image.
+**index** | number | Column index or position. This number is zero-based. 
+**locked** | Boolean | Indicates whether the column is locked. In a response, a value of **true** indicates that the column has been locked by the sheet owner or the admin.
+**lockedForUser** | Boolean | Indicates whether the column is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.
+**modifiedAt** | timestamp | Time of last modification
+**modifiedBy** | [User](#user-object) | User object containing name and email of the summaryField's author
+**objectValue** | [ObjectValue](#objectvalue-object) | Required for date and contact fields
+**options** | string[] | When applicable for **PICKLIST** column type. Array of the options available for the column
+**symbol** | string | When applicable for **PICKLIST** column type. See [Symbol Columns](#symbol-columns).
+**title** | string | Arbitrary name, must be unique within summary
+**type** | string | One of:<ul><li>**ABSTRACT_DATETIME**</li><li>**CHECKBOX**</li><li>**CONTACT_LIST**</li><li>**DATE**</li><li>**DATETIME**</li><li>**DURATION**</li><li>**PICKLIST**</li><li>**PREDECESSOR**</li><li>**TEXT_NUMBER**</li></ul>See [Column Types](#column-types).
+**updateAction** | string | Indicates action to perform on each field. One of:<ul><li>**ADD**</li><li>**DELETE**</li><li>**UPDATE**</li></ul>
+**validation** | Boolean | Indicates whether summary field values are restricted to the type
 
 ## Copy Sheet
 
