@@ -7303,7 +7303,6 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields/{fieldId}/im
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: image/jpeg" \
 -H 'Content-Disposition: attachment; filename="picture.jpg"' \
--H "Content-Length: FILE_SIZE" \
 -X POST \
 --data-binary @picture.jpg
 ```
@@ -7332,18 +7331,27 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields/{fieldId}/im
 
 ```json
 {
-	"message": "SUCCESS",
-	"resultCode": 0,
-	"result": [{
-		"id": 6039340093597572,
-		"rowNumber": 6,
-		"siblingId": 1535740466227076,
-		"expanded": true,
-		"createdAt": "2017-08-28T21:29:16Z",
-		"modifiedAt": "2017-08-30T08:10:47Z",
-		"cells": []
-	}],
-	"version": 19
+  "message": "SUCCESS",
+  "resultCode": 0,
+  "result": {
+    "id": 5629723890335892,
+    "index": 1,
+    "title": "Author",
+    "type": "CONTACT_LIST",
+    "locked": false,
+    "lockedForUser": false,
+    "objectValue": "my image",
+    "formula": "=SYS_CELLIMAGE(\"my image\",\"H4F4Ksmk2sa3RuNv9l8FSZ\",325,284,\"picture.jpg\")",
+    "image": {
+      "id": "H4F4Ksmk2sa3RuNv9l8FSZ",
+      "height": 325,
+      "width": 284,
+      "altText": "my image"
+    },
+    "createdAt": "2018-07-19T22:00:43Z",
+    "modifiedAt": "2018-07-30T22:55:22Z"
+  },
+  "version": 50
 }
 ```
 
@@ -7368,7 +7376,15 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: application/json" \
 -X POST \
--d '[{"type": "TEXT_NUMBER", "objectValue": "Sally Smart", "index": 2, "title": "Author"}]'
+-d '[{ \
+	"type": "TEXT_NUMBER", \
+	"objectValue": { \
+		"objectType": "TEXT_NUMBER", \
+		"name": "Advertising" \
+	}, \
+	"index": 3, \
+	"title": "Department" \
+}]'
 ```
 
 ```javascript
@@ -7400,12 +7416,12 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 	"result": [{
 		"id": 1125905009534852,
 		"index": 3,
-		"title": "Owner",
+		"title": "Department",
 		"type": "TEXT_NUMBER",
 		"locked": false,
 		"lockedForUser": false,
-		"objectValue": "Jake Browning",
-		"displayValue": "Jake Browning",
+		"objectValue": "Advertising",
+		"displayValue": "Advertising",
 		"strict": true
 	}],
 	"version": 4
@@ -7464,7 +7480,8 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields?ids={fieldId
     207098194749316,
     100091196549967,
     450360473006272
-  ]
+  ],
+  "version": 51
 }
 ```
 
@@ -7514,11 +7531,29 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary?include=writerInfo 
 {
   "fields": [
     {
-      "type": "TEXT_NUMBER",
-      "objectValue": "Sally Smart",
-      "id": 4583173393803140,
-      "index": 2,
-      "title": "Author"
+      "id": 5629723890335892,
+      "index": 0,
+      "title": "Owner",
+      "type": "CONTACT_LIST",
+      "locked": false,
+      "lockedForUser": false,
+      "objectValue": {
+        "objectType": "CONTACT",
+        "email": "jane.roe@smartsheet.com",
+        "name": "Jane Roe",
+        "imageId": "u!1!8ljfd7w9-aY!AxDzH0wWv1Y!y9VvAgUOFdg"
+      },
+      "displayValue": "Jane Roe",
+      "createdBy": {
+        "name": "John Doe",
+        "email": "john.doe@smartsheet.com"
+      },
+      "createdAt": "2018-07-19T22:00:43Z",
+      "modifiedBy": {
+        "name": "Sebastian Overwatch",
+        "email": "sebastian.overwatch@smartsheet.com"
+      },
+      "modifiedAt": "2018-07-19T22:00:43Z"
     }
   ]
 }
@@ -7569,20 +7604,29 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 
 ```json
 {
-	"pageNumber": 1,
-	"pageSize": 100,
-	"totalPages": 1,
-	"totalCount": 1,
-	"data": [{
-		"id": 3729823422015364,
-		"index": 0,
-		"title": "aaa",
-		"type": "TEXT_NUMBER",
-		"locked": false,
-		"lockedForUser": false,
-		"createdAt": "2017-01-06T17:54:17Z",
-		"modifiedAt": "2017-01-06T17:54:17Z"
-	}]
+  "pageNumber": 1,
+  "pageSize": 100,
+  "totalPages": 1,
+  "totalCount": 2,
+  "data": [
+    {
+      "id": 5629723890335892,
+      "index": 0,
+      "title": "Owner",
+      "type": "CONTACT_LIST",
+      "locked": false,
+      "lockedForUser": false,
+      "objectValue": {
+        "objectType": "CONTACT",
+        "email": "jane.roe@smartsheet.com",
+        "name": "Jane Roe",
+        "imageId": "u!1!8ljfd7w9-aY!AxDzH0wWv1Y!y9VvAgUOFdg"
+      },
+      "displayValue": "Jane Roe",
+      "createdAt": "2018-07-19T22:00:43Z",
+      "modifiedAt": "2018-07-19T22:00:43Z"
+    }
+  ]
 }
 ```
 
@@ -7608,7 +7652,17 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: application/json" \
 -X PUT \
--d '[{"type": "TEXT_NUMBER", "objectValue": "Sally Smart", "index": 2, "title": "Author"}]'
+-d '[{ \
+	"id": 5629723890335892, \
+	"type": "CONTACT_LIST", \
+	"objectValue": { \
+		"objectType": "CONTACT", \
+		"email": "jane.roe@smartsheet.com", \
+		"name": "Jane Roe" \
+	}, \
+	"index": 2, \
+	"title": "Author" \
+}]'
 ```
 
 ```javascript
@@ -7635,19 +7689,27 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 
 ```json
 {
-	"message": "SUCCESS",
-	"resultCode": 0,
-	"result": [{
-		"id": 6755404543747972,
-		"index": 1,
-		"title": "Department Head",
-		"type": "TEXT_NUMBER",
-		"locked": false,
-		"lockedForUser": false,
-		"objectValue": "Chris Peterson",
-		"displayValue": "Chris Peterson"
-	}],
-	"version": 8
+  "message": "SUCCESS",
+  "resultCode": 0,
+  "result": [
+    {
+      "id": 5629723890335892,
+      "index": 1,
+      "title": "Author",
+      "type": "CONTACT_LIST",
+      "locked": false,
+      "lockedForUser": false,
+      "objectValue": {
+        "objectType": "CONTACT",
+        "email": "jane.roe@smartsheet.com",
+        "name": "Jane Roe"
+      },
+      "displayValue": "Jane Roe",
+      "createdAt": "2018-07-19T22:00:43Z",
+      "modifiedAt": "2018-07-30T22:26:13Z"
+    }
+  ],
+  "version": 49
 }
 ```
 
