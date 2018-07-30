@@ -7336,7 +7336,25 @@ smartsheet.sheets.addSummaryFieldImage(options)
 ```
 
 ```ruby
-# Not yet implemented
+# Sample  1: Add image 
+file = File.new('C:\picture.jpg')
+smartsheet.sheets.summaries.add_image(
+  sheet_id: 1421228469708676,
+  field_id: 5629723890335892,
+  file: file,
+  filename: 'picture.jpg',
+  file_length: file.size,
+  content_type: 'image/jpeg'
+)
+
+# Sample 2: Add image from path
+smartsheet.sheets.summaries.add_image_from_path(
+  sheet_id: 1421228469708676,
+  field_id: 5629723890335892,
+  path: 'C:\picture.jpg',
+  filename: 'picture.jpg',
+  content_type: 'image/jpeg'
+)
 ```
 
 > Example response
@@ -7428,7 +7446,15 @@ smartsheet.sheets.addSummaryFields(options)
 ```
 
 ```ruby
-# Not yet implemented
+smartsheet.sheets.summaries.add_fields(
+  sheet_id: 1421228469708676,
+  body: [{
+    type: 'TEXT_NUMBER',
+    objectValue: 'Sally Smart',
+    index: 2,
+    title: 'Author'
+  }]
+)
 ```
 
 > Example response
@@ -7508,7 +7534,10 @@ smartsheet.sheets.deleteSummaryFields(options)
 ```
 
 ```ruby
-# Not yet implemented
+smartsheet.sheets.summaries.delete_fields(
+  sheet_id: 1421228469708676,
+  params: { ids: '207098194749316', '100091196549967', '450360473006272' }
+)
 ```
 
 > Example response
@@ -7573,7 +7602,7 @@ smartsheet.sheets.getSummary(options)
 ```
 
 ```ruby
-# Not yet implemented
+smartsheet.sheets.summaries.get(sheet_id: 1421228469708676)
 ```
 
 > Example response
@@ -7658,7 +7687,7 @@ smartsheet.sheets.getSummaryFields(options)
 ```
 
 ```ruby
-# Not yet implemented
+smartsheet.sheets.summaries.get_fields(sheet_id: 1421228469708676)
 ```
 
 > Example response
@@ -7756,7 +7785,13 @@ smartsheet.sheets.updateSummaryFields(options)
 ```
 
 ```ruby
-# Not yet implemented
+smartsheet.sheets.summaries.update_fields(
+  sheet_id: 1421228469708676,
+  body: [{
+      id: 5629723890335892,
+      objectValue: 'Accepted'
+  }]
+)
 ```
 
 > Example response
