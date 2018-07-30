@@ -7308,7 +7308,19 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields/{fieldId}/im
 ```
 
 ```javascript
-// Not yet implemented
+var options = {
+  sheetId: 1421228469708676,
+  fieldId: 5629723890335892,
+  path: 'C:/dog.jpg',
+  fileName: 'dog.jpg'
+};
+
+smartsheet.sheets.addSummaryFieldImage(options)
+  .then(function(summary) {
+    console.log(summary);
+  }).catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
@@ -7378,17 +7390,29 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 -X POST \
 -d '[{ \
 	"type": "TEXT_NUMBER", \
-	"objectValue": { \
-		"objectType": "TEXT_NUMBER", \
-		"name": "Advertising" \
-	}, \
-	"index": 3, \
-	"title": "Department" \
+	"objectValue": "Sally Smart", \
+	"index": 2, \
+	"title": "Author" \
 }]'
 ```
 
 ```javascript
-// Not yet implemented
+var options = {
+  sheetId: 1421228469708676,
+  body: [{
+    type: 'TEXT_NUMBER',
+    objectValue: 'Sally Smart',
+    index: 2,
+    title: 'Author'
+  }]
+};
+
+smartsheet.sheets.addSummaryFields(options)
+  .then(function(summary) {
+    console.log(summary);
+  }).catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
@@ -7411,20 +7435,23 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 
 ```json
 {
-	"message": "SUCCESS",
-	"resultCode": 0,
-	"result": [{
-		"id": 1125905009534852,
-		"index": 3,
-		"title": "Department",
-		"type": "TEXT_NUMBER",
-		"locked": false,
-		"lockedForUser": false,
-		"objectValue": "Advertising",
-		"displayValue": "Advertising",
-		"strict": true
-	}],
-	"version": 4
+  "message": "SUCCESS",
+  "resultCode": 0,
+  "result": [
+    {
+      "id": 8022355336292228,
+      "index": 1,
+      "title": "Author",
+      "type": "TEXT_NUMBER",
+      "locked": false,
+      "lockedForUser": false,
+      "objectValue": "Sally Smart",
+      "displayValue": "Sally Smart",
+      "createdAt": "2018-07-30T23:21:12Z",
+      "modifiedAt": "2018-07-30T23:21:12Z"
+    }
+  ],
+  "version": 52
 }
 ```
 
@@ -7451,7 +7478,21 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields?ids={fieldId
 ```
 
 ```javascript
-// Not yet implemented
+var options = {
+  sheetId: 1421228469708676,
+  queryParameters: {
+    ids: '207098194749316',
+    '100091196549967',
+    '450360473006272'
+  }
+};
+
+smartsheet.sheets.deleteSummaryFields(options)
+  .then(function(summary) {
+    console.log(summary);
+  }).catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
@@ -7506,7 +7547,17 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary?include=writerInfo 
 ```
 
 ```javascript
-// Not yet implemented
+var options = {
+  sheetId: 1421228469708676
+};
+
+smartsheet.sheets.getSummary(options)
+  .then(function(summary) {
+    console.log(summary);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
@@ -7581,7 +7632,17 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 ```
 
 ```javascript
-// Not yet implemented
+var options = {
+  sheetId: 1421228469708676
+};
+
+smartsheet.sheets.getSummaryFields(options)
+  .then(function(summary) {
+    console.log(summary);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
@@ -7666,7 +7727,20 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
 ```
 
 ```javascript
-// Not yet implemented
+var options = {
+  sheetId: 1421228469708676,
+  body: [{
+    id: 5629723890335892,
+    objectValue: 'Accepted'
+  }]
+};
+
+smartsheet.sheets.updateSummaryFields(options)
+  .then(function(summary) {
+    console.log(summary);
+  }).catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
