@@ -2097,6 +2097,7 @@ A collection of cells comprises each row in a sheet.
 **overrideValidation** | Boolean | (Admin only) Indicates whether the cell value can contain a value outside of the validation limits (value = **true**). When using this parameter, you must also set **strict** to **false** to bypass value type checking. This property is honored for `POST` or `PUT` actions that update rows.
 **strict** | Boolean | Set to **false** to enable lenient parsing. Defaults to **true**. <%= REQUEST_ONLY_ATTRIBUTE %> See [Cell Value Parsing](#cell-value-parsing) for more information about using this attribute. 
 **value** | string,<br/>number,<br/>or Boolean | A string, a number, or a Boolean value -- depending on the cell type and the data in the cell.  Cell values larger than 4000 characters are silently truncated. An empty cell returns no value. See [Cell Reference](#cell-reference).
+**version** | int | Indicates whether the column accepts multi-contact values, that is more than one contact per cell. 
 
 ### Cell History Object
 
