@@ -2097,7 +2097,6 @@ A collection of cells comprises each row in a sheet.
 **overrideValidation** | Boolean | (Admin only) Indicates whether the cell value can contain a value outside of the validation limits (value = **true**). When using this parameter, you must also set **strict** to **false** to bypass value type checking. This property is honored for `POST` or `PUT` actions that update rows.
 **strict** | Boolean | Set to **false** to enable lenient parsing. Defaults to **true**. <%= REQUEST_ONLY_ATTRIBUTE %> See [Cell Value Parsing](#cell-value-parsing) for more information about using this attribute. 
 **value** | string,<br/>number,<br/>or Boolean | A string, a number, or a Boolean value -- depending on the cell type and the data in the cell.  Cell values larger than 4000 characters are silently truncated. An empty cell returns no value. See [Cell Reference](#cell-reference).
-**version** | int | Indicates whether the column accepts multi-contact values, that is more than one contact per cell. 
 
 ### Cell History Object
 
@@ -3032,11 +3031,13 @@ A column is a component of a sheet or report.
 ```json
 {
 	"id": 7960873114331012,
-	"index": 0,
+	"version": 0,
+  "index": 0,
 	"symbol": "STAR",
 	"title": "Favorite",
 	"type": "CHECKBOX",
-	"validation": false
+	"validation": false,
+  "width": 150
 }
 ```
 
@@ -3058,6 +3059,7 @@ A column is a component of a sheet or report.
 **tags** | string[] | Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li>**CALENDAR_END_DATE**</li><li>**CALENDAR_START_DATE**</li><li>**GANTT_ALLOCATION**</li><li>**GANTT_ASSIGNED_RESOURCE**</li><li>**GANTT_DISPLAY_LABEL**</li><li>**GANTT_DURATION**</li><li>**GANTT_END_DATE**</li><li>**GANTT_PERCENT_COMPLETE**</li><li>**GANTT_PREDECESSOR**</li><li>**GANTT_START_DATE**</li></ul>
 **title** | string | Column title
 **validation** | Boolean | Indicates whether validation has been enabled for the column (value = **true**)
+**version** | number | A zero-based integer indicating whether the column allows more than one contact in a contact list cell. A value of **0** indicates the data will be stored as text and the column type will be TEXT_NUMBER, a value of **1** for sheets and reports or a value of **2** for Sights (aka dashboards) or notifications indicates the data will be stored as contacts and the column type will be CONTACT_LIST. If not specified, the default value is 0. 
 **width** | number | Display width of the column in pixels
 
 ### ContactOption Object
