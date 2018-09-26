@@ -1434,6 +1434,7 @@ report = smartsheet.reports.get(
   "columns": [
     {
       "virtualId": 4583173393803140,
+      "version": 0,
       "index": 0,
       "primary": true,
       "title": "Sheet Name",
@@ -1443,6 +1444,7 @@ report = smartsheet.reports.get(
     },
     {
       "virtualId": 2331373580117892,
+      "version": 0,
       "index": 1,
       "title": "Status",
       "type": "TEXT_NUMBER",
@@ -1488,6 +1490,7 @@ Gets the report, including one page of rows, and optionally populated with attac
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**attachments**</li><li>**discussions**</li><li>**format** -- see [Formatting](#formatting)</li><li>**sourceSheets**</li></ul> 
   | **exclude** (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li></ul>
+  | **level** (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
   | **pageSize** (optional): Number of rows per page.  If not specified, the default value is 100.  This operation can return a maximum of 500 rows per page.
   | **page** (optional): Which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
 <%= RETURNS %> | [Report object](#report-object), populated according to the specified parameters
@@ -6473,6 +6476,7 @@ sheet = smartsheet.sheets.get(
   "columns": [
     {
       "id": 4583173393803140,
+      "version": 0,
       "index": 0,
       "primary": true,
       "title": "Primary Column",
@@ -6481,6 +6485,7 @@ sheet = smartsheet.sheets.get(
     },
     {
       "id": 2331373580117892,
+      "version": 0,
       "index": 1,
       "options": [
         "new",
@@ -6512,7 +6517,7 @@ Gets the sheet specified in the URL. Returns the sheet, including rows, and opti
   | **exclude** (optional): a comma-separated list of elements to not include in the response.<br/><ul><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**nonexistentCells**: excludes cells that have never contained any data</li></ul>
   | **columnIds** (optional): a comma-separated list of column Ids. The response contains only the specified columns in the "columns" array, and individual rows' "cells" array only contains cells in the specified columns.
   | **ifVersionAfter** (optional): If version specified is still the current sheet version, then returns an abbreviated Sheet object with only the sheet **version** property. Otherwise, if the sheet has been modified, returns the complete Sheet object. Intended to allow clients with a cached copy to make sure they have the latest version.
-  | **level** (optional):
+  | **level** (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
   | **page** (optional): which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
   | **pageSize** (optional): number of rows per page to include with the sheet.  If neither **pageSize** nor **page** is specified, returns all rows in the sheet.  If only page is specified, defaults to a page size of 100.
   | **rowIds** (optional): a comma-separated list of row Ids on which to filter the rows included in the result
@@ -7306,6 +7311,7 @@ smartsheet.sheets.rows.sort(
   "columns": [
     {
       "id": 4583173393803140,
+      "version": 0,
       "index": 0,
       "primary": true,
       "title": "Primary Column",
@@ -7314,6 +7320,7 @@ smartsheet.sheets.rows.sort(
     },
     {
       "id": 2331373580117892,
+      "version": 0,
       "index": 1,
       "options": [
         "new",
@@ -7975,6 +7982,7 @@ Gets the specified Sight.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> |  **level** (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=2**). 
 <%= RETURNS %> | [Sight object](#sight-object)
 <%= SCOPE %> | READ_SIGHTS
 

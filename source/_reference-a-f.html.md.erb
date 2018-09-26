@@ -2371,6 +2371,7 @@ Gets the cell modification history.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional): when specified with a value of **columnType**, response includes the **columnType** attribute for each [Cell object](#cell-object)
+ | **level** (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Cell History objects](#cell-history-object). For more details, see [Cell Reference](#cell-reference).
 <%= SCOPE %> | READ_SHEETS
@@ -3687,6 +3688,7 @@ Column Type | Column.type Value | Notes |
 ------------|--------------------------|-------|
 Checkbox 		| **CHECKBOX**		| Checkbox, star, and flag types
 Contact List	| **CONTACT_LIST**	| List containing contacts or roles for a project. **NOTE:** You can use the [contactOptions](#contactoption-object) property to specify a pre-defined list of values for the column, which can also become lanes in card view. 
+Contact List | **MULTI_CONTACT_LIST** | List where single cells can contain more than one contact.
 Date			| **DATE**			|
 Date/Time 		| **ABSTRACT_DATETIME** | Represents a project sheet's start and end dates.<br/>**Only for dependency-enabled project sheets**<br/>The API does not support setting a column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.) Additionally, the API does not support updating data in the "End Date" column under any circumstance, and does not support updating data in the "Start Date" column if "Predecessor" is set for that row.
 Date/Time		| **DATETIME**		| Used only by the following system-generated columns: <ul><li>Created (Date) (**Column.systemColumnType** = **CREATED_DATE**)</li><li>Modified (Date) (**Column.systemColumnType** = **MODIFIED_DATE**)</li></ul>
