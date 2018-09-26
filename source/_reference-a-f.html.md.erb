@@ -1629,7 +1629,7 @@ Gets a list of all versions of the given attachmentId in order from newest to ol
 **includedColumnIds** | long[] | Specifies which columns to include in message.
 **recipientColumnIds** | long[] | Array of column Ids from which to collect email recipients.
 **type** | string | One of three types: **APPROVAL_REQUEST_ACTION**, **NOTIFICATION_ACTION**, or **UPDATE_REQUEST_ACTION**.
-**frequency** | string | Must be one of the following values: **DAILY**, **HOURLY**, **IMMEDIATELY**, or **WEEKLY**.
+**frequency** | string | Must be one of the following values: **DAILY**, **HOURLY**, **IMMEDIATELY**, or **WEEKLY**. Ignored for date-based rules.
 **includeAllColumns** | Boolean | If **true** (default), all columns are included in email contents.
 **includeAttachments** | Boolean | If **true**, includes attachments.
 **includeDiscussions** | Boolean | If **true**, includes discussions.
