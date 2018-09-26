@@ -6421,7 +6421,7 @@ smartsheet.sheets.getSheet(options)
 ```csharp
 // Omit all parameters
 Sheet sheet = smartsheet.SheetResources.GetSheet(
-  9283173393803140,           // long sheetId
+  4583173393803140,           // long sheetId
   null,                       // IEnumerable<SheetLevelInclusion> includes
   null,                       // IEnumerable<SheetLevelExclusion> excludes
   null,                       // IEnumerable<long> rowIds
@@ -6435,7 +6435,7 @@ Sheet sheet = smartsheet.SheetResources.GetSheet(
 ```java
 // Omit all parameters
 Sheet sheet = smartsheet.sheetResources().getSheet(
-  9283173393803140L,      // long sheetId
+  4583173393803140L,      // long sheetId
   null,                   // EnumSet<SheetInclusion> includes    
   null,                   // EnumSet<ObjectExclusion> excludes
   null,                   // Set<Long> rowIds
@@ -6448,12 +6448,12 @@ Sheet sheet = smartsheet.sheetResources().getSheet(
 
 ```python
 sheet = ss_client.Sheets.get_sheet(
-  1531988831168388)           # sheet_id
+  4583173393803140)           # sheet_id
 ```
 
 ```ruby
 sheet = smartsheet.sheets.get(
-  sheet_id: 1531988831168388
+  sheet_id: 4583173393803140
 )
 ```
 
@@ -6461,18 +6461,49 @@ sheet = smartsheet.sheets.get(
 
 ```json
 {
+  "id": 4583173393803140,
+  "name": "sheet 1",
+  "version": 6,
+  "totalRowCount": 240,
   "accessLevel": "OWNER",
+  "effectiveAttachmentOptions": [
+    "EVERNOTE",
+    "GOOGLE_DRIVE",
+    "EGNYTE",
+    "FILE",
+    "ONEDRIVE",
+    "DROPBOX",
+    "BOX_COM"
+  ],
+  "readOnly": true,
+  "ganttEnabled": true,
+  "dependenciesEnabled": true,
+  "resourceManagementEnabled": true,
+  "cellImageUploadEnabled": true,
+  "userSettings": {
+    "criticalPathEnabled": false,
+    "displaySummaryTasks": true
+  },
+  "userPermissions": {
+    "summaryPermissions": "ADMIN"
+  },
+  "workspace": {
+    "id": 825898975642500,
+    "name": "New Workspace"
+  },
   "projectSettings": {
     "workingDays": [
       "MONDAY",
       "TUESDAY",
       "WEDNESDAY"
     ],
-    "nonWorkingDays": [
-      "2018-01-01"
-    ],
-    "lengthOfDay": 6
+    "nonWorkingDays": [],
+    "lengthOfDay": 8
   },
+  "hasSummaryFields": false,
+  "permalink": "https://app.smartsheet.com/b/home?lx=pWNSDH9itjBXxBzFmyf-5w",
+  "createdAt": "2018-09-24T20:27:57Z",
+  "modifiedAt": "2018-09-26T20:45:08Z",
   "columns": [
     {
       "id": 4583173393803140,
@@ -6497,11 +6528,6 @@ sheet = smartsheet.sheets.get(
       "validation": true
     }
   ],
-  "createdAt": "2012-07-24T18:22:29-07:00",
-  "id": 4583173393803140,
-  "modifiedAt": "2012-07-24T18:30:52-07:00",
-  "name": "sheet 1",
-  "permalink": "https://app.smartsheet.com/b/home?lx=pWNSDH9itjBXxBzFmyf-5w",
   "rows": []
 }
 ```
@@ -6513,7 +6539,7 @@ Gets the sheet specified in the URL. Returns the sheet, including rows, and opti
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which sheet or template the sheet was created from, if any.
+<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ganttConfig**: includes Gantt chart details</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which sheet or template the sheet was created from, if any.
   | **exclude** (optional): a comma-separated list of elements to not include in the response.<br/><ul><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**nonexistentCells**: excludes cells that have never contained any data</li></ul>
   | **columnIds** (optional): a comma-separated list of column Ids. The response contains only the specified columns in the "columns" array, and individual rows' "cells" array only contains cells in the specified columns.
   | **ifVersionAfter** (optional): If version specified is still the current sheet version, then returns an abbreviated Sheet object with only the sheet **version** property. Otherwise, if the sheet has been modified, returns the complete Sheet object. Intended to allow clients with a cached copy to make sure they have the latest version.
@@ -7613,6 +7639,7 @@ Report | **GRIDGANTT** | [ReportWidgetContent](#reportwidgetcontent-object)
 Rich Text | **RICHTEXT** | [RichTextWidgetContent](#richtextwidgetcontent-object)
 Shortcut | **SHORTCUTLIST** | [ShortcutWidgetContent](#shortcutwidgetcontent-object)
 Title | **TITLE** | [TitleWidgetContent](#titlewidgetcontent-object)
+Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetcontent-object)
 
 ### CellLinkWidgetContent Object
 
@@ -7687,6 +7714,12 @@ Title | **TITLE** | [TitleWidgetContent](#titlewidgetcontent-object)
 -----|-----|-----|
 **backgroundColor** | hex | The hex color, for instance #E6F5FE
 **htmlContent** | string | HTML snippet to render title
+
+### WebcontentWidgetContent Object
+
+     |     |     |
+-----|-----|-----|
+**url** | string | The URL
 
 ## Copy Sight
 
