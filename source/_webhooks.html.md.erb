@@ -171,6 +171,7 @@ For more information, see [Authenticating Callbacks](#authenticating-callbacks-o
 **NOTES:**
 
 * Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.
+* The callbackURL cannot be a private IP address.
 * The callbackURL must use one of the following ports: 443 (default for HTTPS), 8000, 8008, 8080, or 8443. 
 
 ## Event Callbacks

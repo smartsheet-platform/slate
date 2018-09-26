@@ -4481,7 +4481,22 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences \
 ```
 
 ```javascript
-// Not yet implemented
+var body = {
+  name: "my cross sheet reference",
+  sourceSheetId: 123412341234,
+  startRowId: 234523452345,
+  endRowId: 345634563456
+};
+
+smartsheet.sheets.createCrossSheetReference({sheetId: 456745674567, body: body})
+  .then((result) => {
+    console.log("success");
+    console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 
 ```csharp
@@ -4548,7 +4563,15 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences/{cross
 ```
 
 ```javascript
-// Not yet implemented
+smartsheet.sheets.getCrossSheetReference({sheetId: 123412341234, crossSheetReferenceId: 234523452345})
+  .then((result) => {
+    console.log("success");
+    console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 
 ```csharp
@@ -4605,7 +4628,15 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences \
 ```
 
 ```javascript
-// Not yet implemented
+smartsheet.sheets.listCrossSheetReferences({sheetId: 123412341234})
+  .then((result) => {
+    console.log("success");
+    console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 
 ```csharp
