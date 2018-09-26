@@ -3031,13 +3031,13 @@ A column is a component of a sheet or report.
 
 ```json
 {
-	"id": 7960873114331012,
-	"version": 0,
+  "id": 7960873114331012,
+  "version": 0,
   "index": 0,
-	"symbol": "STAR",
-	"title": "Favorite",
-	"type": "CHECKBOX",
-	"validation": false,
+  "symbol": "STAR",
+  "title": "Favorite",
+  "type": "CHECKBOX",
+  "validation": false,
   "width": 150
 }
 ```
@@ -3060,7 +3060,7 @@ A column is a component of a sheet or report.
 **tags** | string[] | Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li>**CALENDAR_END_DATE**</li><li>**CALENDAR_START_DATE**</li><li>**GANTT_ALLOCATION**</li><li>**GANTT_ASSIGNED_RESOURCE**</li><li>**GANTT_DISPLAY_LABEL**</li><li>**GANTT_DURATION**</li><li>**GANTT_END_DATE**</li><li>**GANTT_PERCENT_COMPLETE**</li><li>**GANTT_PREDECESSOR**</li><li>**GANTT_START_DATE**</li></ul>
 **title** | string | Column title
 **validation** | Boolean | Indicates whether validation has been enabled for the column (value = **true**)
-**version** | number | A zero-based integer indicating whether the column allows more than one contact in a contact list cell. A value of **0** indicates the data will be stored as text and the column type will be TEXT_NUMBER, a value of **1** for sheets and reports or a value of **2** for Sights (aka dashboards) indicates the data will be stored as contacts and the column type will be MULTI_CONTACT_LIST. If not specified, the default value is 0. 
+**version** | number | A zero-based integer indicating whether the column allows multi-contact data. A value of **0** indicates the data will be stored as text and the column type will be TEXT_NUMBER, a value of **1** for sheets and reports or a value of **2** for Sights (aka dashboards) indicates the data will be stored as contacts and the column type will be MULTI_CONTACT_LIST. If not specified, the default value is 0 for sheets and reports or 1 for Sights. 
 **width** | number | Display width of the column in pixels
 
 ### ContactOption Object
