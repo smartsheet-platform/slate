@@ -1629,7 +1629,7 @@ Gets a list of all versions of the given attachmentId in order from newest to ol
 **includedColumnIds** | long[] | Specifies which columns to include in message.
 **recipientColumnIds** | long[] | Array of column Ids from which to collect email recipients.
 **type** | string | One of three types: **APPROVAL_REQUEST_ACTION**, **NOTIFICATION_ACTION**, or **UPDATE_REQUEST_ACTION**.
-**frequency** | string | Must be one of the following values: **DAILY**, **HOURLY**, **IMMEDIATELY**, or **WEEKLY**.
+**frequency** | string | Must be one of the following values: **DAILY**, **HOURLY**, **IMMEDIATELY**, or **WEEKLY**. Ignored for date-based rules.
 **includeAllColumns** | Boolean | If **true** (default), all columns are included in email contents.
 **includeAttachments** | Boolean | If **true**, includes attachments.
 **includeDiscussions** | Boolean | If **true**, includes discussions.
@@ -2371,6 +2371,7 @@ Gets the cell modification history.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional): when specified with a value of **columnType**, response includes the **columnType** attribute for each [Cell object](#cell-object)
+ | **level** (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Cell History objects](#cell-history-object). For more details, see [Cell Reference](#cell-reference).
 <%= SCOPE %> | READ_SHEETS
@@ -3030,12 +3031,14 @@ A column is a component of a sheet or report.
 
 ```json
 {
-	"id": 7960873114331012,
-	"index": 0,
-	"symbol": "STAR",
-	"title": "Favorite",
-	"type": "CHECKBOX",
-	"validation": false
+  "id": 7960873114331012,
+  "version": 0,
+  "index": 0,
+  "symbol": "STAR",
+  "title": "Favorite",
+  "type": "CHECKBOX",
+  "validation": false,
+  "width": 150
 }
 ```
 
@@ -3043,7 +3046,7 @@ A column is a component of a sheet or report.
 -----|-----|-----|
 **id** | number | Column Id
 **systemColumnType** | string | When applicable, one of: **AUTO_NUMBER**, **CREATED_BY**, **CREATED_DATE**, **MODIFIED_BY**, **MODIFIED_DATE**. See [System Columns](#system-columns).
-**type** | string | One of:<ul><li>**ABSTRACT_DATETIME**</li><li>**CHECKBOX**</li><li>**CONTACT_LIST**</li><li>**DATE**</li><li>**DATETIME**</li><li>**DURATION**</li><li>**PICKLIST**</li><li>**PREDECESSOR**</li><li>**TEXT_NUMBER**</li></ul>See [Column Types](#column-types).
+**type** | string | One of:<ul><li>**ABSTRACT_DATETIME**</li><li>**CHECKBOX**</li><li>**CONTACT_LIST**</li><li>**DATE**</li><li>**DATETIME**</li><li>**DURATION**</li><li>**MULTI_CONTACT_LIST**</li><li>**PICKLIST**</li><li>**PREDECESSOR**</li><li>**TEXT_NUMBER**</li></ul>See [Column Types](#column-types).
 **autoNumberFormat** | [AutoNumberFormat](#autonumberformat-object) | Present when **systemColumnType** == **AUTO_NUMBER**
 **contactOptions** | [ContactOption](#contactoption-object)[] | Array of ContactOption objects to specify a pre-defined list of values for the column. Column **type** must be **CONTACT_LIST** 
 **format** | string | The format descriptor (see [Formatting](#formatting))<br/>Only returned if the **include** query string parameter contains **format** and this column has a non-default format applied to it.
@@ -3057,6 +3060,7 @@ A column is a component of a sheet or report.
 **tags** | string[] | Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li>**CALENDAR_END_DATE**</li><li>**CALENDAR_START_DATE**</li><li>**GANTT_ALLOCATION**</li><li>**GANTT_ASSIGNED_RESOURCE**</li><li>**GANTT_DISPLAY_LABEL**</li><li>**GANTT_DURATION**</li><li>**GANTT_END_DATE**</li><li>**GANTT_PERCENT_COMPLETE**</li><li>**GANTT_PREDECESSOR**</li><li>**GANTT_START_DATE**</li></ul>
 **title** | string | Column title
 **validation** | Boolean | Indicates whether validation has been enabled for the column (value = **true**)
+**version** | number | A zero-based integer indicating whether the column allows multi-contact data. A value of **0** indicates the data will be stored as text and the column type will be TEXT_NUMBER, a value of **1** for sheets and reports or a value of **2** for Sights (aka dashboards) indicates the data will be stored as contacts and the column type will be MULTI_CONTACT_LIST. If not specified, the default value is 0 for sheets and reports or 1 for Sights (aka dashboards). 
 **width** | number | Display width of the column in pixels
 
 ### ContactOption Object
@@ -3684,7 +3688,8 @@ Column Type | Column.type Value | Notes |
 ------------|--------------------------|-------|
 Checkbox 		| **CHECKBOX**		| Checkbox, star, and flag types
 Contact List	| **CONTACT_LIST**	| List containing contacts or roles for a project. **NOTE:** You can use the [contactOptions](#contactoption-object) property to specify a pre-defined list of values for the column, which can also become lanes in card view. 
-Date			| **DATE**			|
+Contact List | **MULTI_CONTACT_LIST** | List where single cells can contain more than one contact. Only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying.  
+Date			| **DATE** |
 Date/Time 		| **ABSTRACT_DATETIME** | Represents a project sheet's start and end dates.<br/>**Only for dependency-enabled project sheets**<br/>The API does not support setting a column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.) Additionally, the API does not support updating data in the "End Date" column under any circumstance, and does not support updating data in the "Start Date" column if "Predecessor" is set for that row.
 Date/Time		| **DATETIME**		| Used only by the following system-generated columns: <ul><li>Created (Date) (**Column.systemColumnType** = **CREATED_DATE**)</li><li>Modified (Date) (**Column.systemColumnType** = **MODIFIED_DATE**)</li></ul>
 Dropdown List	| **PICKLIST**		| Custom, RYG, Harvey ball, priority types, etc.
@@ -4476,7 +4481,24 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences \
 ```
 
 ```javascript
-// Not yet implemented
+var body = {
+  name: "my cross sheet reference",
+  sourceSheetId: 154378742065028,
+  startRowId: 4089096300717956,
+  endRowId: 2681721417164676,
+  "startColumnId": 824812248557444,
+	"endColumnId": 824812248557444
+};
+
+smartsheet.sheets.createCrossSheetReference({sheetId: 456745674567, body: body})
+  .then((result) => {
+    console.log("success");
+    console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 
 ```csharp
@@ -4543,7 +4565,15 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences/{cross
 ```
 
 ```javascript
-// Not yet implemented
+smartsheet.sheets.getCrossSheetReference({sheetId: 9283173393803140, crossSheetReferenceId: 8157685695702916})
+  .then((result) => {
+    console.log("success");
+    console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 
 ```csharp
@@ -4600,7 +4630,15 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences \
 ```
 
 ```javascript
-// Not yet implemented
+smartsheet.sheets.listCrossSheetReferences({sheetId: 9283173393803140})
+  .then((result) => {
+    console.log("success");
+    console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 
 ```csharp

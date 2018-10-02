@@ -400,6 +400,7 @@ Revokes the access token used to make this request.  The access token is no long
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **deleteAllForApiClient** (optional): The client Id and user Id is fetched based on the token that is used to make this API call. A value of **true** deletes all tokens associated to the given client Id and user Id. Defaults to **false**.
 <%= RETURNS %> | [Result object](#result-object)
 
 # Update Requests
