@@ -1465,6 +1465,9 @@
                             <li>
                                 <a href="#titlewidgetcontent-object" class="toc-h3 toc-link" data-title="TitleWidgetContent Object">TitleWidgetContent Object</a>
                             </li>
+                            <li>
+                                <a href="#webcontentwidgetcontent-object" class="toc-h3 toc-link" data-title="WebcontentWidgetContent Object">WebcontentWidgetContent Object</a>
+                            </li>
                         </ul>
                   </li>
                   <li>
@@ -1865,7 +1868,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2018-07-13
+<p>Updated 2018-10-02
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -2130,7 +2133,7 @@
 <span class="c1">// Get current user</span>
 <span class="n">UserProfile</span> <span class="n">userProfile</span> <span class="o">=</span> <span class="n">smartsheet</span><span class="o">.</span><span class="na">userResources</span><span class="o">().</span><span class="na">getCurrentUser</span><span class="o">();</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># Create base client object and set the access token</span>
-<span class="n">ss_client</span> <span class="o">=</span> <span class="n">ss_client</span><span class="o">.</span><span class="n">Smartsheet</span><span class="p">(</span><span class="s">'ll352u9jujauoqz4gstvsae05'</span><span class="p">)</span>
+<span class="n">ss_client</span> <span class="o">=</span> <span class="n">smartsheet</span><span class="o">.</span><span class="n">Smartsheet</span><span class="p">(</span><span class="s">'ll352u9jujauoqz4gstvsae05'</span><span class="p">)</span>
 
 <span class="c"># Get current user</span>
 <span class="n">user_profile</span> <span class="o">=</span> <span class="n">ss_client</span><span class="o">.</span><span class="n">Users</span><span class="o">.</span><span class="n">get_current_user</span><span class="p">()</span>
@@ -5156,7 +5159,7 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 <tr>
 <td><strong>frequency</strong></td>
 <td>string</td>
-<td>Must be one of the following values: <strong>DAILY</strong>, <strong>HOURLY</strong>, <strong>IMMEDIATELY</strong>, or <strong>WEEKLY</strong>.</td>
+<td>Must be one of the following values: <strong>DAILY</strong>, <strong>HOURLY</strong>, <strong>IMMEDIATELY</strong>, or <strong>WEEKLY</strong>. Ignored for date-based rules.</td>
 </tr>
 <tr>
 <td><strong>includeAllColumns</strong></td>
@@ -6152,6 +6155,10 @@ This object itself is not used directly.</p>
 </tr>
 <tr>
 <td></td>
+<td><strong>level</strong> (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default) or as multi-contact data (<strong>level=1</strong>).</td>
+</tr>
+<tr>
+<td></td>
 <td>This operation supports query string parameters for pagination of results. For more information, see <a href="#paging-query-string-parameters">Paging Query String Parameters</a>.</td>
 </tr>
 <tr>
@@ -6975,12 +6982,14 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <p>Example: Column object</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7960873114331012</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"STAR"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Favorite"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CHECKBOX"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"validation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7960873114331012</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"STAR"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Favorite"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CHECKBOX"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"validation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <table><thead>
@@ -7003,7 +7012,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <tr>
 <td><strong>type</strong></td>
 <td>string</td>
-<td>One of:<ul><li><strong>ABSTRACT_DATETIME</strong></li><li><strong>CHECKBOX</strong></li><li><strong>CONTACT_LIST</strong></li><li><strong>DATE</strong></li><li><strong>DATETIME</strong></li><li><strong>DURATION</strong></li><li><strong>PICKLIST</strong></li><li><strong>PREDECESSOR</strong></li><li><strong>TEXT_NUMBER</strong></li></ul>See <a href="#column-types">Column Types</a>.</td>
+<td>One of:<ul><li><strong>ABSTRACT_DATETIME</strong></li><li><strong>CHECKBOX</strong></li><li><strong>CONTACT_LIST</strong></li><li><strong>DATE</strong></li><li><strong>DATETIME</strong></li><li><strong>DURATION</strong></li><li><strong>MULTI_CONTACT_LIST</strong></li><li><strong>PICKLIST</strong></li><li><strong>PREDECESSOR</strong></li><li><strong>TEXT_NUMBER</strong></li></ul>See <a href="#column-types">Column Types</a>.</td>
 </tr>
 <tr>
 <td><strong>autoNumberFormat</strong></td>
@@ -7069,6 +7078,11 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <td><strong>validation</strong></td>
 <td>Boolean</td>
 <td>Indicates whether validation has been enabled for the column (value = <strong>true</strong>)</td>
+</tr>
+<tr>
+<td><strong>version</strong></td>
+<td>number</td>
+<td>A zero-based integer indicating whether the column allows multi-contact data. A value of <strong>0</strong> indicates the data will be stored as text and the column type will be TEXT_NUMBER, a value of <strong>1</strong> for sheets and reports or a value of <strong>2</strong> for Sights (aka dashboards) indicates the data will be stored as contacts and the column type will be MULTI_CONTACT_LIST. If not specified, the default value is 0 for sheets and reports or 1 for Sights (aka dashboards).</td>
 </tr>
 <tr>
 <td><strong>width</strong></td>
@@ -7738,6 +7752,11 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <td>Contact List</td>
 <td><strong>CONTACT_LIST</strong></td>
 <td>List containing contacts or roles for a project. <strong>NOTE:</strong> You can use the <a href="#contactoption-object">contactOptions</a> property to specify a pre-defined list of values for the column, which can also become lanes in card view.</td>
+</tr>
+<tr>
+<td>Contact List</td>
+<td><strong>MULTI_CONTACT_LIST</strong></td>
+<td>List where single cells can contain more than one contact. Only visible when using a query parameter of <strong>level</strong> and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying.</td>
 </tr>
 <tr>
 <td>Date</td>
@@ -8762,7 +8781,24 @@ filled in by Smartsheet and whose values cannot be changed by the user. These co
     "startColumnId": 824812248557444,
     "endColumnId": 824812248557444
 }'</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span> <span class="s2">"my cross sheet reference"</span><span class="p">,</span>
+  <span class="na">sourceSheetId</span><span class="p">:</span> <span class="mi">154378742065028</span><span class="p">,</span>
+  <span class="na">startRowId</span><span class="p">:</span> <span class="mi">4089096300717956</span><span class="p">,</span>
+  <span class="na">endRowId</span><span class="p">:</span> <span class="mi">2681721417164676</span><span class="p">,</span>
+  <span class="s2">"startColumnId"</span><span class="p">:</span> <span class="mi">824812248557444</span><span class="p">,</span>
+    <span class="s2">"endColumnId"</span><span class="p">:</span> <span class="mi">824812248557444</span>
+<span class="p">};</span>
+
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">createCrossSheetReference</span><span class="p">({</span><span class="na">sheetId</span><span class="p">:</span> <span class="mi">456745674567</span><span class="p">,</span> <span class="na">body</span><span class="p">:</span> <span class="nx">body</span><span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"success"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">result</span><span class="p">));</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"error"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">error</span><span class="p">));</span>
+  <span class="p">});</span>
 </code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
@@ -8833,7 +8869,15 @@ filled in by Smartsheet and whose values cannot be changed by the user. These co
 
 <pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/crosssheetreferences/<span class="o">{</span>crossSheetReferenceId<span class="o">}</span> <span class="se">\</span>
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> 
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">getCrossSheetReference</span><span class="p">({</span><span class="na">sheetId</span><span class="p">:</span> <span class="mi">9283173393803140</span><span class="p">,</span> <span class="na">crossSheetReferenceId</span><span class="p">:</span> <span class="mi">8157685695702916</span><span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"success"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">result</span><span class="p">));</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"error"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">error</span><span class="p">));</span>
+  <span class="p">});</span>
 </code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
@@ -8891,7 +8935,15 @@ filled in by Smartsheet and whose values cannot be changed by the user. These co
 
 <pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/crosssheetreferences <span class="se">\</span>
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">listCrossSheetReferences</span><span class="p">({</span><span class="na">sheetId</span><span class="p">:</span> <span class="mi">9283173393803140</span><span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"success"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">result</span><span class="p">));</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"error"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">error</span><span class="p">));</span>
+  <span class="p">});</span>
 </code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
@@ -13935,6 +13987,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
   </span><span class="s2">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"virtualId"</span><span class="p">:</span><span class="w"> </span><span class="mi">4583173393803140</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"primary"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sheet Name"</span><span class="p">,</span><span class="w">
@@ -13944,6 +13997,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"virtualId"</span><span class="p">:</span><span class="w"> </span><span class="mi">2331373580117892</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Status"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TEXT_NUMBER"</span><span class="p">,</span><span class="w">
@@ -14001,6 +14055,10 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 <tr>
 <td></td>
 <td><strong>exclude</strong> (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li><strong>linkInFromCellDetails</strong>: excludes the following attributes from the <strong>cell.linkInFromCell</strong> object:<ul><li><strong>columnId</strong></li><li><strong>rowId</strong></li><li><strong>status</strong></li></ul></li><li><strong>linksOutToCellsDetails</strong>: excludes the following attributes from the <strong>cell.linksOutToCells</strong> array elements:<ul><li><strong>columnId</strong></li><li><strong>rowId</strong></li><li><strong>status</strong></li></ul></li></ul></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>level</strong> (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default) or as multi-contact data (<strong>level=1</strong>).</td>
 </tr>
 <tr>
 <td></td>
@@ -20016,7 +20074,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- comma-separated list of elements to copy:<ul><li><strong>attachments</strong></li><li><strong>cellLinks</strong></li><li><strong>data</strong> -- includes formatting</li><li><strong>discussions</strong> -- includes comments</li><li><strong>filters</strong></li><li><strong>forms</strong></li><li><strong>ruleRecipients</strong> -- includes notification recipients, must also include <strong>rules</strong> when using this attribute</li><li><strong>rules</strong> -- includes notifications and workflow rules</li><li><strong>shares</strong></li><li><strong>all</strong> - deprecated</li></ul><strong>NOTE:</strong> Cell history is not copied, regardless of which <strong>include</strong> parameter values are specified.</td>
+<td><strong>include</strong> (optional) -- comma-separated list of elements to copy:<ul><li><strong>attachments</strong></li><li><strong>cellLinks</strong> -- includes cross-sheet references</li><li><strong>data</strong> -- includes formatting</li><li><strong>discussions</strong> -- includes comments</li><li><strong>filters</strong></li><li><strong>forms</strong></li><li><strong>ruleRecipients</strong> -- includes notification recipients, must also include <strong>rules</strong> when using this attribute</li><li><strong>rules</strong> -- includes notifications and workflow rules</li><li><strong>shares</strong></li><li><strong>all</strong> - deprecated</li></ul><strong>NOTE:</strong> Cell history is not copied, regardless of which <strong>include</strong> parameter values are specified.</td>
 </tr>
 <tr>
 <td></td>
@@ -21163,7 +21221,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
     <span class="p">});</span>
 </code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Omit all parameters</span>
 <span class="n">Sheet</span> <span class="n">sheet</span> <span class="p">=</span> <span class="n">smartsheet</span><span class="p">.</span><span class="n">SheetResources</span><span class="p">.</span><span class="nf">GetSheet</span><span class="p">(</span>
-  <span class="m">9283173393803140</span><span class="p">,</span>           <span class="c1">// long sheetId</span>
+  <span class="m">4583173393803140</span><span class="p">,</span>           <span class="c1">// long sheetId</span>
   <span class="k">null</span><span class="p">,</span>                       <span class="c1">// IEnumerable&lt;SheetLevelInclusion&gt; includes</span>
   <span class="k">null</span><span class="p">,</span>                       <span class="c1">// IEnumerable&lt;SheetLevelExclusion&gt; excludes</span>
   <span class="k">null</span><span class="p">,</span>                       <span class="c1">// IEnumerable&lt;long&gt; rowIds</span>
@@ -21174,7 +21232,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <span class="p">);</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// Omit all parameters</span>
 <span class="n">Sheet</span> <span class="n">sheet</span> <span class="o">=</span> <span class="n">smartsheet</span><span class="o">.</span><span class="na">sheetResources</span><span class="o">().</span><span class="na">getSheet</span><span class="o">(</span>
-  <span class="mi">9283173393803140L</span><span class="o">,</span>      <span class="c1">// long sheetId</span>
+  <span class="mi">4583173393803140L</span><span class="o">,</span>      <span class="c1">// long sheetId</span>
   <span class="kc">null</span><span class="o">,</span>                   <span class="c1">// EnumSet&lt;SheetInclusion&gt; includes    </span>
   <span class="kc">null</span><span class="o">,</span>                   <span class="c1">// EnumSet&lt;ObjectExclusion&gt; excludes</span>
   <span class="kc">null</span><span class="o">,</span>                   <span class="c1">// Set&lt;Long&gt; rowIds</span>
@@ -21184,9 +21242,9 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
   <span class="kc">null</span>                    <span class="c1">// Integer page</span>
 <span class="o">);</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">sheet</span> <span class="o">=</span> <span class="n">ss_client</span><span class="o">.</span><span class="n">Sheets</span><span class="o">.</span><span class="n">get_sheet</span><span class="p">(</span>
-  <span class="mi">1531988831168388</span><span class="p">)</span>           <span class="c"># sheet_id</span>
+  <span class="mi">4583173393803140</span><span class="p">)</span>           <span class="c"># sheet_id</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">sheet</span> <span class="o">=</span> <span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span>
-  <span class="ss">sheet_id: </span><span class="mi">1531988831168388</span>
+  <span class="ss">sheet_id: </span><span class="mi">4583173393803140</span>
 <span class="p">)</span>
 </code></pre>
 
@@ -21195,21 +21253,53 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </blockquote>
 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4583173393803140</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sheet 1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"totalRowCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">240</span><span class="p">,</span><span class="w">
   </span><span class="s2">"accessLevel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OWNER"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"effectiveAttachmentOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"EVERNOTE"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"GOOGLE_DRIVE"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"EGNYTE"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"FILE"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ONEDRIVE"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"DROPBOX"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"BOX_COM"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"readOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ganttEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"dependenciesEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"resourceManagementEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cellImageUploadEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"userSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"criticalPathEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"displaySummaryTasks"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"userPermissions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"summaryPermissions"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ADMIN"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"workspace"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">825898975642500</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Workspace"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
   </span><span class="s2">"projectSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"workingDays"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="s2">"MONDAY"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"TUESDAY"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"WEDNESDAY"</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"nonWorkingDays"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="s2">"2018-01-01"</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"lengthOfDay"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="w">
+    </span><span class="s2">"nonWorkingDays"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="s2">"lengthOfDay"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w">
   </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"hasSummaryFields"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"permalink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.smartsheet.com/b/home?lx=pWNSDH9itjBXxBzFmyf-5w"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-24T20:27:57Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-26T20:45:08Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4583173393803140</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"primary"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Primary Column"</span><span class="p">,</span><span class="w">
@@ -21218,6 +21308,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2331373580117892</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
       </span><span class="s2">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"new"</span><span class="p">,</span><span class="w">
@@ -21229,11 +21320,6 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
       </span><span class="s2">"validation"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-24T18:22:29-07:00"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4583173393803140</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-24T18:30:52-07:00"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sheet 1"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"permalink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.smartsheet.com/b/home?lx=pWNSDH9itjBXxBzFmyf-5w"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"rows"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -21254,11 +21340,11 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- a comma-separated list of elements to include in the response.<br/>Supports all <a href="#row-include-flags">Row Include Flags</a> with the following differences:<ul><li><strong>attachments</strong>: includes the metadata for sheet-level and row-level attachments</li><li><strong>crossSheetReferences</strong>: includes the cross-sheet references</li><li><strong>discussions</strong>: includes sheet-level and row-level discussions</li><li><strong>filters</strong>: includes <a href="#row-object">row.filteredOut</a> attribute</li><li><strong>filterDefinitions</strong>: includes type of filter, operators used, and criteria</li><li><strong>format</strong>: includes column, row, and cell formatting</li><li><strong>ownerInfo</strong>: includes the workspace and the owner&#39;s email address and user Id</li></ul>Also supports the <strong>source</strong> include flag, which adds the <a href="#source-object">Source object</a> indicating which sheet or template the sheet was created from, if any.</td>
+<td><strong>include</strong> (optional): a comma-separated list of elements to include in the response.<br/>Supports all <a href="#row-include-flags">Row Include Flags</a> with the following differences:<ul><li><strong>attachments</strong>: includes the metadata for sheet-level and row-level attachments</li><li><strong>crossSheetReferences</strong>: includes the cross-sheet references</li><li><strong>discussions</strong>: includes sheet-level and row-level discussions</li><li><strong>filters</strong>: includes <a href="#row-object">row.filteredOut</a> attribute</li><li><strong>filterDefinitions</strong>: includes type of filter, operators used, and criteria</li><li><strong>format</strong>: includes column, row, and cell formatting</li><li><strong>ganttConfig</strong>: includes Gantt chart details</li><li><strong>ownerInfo</strong>: includes the workspace and the owner&#39;s email address and user Id</li></ul>Also supports the <strong>source</strong> include flag, which adds the <a href="#source-object">Source object</a> indicating which sheet or template the sheet was created from, if any.</td>
 </tr>
 <tr>
 <td></td>
-<td><strong>exclude</strong> (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li><strong>include=format&amp;exclude=nonexistentCells</strong>: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li><strong>linkInFromCellDetails</strong>: excludes the following attributes from the <strong>cell.linkInFromCell</strong> object:<ul><li><strong>columnId</strong></li><li><strong>rowId</strong></li><li><strong>status</strong></li></ul></li><li><strong>linksOutToCellsDetails</strong>: excludes the following attributes from the <strong>cell.linksOutToCells</strong> array elements:<ul><li><strong>columnId</strong></li><li><strong>rowId</strong></li><li><strong>status</strong></li></ul></li><li><strong>nonexistentCells</strong>: excludes cells that have never contained any data</li></ul></td>
+<td><strong>exclude</strong> (optional): a comma-separated list of elements to not include in the response.<br/><ul><li><strong>include=format&amp;exclude=nonexistentCells</strong>: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li><strong>linkInFromCellDetails</strong>: excludes the following attributes from the <strong>cell.linkInFromCell</strong> object:<ul><li><strong>columnId</strong></li><li><strong>rowId</strong></li><li><strong>status</strong></li></ul></li><li><strong>linksOutToCellsDetails</strong>: excludes the following attributes from the <strong>cell.linksOutToCells</strong> array elements:<ul><li><strong>columnId</strong></li><li><strong>rowId</strong></li><li><strong>status</strong></li></ul></li><li><strong>nonexistentCells</strong>: excludes cells that have never contained any data</li></ul></td>
 </tr>
 <tr>
 <td></td>
@@ -21267,6 +21353,10 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <tr>
 <td></td>
 <td><strong>ifVersionAfter</strong> (optional): If version specified is still the current sheet version, then returns an abbreviated Sheet object with only the sheet <strong>version</strong> property. Otherwise, if the sheet has been modified, returns the complete Sheet object. Intended to allow clients with a cached copy to make sure they have the latest version.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>level</strong> (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default) or as multi-contact data (<strong>level=1</strong>).</td>
 </tr>
 <tr>
 <td></td>
@@ -22319,7 +22409,26 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
 -X POST <span class="se">\</span>
 -d <span class="s1">'{"sortCriteria": [{"columnId": 4583173393803140, "direction": "DESCENDING"}]}'</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Specify sort criteria</span>
+<span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">sortCriteria</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="na">columnId</span><span class="p">:</span> <span class="mi">4583173393803140</span><span class="p">,</span>
+      <span class="na">direction</span><span class="p">:</span> <span class="s2">"DESCENDING"</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">};</span>
+
+<span class="c1">// Sort rows</span>
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">sortRowsInSheet</span><span class="p">({</span><span class="na">sheetId</span><span class="p">:</span> <span class="mi">9283173393803140</span><span class="p">,</span> <span class="na">body</span><span class="p">:</span> <span class="nx">body</span><span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"success"</span><span class="p">);</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">result</span><span class="p">));</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"error"</span><span class="p">);</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">error</span><span class="p">));</span>
+  <span class="p">});</span>
 </code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
@@ -22356,6 +22465,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
   </span><span class="s2">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4583173393803140</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"primary"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Primary Column"</span><span class="p">,</span><span class="w">
@@ -22364,6 +22474,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2331373580117892</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
       </span><span class="s2">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"new"</span><span class="p">,</span><span class="w">
@@ -22837,6 +22948,11 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td><strong>TITLE</strong></td>
 <td><a href="#titlewidgetcontent-object">TitleWidgetContent</a></td>
 </tr>
+<tr>
+<td>Web Content</td>
+<td><strong>WEBCONTENT</strong></td>
+<td><a href="#webcontentwidgetcontent-object">WebContentWidgetContent</a></td>
+</tr>
 </tbody></table>
 <h3 id='celllinkwidgetcontent-object'>CellLinkWidgetContent Object</h3>
 <table><thead>
@@ -23062,6 +23178,20 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td><strong>htmlContent</strong></td>
 <td>string</td>
 <td>HTML snippet to render title</td>
+</tr>
+</tbody></table>
+<h3 id='webcontentwidgetcontent-object'>WebcontentWidgetContent Object</h3>
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>url</strong></td>
+<td>string</td>
+<td>The URL</td>
 </tr>
 </tbody></table>
 <h2 id='copy-sight'>Copy Sight</h2>
@@ -23356,6 +23486,10 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td>Headers</td>
 <td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td><strong>level</strong> (optional): allows you to specify whether you want to see data as text format for backwards compatibility or you want to see Multi-Assign data. For sheets and reports, use <strong>level=0</strong> (default) for text or <strong>level=1</strong> for Multi-Assign. For Sights (aka dashboards), use <strong>level=0</strong> or <strong>level=1</strong> (default) for text or <strong>level=2</strong> for Multi-Assign.</td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -24382,6 +24516,10 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
 </tr>
 <tr>
+<td>Parameters</td>
+<td><strong>deleteAllForApiClient</strong> (optional): The client Id and user Id is fetched based on the token that is used to make this API call. A value of <strong>true</strong> deletes all tokens associated to the given client Id and user Id. Defaults to <strong>false</strong>.</td>
+</tr>
+<tr>
 <td>Returns</td>
 <td><a href="#result-object">Result object</a></td>
 </tr>
@@ -24683,6 +24821,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <li><strong>dayOfMonth</strong>, or</li>
 <li><strong>dayOrdinal</strong> together with <strong>dayDescriptors</strong>.  <strong>dayDescriptors</strong> should contain only one value.</li>
 </ul></li>
+<li>If you prefer to use date-based rules, &quot;frequency&quot; settings are ignored, for instance, Oct 31 and DAILY defaults to Oct 31. </li>
 </ol>
 <h2 id='create-update-request'>Create Update Request</h2>
 <blockquote>
@@ -24796,7 +24935,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <span class="n">email_spec</span><span class="o">.</span><span class="n">column_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7036894123976580</span><span class="p">]</span>
 
 <span class="c"># Send update request</span>
-<span class="n">new_update_request</span> <span class="o">=</span> <span class="n">ss_client</span><span class="o">.</span><span class="n">Sheets</span><span class="o">.</span><span class="n">send_update_request</span><span class="p">(</span>
+<span class="n">new_update_request</span> <span class="o">=</span> <span class="n">ss_client</span><span class="o">.</span><span class="n">Sheets</span><span class="o">.</span><span class="n">create_update_request</span><span class="p">(</span>
   <span class="mi">5190835902932868</span><span class="p">,</span>           <span class="c"># sheet_id</span>
   <span class="n">email_spec</span>
 <span class="p">)</span>
@@ -29575,6 +29714,7 @@ For more information, see <a href="#authenticating-callbacks-optional">Authentic
 
 <ul>
 <li>Smartsheet webhooks do not support callbacks to servers using self-signed certificates. The callback server must be using a signed certificate from a certificate authority.</li>
+<li>The callbackURL cannot be a private IP address.</li>
 <li>The callbackURL must use one of the following ports: 443 (default for HTTPS), 8000, 8008, 8080, or 8443. </li>
 </ul>
 
