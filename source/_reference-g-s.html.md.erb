@@ -1340,7 +1340,7 @@ Extends the [Row object](#row-object), adding the following:
 **readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published report:<ul><li>If **ALL**, it is available to anyone who has the link.</li><li>If **ORG**, it is available only to members of the report owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled** = **true**.
 **readOnlyFullDefaultView** | string | Indicates which view the user has set for a read-only, default view of the published report. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
 **readOnlyFullEnabled** | Boolean | (Required) If **true**, a rich version of the report is published with the ability to download row attachments and discussions.
-**readOnlyFullShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
+**readOnlyFullShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published report<br/>Only returned in a response if **readOnlyFullEnabled** = **true**.
 
 ## Get Report
@@ -5257,7 +5257,7 @@ Represents the project settings dependencies for a specific sheet.  Project sett
 **readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published sheet:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the sheet owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled = true**.
 **readOnlyFullDefaultView** | string | Indicates which view the user has set for a read-only, default view of the published sheet. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
 **readOnlyFullEnabled** | Boolean | If **true**, a rich version of the sheet is published with the ability to download row attachments and discussions.
-**readOnlyFullShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
+**readOnlyFullShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published sheet<br/>Only returned in a response if **readOnlyFullEnabled = true**.
 **readOnlyLiteEnabled** | Boolean | If **true**, a lightweight version of the sheet is published without row attachments and discussions.
 **readOnlyLiteSslUrl** | string | URL for 'Read-Only' view of the published sheet when SSL is enabled. 
@@ -5265,7 +5265,7 @@ Represents the project settings dependencies for a specific sheet.  Project sett
 **readWriteAccessibleBy** | string | Indicates who can access the 'Edit by Anyone' view of the published sheet:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the sheet owner's Smartsheet organization.</li></ul>Only returned in a response if **readWriteEnabled = true**.
 **readWriteDefaultView** | string | Indicates which view the user has set for a read-write, default view of the published sheet. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
 **readWriteEnabled** | Boolean | If **true**, a rich version of the sheet is published with the ability to edit cells and manage attachments and discussions.
-**readWriteShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
+**readWriteShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readWriteUrl** | string | URL for 'Edit by Anyone' view of the published sheet<br/>Only returned in a response if **readWriteEnabled = true**.
 
 ### SheetUserSettings Object
