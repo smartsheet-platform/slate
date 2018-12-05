@@ -3091,6 +3091,8 @@ Updates cell values in the specified rows, expands/collapses the specified rows,
 
 <aside class="notice">In a parent row, values of the following fields are auto-calculated based upon values in the child rows (and therefore cannot be updated using the API): Duration, End Date, % Complete, Start Date.</aside>
 
+<aside class="notice">To update a multi-contact cell, you must use an <a href="#objectvalue-object">ObjectValue object</a> with an <b>objectType</b> of <b>MULTI_CONTACT</b>.</aside>
+
 ## <%= RELATED %>
 
 A row is comprised of a collection of cells, and may optionally contain attachments and discussions.
