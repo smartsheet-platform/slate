@@ -2860,7 +2860,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: application/json" \
 -X PUT \
--d '[{"id": "6572427401553796", "cells": [{"columnId": 7518312134403972,"image": {"altText": "New Alt Text"},"value": "new value"}, {"columnId": 1888812600190852,"value": "A"}]}, {"id": "2068827774183300", "cells": [{"columnId": 7518312134403972,"value": "desc_updated"}, {"columnId": 1888812600190852,"value": "B"}]}]'
+-d '[{"id": "6572427401553796", "cells": [{"columnId": 7518312134403972,"image": {"altText": "New Alt Text"},"value": "new value"}, {"columnId": 1888812600190852,"value": "A"}]}, {"id": "2068827774183300", "cells": [{"columnId": 7518312134403972,"value": "desc_updated"}, {"columnId": 1888812600190852,"value": "B"}, {"columnId": 6552023773538180,"objectValue": {"objectType": "MULTI_CONTACT","values": [{"objectType": "CONTACT","email": "john.doe@smartsheet.com","name": "John Doe"}, {"objectType": "CONTACT","email": "jane.roe@smartsheet.com","name": "Jane Roe"}]}}]}]'
 ```
 
 ```javascript
@@ -3060,6 +3060,10 @@ response = smartsheet.sheets.rows.update(
       "type": "TEXT_NUMBER",
       "value": 1,
       "displayValue": "1"
+    },
+    {
+      "columnId": 6552023773538180,
+      "displayValue": "Jane Roe, John Doe"
     }
     ]
   }
