@@ -2398,7 +2398,7 @@ A cell may not contain both a hyperlink and a cell link, so **hyperlink** and **
 #### Cell Value Representation
 
 [Cell objects](#cell-object) retrieved through the Smartsheet APIs have two main attributes representing cell values: **Cell.value**, and
-**Cell.displayValue**. A third attribute, Cell.objectValue is currently used only for adding and updating predecessors, or for multi-contact details, such as email addresses. An empty cell returns no value.
+**Cell.displayValue**. A third attribute, **Cell.objectValue** is currently used only for adding and updating predecessors, or for multi-contact details, such as email addresses. An empty cell returns no value.
 
 **Cell.displayValue** is always a string and is only returned for certain column types (see below).  It represents the formatted value as it should
 be displayed to an end-user.  For example, if a TEXT_NUMBER column is formatted as a US Dollar currency, its **value** may be a number
