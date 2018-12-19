@@ -1868,7 +1868,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2018-10-02
+<p>Updated 2018-12-19
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -5723,7 +5723,7 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 <tr>
 <td><strong>objectValue</strong></td>
 <td><a href="#objectvalue-object">ObjectValue</a></td>
-<td><a href="#row-include-flags">Optionally included</a> object representation of the cell&#39;s value. Used for updating predecessor cell values.</td>
+<td><a href="#row-include-flags">Optionally included</a> object representation of the cell&#39;s value. Used for updating predecessor cell values or for multi-contact details.</td>
 </tr>
 <tr>
 <td><strong>overrideValidation</strong></td>
@@ -5905,7 +5905,7 @@ This object itself is not used directly.</p>
 <tr>
 <td><strong>objectType</strong></td>
 <td>string</td>
-<td>One of <strong>ABSTRACT_DATETIME</strong>, <strong>CONTACT</strong>, <strong>DATE</strong>, <strong>DATETIME</strong>, <strong>DURATION</strong>, or <strong>PREDECESSOR_LIST</strong></td>
+<td>One of <strong>ABSTRACT_DATETIME</strong>, <strong>CONTACT</strong>, <strong>DATE</strong>, <strong>DATETIME</strong>, <strong>DURATION</strong>, <strong>MULTI_CONTACT</strong>, or <strong>PREDECESSOR_LIST</strong></td>
 </tr>
 </tbody></table>
 <h3 id='predecessor-object'>Predecessor Object</h3>
@@ -6151,11 +6151,11 @@ This object itself is not used directly.</p>
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional): when specified with a value of <strong>columnType</strong>, response includes the <strong>columnType</strong> attribute for each <a href="#cell-object">Cell object</a></td>
+<td><strong>include</strong> (optional) -- comma-separated list of elements to copy:<ul><li><strong>columnType</strong> -- includes the <strong>columnType</strong> attribute for each <a href="#cell-object">Cell object</a></li><li><strong>objectValue</strong> -- when used in combination with a <strong>level</strong> query parameter, includes the email addresses for a multi-contact cell.</li></ul></td>
 </tr>
 <tr>
 <td></td>
-<td><strong>level</strong> (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default) or as multi-contact data (<strong>level=1</strong>).</td>
+<td><strong>level</strong> (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default) or as multi-contact data (<strong>level=1</strong>).</td>
 </tr>
 <tr>
 <td></td>
@@ -6186,8 +6186,7 @@ Additionally, a <a href="#celllink-object">CellLink object</a> can only be added
 <p>A cell may not contain both a hyperlink and a cell link, so <strong>hyperlink</strong> and <strong>linkInFromCell</strong> may never both be non-null at the same time.</p>
 <h3 id='cell-reference'>Cell Reference</h3><h4 id='cell-value-representation'>Cell Value Representation</h4>
 <p><a href="#cell-object">Cell objects</a> retrieved through the Smartsheet APIs have two main attributes representing cell values: <strong>Cell.value</strong>, and
-<strong>Cell.displayValue</strong>.  A third attribute, <strong>Cell.objectValue</strong> is currently used only for adding and updating predecessors.
-An empty cell returns no value.</p>
+<strong>Cell.displayValue</strong>. A third attribute, <strong>Cell.objectValue</strong> is currently used only for adding and updating predecessors, or for multi-contact details, such as email addresses. An empty cell returns no value.</p>
 
 <p><strong>Cell.displayValue</strong> is always a string and is only returned for certain column types (see below).  It represents the formatted value as it should
 be displayed to an end-user.  For example, if a TEXT_NUMBER column is formatted as a US Dollar currency, its <strong>value</strong> may be a number
@@ -6229,6 +6228,11 @@ depending on the column type.  An empty cell returns no value. Complex types are
 <td>Yes: same as <strong>value</strong></td>
 </tr>
 <tr>
+<td>MULTI_CONTACT_LIST</td>
+<td>string: only visible when using a query parameter of <strong>level</strong> and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying, otherwise the column type is TEXT_NUMBER.</td>
+<td>Yes: same as <strong>value</strong>; to see actual email addresses, see below.</td>
+</tr>
+<tr>
 <td>PICKLIST</td>
 <td>string: one of the picklist&#39;s column options, or a free-form text value.<br/>number: numeric values</td>
 <td>Yes: same as <strong>value</strong> for strings; for number values, the number with formatting applied.</td>
@@ -6245,9 +6249,13 @@ depending on the column type.  An empty cell returns no value. Complex types are
 </tr>
 </tbody></table>
 
-<p><strong>Cell.objectValue</strong> is an object representation of a cell&#39;s value and is currently used for adding or updating predecessor cell values.
-It provides a more &quot;programmer friendly&quot; format for assembling predecessors. To update a cell&#39;s predecessors, set <strong>objectValue</strong> to a
-<a href="#predecessorlist-object">PredecessorList object</a> containing <a href="#predecessor-object">Predecessor objects</a>.</p>
+<p><strong>Cell.objectValue</strong> is an object representation of a cell&#39;s value and is currently used for adding or updating predecessor cell values, or for multi-contact details, such as email addresses.</p>
+
+<ul>
+<li>For predecessors, it provides a more &quot;programmer friendly&quot; format for assembling predecessors. To update a cell&#39;s predecessors, set <strong>objectValue</strong> to a
+<a href="#predecessorlist-object">PredecessorList object</a> containing <a href="#predecessor-object">Predecessor objects</a>.</li>
+<li>For multi-contact details, use both a level query parameter <em>and</em> an <strong>include=objectValue</strong> query to see email addresses rather than display names.</li>
+</ul>
 <h4 id='cell-value-parsing'>Cell Value Parsing</h4>
 <p>The flexibility in cell value data types is a powerful feature in the Smartsheet application; however, it poses a challenge
 for an API in terms of parsing. Being too flexible might result in unexpected behavior. For instance, if you write code
@@ -6359,6 +6367,20 @@ sense of it. To enable lenient parsing simply include <strong>&quot;strict&quot;
 </tbody></table>
 
 <aside class="notice">You may use the query string parameter <b>projectParseLocale</b> with a <a href="#server-information">supported locale string</a> to force parsing in the specified locale (for example, using <b>en_US</b> lets you send in English values regardless of the user's locale).</aside>
+
+<p><strong>MULTI_CONTACT_LIST</strong></p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>N/A</td>
+<td>Set using the <strong>objectValue</strong> attribute for the Cell object, which is inherently strict. See <a href="#cell-reference">Cell Reference</a>.</td>
+</tr>
+</tbody></table>
 
 <p><strong>PICKLIST</strong></p>
 
@@ -7756,7 +7778,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <tr>
 <td>Contact List</td>
 <td><strong>MULTI_CONTACT_LIST</strong></td>
-<td>List where single cells can contain more than one contact. Only visible when using a query parameter of <strong>level</strong> and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying.</td>
+<td>List where single cells can contain more than one contact. Only visible when using a query parameter of <strong>level</strong> and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying. To see email addresses behind the display names, combine an <strong>include=objectValue</strong> query parameter with a <strong>level</strong> query parameter.</td>
 </tr>
 <tr>
 <td>Date</td>
@@ -13478,7 +13500,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 </tbody></table>
 
-<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li><li>Hierarchical relationships between rows in an external file won't import.</li></ul></aside>
 
 <h2 id='import-sheet-into-folder'>Import Sheet into Folder</h2>
 
@@ -13630,7 +13652,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 </tbody></table>
 
-<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li><li>Hierarchical relationships between rows in an external file won't import.</li></ul></aside>
 
 <h2 id='import-sheet-into-workspace'>Import Sheet into Workspace</h2>
 
@@ -13782,7 +13804,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 </tbody></table>
 
-<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li><li>Hierarchical relationships between rows in an external file won't import.</li></ul></aside>
 
 <h1 id='reports'>Reports</h1>
 
@@ -13901,7 +13923,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 <tr>
 <td><strong>readOnlyFullShowToolbar</strong></td>
 <td>Boolean</td>
-<td>Indicates whether the left nav toolbar is displayed. The default, or <strong>true</strong>, is to display the toolbar. If <strong>false</strong>, hides the toolbar.</td>
+<td><strong>DEPRECATED</strong> Indicates whether the left nav toolbar is displayed. The default, or <strong>true</strong>, is to display the toolbar. If <strong>false</strong>, hides the toolbar.</td>
 </tr>
 <tr>
 <td><strong>readOnlyFullUrl</strong></td>
@@ -14050,7 +14072,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>attachments</strong></li><li><strong>discussions</strong></li><li><strong>format</strong> -- see <a href="#formatting">Formatting</a></li><li><strong>sourceSheets</strong></li></ul></td>
+<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>attachments</strong></li><li><strong>discussions</strong></li><li><strong>format</strong> -- see <a href="#formatting">Formatting</a></li><li><strong>objectValue</strong> -- when used in combination with a <strong>level</strong> query parameter, includes the email addresses for multi-contact data</li><li><strong>sourceSheets</strong></li></ul></td>
 </tr>
 <tr>
 <td></td>
@@ -14058,11 +14080,11 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 <tr>
 <td></td>
-<td><strong>level</strong> (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default) or as multi-contact data (<strong>level=1</strong>).</td>
+<td><strong>level</strong> (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default) or as multi-contact data (<strong>level=1</strong>).</td>
 </tr>
 <tr>
 <td></td>
-<td><strong>pageSize</strong> (optional): Number of rows per page.  If not specified, the default value is 100.  This operation can return a maximum of 500 rows per page.</td>
+<td><strong>pageSize</strong> (optional): Number of rows per page.  If not specified, the default value is 100.  If you need larger sets of data from your report, this operation can return a maximum of 10,000 rows per request (report limit is 50,000 rows).</td>
 </tr>
 <tr>
 <td></td>
@@ -16023,7 +16045,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
 -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
 -X PUT <span class="se">\</span>
--d <span class="s1">'[{"id": "6572427401553796", "cells": [{"columnId": 7518312134403972,"image": {"altText": "New Alt Text"},"value": "new value"}, {"columnId": 1888812600190852,"value": "A"}]}, {"id": "2068827774183300", "cells": [{"columnId": 7518312134403972,"value": "desc_updated"}, {"columnId": 1888812600190852,"value": "B"}]}]'</span>
+-d <span class="s1">'[{"id": "6572427401553796", "cells": [{"columnId": 7518312134403972,"image": {"altText": "New Alt Text"},"value": "new value"}, {"columnId": 1888812600190852,"value": "A"}]}, {"id": "2068827774183300", "cells": [{"columnId": 7518312134403972,"value": "desc_updated"}, {"columnId": 1888812600190852,"value": "B"}, {"columnId": 6552023773538180,"objectValue": {"objectType": "MULTI_CONTACT","values": [{"objectType": "CONTACT","email": "john.doe@smartsheet.com","name": "John Doe"}, {"objectType": "CONTACT","email": "jane.roe@smartsheet.com","name": "Jane Roe"}]}}]}]'</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Specify updated cell values</span>
 <span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="p">[</span>
   <span class="p">{</span>
@@ -16209,6 +16231,10 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
       </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TEXT_NUMBER"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
       </span><span class="s2">"displayValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"columnId"</span><span class="p">:</span><span class="w"> </span><span class="mi">6552023773538180</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"displayValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Roe, John Doe"</span><span class="w">
     </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
   </span><span class="p">}</span><span class="w">
@@ -16262,6 +16288,8 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 <aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>above</b>, <b>parentId</b>, <b>siblingId</b>, <b>toBottom</b>, and <b>toTop</b> attributes must be the same for all rows in the request).</aside>
 
 <aside class="notice">In a parent row, values of the following fields are auto-calculated based upon values in the child rows (and therefore cannot be updated using the API): Duration, End Date, % Complete, Start Date.</aside>
+
+<aside class="notice">To update a multi-contact cell, you must use an <a href="#objectvalue-object">ObjectValue object</a> with an <b>objectType</b> of <b>MULTI_CONTACT</b>.</aside>
 
 <h2 id='related-items-8'>Related Items</h2>
 
@@ -19820,7 +19848,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <tr>
 <td><strong>readOnlyFullShowToolbar</strong></td>
 <td>Boolean</td>
-<td>Indicates whether the left nav toolbar is displayed. The default, or <strong>true</strong>, is to display the toolbar. If <strong>false</strong>, hides the toolbar.</td>
+<td><strong>DEPRECATED</strong> Indicates whether the left nav toolbar is displayed. The default, or <strong>true</strong>, is to display the toolbar. If <strong>false</strong>, hides the toolbar.</td>
 </tr>
 <tr>
 <td><strong>readOnlyFullUrl</strong></td>
@@ -19860,7 +19888,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <tr>
 <td><strong>readWriteShowToolbar</strong></td>
 <td>Boolean</td>
-<td>Indicates whether the left nav toolbar is displayed. The default, or <strong>true</strong>, is to display the toolbar. If <strong>false</strong>, hides the toolbar.</td>
+<td><strong>DEPRECATED</strong> Indicates whether the left nav toolbar is displayed. The default, or <strong>true</strong>, is to display the toolbar. If <strong>false</strong>, hides the toolbar.</td>
 </tr>
 <tr>
 <td><strong>readWriteUrl</strong></td>
@@ -21340,7 +21368,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional): a comma-separated list of elements to include in the response.<br/>Supports all <a href="#row-include-flags">Row Include Flags</a> with the following differences:<ul><li><strong>attachments</strong>: includes the metadata for sheet-level and row-level attachments</li><li><strong>crossSheetReferences</strong>: includes the cross-sheet references</li><li><strong>discussions</strong>: includes sheet-level and row-level discussions</li><li><strong>filters</strong>: includes <a href="#row-object">row.filteredOut</a> attribute</li><li><strong>filterDefinitions</strong>: includes type of filter, operators used, and criteria</li><li><strong>format</strong>: includes column, row, and cell formatting</li><li><strong>ganttConfig</strong>: includes Gantt chart details</li><li><strong>ownerInfo</strong>: includes the workspace and the owner&#39;s email address and user Id</li></ul>Also supports the <strong>source</strong> include flag, which adds the <a href="#source-object">Source object</a> indicating which sheet or template the sheet was created from, if any.</td>
+<td><strong>include</strong> (optional): a comma-separated list of elements to include in the response.<br/>Supports all <a href="#row-include-flags">Row Include Flags</a> with the following differences:<ul><li><strong>attachments</strong>: includes the metadata for sheet-level and row-level attachments</li><li><strong>crossSheetReferences</strong>: includes the cross-sheet references</li><li><strong>discussions</strong>: includes sheet-level and row-level discussions</li><li><strong>filters</strong>: includes <a href="#row-object">row.filteredOut</a> attribute</li><li><strong>filterDefinitions</strong>: includes type of filter, operators used, and criteria</li><li><strong>format</strong>: includes column, row, and cell formatting</li><li><strong>ganttConfig</strong>: includes Gantt chart details</li><li><strong>objectValue</strong> -- when used in combination with a <strong>level</strong> query parameter, includes the email addresses for multi-contact data</li><li><strong>ownerInfo</strong>: includes the workspace and the owner&#39;s email address and user Id</li></ul>Also supports the <strong>source</strong> include flag, which adds the <a href="#source-object">Source object</a> indicating which sheet or template the sheet was created from, if any.</td>
 </tr>
 <tr>
 <td></td>
@@ -21356,7 +21384,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td></td>
-<td><strong>level</strong> (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default) or as multi-contact data (<strong>level=1</strong>).</td>
+<td><strong>level</strong> (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default) or as multi-contact data (<strong>level=1</strong>).</td>
 </tr>
 <tr>
 <td></td>
@@ -23489,7 +23517,11 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>level</strong> (optional): allows you to specify whether you want to see data as text format for backwards compatibility or you want to see Multi-Assign data. For sheets and reports, use <strong>level=0</strong> (default) for text or <strong>level=1</strong> for Multi-Assign. For Sights (aka dashboards), use <strong>level=0</strong> or <strong>level=1</strong> (default) for text or <strong>level=2</strong> for Multi-Assign.</td>
+<td><strong>level</strong> (optional): allows you to specify whether you want to see data as text format for backwards compatibility or you want to see multi-contact data. Use <strong>level=0</strong> or <strong>level=1</strong> (default) for text or <strong>level=2</strong> for multi-contact.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>objectValue</strong> (optional) -- when used in combination with a <strong>level</strong> query parameter, includes the email addresses for multi-contact data.</td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -24882,7 +24914,15 @@ only has read-only access to the sheet (for example, the user has viewer permiss
     <span class="p">}</span>
   <span class="p">],</span>
   <span class="na">subject</span><span class="p">:</span> <span class="s2">"Sample Monthly Update Request"</span><span class="p">,</span>
-  <span class="na">message</span><span class="p">:</span> <span class="s2">"Please update my online sheet."</span>
+  <span class="na">message</span><span class="p">:</span> <span class="s2">"Please update my online sheet."</span><span class="p">,</span>
+  <span class="na">schedule</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">type</span><span class="p">:</span> <span class="s2">"DAILY"</span><span class="p">,</span>
+    <span class="na">startAt</span><span class="p">:</span> <span class="s2">"2016-04-01T00:00:00Z"</span><span class="p">,</span>
+    <span class="na">endAt</span><span class="p">:</span> <span class="s2">"2018-12-31T00:00:00Z"</span><span class="p">,</span>
+    <span class="na">dayDescriptors</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">"WEEKDAY"</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
 <span class="p">};</span>
 
 <span class="c1">// Set options</span>
