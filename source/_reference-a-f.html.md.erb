@@ -2093,7 +2093,7 @@ A collection of cells comprises each row in a sheet.
 **image** | [Image](#image-object) | The image that the cell contains.<br/>Only returned if the cell contains an image.
 **linkInFromCell** | [CellLink](#celllink-object) | An inbound link from a cell in another sheet.  This cell's value mirrors the linked cell's value.
 **linksOutToCells** | [CellLink](#celllink-object)[] | An array of [CellLink objects](#celllink-object).  Zero or more outbound links from this cell to cells in other sheets whose values mirror this cell's value.
-**objectValue** | [ObjectValue](#objectvalue-object) | [Optionally included](#row-include-flags) object representation of the cell's value. Used for updating predecessor cell values.
+**objectValue** | [ObjectValue](#objectvalue-object) | [Optionally included](#row-include-flags) object representation of the cell's value. Used for updating predecessor cell values or for multi-contact details.
 **overrideValidation** | Boolean | (Admin only) Indicates whether the cell value can contain a value outside of the validation limits (value = **true**). When using this parameter, you must also set **strict** to **false** to bypass value type checking. This property is honored for `POST` or `PUT` actions that update rows.
 **strict** | Boolean | Set to **false** to enable lenient parsing. Defaults to **true**. <%= REQUEST_ONLY_ATTRIBUTE %> See [Cell Value Parsing](#cell-value-parsing) for more information about using this attribute. 
 **value** | string,<br/>number,<br/>or Boolean | A string, a number, or a Boolean value -- depending on the cell type and the data in the cell.  Cell values larger than 4000 characters are silently truncated. An empty cell returns no value. See [Cell Reference](#cell-reference).
@@ -2370,7 +2370,7 @@ Gets the cell modification history.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional): when specified with a value of **columnType**, response includes the **columnType** attribute for each [Cell object](#cell-object)
+<%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>**columnType** -- includes the **columnType** attribute for each [Cell object](#cell-object)</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for a multi-contact cell.</li></ul>
  | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Cell History objects](#cell-history-object). For more details, see [Cell Reference](#cell-reference).
@@ -2398,8 +2398,7 @@ A cell may not contain both a hyperlink and a cell link, so **hyperlink** and **
 #### Cell Value Representation
 
 [Cell objects](#cell-object) retrieved through the Smartsheet APIs have two main attributes representing cell values: **Cell.value**, and
-**Cell.displayValue**.  A third attribute, **Cell.objectValue** is currently used only for adding and updating predecessors.
-An empty cell returns no value.
+**Cell.displayValue**. A third attribute, Cell.objectValue is currently used only for adding and updating predecessors, or for multi-contact details, such as email addresses. An empty cell returns no value.
 
 **Cell.displayValue** is always a string and is only returned for certain column types (see below).  It represents the formatted value as it should
 be displayed to an end-user.  For example, if a TEXT_NUMBER column is formatted as a US Dollar currency, its **value** may be a number
@@ -2417,13 +2416,16 @@ CHECKBOX | Boolean: **true** if the checkbox is checked, **false** if unchecked,
 CONTACT_LIST | string: an email address representing a contact, or a free-form text value. | Yes: same as **value** for free-form strings; for contacts, the contact's name if any, else their email address.
 DATE | string: a date in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format, or a free-form text value.<br/>number: see [Dates and Times](#dates-and-times) for how to request dates to be returned as numbers. | No.
 DURATION | string: a duration value such as "4d 6h 30m" in the user's locale, or a free-form text value.<br/>See the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>) for more information on durations. | Yes: same as **value**
+MULTI_CONTACT_LIST | string: only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying, otherwise the column type is TEXT_NUMBER. | Yes: same as **value**; to see actual email addresses, see below.
 PICKLIST | string: one of the picklist's column options, or a free-form text value.<br/>number: numeric values | Yes: same as **value** for strings; for number values, the number with formatting applied.
 PREDECESSOR	| string: a comma-delimited predecessor list such as "12FS +3d 4h, 14SS", or a free-form text value.<br/>See the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>) for more information on predecessors. | Yes: same as **value**
 TEXT_NUMBER	| string: free-form text values<br/>number: numeric values | Yes: same as **value** for strings; for number values, the number with formatting applied.
 
-**Cell.objectValue** is an object representation of a cell's value and is currently used for adding or updating predecessor cell values.
-It provides a more "programmer friendly" format for assembling predecessors. To update a cell's predecessors, set **objectValue** to a
+**Cell.objectValue** is an object representation of a cell's value and is currently used for adding or updating predecessor cell values, or for multi-contact details, such as email addresses.
+
+* For predecessors, it provides a more "programmer friendly" format for assembling predecessors. To update a cell's predecessors, set **objectValue** to a
 [PredecessorList object](#predecessorlist-object) containing [Predecessor objects](#predecessor-object).
+* For multi-contact details, use both a level query parameter *and* an **include=objectValue** query to see email addresses rather than display names.
 
 #### Cell Value Parsing
 
@@ -2482,6 +2484,12 @@ The parsing rules for the various column types are as follows:
 **strict** | Only valid duration strings in the user's locale are valid. Information on duration strings can be found in [Help Center](<%= PROJECT_COLUMN_HELP_URL %>).
 
 <aside class="notice">You may use the query string parameter <b>projectParseLocale</b> with a <a href="#server-information">supported locale string</a> to force parsing in the specified locale (for example, using <b>en_US</b> lets you send in English values regardless of the user's locale).</aside>
+
+**MULTI_CONTACT_LIST**
+
+     |     |
+-----|-----|
+N/A | Set using the **objectValue** attribute for the Cell object, which is inherently strict. See [Cell Reference](#cell-reference).
 
 **PICKLIST**
 
@@ -3688,7 +3696,7 @@ Column Type | Column.type Value | Notes |
 ------------|--------------------------|-------|
 Checkbox 		| **CHECKBOX**		| Checkbox, star, and flag types
 Contact List	| **CONTACT_LIST**	| List containing contacts or roles for a project. **NOTE:** You can use the [contactOptions](#contactoption-object) property to specify a pre-defined list of values for the column, which can also become lanes in card view. 
-Contact List | **MULTI_CONTACT_LIST** | List where single cells can contain more than one contact. Only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying.  
+Contact List | **MULTI_CONTACT_LIST** | List where single cells can contain more than one contact. Only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying. To see email addresses behind the display names, combine an **include=objectValue** query parameter with a **level** query parameter. 
 Date			| **DATE** |
 Date/Time 		| **ABSTRACT_DATETIME** | Represents a project sheet's start and end dates.<br/>**Only for dependency-enabled project sheets**<br/>The API does not support setting a column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.) Additionally, the API does not support updating data in the "End Date" column under any circumstance, and does not support updating data in the "Start Date" column if "Predecessor" is set for that row.
 Date/Time		| **DATETIME**		| Used only by the following system-generated columns: <ul><li>Created (Date) (**Column.systemColumnType** = **CREATED_DATE**)</li><li>Modified (Date) (**Column.systemColumnType** = **MODIFIED_DATE**)</li></ul>
