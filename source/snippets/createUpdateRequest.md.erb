@@ -61,7 +61,15 @@ var body = {
     }
   ],
   subject: "Sample Monthly Update Request",
-  message: "Please update my online sheet."
+  message: "Please update my online sheet.",
+  schedule: {
+    type: "DAILY",
+    startAt: "2016-04-01T00:00:00Z",
+    endAt: "2018-12-31T00:00:00Z",
+    dayDescriptors: [
+      "WEEKDAY"
+    ]
+  }
 };
 
 // Set options

@@ -1006,7 +1006,7 @@ Imports CSV or XLSX data into a new sheet in the top-level "sheets" folder.
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
 
-<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li><li>Hierarchical relationships between rows in an external file won't import.</li></ul></aside>
 
 ## Import Sheet into Folder
 
@@ -1139,7 +1139,7 @@ Imports CSV or XLSX data into a new sheet in the specified folder.
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
 
-<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li><li>Hierarchical relationships between rows in an external file won't import.</li></ul></aside>
 
 ## Import Sheet into Workspace
 
@@ -1272,7 +1272,7 @@ Imports CSV or XLSX data into a new sheet in the specified workspace.
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
 
-<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li><li>Hierarchical relationships between rows in an external file won't import.</li></ul></aside>
 
 # Reports
 
@@ -1340,7 +1340,7 @@ Extends the [Row object](#row-object), adding the following:
 **readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published report:<ul><li>If **ALL**, it is available to anyone who has the link.</li><li>If **ORG**, it is available only to members of the report owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled** = **true**.
 **readOnlyFullDefaultView** | string | Indicates which view the user has set for a read-only, default view of the published report. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
 **readOnlyFullEnabled** | Boolean | (Required) If **true**, a rich version of the report is published with the ability to download row attachments and discussions.
-**readOnlyFullShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
+**readOnlyFullShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published report<br/>Only returned in a response if **readOnlyFullEnabled** = **true**.
 
 ## Get Report
@@ -1488,10 +1488,10 @@ Gets the report, including one page of rows, and optionally populated with attac
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**attachments**</li><li>**discussions**</li><li>**format** -- see [Formatting](#formatting)</li><li>**sourceSheets**</li></ul> 
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**attachments**</li><li>**discussions**</li><li>**format** -- see [Formatting](#formatting)</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**sourceSheets**</li></ul> 
   | **exclude** (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li></ul>
-  | **level** (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
-  | **pageSize** (optional): Number of rows per page.  If not specified, the default value is 100.  This operation can return a maximum of 500 rows per page.
+  | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
+  | **pageSize** (optional): Number of rows per page.  If not specified, the default value is 100.  If you need larger sets of data from your report, this operation can return a maximum of 10,000 rows per request (report limit is 50,000 rows).
   | **page** (optional): Which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
 <%= RETURNS %> | [Report object](#report-object), populated according to the specified parameters
 <%= SCOPE %> | READ_SHEETS
@@ -2860,7 +2860,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: application/json" \
 -X PUT \
--d '[{"id": "6572427401553796", "cells": [{"columnId": 7518312134403972,"image": {"altText": "New Alt Text"},"value": "new value"}, {"columnId": 1888812600190852,"value": "A"}]}, {"id": "2068827774183300", "cells": [{"columnId": 7518312134403972,"value": "desc_updated"}, {"columnId": 1888812600190852,"value": "B"}]}]'
+-d '[{"id": "6572427401553796", "cells": [{"columnId": 7518312134403972,"image": {"altText": "New Alt Text"},"value": "new value"}, {"columnId": 1888812600190852,"value": "A"}]}, {"id": "2068827774183300", "cells": [{"columnId": 7518312134403972,"value": "desc_updated"}, {"columnId": 1888812600190852,"value": "B"}, {"columnId": 6552023773538180,"objectValue": {"objectType": "MULTI_CONTACT","values": [{"objectType": "CONTACT","email": "john.doe@smartsheet.com","name": "John Doe"}, {"objectType": "CONTACT","email": "jane.roe@smartsheet.com","name": "Jane Roe"}]}}]}]'
 ```
 
 ```javascript
@@ -3060,6 +3060,10 @@ response = smartsheet.sheets.rows.update(
       "type": "TEXT_NUMBER",
       "value": 1,
       "displayValue": "1"
+    },
+    {
+      "columnId": 6552023773538180,
+      "displayValue": "Jane Roe, John Doe"
     }
     ]
   }
@@ -3086,6 +3090,8 @@ Updates cell values in the specified rows, expands/collapses the specified rows,
 <aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>above</b>, <b>parentId</b>, <b>siblingId</b>, <b>toBottom</b>, and <b>toTop</b> attributes must be the same for all rows in the request).</aside>
 
 <aside class="notice">In a parent row, values of the following fields are auto-calculated based upon values in the child rows (and therefore cannot be updated using the API): Duration, End Date, % Complete, Start Date.</aside>
+
+<aside class="notice">To update a multi-contact cell, you must use an <a href="#objectvalue-object">ObjectValue object</a> with an <b>objectType</b> of <b>MULTI_CONTACT</b>.</aside>
 
 ## <%= RELATED %>
 
@@ -5257,7 +5263,7 @@ Represents the project settings dependencies for a specific sheet.  Project sett
 **readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published sheet:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the sheet owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled = true**.
 **readOnlyFullDefaultView** | string | Indicates which view the user has set for a read-only, default view of the published sheet. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
 **readOnlyFullEnabled** | Boolean | If **true**, a rich version of the sheet is published with the ability to download row attachments and discussions.
-**readOnlyFullShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
+**readOnlyFullShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published sheet<br/>Only returned in a response if **readOnlyFullEnabled = true**.
 **readOnlyLiteEnabled** | Boolean | If **true**, a lightweight version of the sheet is published without row attachments and discussions.
 **readOnlyLiteSslUrl** | string | URL for 'Read-Only' view of the published sheet when SSL is enabled. 
@@ -5265,7 +5271,7 @@ Represents the project settings dependencies for a specific sheet.  Project sett
 **readWriteAccessibleBy** | string | Indicates who can access the 'Edit by Anyone' view of the published sheet:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the sheet owner's Smartsheet organization.</li></ul>Only returned in a response if **readWriteEnabled = true**.
 **readWriteDefaultView** | string | Indicates which view the user has set for a read-write, default view of the published sheet. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
 **readWriteEnabled** | Boolean | If **true**, a rich version of the sheet is published with the ability to edit cells and manage attachments and discussions.
-**readWriteShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
+**readWriteShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readWriteUrl** | string | URL for 'Edit by Anyone' view of the published sheet<br/>Only returned in a response if **readWriteEnabled = true**.
 
 ### SheetUserSettings Object
@@ -6539,11 +6545,11 @@ Gets the sheet specified in the URL. Returns the sheet, including rows, and opti
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ganttConfig**: includes Gantt chart details</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which sheet or template the sheet was created from, if any.
+<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ganttConfig**: includes Gantt chart details</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which sheet or template the sheet was created from, if any.
   | **exclude** (optional): a comma-separated list of elements to not include in the response.<br/><ul><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**nonexistentCells**: excludes cells that have never contained any data</li></ul>
   | **columnIds** (optional): a comma-separated list of column Ids. The response contains only the specified columns in the "columns" array, and individual rows' "cells" array only contains cells in the specified columns.
   | **ifVersionAfter** (optional): If version specified is still the current sheet version, then returns an abbreviated Sheet object with only the sheet **version** property. Otherwise, if the sheet has been modified, returns the complete Sheet object. Intended to allow clients with a cached copy to make sure they have the latest version.
-  | **level** (optional): specifies whether Multi-Assign data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
+  | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
   | **page** (optional): which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
   | **pageSize** (optional): number of rows per page to include with the sheet.  If neither **pageSize** nor **page** is specified, returns all rows in the sheet.  If only page is specified, defaults to a page size of 100.
   | **rowIds** (optional): a comma-separated list of row Ids on which to filter the rows included in the result
@@ -8034,7 +8040,8 @@ Gets the specified Sight.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> |  **level** (optional): allows you to specify whether you want to see data as text format for backwards compatibility or you want to see Multi-Assign data. For sheets and reports, use **level=0** (default) for text or **level=1** for Multi-Assign. For Sights (aka dashboards), use **level=0** or **level=1** (default) for text or **level=2** for Multi-Assign. 
+<%= PARAMETERS %> |  **level** (optional): allows you to specify whether you want to see data as text format for backwards compatibility or you want to see multi-contact data. Use **level=0** or **level=1** (default) for text or **level=2** for multi-contact. 
+  | **objectValue** (optional) -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data.
 <%= RETURNS %> | [Sight object](#sight-object)
 <%= SCOPE %> | READ_SIGHTS
 
