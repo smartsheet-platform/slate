@@ -253,7 +253,6 @@ HTTP status code | Smartsheet errorCode | Smartsheet message
 400 | 1116 | You cannot link a cell to its own sheet.
 400 | 1117 | One of the following cell.hyperlink fields must be non-null: url, sheetId, or reportId.
 400 | 1118 | You cannot set the value of a Gantt allocation column (id {0}) in a row that has child rows.
-500 | 1119 | Failed to complete copy.<br/>**NOTE**: may include a "detail" object containing "topContainerType" and "topContainerId" which represent the top-level folder or workspace that were partially copied.
 400 | 1120 | Too many sheets to copy.<br/>**NOTE**: includes a "detail" object containing "maxSheetCount" which represents the server-side limit on the number of sheets allowed in a single folder/workspace copy operation.
 400 | 1121 | transferTo must be provided because user being deleted owns one or more groups.
 405 | 1122 | Requested URL does not support this method: {0}.
@@ -323,6 +322,7 @@ HTTP status code | Smartsheet errorCode | Smartsheet message
 400 | 1219 | Some recipients cannot be notified. They are not shared to the sheet, or your settings prohibit notification of non-shared users.
 400 | 1220 | Automation action type cannot be changed.
 400 | 1221 | The value {0} is not valid for the attribute action.recipientColumnIds. Only Contact List columns may be used.
+400 | 1255 | Attachment type '{0}' is not supported.
 429 | 4003 | Rate limit exceeded.
 400 | 5xxx | Errors in the 5xxx range represent conditions that a developer cannot reasonably prevent or handle, most typically related to account status. These error messages are localized and can be displayed to the end-user to inform them of the condition that caused the error to occur.
 
@@ -336,6 +336,7 @@ HTTP status code | Smartsheet errorCode | Smartsheet message
 500 | 1012 | Required object attribute(s) are missing from your request: action.includedColumnIds.
 500 | 1031 | The value '[]' is not valid for the attribute action.includedColumnIds.
 500 | 1032 | The attribute(s) automationRule.userCanModify are not allowed for this operation.
+500 | 1119 | Failed to complete copy.<br/>**NOTE**: may include a "detail" object containing "topContainerType" and "topContainerId" which represent the top-level folder or workspace that were partially copied.
 500 | 1170 | The sheet referenced by this widget is unavailable or deleted.
 500 | 1171 | The report referenced by this widget is unavailable or deleted.
 500 | 1172 | The referenced cell is unavailable or deleted.
