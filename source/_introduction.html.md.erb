@@ -716,21 +716,21 @@ curl 'https://app.smartsheet.com/b/authorize?response_type=code&client_id=dheu3d
 const qs = require('querystring');
 
 function authorizeURL(params) {
-    const authUrl = 'https://app.smartsheet.com/b/authorize';
-    return `${authUrl}?${qs.stringify(params)}`;
+  const authUrl = 'https://app.smartsheet.com/b/authorize';
+  return `${authUrl}?${qs.stringify(params)}`;
 }
 
 const authorizationUri = authorizeURL({
-    response_type: 'code',
-    client_id: '1samp48lel5for68you',
-    redirect_uri: 'http://localhost:3000/callback',
-    scope: 'CREATE_SHEETS WRITE_SHEETS',
+  response_type: 'code',
+  client_id: '1samp48lel5for68you',
+  redirect_uri: 'http://localhost:3000/callback',
+  scope: 'CREATE_SHEETS WRITE_SHEETS',
 });
 
 // Initial page redirecting to Smartsheet
 app.get('/auth', (req, res) => {
-    console.log(authorizationUri);
-    res.redirect(authorizationUri);
+  console.log(authorizationUri);
+  res.redirect(authorizationUri);
 });
 ```
 
