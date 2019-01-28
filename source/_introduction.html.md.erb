@@ -747,7 +747,9 @@ app.get('/auth', (req, res) => {
 ```
 
 ```ruby
-# [todo]
+auth_request_url = client.token.build_authorization_url(
+  client_id: 'my-client-id',
+  scopes: ['CREATE_SHEETS', 'WRITE_SHEETS'])
 ```
 
 > Successful Response:
