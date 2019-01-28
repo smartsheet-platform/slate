@@ -1178,6 +1178,7 @@ Gets the current user.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **include** (optional): When specified with a value of **groups**, response includes an array of groups (groupId, name, and description only) that the user is a member of. **NOTE:** use [assume user](#assume-user) if querying about a user other than the current user.
 <%= RETURNS %> | [UserProfile object](#userprofile-object)<br/><br/><b>NOTE:</b> For system administrators, the following UserProfile attributes are included in the response:<ul><li>**customWelcomeScreenViewed** (only returned when an Enterprise user has viewed the [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>))</li><li>**lastLogin** (only returned if the user has logged in)</li><li>**sheetCount** (only returned if the **status** attribute is **ACTIVE**)</li></ul>
 <%= SCOPE %> | all scopes
 
