@@ -1343,6 +1343,15 @@ Extends the [Row object](#row-object), adding the following:
 **readOnlyFullShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published report<br/>Only returned in a response if **readOnlyFullEnabled** = **true**.
 
+### Scope Object
+
+Extends the [Row object](#row-object), adding the following: 
+
+     |     |     |
+-----|-----|-----|
+**sheetIds** | [Sheet](#sheet-object)[] | Array of Sheet object Ids of any sheets that the requestor has access to that make up the report
+**workspaceIds** | [Workspace](#workspace-object) | Array of Workspace object Ids that the requestor has access to that make up the report
+
 ## Get Report
 
 > Example request: get report
