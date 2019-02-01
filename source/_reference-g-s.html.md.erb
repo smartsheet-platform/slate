@@ -7679,6 +7679,7 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 
      |     |     |
 -----|-----|-----|
+**sheetId** | number | The Id of the sheet from which the cell data originates
 **cellData** | [CellDataItem](#celldataitem-object)[] | Array of CellDataItem objects
 **columns** | [Column](#column-object)[] | Array of Column objects
 **hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
@@ -7688,8 +7689,11 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
      |     |     |
 -----|-----|-----|
 **columnId** | number | Column Id for the cell
+**rowId** | number | Row Id for the cell
+**sheetId** | number | Sheet Id for the cell
 **objectValue** | A string, number, or a Boolean value | The type of data returned depends on the cell type and the data in the cell
 **cell** | [Cell](#cell-object) | Cell object
+**dataSource** | |
 **label** | string | Label for the data point. This is either the column name or a user-provided string
 **labelFormat** | string | [formatDescriptor](#formatting)
 **order** | integer | The display order for the CellDataItem
@@ -7699,8 +7703,13 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 
      |     |     |
 -----|-----|-----|
+**reportId** | number | Report Id denoting container source, if applicable
+**sheetId** | number | Sheet Id denoting container source, if applicable
 **axes** | Axes[] | Array of Axes objects
+**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
+**includeColumnIds** | |
 **legend** | string | The location in the widget where Smartsheet renders the legend, for example, **RIGHT**
+**selectionRanges** | [SelectionRanges](#selectionranges-object)[] |
 **series** | Series[] | Array of Series objects
 
 ### ImageWidgetContent Object
@@ -7711,19 +7720,31 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 **fileName** | string | Name of the image file
 **format** | string | [formatDescriptor](#formatting)
 **height** | integer | Original height of the image in pixels
+**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
 **width** | integer | Original width of the image in pixels
 
 ### ReportWidgetContent Object
 
      |     |     |
 -----|-----|-----|
+**reportId** | number | Report Id denoting container source
 **htmlContent** | string | HTML snippet to render report
+**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
 
 ### RichTextWidgetContent Object
 
      |     |     |
 -----|-----|-----|
 **html** | string | The widget content as HTML </br> </br> The Rich Text widget supports the following subset of HTML tags and CSS Styles: </br></br> <b>HTML</b><ul><li>**a** - defines a hyperlink</li> <li>**br** - inserts a single line break</li><li>**li** - defines a list item</li> <li>**ol** - defines an ordered list</li> <li>**p** - defines a paragraph</li> <li>**ul** - defines an unordered list</li> <li>**span** - defines a section in a document</li></ul> <b>CSS</b><ul><li>**color**</li> <li>**font-family**</li> <li>**font-size**</li> <li>**font-style**</li> <li>**font-weight**</li> <li>**text-align**</li> <li>**text-decoration**</li></ul>
+
+### SelectionRanges Object
+
+     |     |     |
+-----|-----|-----|
+**sourceColumnId1** | | 
+**sourceColumnId2** | | 
+**sourceRowId1** | | 
+**sourceRowId2** | | 
 
 ### ShortcutWidgetContent Object
 
