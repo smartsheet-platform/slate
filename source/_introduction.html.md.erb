@@ -293,6 +293,20 @@ Many of the List All commands, for example, `GET /sheets`, return only an abbrev
 
 The JSON representation of the objects returned from the List All REST endpoints will only include a subset of the properties documented here. However, the objects returned from the Java and C# SDKs will represent the omitted properties with NULLs.
 
+## Working with Smartsheetgov.com Accounts
+
+Smartsheetgov.com is FedRAMP authorized. As an API developer working on a Smartsheetgov.com account, you should be aware of the following differences from the standard API:
+
+* The base URL for each API call is smartsheetgov.com instead of smartsheet.com. This documentation uses smartsheet.com in *all* examples.
+* Smartsheetgov.com has a restriction on attachment types. Only the following attachment types are allowed: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.
+* If you use a Smartsheet SDK, you need to modify the standard config file to point to smartsheetgov.com. There are instructions specific to each SDK on how to modify the config file at the following locations:
+
+  * [C# SDK](https://github.com/smartsheet-platform/smartsheet-csharp-sdk/blob/master/ADVANCED.md)
+  * Java SDK -- coming soon
+  * Node.js SDK -- coming soon
+  * Python SDK -- coming soon
+  * Ruby SDK -- coming soon
+
 ## Versioning and Changes
 
 Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
