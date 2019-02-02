@@ -288,6 +288,9 @@
                     <a href="#object-details-vs-list-summaries" class="toc-h2 toc-link" data-title="Object Details vs List Summaries">Object Details vs List Summaries</a>
                   </li>
                   <li>
+                    <a href="#working-with-smartsheetgov-com-accounts" class="toc-h2 toc-link" data-title="Working with Smartsheetgov.com Accounts">Working with Smartsheetgov.com Accounts</a>
+                  </li>
+                  <li>
                     <a href="#versioning-and-changes" class="toc-h2 toc-link" data-title="Versioning and Changes">Versioning and Changes</a>
                   </li>
               </ul>
@@ -1868,7 +1871,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2018-12-19
+<p>Updated 2019-02-01
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -2216,6 +2219,22 @@ displayed to an end-user in their local time zone, you must do the conversion us
 <p>Many of the List All commands, for example, <code>GET /sheets</code>, return only an abbreviated object for each object returned. For full details, read a single item, such as <code>GET /sheets/{sheetId}</code>. In many cases, you can refine the exact object properties to be returned by using <strong>include</strong> and <strong>exclude</strong> query parameters.</p>
 
 <p>The JSON representation of the objects returned from the List All REST endpoints will only include a subset of the properties documented here. However, the objects returned from the Java and C# SDKs will represent the omitted properties with NULLs.</p>
+<h2 id='working-with-smartsheetgov-com-accounts'>Working with Smartsheetgov.com Accounts</h2>
+<p>Smartsheetgov.com is FedRAMP authorized. As an API developer working on a Smartsheetgov.com account, you should be aware of the following differences from the standard API:</p>
+
+<ul>
+<li>The base URL for each API call is smartsheetgov.com instead of smartsheet.com. This documentation uses smartsheet.com in <em>all</em> examples.</li>
+<li>Smartsheetgov.com has a restriction on attachment types. Only the following attachment types are allowed: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</li>
+<li><p>If you use a Smartsheet SDK, you need to modify the standard config file to point to smartsheetgov.com. There are instructions specific to each SDK on how to modify the config file at the following locations:</p>
+
+<ul>
+<li><a href="https://github.com/smartsheet-platform/smartsheet-csharp-sdk/blob/master/ADVANCED.md">C# SDK</a></li>
+<li>Java SDK -- coming soon</li>
+<li>Node.js SDK -- coming soon</li>
+<li>Python SDK -- coming soon</li>
+<li>Ruby SDK -- coming soon</li>
+</ul></li>
+</ul>
 <h2 id='versioning-and-changes'>Versioning and Changes</h2>
 <p>Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. </p>
@@ -3228,7 +3247,7 @@ To avoid this scenario, design your integration such that API requests to update
 <tr>
 <td><strong>attachmentType</strong></td>
 <td>string</td>
-<td>Attachment type (one of <b>BOX_COM</b>, <b>DROPBOX</b>, <b>EGNYTE</b>, <b>EVERNOTE</b>, <b>FILE</b>, <b>GOOGLE_DRIVE</b>, <b>LINK</b>, or <b>ONEDRIVE</b>)</td>
+<td>Attachment type (one of <b>BOX_COM</b>, <b>DROPBOX*</b>, <b>EGNYTE*</b>, <b>EVERNOTE*</b>, <b>FILE</b>, <b>GOOGLE_DRIVE</b>, <b>LINK</b>, or <b>ONEDRIVE</b>) *Not supported for all account types, see below.</td>
 </tr>
 <tr>
 <td><strong>attachmentSubType</strong></td>
@@ -3276,6 +3295,8 @@ To avoid this scenario, design your integration such that API requests to update
 <td>Attachment temporary URL time to live (files only)</td>
 </tr>
 </tbody></table>
+
+<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
 <h2 id='post-an-attachment'>Post an Attachment</h2>
 
 <p>Like the Smartsheet app, the Smartsheet API allows uploading files to sheets, rows, and comments. 
@@ -3924,6 +3945,8 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 
 <aside class="notice">When the attachment type is <b>BOX_COM</b>, <b>DROPBOX</b>, <b>EGNYTE</b> (without an <b>attachmentSubType</b> specified), <b>GOOGLE_DRIVE</b> (without an <b>attachmentSubType</b> specified), or <b>ONEDRIVE</b>, the <b>mimeType</b> is derived by the file extension specified on the <b>name</b> attribute.</aside>
 
+<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
+
 <h2 id='attach-url-to-row'>Attach URL to Row</h2>
 
 <blockquote>
@@ -4078,6 +4101,8 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 
 <aside class="notice">When the attachment type is <b>BOX_COM</b>, <b>DROPBOX</b>, <b>EGNYTE</b> (without an <b>attachmentSubType</b> specified), <b>GOOGLE_DRIVE</b> (without an <b>attachmentSubType</b> specified), or <b>ONEDRIVE</b>, the <b>mimeType</b> is derived by the file extension specified on the <b>name</b> attribute.</aside>
 
+<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
+
 <h2 id='attach-url-to-sheet'>Attach URL to Sheet</h2>
 
 <blockquote>
@@ -4227,6 +4252,8 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 <aside class="notice">For EGNYTE attachments which are folders, the <b>attachmentSubType</b> attribute must be included with a value of <b>FOLDER</b>.</aside>
 
 <aside class="notice">When the attachment type is <b>BOX_COM</b>, <b>DROPBOX</b>, <b>EGNYTE</b> (without an <b>attachmentSubType</b> specified), <b>GOOGLE_DRIVE</b> (without an <b>attachmentSubType</b> specified), or <b>ONEDRIVE</b>, the <b>mimeType</b> is derived by the file extension specified on the <b>name</b> attribute.</aside>
+
+<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
 
 <h2 id='delete-attachment'>Delete Attachment</h2>
 
@@ -28767,11 +28794,6 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td>You cannot set the value of a Gantt allocation column (id {0}) in a row that has child rows.</td>
 </tr>
 <tr>
-<td>500</td>
-<td>1119</td>
-<td>Failed to complete copy.<br/><strong>NOTE</strong>: may include a &quot;detail&quot; object containing &quot;topContainerType&quot; and &quot;topContainerId&quot; which represent the top-level folder or workspace that were partially copied.</td>
-</tr>
-<tr>
 <td>400</td>
 <td>1120</td>
 <td>Too many sheets to copy.<br/><strong>NOTE</strong>: includes a &quot;detail&quot; object containing &quot;maxSheetCount&quot; which represents the server-side limit on the number of sheets allowed in a single folder/workspace copy operation.</td>
@@ -29117,6 +29139,11 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td>The value {0} is not valid for the attribute action.recipientColumnIds. Only Contact List columns may be used.</td>
 </tr>
 <tr>
+<td>400</td>
+<td>1255</td>
+<td>Attachment type &#39;{0}&#39; is not supported.</td>
+</tr>
+<tr>
 <td>429</td>
 <td>4003</td>
 <td>Rate limit exceeded.</td>
@@ -29158,6 +29185,11 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td>500</td>
 <td>1032</td>
 <td>The attribute(s) automationRule.userCanModify are not allowed for this operation.</td>
+</tr>
+<tr>
+<td>500</td>
+<td>1119</td>
+<td>Failed to complete copy.<br/><strong>NOTE</strong>: may include a &quot;detail&quot; object containing &quot;topContainerType&quot; and &quot;topContainerId&quot; which represent the top-level folder or workspace that were partially copied.</td>
 </tr>
 <tr>
 <td>500</td>
