@@ -288,9 +288,6 @@
                     <a href="#object-details-vs-list-summaries" class="toc-h2 toc-link" data-title="Object Details vs List Summaries">Object Details vs List Summaries</a>
                   </li>
                   <li>
-                    <a href="#working-with-smartsheetgov-com-accounts" class="toc-h2 toc-link" data-title="Working with Smartsheetgov.com Accounts">Working with Smartsheetgov.com Accounts</a>
-                  </li>
-                  <li>
                     <a href="#versioning-and-changes" class="toc-h2 toc-link" data-title="Versioning and Changes">Versioning and Changes</a>
                   </li>
               </ul>
@@ -2219,22 +2216,6 @@ displayed to an end-user in their local time zone, you must do the conversion us
 <p>Many of the List All commands, for example, <code>GET /sheets</code>, return only an abbreviated object for each object returned. For full details, read a single item, such as <code>GET /sheets/{sheetId}</code>. In many cases, you can refine the exact object properties to be returned by using <strong>include</strong> and <strong>exclude</strong> query parameters.</p>
 
 <p>The JSON representation of the objects returned from the List All REST endpoints will only include a subset of the properties documented here. However, the objects returned from the Java and C# SDKs will represent the omitted properties with NULLs.</p>
-<h2 id='working-with-smartsheetgov-com-accounts'>Working with Smartsheetgov.com Accounts</h2>
-<p>Smartsheetgov.com is FedRAMP authorized. As an API developer working on a Smartsheetgov.com account, you should be aware of the following differences from the standard API:</p>
-
-<ul>
-<li>The base URL for each API call is smartsheetgov.com instead of smartsheet.com. This documentation uses smartsheet.com in <em>all</em> examples.</li>
-<li>Smartsheetgov.com has a restriction on attachment types. Only the following attachment types are allowed: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</li>
-<li><p>If you use a Smartsheet SDK, you need to modify the standard config file to point to smartsheetgov.com. There are instructions specific to each SDK on how to modify the config file at the following locations:</p>
-
-<ul>
-<li><a href="https://github.com/smartsheet-platform/smartsheet-csharp-sdk/blob/master/ADVANCED.md#working-with-smartsheetgovcom-accounts">C# SDK</a></li>
-<li><a href="https://github.com/smartsheet-platform/smartsheet-java-sdk/blob/master/ADVANCED.md#working-with-smartsheetgovcom-accounts">Java SDK</a></li>
-<li><a href="https://github.com/smartsheet-platform/smartsheet-javascript-sdk#base-url-configuration">Node.js SDK</a></li>
-<li>Python SDK -- coming soon</li>
-<li><a href="https://github.com/smartsheet-platform/smartsheet-ruby-sdk#basic-configuration">Ruby SDK</a></li>
-</ul></li>
-</ul>
 <h2 id='versioning-and-changes'>Versioning and Changes</h2>
 <p>Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. </p>
