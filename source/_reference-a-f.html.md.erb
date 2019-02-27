@@ -31,7 +31,7 @@ Attachments can exist on a [comment](#comments) (that is, within a discussion), 
 -----|-----|-----|
 **id** | number | Attachment Id
 **parentId** | number | The Id of the parent 
-**attachmentType** | string | Attachment type (one of <b>BOX_COM</b>, <b>DROPBOX</b>, <b>EGNYTE</b>, <b>EVERNOTE</b>, <b>FILE</b>, <b>GOOGLE_DRIVE</b>, <b>LINK</b>, or <b>ONEDRIVE</b>)
+**attachmentType** | string | Attachment type (one of <b>BOX_COM</b>, <b>DROPBOX*</b>, <b>EGNYTE*</b>, <b>EVERNOTE*</b>, <b>FILE</b>, <b>GOOGLE_DRIVE</b>, <b>LINK</b>, or <b>ONEDRIVE</b>) *Not supported for all account types, see below.
 **attachmentSubType** | string | Attachment sub type, valid only for the following:<ul><li><b>EGNYTE</b> values: <b>FOLDER</b></li><li><b>GOOGLE_DRIVE</b> values: <b>DOCUMENT</b>, <b>DRAWING</b>, <b>PDF</b>, <b>PRESENTATION</b>, or <b>SPREADSHEET</b></li></ul>
 **mimeType** | string | Attachment MIME type (PNG, etc.)
 **parentType** | string | The type of object the attachment belongs to (one of <b>COMMENT</b>, <b>ROW</b>, or <b>SHEET</b>)
@@ -41,6 +41,8 @@ Attachments can exist on a [comment](#comments) (that is, within a discussion), 
 **sizeInKb** | number | The size of the file, if the attachmentType is <b>FILE</b>  
 **url** | string | Attachment temporary URL (files only)
 **urlExpiresInMillis** | number | Attachment temporary URL time to live (files only) 
+
+<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
 
 ## Post an Attachment
 
