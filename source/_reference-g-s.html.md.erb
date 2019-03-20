@@ -7727,9 +7727,9 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 **sheetId** | number | Sheet Id denoting container source, if applicable
 **axes** | Axes[] | Array of Axes objects
 **hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
-**includeColumnIds** | |
+**includedColumnIds** |  includedColumnIds[]] | Array of columnIds if the range was selected through the UI
 **legend** | string | The location in the widget where Smartsheet renders the legend, for example, **RIGHT**
-**selectionRanges** | [SelectionRanges](#selectionranges-object)[] |
+**selectionRanges** | [SelectionRanges](#selectionranges-object)[] | If the source is a sheet
 **series** | Series[] | Array of Series objects
 
 ### ImageWidgetContent Object
@@ -7740,7 +7740,7 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 **fileName** | string | Name of the image file
 **format** | string | [formatDescriptor](#formatting)
 **height** | integer | Original height of the image in pixels
-**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
+**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
 **width** | integer | Original width of the image in pixels
 
 ### ReportWidgetContent Object
@@ -7749,7 +7749,7 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 -----|-----|-----|
 **reportId** | number | Report Id denoting container source
 **htmlContent** | string | HTML snippet to render report
-**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
+**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
 
 ### RichTextWidgetContent Object
 
@@ -7761,10 +7761,10 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 
      |     |     |
 -----|-----|-----|
-**sourceColumnId1** | | 
-**sourceColumnId2** | | 
-**sourceRowId1** | | 
-**sourceRowId2** | | 
+**sourceColumnId1** | number | Defines beginning edge of range when specifying one or more columns.
+**sourceColumnId2** | number | Defines ending edge of range when specifying one or more columns.
+**sourceRowId1** | number | Defines beginning edge of range when specifying one or more rows.
+**sourceRowId2** | number | Defines ending edge of range when specifying one or more rows.
 
 ### ShortcutWidgetContent Object
 
