@@ -7708,12 +7708,12 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 
      |     |     |
 -----|-----|-----|
-**columnId** | number | Column Id for the cell
-**rowId** | number | Row Id for the cell
-**sheetId** | number | Sheet Id for the cell
+**columnId** | number | Column Id for each item
+**rowId** | number | Row Id for each item
+**sheetId** | number | Sheet Id for each item
 **objectValue** | A string, number, or a Boolean value | The type of data returned depends on the cell type and the data in the cell
 **cell** | [Cell](#cell-object) | Cell object
-**dataSource** | |
+**dataSource** | string | **CELL**
 **label** | string | Label for the data point. This is either the column name or a user-provided string
 **labelFormat** | string | [formatDescriptor](#formatting)
 **order** | integer | The display order for the CellDataItem
@@ -7795,6 +7795,18 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
      |     |     |
 -----|-----|-----|
 **url** | string | The URL
+
+### WidgetHyperlink Object
+
+     |     |     |
+-----|-----|-----|
+**interactionType** | string | Specifies what happens when a user clicks the widget. Valid values: <ul><li>**DISTI_COPY** -- a distribution link, only available if org has distribution links enabled</li><li>**NONE** -- do nothing, no other attribute required</li><li>**SMARTSHEET_ITEM** -- open a Smartsheet item that is not the SOURCE_SHEET, must also have one of the following:</li><ul><li>**folderId**</li><li>**reportId**</li><li>**sheetId**</li><li>**sightId**</li><li>**workspaceId**</li></ul><li>**SOURCE_SHEET** -- open the container where the widget data comes from, no other attribute required</li><li>**WEB** -- launch the URL, must also have **url** attribute</li></ul>
+**folderId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the folder to open
+**reportId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the report to open
+**sheetId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the sheet to open
+**sightId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the Sight (aka dashboard) to open
+**url** | string | If **interactionType** = **WEB** this is the URL to launch
+**workspaceId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the workspace to open
 
 ## Copy Sight
 
