@@ -298,6 +298,20 @@ The JSON representation of the objects returned from the List All REST endpoints
 Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. 
 
+## Working with Smartsheet Gov Accounts
+
+Smartsheet Gov has "FedRAMP Ready" status as part of Federal Risk and Authorization Management Program (FedRAMP). As an API developer working on a Smartsheet Gov account, you should be aware of the following differences from the standard API:
+
+* The base URL for each API call is smartsheetgov.com instead of smartsheet.com. This documentation uses smartsheet.com in *all* examples.
+* Smartsheetgov.com has a restriction on attachment types. Only the following attachment types are allowed: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.
+* If you use a Smartsheet SDK, you need to modify the standard config file to point to smartsheetgov.com. There are instructions specific to each SDK on how to modify the config file at the following locations:
+
+  * [C# SDK](https://github.com/smartsheet-platform/smartsheet-csharp-sdk/blob/master/ADVANCED.md#working-with-smartsheetgovcom-accounts)
+  * [Java SDK](https://github.com/smartsheet-platform/smartsheet-java-sdk/blob/master/ADVANCED.md#working-with-smartsheetgovcom-accounts)
+  * [Node.js SDK](https://github.com/smartsheet-platform/smartsheet-javascript-sdk#working-with-smartsheetgovcom-accounts)
+  * [Python SDK](https://github.com/smartsheet-platform/smartsheet-python-sdk/blob/master/ADVANCED.md#working-with-smartsheetgovcom-accounts)
+  * [Ruby SDK](https://github.com/smartsheet-platform/smartsheet-ruby-sdk#basic-configuration)
+
 # Getting Started
 
 ## Make Your First API Call
