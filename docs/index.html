@@ -290,6 +290,9 @@
                   <li>
                     <a href="#versioning-and-changes" class="toc-h2 toc-link" data-title="Versioning and Changes">Versioning and Changes</a>
                   </li>
+                  <li>
+                    <a href="#working-with-smartsheet-gov-accounts" class="toc-h2 toc-link" data-title="Working with Smartsheet Gov Accounts">Working with Smartsheet Gov Accounts</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -2221,6 +2224,22 @@ displayed to an end-user in their local time zone, you must do the conversion us
 <h2 id='versioning-and-changes'>Versioning and Changes</h2>
 <p>Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. </p>
+<h2 id='working-with-smartsheet-gov-accounts'>Working with Smartsheet Gov Accounts</h2>
+<p>Smartsheet Gov has &quot;FedRAMP Ready&quot; status as part of Federal Risk and Authorization Management Program (FedRAMP). As an API developer working on a Smartsheet Gov account, you should be aware of the following differences from the standard API:</p>
+
+<ul>
+<li>The base URL for each API call is smartsheetgov.com instead of smartsheet.com. This documentation uses smartsheet.com in <em>all</em> examples.</li>
+<li>Smartsheetgov.com has a restriction on attachment types. Only the following attachment types are allowed: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</li>
+<li><p>If you use a Smartsheet SDK, you need to modify the standard config file to point to smartsheetgov.com. There are instructions specific to each SDK on how to modify the config file at the following locations:</p>
+
+<ul>
+<li><a href="https://github.com/smartsheet-platform/smartsheet-csharp-sdk/blob/master/ADVANCED.md#working-with-smartsheetgovcom-accounts">C# SDK</a></li>
+<li><a href="https://github.com/smartsheet-platform/smartsheet-java-sdk/blob/master/ADVANCED.md#working-with-smartsheetgovcom-accounts">Java SDK</a></li>
+<li><a href="https://github.com/smartsheet-platform/smartsheet-javascript-sdk#working-with-smartsheetgovcom-accounts">Node.js SDK</a></li>
+<li><a href="https://github.com/smartsheet-platform/smartsheet-python-sdk/blob/master/ADVANCED.md#working-with-smartsheetgovcom-accounts">Python SDK</a></li>
+<li><a href="https://github.com/smartsheet-platform/smartsheet-ruby-sdk#basic-configuration">Ruby SDK</a></li>
+</ul></li>
+</ul>
 <h1 id='getting-started'>Getting Started</h1><h2 id='make-your-first-api-call'>Make Your First API Call</h2>
 <p>Before you write any code, try executing API requests using a tool like <a href="https://curl.haxx.se/">cURL</a> or <a href="https://www.getpostman.com/">Postman</a>. By taking your code out of the equation, you can isolate troubleshooting to the raw request and response.</p>
 
@@ -3525,6 +3544,8 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 </tr>
 </tbody></table>
 
+<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
+
 <h2 id='attach-file-to-row'>Attach File to Row</h2>
 
 <blockquote>
@@ -3654,6 +3675,8 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 </tr>
 </tbody></table>
 
+<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
+
 <h2 id='attach-file-to-sheet'>Attach File to Sheet</h2>
 
 <blockquote>
@@ -3776,6 +3799,8 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 <td>WRITE_SHEETS</td>
 </tr>
 </tbody></table>
+
+<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
 
 <h2 id='attach-url-to-comment'>Attach URL to Comment</h2>
 
@@ -3926,8 +3951,6 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 <aside class="notice">For EGNYTE attachments which are folders, the <b>attachmentSubType</b> attribute must be included with a value of <b>FOLDER</b>.</aside>
 
 <aside class="notice">When the attachment type is <b>BOX_COM</b>, <b>DROPBOX</b>, <b>EGNYTE</b> (without an <b>attachmentSubType</b> specified), <b>GOOGLE_DRIVE</b> (without an <b>attachmentSubType</b> specified), or <b>ONEDRIVE</b>, the <b>mimeType</b> is derived by the file extension specified on the <b>name</b> attribute.</aside>
-
-<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
 
 <h2 id='attach-url-to-row'>Attach URL to Row</h2>
 
@@ -4083,8 +4106,6 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 
 <aside class="notice">When the attachment type is <b>BOX_COM</b>, <b>DROPBOX</b>, <b>EGNYTE</b> (without an <b>attachmentSubType</b> specified), <b>GOOGLE_DRIVE</b> (without an <b>attachmentSubType</b> specified), or <b>ONEDRIVE</b>, the <b>mimeType</b> is derived by the file extension specified on the <b>name</b> attribute.</aside>
 
-<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
-
 <h2 id='attach-url-to-sheet'>Attach URL to Sheet</h2>
 
 <blockquote>
@@ -4234,8 +4255,6 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 <aside class="notice">For EGNYTE attachments which are folders, the <b>attachmentSubType</b> attribute must be included with a value of <b>FOLDER</b>.</aside>
 
 <aside class="notice">When the attachment type is <b>BOX_COM</b>, <b>DROPBOX</b>, <b>EGNYTE</b> (without an <b>attachmentSubType</b> specified), <b>GOOGLE_DRIVE</b> (without an <b>attachmentSubType</b> specified), or <b>ONEDRIVE</b>, the <b>mimeType</b> is derived by the file extension specified on the <b>name</b> attribute.</aside>
-
-<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
 
 <h2 id='delete-attachment'>Delete Attachment</h2>
 
@@ -4849,6 +4868,8 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 <td>WRITE_SHEETS</td>
 </tr>
 </tbody></table>
+
+<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
 
 <aside class="notice">Uploading new versions is not supported for URL attachments.</aside>
 <h3 id='delete-all-versions'>Delete All Versions</h3>
