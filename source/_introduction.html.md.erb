@@ -591,7 +591,7 @@ curl https://api.smartsheet.com/2.0/sheets \
 ```javascript
 // Set options
 var options = {
-  assumeUser: "jane.doe%40smartsheet.com"
+  assumeUser: "jane.doe@smartsheet.com"
   };
 
 // List Sheets
@@ -716,21 +716,21 @@ curl 'https://app.smartsheet.com/b/authorize?response_type=code&client_id=dheu3d
 const qs = require('querystring');
 
 function authorizeURL(params) {
-    const authUrl = 'https://app.smartsheet.com/b/authorize';
-    return `${authUrl}?${qs.stringify(params)}`;
+  const authUrl = 'https://app.smartsheet.com/b/authorize';
+  return `${authUrl}?${qs.stringify(params)}`;
 }
 
 const authorizationUri = authorizeURL({
-    response_type: 'code',
-    client_id: '1samp48lel5for68you',
-    redirect_uri: 'http://localhost:3000/callback',
-    scope: 'CREATE_SHEETS WRITE_SHEETS',
+  response_type: 'code',
+  client_id: '1samp48lel5for68you',
+  redirect_uri: 'http://localhost:3000/callback',
+  scope: 'CREATE_SHEETS WRITE_SHEETS',
 });
 
 // Initial page redirecting to Smartsheet
 app.get('/auth', (req, res) => {
-    console.log(authorizationUri);
-    res.redirect(authorizationUri);
+  console.log(authorizationUri);
+  res.redirect(authorizationUri);
 });
 ```
 
@@ -747,7 +747,9 @@ app.get('/auth', (req, res) => {
 ```
 
 ```ruby
-# [todo]
+auth_request_url = client.token.build_authorization_url(
+  client_id: 'my-client-id',
+  scopes: ['CREATE_SHEETS', 'WRITE_SHEETS'])
 ```
 
 > Successful Response:
@@ -902,8 +904,7 @@ smartsheet.token.get(
 		"access_token": "ll352u9jujauoqz4gstvsae05",
 		"token_type": "bearer",
 		"refresh_token": "e9x352a9mp4151le2505",
-		"expires_in": 604799,
-		"expires_at": "2017-11-21T23:32:22.180Z"
+		"expires_in": 604799
 	}
 }
 ```
@@ -1003,8 +1004,7 @@ smartsheet.token.refresh(
 		"access_token": "new52u9jujauoqz4gstvsae05",
 		"token_type": "bearer",
 		"refresh_token": "new352a9mp4151le2505",
-		"expires_in": 604799,
-		"expires_at": "2017-11-21T23:32:22.180Z"
+		"expires_in": 604799
 	}
 }
 ```

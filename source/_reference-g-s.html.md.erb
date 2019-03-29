@@ -316,7 +316,7 @@ group = smartsheet.groups.get(
 
 `GET /groups/{groupId}`
 
-Gets the group specified in the URL.
+Gets information about and an array of members for the group specified in the URL.
 
      |     |
 -----|-----|
@@ -863,7 +863,7 @@ Gets a nested list of all Home objects, including folders, reports, sheets, Sigh
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li></ul>
   | **exclude** (optional) -- a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**permalinks** - excludes the permalink from each data object</li></ul> 
 <%= RETURNS %> | [Home object](#home-object), populated according to the **include** parameter
 <%= SCOPE %> | READ_SHEETS
@@ -1488,7 +1488,7 @@ Gets the report, including one page of rows, and optionally populated with attac
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**attachments**</li><li>**discussions**</li><li>**format** -- see [Formatting](#formatting)</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**sourceSheets**</li></ul> 
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**attachments**</li><li>**discussions**</li><li>**format** -- see [Formatting](#formatting)</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**source** -- adds the [Source object](#source-object) indicating which report the report was created from, if any</li><li>**sourceSheets**</li></ul> 
   | **exclude** (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li></ul>
   | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
   | **pageSize** (optional): Number of rows per page.  If not specified, the default value is 100.  If you need larger sets of data from your report, this operation can return a maximum of 10,000 rows per request (report limit is 50,000 rows).
@@ -5189,7 +5189,7 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 **resourceManagementEnabled** | Boolean | Indicates that resource management is enabled
 **rows** | [Row](#row-object)[] | Array of Row objects
 **showParentRowsForFilters** | Boolean | Returned only if there are column filters on the sheet.  Value = **true** if "show parent rows" is enabled for the filters.
-**source** | [Source](#source-object) | A Source object indicating the sheet or template from which this sheet was created
+**source** | [Source](#source-object) | A Source object indicating the report, sheet, Sight (aka dashboard), or template from which this sheet was created, if any
 **totalRowCount** | number | The total number of rows in the sheet
 **userSettings** | [SheetUserSettings](#sheetusersettings-object) | A SheetUserSettings object containing the current user's sheet-specific settings.
 **version** | number | A number that is incremented every time a sheet is modified
@@ -5300,8 +5300,8 @@ Represents individual user settings for a specific sheet.  User settings may be 
 
      |     |     |
 -----|-----|-----|
-**id** | number | Id of the sheet or template from which the enclosing sheet was created
-**type** | string | **sheet** or **template**
+**id** | number | Id of the report, sheet, Sight (aka dashboard), or template from which the enclosing report, sheet, Sight, or template was created
+**type** | string | **report**, **sheet**, **sight**, or **template**
 
 ## Copy Sheet
 
@@ -6545,7 +6545,7 @@ Gets the sheet specified in the URL. Returns the sheet, including rows, and opti
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ganttConfig**: includes Gantt chart details</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which sheet or template the sheet was created from, if any.
+<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ganttConfig**: includes Gantt chart details</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which report, sheet, Sight (aka dashboard), or template the sheet was created from, if any.
   | **exclude** (optional): a comma-separated list of elements to not include in the response.<br/><ul><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**nonexistentCells**: excludes cells that have never contained any data</li></ul>
   | **columnIds** (optional): a comma-separated list of column Ids. The response contains only the specified columns in the "columns" array, and individual rows' "cells" array only contains cells in the specified columns.
   | **ifVersionAfter** (optional): If version specified is still the current sheet version, then returns an abbreviated Sheet object with only the sheet **version** property. Otherwise, if the sheet has been modified, returns the complete Sheet object. Intended to allow clients with a cached copy to make sure they have the latest version.
@@ -6941,7 +6941,7 @@ Gets a list of all sheets that the user has access to in alphabetical order by n
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any report, sheet, Sight (aka dashboard), or template that was created from another report, sheet, Sight, or template, if any</li></ul>
  | <%= PARAMETER_MODIFIEDSINCE %>
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Sheet objects](#sheet-object) limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**createdAt**</li><li>**modifiedAt**</li><li>**name**</li><li>**permalink**</li><li>**source** (included only if **source** is specified with the **include** parameter)</li></ul>
@@ -7670,6 +7670,7 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 
      |     |     |
 -----|-----|-----|
+**sheetId** | number | The Id of the sheet from which the cell data originates
 **cellData** | [CellDataItem](#celldataitem-object)[] | Array of CellDataItem objects
 **columns** | [Column](#column-object)[] | Array of Column objects
 **hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
@@ -7678,9 +7679,12 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 
      |     |     |
 -----|-----|-----|
-**columnId** | number | Column Id for the cell
+**columnId** | number | Column Id for each item
+**rowId** | number | Row Id for each item
+**sheetId** | number | Sheet Id for each item
 **objectValue** | A string, number, or a Boolean value | The type of data returned depends on the cell type and the data in the cell
 **cell** | [Cell](#cell-object) | Cell object
+**dataSource** | string | **CELL**
 **label** | string | Label for the data point. This is either the column name or a user-provided string
 **labelFormat** | string | [formatDescriptor](#formatting)
 **order** | integer | The display order for the CellDataItem
@@ -7690,8 +7694,13 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 
      |     |     |
 -----|-----|-----|
+**reportId** | number | Report Id denoting container source, if applicable
+**sheetId** | number | Sheet Id denoting container source, if applicable
 **axes** | Axes[] | Array of Axes objects
+**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
+**includedColumnIds** |  includedColumnIds[]] | Array of columnIds if the range was selected through the UI
 **legend** | string | The location in the widget where Smartsheet renders the legend, for example, **RIGHT**
+**selectionRanges** | [SelectionRange](#selectionrange-object)[] | If the source is a sheet
 **series** | Series[] | Array of Series objects
 
 ### ImageWidgetContent Object
@@ -7702,19 +7711,31 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 **fileName** | string | Name of the image file
 **format** | string | [formatDescriptor](#formatting)
 **height** | integer | Original height of the image in pixels
+**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
 **width** | integer | Original width of the image in pixels
 
 ### ReportWidgetContent Object
 
      |     |     |
 -----|-----|-----|
+**reportId** | number | Report Id denoting container source
 **htmlContent** | string | HTML snippet to render report
+**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
 
 ### RichTextWidgetContent Object
 
      |     |     |
 -----|-----|-----|
 **html** | string | The widget content as HTML </br> </br> The Rich Text widget supports the following subset of HTML tags and CSS Styles: </br></br> <b>HTML</b><ul><li>**a** - defines a hyperlink</li> <li>**br** - inserts a single line break</li><li>**li** - defines a list item</li> <li>**ol** - defines an ordered list</li> <li>**p** - defines a paragraph</li> <li>**ul** - defines an unordered list</li> <li>**span** - defines a section in a document</li></ul> <b>CSS</b><ul><li>**color**</li> <li>**font-family**</li> <li>**font-size**</li> <li>**font-style**</li> <li>**font-weight**</li> <li>**text-align**</li> <li>**text-decoration**</li></ul>
+
+### SelectionRange Object
+
+     |     |     |
+-----|-----|-----|
+**sourceColumnId1** | number | Defines beginning edge of range when specifying one or more columns.
+**sourceColumnId2** | number | Defines ending edge of range when specifying one or more columns.
+**sourceRowId1** | number | Defines beginning edge of range when specifying one or more rows.
+**sourceRowId2** | number | Defines ending edge of range when specifying one or more rows.
 
 ### ShortcutWidgetContent Object
 
@@ -7745,6 +7766,18 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
      |     |     |
 -----|-----|-----|
 **url** | string | The URL
+
+### WidgetHyperlink Object
+
+     |     |     |
+-----|-----|-----|
+**interactionType** | string | Specifies what happens when a user clicks the widget. Valid values: <ul><li>**DISTI_COPY** -- a distribution link, only available if org has distribution links enabled</li><li>**NONE** -- do nothing, no other attribute required</li><li>**SMARTSHEET_ITEM** -- open a Smartsheet item that is not the SOURCE_SHEET, must also have one of the following:</li><ul><li>**folderId**</li><li>**reportId**</li><li>**sheetId**</li><li>**sightId**</li><li>**workspaceId**</li></ul><li>**SOURCE_SHEET** -- open the container where the widget data comes from, no other attribute required</li><li>**WEB** -- launch the URL, must also have **url** attribute</li></ul>
+**folderId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the folder to open
+**reportId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the report to open
+**sheetId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the sheet to open
+**sightId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the Sight (aka dashboard) to open
+**url** | string | If **interactionType** = **WEB** this is the URL to launch
+**workspaceId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the workspace to open
 
 ## Copy Sight
 
@@ -8040,7 +8073,8 @@ Gets the specified Sight.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> |  **level** (optional): allows you to specify whether you want to see data as text format for backwards compatibility or you want to see multi-contact data. Use **level=0** or **level=1** (default) for text or **level=2** for multi-contact. 
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any Sight that was created from another Sight, if any</li></ul>  
+  | **level** (optional): allows you to specify whether you want to see data as text format for backwards compatibility or you want to see multi-contact data. Use **level=0** or **level=1** (default) for text or **level=2** for multi-contact. 
   | **objectValue** (optional) -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data.
 <%= RETURNS %> | [Sight object](#sight-object)
 <%= SCOPE %> | READ_SIGHTS

@@ -2768,7 +2768,39 @@ curl -o "stanley_hotel.png" "https://aws.smartsheet.com/storageProxy/image/image
 ```
 
 ```javascript
-// [todo]
+var fs = require('fs');
+var request = require('request');
+
+var sheetId = 1639534409607044;
+var rowId = 3344087179913092;
+var columnId = 1735559124150148;
+
+//  Step 1: Identify the cell that contains an image
+
+smartsheet.sheets.getRow({
+  sheetId: sheetId,
+  rowId: rowId
+}).then(row => {
+  var cell = row.cells.find(cell => cell.columnId === columnId);
+
+// Step 2: Get image info from cell
+
+  var image = cell.image;
+  var imageId = image.id;
+  var localFileName = image.altText;
+
+// Step 3: Build list of image URLs
+
+smartsheet.images.listImageUrls({
+    body: [{imageId: imageId}]
+  }).then(result => {
+    var imageUrl = result.imageUrls[0].url;
+
+// Step 4: Download the image
+
+    request(imageUrl).pipe(fs.createWriteStream(localFileName));
+  });
+});
 ```
 
 ```csharp
@@ -7102,7 +7134,7 @@ Gets the specified folder (and lists its contents).
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li></ul>
 <%= RETURNS %> | [Folder object](#folder-object), populated according to the **include** parameter<br/><br/>NOTE: If no folders, reports, sheets, Sights, or templates are present in the folder, the corresponding attribute (for example, **folders**, **sheets**) is not present in the response.
 <%= SCOPE %> | READ_SHEETS
 

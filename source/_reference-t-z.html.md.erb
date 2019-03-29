@@ -159,8 +159,7 @@ The Smartsheet API utilizes OAuth 2.0 for authentication and authorization. An *
   "access_token": "ll352u9jujauoqz4gstvsae05",
   "token_type": "bearer",
   "refresh_token": "e9x352a9mp4151le2505",
-  "expires_in": 604799,
-  "expires_at": "2017-11-21T23:32:22.180Z"
+  "expires_in": 604799
 }
 ```
 
@@ -168,7 +167,6 @@ The Smartsheet API utilizes OAuth 2.0 for authentication and authorization. An *
 -----|-----|-----|
 **access_token** | string | A credential that can be used by a client to access the Smartsheet API.
 **token_type** | enum | How an access token will be generated and presented. Smartsheet uses the bearer parameter, which means essentially give access to the bearer of this token.
-**expires_at** | timestamp | The date, time, and time zone for when the access token expires.
 **expires_in** | number | Number of seconds token is valid once issued; this is currently 604799 seconds, or approx. 7 days.
 **refresh_token** | string | A credential tied to the access token that can be used to obtain a fresh access token with the same permissions, without further involvement from a user.
 
@@ -240,8 +238,7 @@ smartsheet.token.get(
 		"access_token": "ll352u9jujauoqz4gstvsae05",
 		"token_type": "bearer",
 		"refresh_token": "e9x352a9mp4151le2505",
-		"expires_in": 604799,
-		"expires_at": "2017-11-21T23:32:22.180Z"
+		"expires_in": 604799
 	}
 }
 ```
@@ -329,8 +326,7 @@ smartsheet.token.refresh(
 		"access_token": "new52u9jujauoqz4gstvsae05",
 		"token_type": "bearer",
 		"refresh_token": "new352a9mp4151le2505",
-		"expires_in": 604799,
-		"expires_at": "2017-11-21T23:32:22.180Z"
+		"expires_in": 604799
 	}
 }
 ```
@@ -1178,6 +1174,7 @@ Gets the current user.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **include** (optional): When specified with a value of **groups**, response includes an array of groups (groupId, name, and description only) that the user is a member of. **NOTE:** use [assume user](#assume-user) if querying about a user other than the current user.
 <%= RETURNS %> | [UserProfile object](#userprofile-object)<br/><br/><b>NOTE:</b> For system administrators, the following UserProfile attributes are included in the response:<ul><li>**customWelcomeScreenViewed** (only returned when an Enterprise user has viewed the [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>))</li><li>**lastLogin** (only returned if the user has logged in)</li><li>**sheetCount** (only returned if the **status** attribute is **ACTIVE**)</li></ul>
 <%= SCOPE %> | all scopes
 
@@ -2097,7 +2094,7 @@ Gets the specified workspace (and lists its contents).
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **loadAll** (optional) -- **true** or **false** (defaults to **false**)
-	| **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
+	| **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li></ul>
 <%= RETURNS %> | [Workspace object](#workspace-object), populated according to the **include** parameter
 <%= SCOPE %> | READ_SHEETS
 
