@@ -1457,6 +1457,9 @@
                                 <a href="#richtextwidgetcontent-object" class="toc-h3 toc-link" data-title="RichTextWidgetContent Object">RichTextWidgetContent Object</a>
                             </li>
                             <li>
+                                <a href="#selectionrange-object" class="toc-h3 toc-link" data-title="SelectionRange Object">SelectionRange Object</a>
+                            </li>
+                            <li>
                                 <a href="#shortcutwidgetcontent-object" class="toc-h3 toc-link" data-title="ShortcutWidgetContent Object">ShortcutWidgetContent Object</a>
                             </li>
                             <li>
@@ -1467,6 +1470,9 @@
                             </li>
                             <li>
                                 <a href="#webcontentwidgetcontent-object" class="toc-h3 toc-link" data-title="WebcontentWidgetContent Object">WebcontentWidgetContent Object</a>
+                            </li>
+                            <li>
+                                <a href="#widgethyperlink-object" class="toc-h3 toc-link" data-title="WidgetHyperlink Object">WidgetHyperlink Object</a>
                             </li>
                         </ul>
                   </li>
@@ -1868,7 +1874,8 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2019-02-06
+<p>Updated 2019-03-29</p>
+
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -1892,7 +1899,7 @@
 <span class="c1"># how to execute operations using the Smartsheet</span>
 <span class="c1"># Ruby SDK: https://github.com/smartsheet-platform/smartsheet-ruby-sdk.</span>
 </code></pre>
-<p><a href="https://www.smartsheet.com/">Smartsheet</a> API 2.0 allows you to programmatically access and manage your organization&#39;s Smartsheet data and account information. The API allows you to do the following:</p></p>
+<p><a href="https://www.smartsheet.com/">Smartsheet</a> API 2.0 allows you to programmatically access and manage your organization&#39;s Smartsheet data and account information. The API allows you to do the following:</p>
 
 <ul>
 <li>Read and update sheets</li>
@@ -1901,9 +1908,7 @@
 </ul>
 
 <p>You can view code examples in the programming language of your choice by clicking the corresponding tab in the dark-blue area in the rightmost pane. Each tab corresponds to a Software Development Kit (SDK) that Smartsheet provides to make working in that programming language easier. See <a href="#sdks-and-sample-code">SDKs and Sample Code</a>.</p>
-
 <h2 id='how-do-i-start'>How Do I Start?</h2>
-
 <p>This documentation provides two <a href="#getting-started">Getting Started</a> tutorials that walk you through making your first API call and interpreting the response to a <code>GET /sheet</code> request. You may also want to bookmark or note the following resources:</p>
 
 <ul>
@@ -1912,7 +1917,6 @@
 <li><a href="https://stackoverflow.com/questions/tagged/smartsheet-api">StackOverflow</a> using the &quot;smartsheet-api&quot; tag</li>
 <li>Contact us at <a href="mailto:api@smartsheet.com">api@smartsheet.com</a></li>
 </ul>
-
 <h2 id='http-and-rest'>HTTP and REST</h2><h3 id='restful-architecture'>RESTful Architecture</h3>
 <p>The REST URL structure follows typical resource-oriented conventions.</p>
 
@@ -2101,11 +2105,9 @@
 
 <aside class="notice">Query strings are case sensitive. If you do not see the expected response, confirm that your query is formatted correctly.</aside>
 <h2 id='authentication-and-access-tokens'>Authentication and Access Tokens</h2>
-
 <blockquote>
 <p>Example request: authentication and access tokens</p>
 </blockquote>
-
 <pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/users/me <span class="se">\</span>
 <span class="sb">`</span>-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set the access token</span>
@@ -2349,7 +2351,6 @@ Also, make sure your code does not depend on the order in which JSON objects are
 <p><br/></p>
 
 <p>This core hierarchy of Sheet &gt; Column &gt; Row &gt; Cell is essential to working with the Smartsheet API. As your user&#39;s sheets grow in complexity, the responses do too. This walkthrough has given you some navigational aid in finding the right value to plug into your API calls. Use the API Reference and the example language tabs to learn more.</p>
-
 <h1 id='sdks-and-sample-code'>SDKs and Sample Code</h1>
 
 <blockquote>
@@ -2514,7 +2515,7 @@ The <strong>accessLevel</strong> attribute has one of the following values:</p>
 -H <span class="s2">"Assume-User: jane.doe%40smartsheet.com"</span> <span class="se">\</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set options</span>
 <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">assumeUser</span><span class="p">:</span> <span class="s2">"jane.doe%40smartsheet.com"</span>
+  <span class="na">assumeUser</span><span class="p">:</span> <span class="s2">"jane.doe@smartsheet.com"</span>
   <span class="p">};</span>
 
 <span class="c1">// List Sheets</span>
@@ -2674,26 +2675,28 @@ The following diagram has an overview of the OAuth flow:</p>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">qs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'querystring'</span><span class="p">);</span>
 
 <span class="kd">function</span> <span class="nx">authorizeURL</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">authUrl</span> <span class="o">=</span> <span class="s1">'https://app.smartsheet.com/b/authorize'</span><span class="p">;</span>
-    <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="nx">authUrl</span><span class="p">}</span><span class="s2">?</span><span class="p">${</span><span class="nx">qs</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">params</span><span class="p">)}</span><span class="s2">`</span><span class="p">;</span>
+  <span class="kr">const</span> <span class="nx">authUrl</span> <span class="o">=</span> <span class="s1">'https://app.smartsheet.com/b/authorize'</span><span class="p">;</span>
+  <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="nx">authUrl</span><span class="p">}</span><span class="s2">?</span><span class="p">${</span><span class="nx">qs</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">params</span><span class="p">)}</span><span class="s2">`</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kr">const</span> <span class="nx">authorizationUri</span> <span class="o">=</span> <span class="nx">authorizeURL</span><span class="p">({</span>
-    <span class="na">response_type</span><span class="p">:</span> <span class="s1">'code'</span><span class="p">,</span>
-    <span class="na">client_id</span><span class="p">:</span> <span class="s1">'1samp48lel5for68you'</span><span class="p">,</span>
-    <span class="na">redirect_uri</span><span class="p">:</span> <span class="s1">'http://localhost:3000/callback'</span><span class="p">,</span>
-    <span class="na">scope</span><span class="p">:</span> <span class="s1">'CREATE_SHEETS WRITE_SHEETS'</span><span class="p">,</span>
+  <span class="na">response_type</span><span class="p">:</span> <span class="s1">'code'</span><span class="p">,</span>
+  <span class="na">client_id</span><span class="p">:</span> <span class="s1">'1samp48lel5for68you'</span><span class="p">,</span>
+  <span class="na">redirect_uri</span><span class="p">:</span> <span class="s1">'http://localhost:3000/callback'</span><span class="p">,</span>
+  <span class="na">scope</span><span class="p">:</span> <span class="s1">'CREATE_SHEETS WRITE_SHEETS'</span><span class="p">,</span>
 <span class="p">});</span>
 
 <span class="c1">// Initial page redirecting to Smartsheet</span>
 <span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/auth'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">authorizationUri</span><span class="p">);</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="nx">authorizationUri</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">authorizationUri</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="nx">authorizationUri</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// [todo]</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// [todo]</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># [todo]</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># [todo]</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">auth_request_url</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">token</span><span class="p">.</span><span class="nf">build_authorization_url</span><span class="p">(</span>
+  <span class="ss">client_id: </span><span class="s1">'my-client-id'</span><span class="p">,</span>
+  <span class="ss">scopes: </span><span class="p">[</span><span class="s1">'CREATE_SHEETS'</span><span class="p">,</span> <span class="s1">'WRITE_SHEETS'</span><span class="p">])</span>
 </code></pre>
 <blockquote>
 <p>Successful Response:</p>
@@ -2849,8 +2852,7 @@ Smartsheet will redirect this URL to display your app&#39;s consent page with an
         </span><span class="s2">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ll352u9jujauoqz4gstvsae05"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bearer"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"refresh_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e9x352a9mp4151le2505"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">604799</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-21T23:32:22.180Z"</span><span class="w">
+        </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">604799</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -2947,8 +2949,7 @@ Smartsheet will redirect this URL to display your app&#39;s consent page with an
         </span><span class="s2">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"new52u9jujauoqz4gstvsae05"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bearer"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"refresh_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"new352a9mp4151le2505"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">604799</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-21T23:32:22.180Z"</span><span class="w">
+        </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">604799</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -6748,7 +6749,39 @@ curl https://api.smartsheet.com/2.0/imageurls <span class="se">\</span>
 
 // Step 4: Download the image
 curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aws.smartsheet.com/storageProxy/image/images/OMB9hAConFbhUdJMQ5czQEkwAj1-ErW-sXz3Dr4nDfE?expirationDate=2017-07-25T22%3A01%3A33%2B0000&amp;height=40&amp;width=20&amp;hmac=5t%2FHs9%2BXTk5cNhyDax9ZgcbepKI%3D"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// [todo]</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'request'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">sheetId</span> <span class="o">=</span> <span class="mi">1639534409607044</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">rowId</span> <span class="o">=</span> <span class="mi">3344087179913092</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">columnId</span> <span class="o">=</span> <span class="mi">1735559124150148</span><span class="p">;</span>
+
+<span class="c1">//  Step 1: Identify the cell that contains an image</span>
+
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">getRow</span><span class="p">({</span>
+  <span class="na">sheetId</span><span class="p">:</span> <span class="nx">sheetId</span><span class="p">,</span>
+  <span class="na">rowId</span><span class="p">:</span> <span class="nx">rowId</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">row</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">cell</span> <span class="o">=</span> <span class="nx">row</span><span class="p">.</span><span class="nx">cells</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">cell</span> <span class="o">=&gt;</span> <span class="nx">cell</span><span class="p">.</span><span class="nx">columnId</span> <span class="o">===</span> <span class="nx">columnId</span><span class="p">);</span>
+
+<span class="c1">// Step 2: Get image info from cell</span>
+
+  <span class="kd">var</span> <span class="nx">image</span> <span class="o">=</span> <span class="nx">cell</span><span class="p">.</span><span class="nx">image</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">imageId</span> <span class="o">=</span> <span class="nx">image</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">localFileName</span> <span class="o">=</span> <span class="nx">image</span><span class="p">.</span><span class="nx">altText</span><span class="p">;</span>
+
+<span class="c1">// Step 3: Build list of image URLs</span>
+
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">images</span><span class="p">.</span><span class="nx">listImageUrls</span><span class="p">({</span>
+    <span class="na">body</span><span class="p">:</span> <span class="p">[{</span><span class="na">imageId</span><span class="p">:</span> <span class="nx">imageId</span><span class="p">}]</span>
+  <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">imageUrl</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">imageUrls</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">url</span><span class="p">;</span>
+
+<span class="c1">// Step 4: Download the image</span>
+
+    <span class="nx">request</span><span class="p">(</span><span class="nx">imageUrl</span><span class="p">).</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="nx">localFileName</span><span class="p">));</span>
+  <span class="p">});</span>
+<span class="p">});</span>
 </code></pre><pre class="highlight csharp tab-csharp"><code><span class="kt">long</span> <span class="n">sheetId</span> <span class="p">=</span> <span class="m">1639534409607044</span><span class="p">;</span>
 <span class="kt">long</span> <span class="n">rowId</span> <span class="p">=</span> <span class="m">3344087179913092</span><span class="p">;</span>
 <span class="kt">long</span> <span class="n">columnId</span> <span class="p">=</span> <span class="m">1735559124150148</span><span class="p">;</span>
@@ -11849,7 +11882,7 @@ These API operations allow you to access the user&#39;s favorite API-supported o
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>ownerInfo</strong> - owner&#39;s email address and user Id for each sheet</li><li><strong>sheetVersion</strong> - current version number of each sheet, should not be combined with pagination</li><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another sheet or template</li></ul></td>
+<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>ownerInfo</strong> - owner&#39;s email address and user Id for each sheet</li><li><strong>sheetVersion</strong> - current version number of each sheet, should not be combined with pagination</li><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li></ul></td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -12724,7 +12757,7 @@ These API operations allow you to access the user&#39;s favorite API-supported o
 
 <p><code>GET /groups/{groupId}</code></p>
 
-<p>Gets the group specified in the URL.</p>
+<p>Gets information about and an array of members for the group specified in the URL.</p>
 
 <table><thead>
 <tr>
@@ -13343,7 +13376,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another sheet or template</li></ul></td>
+<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li></ul></td>
 </tr>
 <tr>
 <td></td>
@@ -14080,7 +14113,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>attachments</strong></li><li><strong>discussions</strong></li><li><strong>format</strong> -- see <a href="#formatting">Formatting</a></li><li><strong>objectValue</strong> -- when used in combination with a <strong>level</strong> query parameter, includes the email addresses for multi-contact data</li><li><strong>sourceSheets</strong></li></ul></td>
+<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>attachments</strong></li><li><strong>discussions</strong></li><li><strong>format</strong> -- see <a href="#formatting">Formatting</a></li><li><strong>objectValue</strong> -- when used in combination with a <strong>level</strong> query parameter, includes the email addresses for multi-contact data</li><li><strong>source</strong> -- adds the <a href="#source-object">Source object</a> indicating which report the report was created from, if any</li><li><strong>sourceSheets</strong></li></ul></td>
 </tr>
 <tr>
 <td></td>
@@ -19672,7 +19705,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <tr>
 <td><strong>source</strong></td>
 <td><a href="#source-object">Source</a></td>
-<td>A Source object indicating the sheet or template from which this sheet was created</td>
+<td>A Source object indicating the report, sheet, Sight (aka dashboard), or template from which this sheet was created, if any</td>
 </tr>
 <tr>
 <td><strong>totalRowCount</strong></td>
@@ -19969,12 +20002,12 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <tr>
 <td><strong>id</strong></td>
 <td>number</td>
-<td>Id of the sheet or template from which the enclosing sheet was created</td>
+<td>Id of the report, sheet, Sight (aka dashboard), or template from which the enclosing report, sheet, Sight, or template was created</td>
 </tr>
 <tr>
 <td><strong>type</strong></td>
 <td>string</td>
-<td><strong>sheet</strong> or <strong>template</strong></td>
+<td><strong>report</strong>, <strong>sheet</strong>, <strong>sight</strong>, or <strong>template</strong></td>
 </tr>
 </tbody></table>
 <h2 id='copy-sheet'>Copy Sheet</h2>
@@ -21376,7 +21409,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional): a comma-separated list of elements to include in the response.<br/>Supports all <a href="#row-include-flags">Row Include Flags</a> with the following differences:<ul><li><strong>attachments</strong>: includes the metadata for sheet-level and row-level attachments</li><li><strong>crossSheetReferences</strong>: includes the cross-sheet references</li><li><strong>discussions</strong>: includes sheet-level and row-level discussions</li><li><strong>filters</strong>: includes <a href="#row-object">row.filteredOut</a> attribute</li><li><strong>filterDefinitions</strong>: includes type of filter, operators used, and criteria</li><li><strong>format</strong>: includes column, row, and cell formatting</li><li><strong>ganttConfig</strong>: includes Gantt chart details</li><li><strong>objectValue</strong> -- when used in combination with a <strong>level</strong> query parameter, includes the email addresses for multi-contact data</li><li><strong>ownerInfo</strong>: includes the workspace and the owner&#39;s email address and user Id</li></ul>Also supports the <strong>source</strong> include flag, which adds the <a href="#source-object">Source object</a> indicating which sheet or template the sheet was created from, if any.</td>
+<td><strong>include</strong> (optional): a comma-separated list of elements to include in the response.<br/>Supports all <a href="#row-include-flags">Row Include Flags</a> with the following differences:<ul><li><strong>attachments</strong>: includes the metadata for sheet-level and row-level attachments</li><li><strong>crossSheetReferences</strong>: includes the cross-sheet references</li><li><strong>discussions</strong>: includes sheet-level and row-level discussions</li><li><strong>filters</strong>: includes <a href="#row-object">row.filteredOut</a> attribute</li><li><strong>filterDefinitions</strong>: includes type of filter, operators used, and criteria</li><li><strong>format</strong>: includes column, row, and cell formatting</li><li><strong>ganttConfig</strong>: includes Gantt chart details</li><li><strong>objectValue</strong> -- when used in combination with a <strong>level</strong> query parameter, includes the email addresses for multi-contact data</li><li><strong>ownerInfo</strong>: includes the workspace and the owner&#39;s email address and user Id</li></ul>Also supports the <strong>source</strong> include flag, which adds the <a href="#source-object">Source object</a> indicating which report, sheet, Sight (aka dashboard), or template the sheet was created from, if any.</td>
 </tr>
 <tr>
 <td></td>
@@ -21814,7 +21847,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>sheetVersion</strong> - current version number of each sheet, should not be combined with pagination</li><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another sheet or template</li></ul></td>
+<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>sheetVersion</strong> - current version number of each sheet, should not be combined with pagination</li><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any report, sheet, Sight (aka dashboard), or template that was created from another report, sheet, Sight, or template, if any</li></ul></td>
 </tr>
 <tr>
 <td></td>
@@ -22999,6 +23032,11 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 </thead><tbody>
 <tr>
+<td><strong>sheetId</strong></td>
+<td>number</td>
+<td>The Id of the sheet from which the cell data originates</td>
+</tr>
+<tr>
 <td><strong>cellData</strong></td>
 <td><a href="#celldataitem-object">CellDataItem</a>[]</td>
 <td>Array of CellDataItem objects</td>
@@ -23025,7 +23063,17 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td><strong>columnId</strong></td>
 <td>number</td>
-<td>Column Id for the cell</td>
+<td>Column Id for each item</td>
+</tr>
+<tr>
+<td><strong>rowId</strong></td>
+<td>number</td>
+<td>Row Id for each item</td>
+</tr>
+<tr>
+<td><strong>sheetId</strong></td>
+<td>number</td>
+<td>Sheet Id for each item</td>
 </tr>
 <tr>
 <td><strong>objectValue</strong></td>
@@ -23036,6 +23084,11 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td><strong>cell</strong></td>
 <td><a href="#cell-object">Cell</a></td>
 <td>Cell object</td>
+</tr>
+<tr>
+<td><strong>dataSource</strong></td>
+<td>string</td>
+<td><strong>CELL</strong></td>
 </tr>
 <tr>
 <td><strong>label</strong></td>
@@ -23067,14 +23120,39 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 </thead><tbody>
 <tr>
+<td><strong>reportId</strong></td>
+<td>number</td>
+<td>Report Id denoting container source, if applicable</td>
+</tr>
+<tr>
+<td><strong>sheetId</strong></td>
+<td>number</td>
+<td>Sheet Id denoting container source, if applicable</td>
+</tr>
+<tr>
 <td><strong>axes</strong></td>
 <td>Axes[]</td>
 <td>Array of Axes objects</td>
 </tr>
 <tr>
+<td><strong>hyperlink</strong></td>
+<td><a href="#hyperlink-object">Hyperlink</a></td>
+<td>The widget has <strong>when clicked</strong> attribute set to that hyperlink (if present and non-null)</td>
+</tr>
+<tr>
+<td><strong>includedColumnIds</strong></td>
+<td>includedColumnIds[]]</td>
+<td>Array of columnIds if the range was selected through the UI</td>
+</tr>
+<tr>
 <td><strong>legend</strong></td>
 <td>string</td>
 <td>The location in the widget where Smartsheet renders the legend, for example, <strong>RIGHT</strong></td>
+</tr>
+<tr>
+<td><strong>selectionRanges</strong></td>
+<td><a href="#selectionrange-object">SelectionRange</a>[]</td>
+<td>If the source is a sheet</td>
 </tr>
 <tr>
 <td><strong>series</strong></td>
@@ -23111,6 +23189,11 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td>Original height of the image in pixels</td>
 </tr>
 <tr>
+<td><strong>hyperlink</strong></td>
+<td><a href="#hyperlink-object">Hyperlink</a></td>
+<td>The widget has <strong>when clicked</strong> attribute set to that hyperlink (if present and non-null). Hyperlinks will have <strong>interactionType</strong>.</td>
+</tr>
+<tr>
 <td><strong>width</strong></td>
 <td>integer</td>
 <td>Original width of the image in pixels</td>
@@ -23125,9 +23208,19 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 </thead><tbody>
 <tr>
+<td><strong>reportId</strong></td>
+<td>number</td>
+<td>Report Id denoting container source</td>
+</tr>
+<tr>
 <td><strong>htmlContent</strong></td>
 <td>string</td>
 <td>HTML snippet to render report</td>
+</tr>
+<tr>
+<td><strong>hyperlink</strong></td>
+<td><a href="#hyperlink-object">Hyperlink</a></td>
+<td>The widget has <strong>when clicked</strong> attribute set to that hyperlink (if present and non-null). Hyperlinks will have <strong>interactionType</strong>.</td>
 </tr>
 </tbody></table>
 <h3 id='richtextwidgetcontent-object'>RichTextWidgetContent Object</h3>
@@ -23142,6 +23235,35 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td><strong>html</strong></td>
 <td>string</td>
 <td>The widget content as HTML </br> </br> The Rich Text widget supports the following subset of HTML tags and CSS Styles: </br></br> <b>HTML</b><ul><li><strong>a</strong> - defines a hyperlink</li> <li><strong>br</strong> - inserts a single line break</li><li><strong>li</strong> - defines a list item</li> <li><strong>ol</strong> - defines an ordered list</li> <li><strong>p</strong> - defines a paragraph</li> <li><strong>ul</strong> - defines an unordered list</li> <li><strong>span</strong> - defines a section in a document</li></ul> <b>CSS</b><ul><li><strong>color</strong></li> <li><strong>font-family</strong></li> <li><strong>font-size</strong></li> <li><strong>font-style</strong></li> <li><strong>font-weight</strong></li> <li><strong>text-align</strong></li> <li><strong>text-decoration</strong></li></ul></td>
+</tr>
+</tbody></table>
+<h3 id='selectionrange-object'>SelectionRange Object</h3>
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>sourceColumnId1</strong></td>
+<td>number</td>
+<td>Defines beginning edge of range when specifying one or more columns.</td>
+</tr>
+<tr>
+<td><strong>sourceColumnId2</strong></td>
+<td>number</td>
+<td>Defines ending edge of range when specifying one or more columns.</td>
+</tr>
+<tr>
+<td><strong>sourceRowId1</strong></td>
+<td>number</td>
+<td>Defines beginning edge of range when specifying one or more rows.</td>
+</tr>
+<tr>
+<td><strong>sourceRowId2</strong></td>
+<td>number</td>
+<td>Defines ending edge of range when specifying one or more rows.</td>
 </tr>
 </tbody></table>
 <h3 id='shortcutwidgetcontent-object'>ShortcutWidgetContent Object</h3>
@@ -23228,6 +23350,50 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td><strong>url</strong></td>
 <td>string</td>
 <td>The URL</td>
+</tr>
+</tbody></table>
+<h3 id='widgethyperlink-object'>WidgetHyperlink Object</h3>
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>interactionType</strong></td>
+<td>string</td>
+<td>Specifies what happens when a user clicks the widget. Valid values: <ul><li><strong>DISTI_COPY</strong> -- a distribution link, only available if org has distribution links enabled</li><li><strong>NONE</strong> -- do nothing, no other attribute required</li><li><strong>SMARTSHEET_ITEM</strong> -- open a Smartsheet item that is not the SOURCE_SHEET, must also have one of the following:</li><ul><li><strong>folderId</strong></li><li><strong>reportId</strong></li><li><strong>sheetId</strong></li><li><strong>sightId</strong></li><li><strong>workspaceId</strong></li></ul><li><strong>SOURCE_SHEET</strong> -- open the container where the widget data comes from, no other attribute required</li><li><strong>WEB</strong> -- launch the URL, must also have <strong>url</strong> attribute</li></ul></td>
+</tr>
+<tr>
+<td><strong>folderId</strong></td>
+<td>number</td>
+<td>If <strong>interactionType</strong> = <strong>SMARTSHEET_ITEM</strong> this is the folder to open</td>
+</tr>
+<tr>
+<td><strong>reportId</strong></td>
+<td>number</td>
+<td>If <strong>interactionType</strong> = <strong>SMARTSHEET_ITEM</strong> this is the report to open</td>
+</tr>
+<tr>
+<td><strong>sheetId</strong></td>
+<td>number</td>
+<td>If <strong>interactionType</strong> = <strong>SMARTSHEET_ITEM</strong> this is the sheet to open</td>
+</tr>
+<tr>
+<td><strong>sightId</strong></td>
+<td>number</td>
+<td>If <strong>interactionType</strong> = <strong>SMARTSHEET_ITEM</strong> this is the Sight (aka dashboard) to open</td>
+</tr>
+<tr>
+<td><strong>url</strong></td>
+<td>string</td>
+<td>If <strong>interactionType</strong> = <strong>WEB</strong> this is the URL to launch</td>
+</tr>
+<tr>
+<td><strong>workspaceId</strong></td>
+<td>number</td>
+<td>If <strong>interactionType</strong> = <strong>SMARTSHEET_ITEM</strong> this is the workspace to open</td>
 </tr>
 </tbody></table>
 <h2 id='copy-sight'>Copy Sight</h2>
@@ -23525,6 +23691,10 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Parameters</td>
+<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any Sight that was created from another Sight, if any</li></ul></td>
+</tr>
+<tr>
+<td></td>
 <td><strong>level</strong> (optional): allows you to specify whether you want to see data as text format for backwards compatibility or you want to see multi-contact data. Use <strong>level=0</strong> or <strong>level=1</strong> (default) for text or <strong>level=2</strong> for multi-contact.</td>
 </tr>
 <tr>
@@ -24276,8 +24446,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
   </span><span class="s2">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ll352u9jujauoqz4gstvsae05"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bearer"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"refresh_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e9x352a9mp4151le2505"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">604799</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-21T23:32:22.180Z"</span><span class="w">
+  </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">604799</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <table><thead>
@@ -24296,11 +24465,6 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td><strong>token_type</strong></td>
 <td>enum</td>
 <td>How an access token will be generated and presented. Smartsheet uses the bearer parameter, which means essentially give access to the bearer of this token.</td>
-</tr>
-<tr>
-<td><strong>expires_at</strong></td>
-<td>timestamp</td>
-<td>The date, time, and time zone for when the access token expires.</td>
 </tr>
 <tr>
 <td><strong>expires_in</strong></td>
@@ -24368,8 +24532,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
         </span><span class="s2">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ll352u9jujauoqz4gstvsae05"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bearer"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"refresh_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e9x352a9mp4151le2505"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">604799</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-21T23:32:22.180Z"</span><span class="w">
+        </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">604799</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -24467,8 +24630,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
         </span><span class="s2">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"new52u9jujauoqz4gstvsae05"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bearer"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"refresh_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"new352a9mp4151le2505"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">604799</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-21T23:32:22.180Z"</span><span class="w">
+        </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">604799</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -26773,6 +26935,10 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
 </tr>
 <tr>
+<td>Parameters</td>
+<td><strong>include</strong> (optional): When specified with a value of <strong>groups</strong>, response includes an array of groups (groupId, name, and description only) that the user is a member of. <strong>NOTE:</strong> use <a href="#assume-user">assume user</a> if querying about a user other than the current user.</td>
+</tr>
+<tr>
 <td>Returns</td>
 <td><a href="#userprofile-object">UserProfile object</a><br/><br/><b>NOTE:</b> For system administrators, the following UserProfile attributes are included in the response:<ul><li><strong>customWelcomeScreenViewed</strong> (only returned when an Enterprise user has viewed the <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only-#welcomescreen">Custom Welcome Screen</a>)</li><li><strong>lastLogin</strong> (only returned if the user has logged in)</li><li><strong>sheetCount</strong> (only returned if the <strong>status</strong> attribute is <strong>ACTIVE</strong>)</li></ul></td>
 </tr>
@@ -27729,7 +27895,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td></td>
-<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>ownerInfo</strong> - owner&#39;s email address and user Id for each sheet</li><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another sheet or template</li></ul></td>
+<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>ownerInfo</strong> - owner&#39;s email address and user Id for each sheet</li><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li></ul></td>
 </tr>
 <tr>
 <td>Returns</td>
