@@ -4552,7 +4552,16 @@ smartsheet.sheets.createCrossSheetReference({sheetId: 456745674567, body: body})
 ```
 
 ```python
-# Not yet implemented
+xref = smartsheet.models.CrossSheetReference({
+    'name': 'Sample Time Log Sheet Range 1',
+    'source_sheet_id': 154378742065028,
+    'start_row_id': 4089096300717956,
+    'end_row_id': 2681721417164676,
+    'start_column_id': 824812248557444,
+    'end_column_id': 824812248557444
+})
+result = smartsheet.Sheets.create_cross_sheet_reference(
+  1755440242550660, xref)
 ```
 
 ```ruby
@@ -4627,7 +4636,8 @@ smartsheet.sheets.getCrossSheetReference({sheetId: 9283173393803140, crossSheetR
 ```
 
 ```python
-# Not yet implemented
+result = smartsheet.Sheets.get_cross_sheet_reference(
+  9283173393803140, 8157685695702916)
 ```
 
 ```ruby
@@ -4692,7 +4702,8 @@ smartsheet.sheets.listCrossSheetReferences({sheetId: 9283173393803140})
 ```
 
 ```python
-# Not yet implemented
+result = smartsheet.Sheets.list_cross_sheet_references(
+  9283173393803140)
 ```
 
 ```ruby
