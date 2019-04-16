@@ -7326,7 +7326,13 @@ smartsheet.sheets.sortRowsInSheet({sheetId: 9283173393803140, body: body})
 ```
 
 ```python
-# Not yet implemented
+sort_specifier = smartsheet.models.SortSpecifier({
+    'sort_criteria': [smartsheet.models.SortCriterion({
+        'column_id': 4583173393803140,
+        'direction': 'DESCENDING'
+    })]
+})
+sheet = smartsheet.Sheets.sort_sheet(9283173393803140, sort_specifier)
 ```
 
 ```ruby
