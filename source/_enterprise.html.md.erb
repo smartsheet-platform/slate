@@ -1,0 +1,98 @@
+# <span class="customTOCSectionHeading">Enterprise Events</span>
+
+# Overview of Enterprise Events
+
+With Enterprise Events, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc. Not all events will be included in the initial release but we plan to add more events in subsequent releases.
+
+See the main section of this document for general information on authentication and other calling conventions.
+
+## <%= OBJECTS %>
+
+### StreamResult Object
+
+> Example: StreamResult object
+
+```json
+{
+  "nextStreamPosition": "XyzMa8456nafnahasfkjnafsd",
+  "moreAvailable": "false",
+  "data": []
+}
+```
+
+     |     |     |
+-----|-----|-----|
+**nextStreamPosition** | string | This string should be passed back to the next GET events call to obtain subsequent events
+**moreAvailable** | Boolean | True if more results are available. This is typically due to event counts exceeding the `maxCount` parameter passed in
+**data** | Event[] | Array of event information. See [event reference documentation](https://smartsheet-platform.github.io/enterprise-events-docs/) for details on each event type.
+
+## Get Events
+
+> Example request: get events
+
+```shell
+// Example 1: Return events starting from the oldest event available
+curl https://api.smartsheet.com/2.0/events?since=0 \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Accept-Encoding: gzip"
+
+// Example 2: Return events from a given stream position on
+curl https://api.smartsheet.com/2.0/events?streamPosition=jhsweijglsns \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Accept-Encoding: gzip"
+```
+
+```javascript
+// Coming soon
+```
+
+```csharp
+// Coming soon
+```
+
+```java
+// Coming soon
+```
+
+```python
+# Coming soon
+```
+
+```ruby
+# Coming soon
+```
+
+> Example response
+
+```json
+{
+    "nextStreamPosition": "XyzMa8456nafnahasfkjnafsd",
+    "moreAvailable": "false",
+    "data": [{
+        "eventId" : "753ddcab04da4ed29ea52f12727e76b9",
+        "objectType" : "SHEET",
+        "action" : "LOAD",
+        "objectId" : 345987624123,
+        "eventTimestamp" : 1512078160000,
+        "userId" : 100107312321,
+        "source" : "WEB_APP",
+        "additionalDetails" : { }
+    }]
+}
+```
+
+`GET /events`
+
+Gets events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+ | **Accept-Encoding** -- Strongly recommended to make sure payload is compressed. Must be set to one of the following values:<ul><li>**deflate**</li><li>**gzip**</li></ul>
+<%= PARAMETERS %> | **since**: Starting time for events to return. Intended for use only at client startup or recovery. <br/>This is intended for backfilling data and not for fine-grained date-based queries. Therefore, resolution is limited to the nearest hour. Interpreted as ISO-8601 format, unless `numericDates` is specified (see details about numericDates below) <br/>You must pass in a value for either `since` or `streamPosition` and never both.
+  | **streamPosition**: Indicates next set of events to return. Use value of `nextStreamPosition` returned from the previous call.<br/>You must pass in a value for either `since` or `streamPosition` and never both.
+  | **maxCount** (optional): Maximum number of events to return as response to this call. <br/>Must be between 1 through 10,000 (inclusive).<br/>Defaults to 1,000 if not specified.
+  | **numericDates** (optional): If true, dates are accepted and returned in Unix epoch time (milliseconds since midnight on January 1, 1970 in UTC time). <br/>Default is false, which means ISO-8601 format.
+<%= RETURNS %> | [StreamResult object](#streamresult-object), populated according to the specified parameters
+<%= SCOPE %> | READ_EVENTS
+
