@@ -471,7 +471,7 @@ Revokes the access token used to make this request.  The access token is no long
      |     |     |
 -----|-----|-----|
 **id** | number | User Id
-**admin** | Boolean | Indicates whether the user is a system admin (can manage users and account)
+**admin** | Boolean | Indicates whether the user is a system admin (can manage user accounts and organization account)
 **customWelcomeScreenViewed** | timestamp | Timestamp of viewing an Enterprise [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) by the current user
 **email** | string | User's primary email address
 **firstName** | string | User's first name
@@ -482,7 +482,7 @@ Revokes the access token used to make this request.  The access token is no long
 **name** | string | User's full name (read-only)
 **profileImage** | [Image](#image-object) | An [Image object](#image-object) representing the profile image associated with the user account
 **resourceViewer** | Boolean | Indicates whether the user is a resource viewer (can access resource views)
-**sheetCount** | number | The number of sheets owned by the current user within the organization
+**sheetCount** | number | The number of sheets owned by the current user within the organization account
 **status** | string |  User status, set to one of the following values: **ACTIVE**, **DECLINED**, or **PENDING**
 
 ### UserProfile Object
@@ -491,7 +491,7 @@ Revokes the access token used to make this request.  The access token is no long
 -----|-----|-----|
 **id** | number | Current user's Id
 **account** | [Account](#account-object) | Account object representing the current user's customer account
-**admin** | Boolean | Indicates whether the user is a system admin (can manage users and account)
+**admin** | Boolean | Indicates whether the user is a system admin (can manage user accounts and organization account)
 **alternateEmails** | [AlternateEmail](#alternateemail-object)[] | An array of [AlternateEmail objects](#alternateemail-object) representing the alternate email addresses associated with the user account
 **company** | string | User's company
 **customWelcomeScreenViewed** | timestamp | Timestamp of viewing an Enterprise [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) by the current user
@@ -510,7 +510,7 @@ Revokes the access token used to make this request.  The access token is no long
 **role** | string | User's role
 **salesforceAdmin** | Boolean | Indicates whether the user is a Salesforce admin
 **salesforceUser** | Boolean | Indicates whether the user is a registered Salesforce user
-**sheetCount** | number | The number of sheets owned by the current user within the organization
+**sheetCount** | number | The number of sheets owned by the current user within the organization account
 **timeZone** | string | Current user's time zone Id
 **title** | string | User's title
 **workPhone** | string | User's work phone number
@@ -656,7 +656,7 @@ new_user = response[:result]
 
 `POST /users`
 
-Adds a user to the organization.
+Adds a user to the organization account.
 
 <aside class="notice">This operation is only available to system administrators.</aside>
 
@@ -671,11 +671,11 @@ Adds a user to the organization.
 
 <aside class="notice">If successful, and user auto provisioning (UAP) is on, and user matches the auto provisioning rules, user is added to the org.  If UAP is off, or user does not match UAP rules, user is invited to the org and must explicitly accept the invitation to join.</aside>
 
-<aside class="notice">In some specific scenarios, supplied attributes such as <b>firstName</b> and <b>lastName</b> may be ignored.  For example, if you are inviting an existing Smartsheet user to join your organization, and the invited user has not yet accepted your invitation, any supplied <b>firstName</b> and <b>lastName</b> are ignored.</aside>
+<aside class="notice">In some specific scenarios, supplied attributes such as <b>firstName</b> and <b>lastName</b> may be ignored.  For example, if you are inviting an existing Smartsheet user to join your organization account, and the invited user has not yet accepted your invitation, any supplied <b>firstName</b> and <b>lastName</b> are ignored.</aside>
 
 ## Alternate Email Addresses
 
-A [User](#user-object) in Smartsheet must have a *primary* email address associated with their account (**User.email**) and may optionally have one or more alternate email addresses associated with their account (**User.alternateEmails**). 
+A [User](#user-object) in Smartsheet must have a *primary* email address associated with their user account (**User.email**) and may optionally have one or more alternate email addresses associated with their account (**User.alternateEmails**). 
 
 <aside class="notice">The following operations must be performed using an user's primary email address:<ul><li><a href="#add-group-members">Add Group Members</a></li><li><a href="#add-user">Add User</a></li><li><a href="#create-update-request">Create Update Request</a></li><li><a href="#report-sharing">Share Report</a></li><li><a href="#share-sheet">Share Sheet</a></li><li><a href="#workspace-sharing">Share Workspace</a></li></ul>Attempting to specify a user's alternate email address for any of the above operations results in an error.</aside>
 
@@ -1385,7 +1385,7 @@ users = response[:data]
 
 `GET /users`
 
-Gets a list of users in the organization. To filter by email, use the optional **email** query string parameter to specify a list of users' email addresses.
+Gets a list of users in the organization account. To filter by email, use the optional **email** query string parameter to specify a list of users' email addresses.
 
      |     |
 -----|-----|
@@ -1469,14 +1469,14 @@ smartsheet.users.remove(
 
 `DELETE /users/{userId}`
 
-Removes a user from an organization. User is transitioned to a free collaborator with read-only access to owned reports, sheets, Sights, workspaces, and any shared templates (unless those are optionally transferred to another user). 
+Removes a user from an organization account. User is transitioned to a free collaborator with read-only access to owned reports, sheets, Sights, workspaces, and any shared templates (unless those are optionally transferred to another user). 
 
 <aside class="notice">This operation is only available to system administrators.</aside>
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **removeFromSharing** (optional): Set to **true** to remove the user from sharing for all sheets/workspaces in the organization. If not specified, user is not removed from sharing.
+<%= PARAMETERS %> | **removeFromSharing** (optional): Set to **true** to remove the user from sharing for all sheets/workspaces in the organization account. If not specified, user is not removed from sharing.
   | **transferSheets** (optional): If **true**, and **transferTo** is specified, the removed user's sheets are transferred.  Else, sheets are not transferred.  Defaults to **false**.
   | **transferTo** (required if user owns groups): The Id of the user to transfer ownership to.  If the user being removed owns groups, they are transferred to this user.  If the user owns sheets, *and* **transferSheets** is true, the removed user's sheets are transferred to this user.
 <%= RETURNS %> | [Result object](#result-object)
@@ -1484,7 +1484,7 @@ Removes a user from an organization. User is transitioned to a free collaborator
 
 <aside class="notice">If the <b>transferTo</b> parameter is specified and the removed user owns groups, the user specified via the <b>transferTo</b> parameter must have group admin rights.</aside>
 
-<aside class="notice">The <b>transferTo</b> and <b>transferSheets</b> parameters cannot be specified for a user who has not yet accepted an invitation to join the organization (that is, if user <b>status=PENDING</b>).</aside>
+<aside class="notice">The <b>transferTo</b> and <b>transferSheets</b> parameters cannot be specified for a user who has not yet accepted an invitation to join the organization account (that is, if user <b>status=PENDING</b>).</aside>
 
 ## Update User
 
