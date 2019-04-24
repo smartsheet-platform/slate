@@ -95,6 +95,6 @@ Gets events that are occurring in your Smartsheet organization account. Examples
   | **streamPosition**: Indicates next set of events to return. Use value of `nextStreamPosition` returned from the previous call.<br/>You must pass in a value for either `since` or `streamPosition` and never both.
   | **maxCount** (optional): Maximum number of events to return as response to this call. <br/>Must be between 1 through 10,000 (inclusive).<br/>Defaults to 1,000 if not specified.
   | **numericDates** (optional): If true, dates are accepted and returned in Unix epoch time (milliseconds since midnight on January 1, 1970 in UTC time). <br/>Default is false, which means ISO-8601 format.
-<%= RETURNS %> | [StreamResult object](#streamresult-object)
+<%= RETURNS %> | [StreamResult object](#streamresult-object), populated according to the specified parameters
 <%= SCOPE %> | READ_EVENTS
 
