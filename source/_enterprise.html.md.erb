@@ -1,14 +1,47 @@
 # <span class="customTOCSectionHeading">Enterprise Events</span>
 
+The following section describes the specific event types and payloads returned from the Smartsheet Enterprise Events API.
+
+Enterprise Events is a premium feature and is only made available to select enterprise customers. To learn more, please call +1 (855) 824-2221.
+
 With Enterprise Events, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc. Not all events will be included in the initial release but we plan to add more events in subsequent releases.
 
-See the main section of this document for general information on authentication and other calling conventions.
+See [Authentication and Access Tokens](#authentication-and-access-tokens) for more information.
 
 # <%= OBJECTS %>
 
 ## Event Object
 
-Each event type has a distinct combination of `objectType` and `action`, as shown in the <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">event reference documentation</a>. Many event types have additional information returned under an `additionalProperties` object.
+> Example: Event object
+
+```json
+{
+  "eventId" : "5a23513adf864b18889f149ce2b65b3c",
+  "objectType" : "SHEET",
+  "action" : "CREATE",
+  "objectId" : 345987624123,
+  "eventTimestamp" : "2017-11-30T20:28:33Z",
+  "userId" : 100107312321,
+  "requestUserId" : 100107312321,
+  "source" : "WEB_APP",
+  "additionalDetails" : {
+    "sheetName" : "Test Sheet"
+  }
+}
+```
+
+     |     |     |
+-----|-----|-----|
+**eventId** | string | Unique event identifier.
+**objectType** | string | The Smartsheet resource impacted by the event, for example SHEET or REPORT.
+**action** | string |  The action applied to the specified object.
+**objectId** | string or long | The identifier of the object impacted by the event.
+**eventTimestamp** | string | Date and time of the event. Defaults to ISO-8601 format. See [dates and times](#dates-and-times) for more information.
+**userId** | long | User assumed as the one who initiated the event. Usually the `userId` property and the `requestUserId` property (below) have the same value. However, if the request is an API call with [`Assume-User` header](#assume-user) then the `userId` property identifies the user whose email matches the value in the `Assume-User` header.
+**requestUserId** | long | User whose authentication credential is embedded in the request that initiated the event. For example, if the request is an API call with an [access token](#authentication-and-access-tokens) then `requestUserId` identifies the user whose data can be accessed via the access token (i.e., the user who authorized the creation of the access token). On the other hand, if the request comes from a UI session, then `requestUserId` identifies the user logged-in to the UI.
+**accessTokenName** | string | Name of the access token embedded in the request. This property is omitted if there is no [access token](#authentication-and-access-tokens) in the request (i.e., it isn't an API call) or if the access token wasn't given a name when created (only access tokens generated via the Smartsheet desktop UI can be given a name at creation time).
+**source** | string | Identifies the type of action that triggered the event.
+**additionalDetails** | object | Container object for additional event-specific properties. Properties depend upon the event type. See <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">event reference documentation</a> for details on each event type.
 
 ## StreamResult Object
 
@@ -26,7 +59,7 @@ Each event type has a distinct combination of `objectType` and `action`, as show
 -----|-----|-----|
 **nextStreamPosition** | string | This string should be passed back to the next GET events call to obtain subsequent events
 **moreAvailable** | Boolean | True if more results are available. This is typically due to event counts exceeding the `maxCount` parameter passed in
-**data** | [Event](#event-object)[] | Array of event information. See <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">event reference documentation</a> for details on each event type.
+**data** | [Event](#event-object)[] | Array of event information.
 
 # Get Events
 
@@ -86,6 +119,8 @@ curl https://api.smartsheet.com/2.0/events?streamPosition=jhsweijglsns \
 `GET /events`
 
 Gets events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc.
+
+Each event type has a distinct combination of `objectType` and `action`. Many event types have additional information returned under an `additionalProperties` object. See the <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">event reference documentation</a> if you need specific information about an event type's additionalDetails field.
 
      |     |
 -----|-----|
