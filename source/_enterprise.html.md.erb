@@ -6,7 +6,7 @@ With Enterprise Events, you can programmatically retrieve events that are occurr
 
 See [Authentication and Access Tokens](#authentication-and-access-tokens) for more information.
 
-<aside class="notice">Enterprise Events is a premium add-on for Enterprise and Premier plans only. For details on the Enterprise plan, see our [Pricing](https://www.smartsheet.com/pricing) page.</aside>
+<aside class="notice">Enterprise Events is a premium add-on for Enterprise and Premier plans only. For details on the Enterprise and Premier plans, see our [Pricing](https://www.smartsheet.com/pricing) page.</aside>
 
 # <%= OBJECTS %>
 
@@ -33,8 +33,8 @@ See [Authentication and Access Tokens](#authentication-and-access-tokens) for mo
      |     |     |
 -----|-----|-----|
 **eventId** | string | Unique event identifier.
-**objectType** | string | The Smartsheet resource impacted by the event, for example SHEET or REPORT.
-**action** | string |  The action applied to the specified object.
+**objectType** | string | The Smartsheet resource impacted by the event, limited to the following attributes:<ul><li>**ACCESS_TOKEN**</li><li>**ACCOUNT**</li><li>**ATTACHMENT**</li><li>**DASHBOARD**</li><li>**DISCUSSION**</li><li>**FOLDER**</li><li>**FORM**</li><li>**GROUP**</li><li>**REPORT**</li><li>**SHEET**</li><li>**UPDATE_REQUEST**</li><li>**USER**</li><li>**WORKSPACE**</li></ul>
+**action** | string |  The action applied to the specified object, limited to the following attributes:<ul><li>**ACCEPT_INVITE**</li><li>**ACTIVATE**</li><li>**ADD_MEMBER**</li><li>**ADD_PUBLISH**</li><li>**ADD_SHARE**</li><li>**ADD_SHARE_MEMBER**</li><li>**ADD_TO_ACCOUNT**</li><li>**ADD_WORKSPACE_SHARE**</li><li>**AUTHORIZE**</li><li>**BULK_UPDATE**</li><li>**COPY_ROW**</li><li>**CREATE**</li><li>**CREATE_CELL_LINK**</li><li>**CREATE_RECURRING_BACKUP**</li><li>**DEACTIVATE**</li><li>**DECLINE_INVITE**</li><li>**DELETE**</li><li>**DELETE_RECURRING_BACKUP**</li><li>**DOWNLOAD_LOGIN_HISTORY**</li><li>**DOWNLOAD_PUBLISHED_ITEMS_REPORT**</li><li>**DOWNLOAD_SHEET_ACCESS_REPORT**</li><li>**DOWNLOAD_USER_LIST**</li><li>**EXPORT**</li><li>**IMPORT_USERS**</li><li>**LIST_SHEETS**</li><li>**LOAD**</li><li>**MOVE**</li><li>**MOVE_ROW**</li><li>**PURGE**</li><li>**REMOVE_FROM_ACCOUNT**</li><li>**REMOVE_FROM_GROUPS**</li><li>**REMOVE_MEMBER**</li><li>**REMOVE_PUBLISH**</li><li>**REMOVE_SHARE**</li><li>**REMOVE_SHARES**</li><li>**REMOVE_SHARE_MEMBER**</li><li>**REMOVE_WORKSPACE_SHARE**</li><li>**RENAME**</li><li>**REQUEST_BACKUP**</li><li>**RESTORE**</li><li>**REVOKE**</li><li>**SAVE_AS_NEW**</li><li>**SAVE_AS_TEMPLATE**</li><li>**SEND**</li><li>**SEND_AS_ATTACHMENT**</li><li>**SEND_COMMENT**</li><li>**SEND_INVITE**</li><li>**SEND_PASSWORD_RESET**</li><li>**SEND_ROW**</li><li>**TRANSFER_OWNED_GROUPS**</li><li>**TRANSFER_OWNED_ITEMS**</li><li>**TRANSFER_OWNERSHIP**</li><li>**UPDATE**</li><li>**UPDATE_MAIN_CONTACT**</li><li>**UPDATE_RECURRING_BACKUP**</li></ul>
 **objectId** | string or long | The identifier of the object impacted by the event.
 **eventTimestamp** | string | Date and time of the event. Defaults to ISO-8601 format. See [dates and times](#dates-and-times) for more information.
 **userId** | long | User assumed as the one who initiated the event. Usually the `userId` property and the `requestUserId` property (below) have the same value. However, if the request is an API call with [`Assume-User` header](#assume-user) then the `userId` property identifies the user whose email matches the value in the `Assume-User` header.
