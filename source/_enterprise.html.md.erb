@@ -1,0 +1,138 @@
+# <span class="customTOCSectionHeading">Event Reporting</span>
+
+The following section describes the specific event types and payloads returned from the Smartsheet Events API.
+
+With Event Reporting, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are create, update, load, and delete of sheets, reports, dashboards, attachments, and users. Not all events will be included in the initial release but we plan to add more events in subsequent releases.
+
+See <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.
+
+See [Authentication and Access Tokens](#authentication-and-access-tokens) for more information.
+
+<aside class="notice">Event Reporting is a premium add-on for Enterprise and Premier plans only. For details on the Enterprise and Premier plans, see our [Pricing](https://www.smartsheet.com/pricing) page.</aside>
+
+# <%= OBJECTS %>
+
+## Event Object
+
+> Example: Event object
+
+```json
+{
+  "eventId" : "4b12345abc444def333g149he2b15b3j",
+  "objectType" : "SHEET",
+  "action" : "CREATE",
+  "objectId" : 345678901234,
+  "eventTimestamp" : "2019-04-29T08:28:33Z",
+  "userId" : 123457654321,
+  "requestUserId" : 133445566778,
+  "source" : "WEB_APP",
+  "additionalDetails" : {
+    "sheetName" : "Test Sheet"
+  }
+}
+```
+
+     |     |     |
+-----|-----|-----|
+**eventId** | string | Unique event identifier.
+**objectType** | string | The Smartsheet resource impacted by the event, limited to the following attributes:<ul><li>**ACCESS_TOKEN**</li><li>**ACCOUNT**</li><li>**ATTACHMENT**</li><li>**DASHBOARD**</li><li>**DISCUSSION**</li><li>**FOLDER**</li><li>**FORM**</li><li>**GROUP**</li><li>**REPORT**</li><li>**SHEET**</li><li>**UPDATE_REQUEST**</li><li>**USER**</li><li>**WORKSPACE**</li></ul>
+**action** | string |  The action applied to the specified object, limited to the following attributes:<ul><li>**ACCEPT_INVITE**</li><li>**ACTIVATE**</li><li>**ADD_MEMBER**</li><li>**ADD_PUBLISH**</li><li>**ADD_SHARE**</li><li>**ADD_SHARE_MEMBER**</li><li>**ADD_TO_ACCOUNT**</li><li>**ADD_WORKSPACE_SHARE**</li><li>**AUTHORIZE**</li><li>**BULK_UPDATE**</li><li>**COPY_ROW**</li><li>**CREATE**</li><li>**CREATE_CELL_LINK**</li><li>**CREATE_RECURRING_BACKUP**</li><li>**DEACTIVATE**</li><li>**DECLINE_INVITE**</li><li>**DELETE**</li><li>**DELETE_RECURRING_BACKUP**</li><li>**DOWNLOAD_LOGIN_HISTORY**</li><li>**DOWNLOAD_PUBLISHED_ITEMS_REPORT**</li><li>**DOWNLOAD_SHEET_ACCESS_REPORT**</li><li>**DOWNLOAD_USER_LIST**</li><li>**EXPORT**</li><li>**IMPORT_USERS**</li><li>**LIST_SHEETS**</li><li>**LOAD**</li><li>**MOVE**</li><li>**MOVE_ROW**</li><li>**PURGE**</li><li>**REMOVE_FROM_ACCOUNT**</li><li>**REMOVE_FROM_GROUPS**</li><li>**REMOVE_MEMBER**</li><li>**REMOVE_PUBLISH**</li><li>**REMOVE_SHARE**</li><li>**REMOVE_SHARES**</li><li>**REMOVE_SHARE_MEMBER**</li><li>**REMOVE_WORKSPACE_SHARE**</li><li>**RENAME**</li><li>**REQUEST_BACKUP**</li><li>**RESTORE**</li><li>**REVOKE**</li><li>**SAVE_AS_NEW**</li><li>**SAVE_AS_TEMPLATE**</li><li>**SEND**</li><li>**SEND_AS_ATTACHMENT**</li><li>**SEND_COMMENT**</li><li>**SEND_INVITE**</li><li>**SEND_PASSWORD_RESET**</li><li>**SEND_ROW**</li><li>**TRANSFER_OWNED_GROUPS**</li><li>**TRANSFER_OWNED_ITEMS**</li><li>**TRANSFER_OWNERSHIP**</li><li>**UPDATE**</li><li>**UPDATE_MAIN_CONTACT**</li><li>**UPDATE_RECURRING_BACKUP**</li></ul>
+**objectId** | string or long | The identifier of the object impacted by the event.
+**eventTimestamp** | string | Date and time of the event. Defaults to ISO-8601 format. See [dates and times](#dates-and-times) for more information.
+**userId** | long | User assumed as the one who initiated the event. Usually the `userId` property and the `requestUserId` property (below) have the same value. However, if the request is an API call with [`Assume-User` header](#assume-user) then the `userId` property identifies the user whose email matches the value in the `Assume-User` header.
+**requestUserId** | long | User whose authentication credential is embedded in the request that initiated the event. For example, if the request is an API call with an [access token](#authentication-and-access-tokens) then `requestUserId` identifies the user whose data can be accessed via the access token (i.e., the user who authorized the creation of the access token). On the other hand, if the request comes from a UI session, then `requestUserId` identifies the user logged-in to the UI.
+**accessTokenName** | string | Name of the access token embedded in the request. This property is omitted if there is no [access token](#authentication-and-access-tokens) in the request (i.e., it isn't an API call) or if the access token wasn't given a name when created (only access tokens generated via the Smartsheet desktop UI can be given a name at creation time).
+**source** | string | Identifies the type of action that triggered the event.
+**additionalDetails** | object | Container object for additional event-specific properties. Properties depend upon the event type. See <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.
+
+## StreamResult Object
+
+> Example: StreamResult object
+
+```json
+{
+  "nextStreamPosition": "XyzAb1234cdefghijklmnofpq",
+  "moreAvailable": "false",
+  "data": []
+}
+```
+
+     |     |     |
+-----|-----|-----|
+**nextStreamPosition** | string | This string should be passed back to the next GET events call to obtain subsequent events
+**moreAvailable** | Boolean | True if more results are available. This is typically due to event counts exceeding the `maxCount` parameter passed in
+**data** | [Event](#event-object)[] | Array of event information.
+
+# Get Events
+
+> Example request: get events
+
+```shell
+// Example 1: Return events starting from the oldest event available
+curl https://api.smartsheet.com/2.0/events?since=0 \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Accept-Encoding: gzip"
+
+// Example 2: Return events from a given stream position on
+curl https://api.smartsheet.com/2.0/events?streamPosition=XyzAb1234cdefghijklmnofpq \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Accept-Encoding: gzip"
+```
+
+```javascript
+// Coming soon
+```
+
+```csharp
+// Coming soon
+```
+
+```java
+// Coming soon
+```
+
+```python
+# Coming soon
+```
+
+```ruby
+# Coming soon
+```
+
+> Example response
+
+```json
+{
+    "nextStreamPosition": "XyzAb1234cdefghijklmnofpq",
+    "moreAvailable": "false",
+    "data": [{
+        "eventId" : "4b12345abc444def333g149he2b15b3j",
+        "objectType" : "SHEET",
+        "action" : "LOAD",
+        "objectId" : 345678901234,
+        "eventTimestamp" : 2019-04-29T08:28:33Z,
+        "userId" : 123457654321,
+        "requestUserId" : 133445566778,
+        "source" : "WEB_APP",
+        "additionalDetails" : { }
+    }]
+}
+```
+
+`GET /events`
+
+Gets events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc.
+
+Each event type has a distinct combination of `objectType` and `action`. Many event types have additional information returned under an `additionalDetails` object. See the <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">Event Reporting reference documentation</a> if you need specific information about an event type's additionalDetails field.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+ | Accept-Encoding -- Strongly recommended to make sure payload is compressed. Must be set to one of the following values:<ul><li>**deflate**</li><li>**gzip**</li></ul>
+<%= PARAMETERS %> | **since**: Starting time for events to return. Intended for use only at client startup or recovery. <br/>This is intended for backfilling data and not for fine-grained date-based queries. Therefore, resolution is limited to the nearest hour. Interpreted as ISO-8601 format, unless `numericDates` is specified (see details about numericDates below) <br/>You must pass in a value for either `since` or `streamPosition` and never both.
+  | **streamPosition**: Indicates next set of events to return. Use value of `nextStreamPosition` returned from the previous call.<br/>You must pass in a value for either `since` or `streamPosition` and never both.
+  | **maxCount** (optional): Maximum number of events to return as response to this call. <br/>Must be between 1 through 10,000 (inclusive).<br/>Defaults to 1,000 if not specified.
+  | **numericDates** (optional): If true, dates are accepted and returned in Unix epoch time (milliseconds since midnight on January 1, 1970 in UTC time). <br/>Default is false, which means ISO-8601 format.
+<%= RETURNS %> | [StreamResult object](#streamresult-object), populated according to the specified parameters
+<%= SCOPE %> | READ_EVENTS
+

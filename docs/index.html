@@ -1774,6 +1774,25 @@
             <a href="#troubleshooting" class="toc-h1 toc-link" data-title="Troubleshooting">Troubleshooting</a>
           </li>
           <li>
+            <a href="#enterprise-events" class="toc-h1 toc-link" data-title="Enterprise Events"><span class="customTOCSectionHeading">Enterprise Events</span></a>
+          </li>
+          <li>
+            <a href="#overview-of-enterprise-events" class="toc-h1 toc-link" data-title="Overview of Enterprise Events">Overview of Enterprise Events</a>
+              <ul class="toc-list-subhead">
+                  <li>
+                    <a href="#objects-29" class="toc-h2 toc-link" data-title="Objects">Objects</a>
+                        <ul class="toc-list-subhead">
+                            <li>
+                                <a href="#streamresult-object" class="toc-h3 toc-link" data-title="StreamResult Object">StreamResult Object</a>
+                            </li>
+                        </ul>
+                  </li>
+                  <li>
+                    <a href="#get-events" class="toc-h2 toc-link" data-title="Get Events">Get Events</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#webhooks" class="toc-h1 toc-link" data-title="Webhooks"><span class="customTOCSectionHeading">Webhooks</span></a>
           </li>
           <li>
@@ -1833,7 +1852,7 @@
             <a href="#webhooks-reference" class="toc-h1 toc-link" data-title="Webhooks Reference"><span class="customTOCSectionHeading">Webhooks Reference</span></a>
           </li>
           <li>
-            <a href="#objects-29" class="toc-h1 toc-link" data-title="Objects">Objects</a>
+            <a href="#objects-30" class="toc-h1 toc-link" data-title="Objects">Objects</a>
               <ul class="toc-list-subhead">
                   <li>
                     <a href="#callback-object" class="toc-h2 toc-link" data-title="Callback Object">Callback Object</a>
@@ -1877,7 +1896,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2019-03-29</p>
+<p>Updated 2019-04-29</p>
 
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
@@ -29724,6 +29743,131 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <li>Check for capitalization errors. <strong>NOTE:</strong> URL endpoints are all lower case, while object properties and query parameters are camelCase.</li>
 </ol>
 
+<h1 id='enterprise-events'><span class="customTOCSectionHeading">Enterprise Events</span></h1><h1 id='overview-of-enterprise-events'>Overview of Enterprise Events</h1>
+
+<p>With Enterprise Events, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc. Not all events will be included in the initial release but we plan to add more events in subsequent releases.</p>
+
+<p>See the main section of this document for general information on authentication and other calling conventions.</p>
+
+<h2 id='objects-29'>Objects</h2><h3 id='streamresult-object'>StreamResult Object</h3>
+<blockquote>
+<p>Example: StreamResult object</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"nextStreamPosition"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XyzMa8456nafnahasfkjnafsd"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"moreAvailable"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>nextStreamPosition</strong></td>
+<td>string</td>
+<td>This string should be passed back to the next GET events call to obtain subsequent events</td>
+</tr>
+<tr>
+<td><strong>moreAvailable</strong></td>
+<td>Boolean</td>
+<td>True if more results are available. This is typically due to event counts exceeding the <code>maxCount</code> parameter passed in</td>
+</tr>
+<tr>
+<td><strong>data</strong></td>
+<td>Event[]</td>
+<td>Array of event information. See <a href="https://smartsheet-platform.github.io/enterprise-events-docs/">event reference documentation</a> for details on each event type.</td>
+</tr>
+</tbody></table>
+<h2 id='get-events'>Get Events</h2>
+
+<blockquote>
+<p>Example request: get events</p>
+</blockquote>
+
+<pre class="highlight shell tab-shell"><code>// Example 1: Return events starting from the oldest event available
+curl https://api.smartsheet.com/2.0/events?since<span class="o">=</span>0 <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
+-H <span class="s2">"Accept-Encoding: gzip"</span>
+
+// Example 2: Return events from a given stream position on
+curl https://api.smartsheet.com/2.0/events?streamPosition<span class="o">=</span>jhsweijglsns <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
+-H <span class="s2">"Accept-Encoding: gzip"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Coming soon</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Coming soon</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// Coming soon</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Coming soon</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># Coming soon</span>
+</code></pre>
+
+<blockquote>
+<p>Example response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"nextStreamPosition"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XyzMa8456nafnahasfkjnafsd"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"moreAvailable"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="s2">"eventId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"753ddcab04da4ed29ea52f12727e76b9"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"objectType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"SHEET"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"action"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"LOAD"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"objectId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">345987624123</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"eventTimestamp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1512078160000</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"userId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">100107312321</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"source"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"WEB_APP"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"additionalDetails"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><code>GET /events</code></p>
+
+<p>Gets events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Headers</td>
+<td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Accept-Encoding</strong> -- Strongly recommended to make sure payload is compressed. Must be set to one of the following values:<ul><li><strong>deflate</strong></li><li><strong>gzip</strong></li></ul></td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td><strong>since</strong>: Starting time for events to return. Intended for use only at client startup or recovery. <br/>This is intended for backfilling data and not for fine-grained date-based queries. Therefore, resolution is limited to the nearest hour. Interpreted as ISO-8601 format, unless <code>numericDates</code> is specified (see details about numericDates below) <br/>You must pass in a value for either <code>since</code> or <code>streamPosition</code> and never both.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>streamPosition</strong>: Indicates next set of events to return. Use value of <code>nextStreamPosition</code> returned from the previous call.<br/>You must pass in a value for either <code>since</code> or <code>streamPosition</code> and never both.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>maxCount</strong> (optional): Maximum number of events to return as response to this call. <br/>Must be between 1 through 10,000 (inclusive).<br/>Defaults to 1,000 if not specified.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>numericDates</strong> (optional): If true, dates are accepted and returned in Unix epoch time (milliseconds since midnight on January 1, 1970 in UTC time). <br/>Default is false, which means ISO-8601 format.</td>
+</tr>
+<tr>
+<td>Returns</td>
+<td><a href="#streamresult-object">StreamResult object</a>, populated according to the specified parameters</td>
+</tr>
+<tr>
+<td>Access Scope</td>
+<td>READ_EVENTS</td>
+</tr>
+</tbody></table>
+
 <h1 id='webhooks'><span class="customTOCSectionHeading">Webhooks</span></h1><h1 id='intro-to-webhooks'>Intro to Webhooks</h1>
 
 <p>Webhooks provide a way for Smartsheet to automatically notify your external application or service when certain events occur in Smartsheet. Webhooks offer a more efficient alternative to using the API to periodically poll for changes. </p>
@@ -30223,7 +30367,7 @@ Use this information to implement error handling logic according to the followin
 
 <p>For more information, see <a href="#intro-to-webhooks">Intro to Webhooks</a>.</p>
 
-<h1 id='objects-29'>Objects</h1><h2 id='callback-object'>Callback Object</h2>
+<h1 id='objects-30'>Objects</h1><h2 id='callback-object'>Callback Object</h2>
 <table><thead>
 <tr>
 <th></th>
