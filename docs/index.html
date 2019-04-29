@@ -29762,7 +29762,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 
 <p>With Event Reporting, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are create, update, load, and delete of sheets, reports, dashboards, attachments, and users. Not all events will be included in the initial release but we plan to add more events in subsequent releases.</p>
 
-<p>See <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.</p>
+<p>See <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.</p>
 
 <p>See <a href="#authentication-and-access-tokens">Authentication and Access Tokens</a> for more information.</p>
 
@@ -29841,7 +29841,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td><strong>additionalDetails</strong></td>
 <td>object</td>
-<td>Container object for additional event-specific properties. Properties depend upon the event type. See <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.</td>
+<td>Container object for additional event-specific properties. Properties depend upon the event type. See <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.</td>
 </tr>
 </tbody></table>
 <h2 id='streamresult-object'>StreamResult Object</h2>
@@ -29924,7 +29924,7 @@ curl https://api.smartsheet.com/2.0/events?streamPosition<span class="o">=</span
 
 <p>Gets events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc.</p>
 
-<p>Each event type has a distinct combination of <code>objectType</code> and <code>action</code>. Many event types have additional information returned under an <code>additionalDetails</code> object. See the <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">Event Reporting reference documentation</a> if you need specific information about an event type&#39;s additionalDetails field.</p>
+<p>Each event type has a distinct combination of <code>objectType</code> and <code>action</code>. Many event types have additional information returned under an <code>additionalDetails</code> object. See the <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> if you need specific information about an event type&#39;s additionalDetails field.</p>
 
 <table><thead>
 <tr>
