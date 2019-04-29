@@ -4,7 +4,7 @@ The following section describes the specific event types and payloads returned f
 
 With Event Reporting, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are create, update, load, and delete of sheets, reports, dashboards, attachments, and users. Not all events will be included in the initial release but we plan to add more events in subsequent releases.
 
-See <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.
+See <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.
 
 See [Authentication and Access Tokens](#authentication-and-access-tokens) for more information.
 
@@ -43,7 +43,7 @@ See [Authentication and Access Tokens](#authentication-and-access-tokens) for mo
 **requestUserId** | long | User whose authentication credential is embedded in the request that initiated the event. For example, if the request is an API call with an [access token](#authentication-and-access-tokens) then `requestUserId` identifies the user whose data can be accessed via the access token (i.e., the user who authorized the creation of the access token). On the other hand, if the request comes from a UI session, then `requestUserId` identifies the user logged-in to the UI.
 **accessTokenName** | string | Name of the access token embedded in the request. This property is omitted if there is no [access token](#authentication-and-access-tokens) in the request (i.e., it isn't an API call) or if the access token wasn't given a name when created (only access tokens generated via the Smartsheet desktop UI can be given a name at creation time).
 **source** | string | Identifies the type of action that triggered the event.
-**additionalDetails** | object | Container object for additional event-specific properties. Properties depend upon the event type. See <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.
+**additionalDetails** | object | Container object for additional event-specific properties. Properties depend upon the event type. See <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.
 
 ## StreamResult Object
 
@@ -123,7 +123,7 @@ curl https://api.smartsheet.com/2.0/events?streamPosition=XyzAb1234cdefghijklmno
 
 Gets events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc.
 
-Each event type has a distinct combination of `objectType` and `action`. Many event types have additional information returned under an `additionalDetails` object. See the <a href="https://smartsheet-platform.github.io/enterprise-events-docs/" target="_blank">Event Reporting reference documentation</a> if you need specific information about an event type's additionalDetails field.
+Each event type has a distinct combination of `objectType` and `action`. Many event types have additional information returned under an `additionalDetails` object. See the <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> if you need specific information about an event type's additionalDetails field.
 
      |     |
 -----|-----|
