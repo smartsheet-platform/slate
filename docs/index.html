@@ -1894,7 +1894,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2019-04-29</p>
+<p>Updated 2019-04-30</p>
 
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
@@ -29760,7 +29760,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 
 <p>The following section describes the specific event types and payloads returned from the Smartsheet Events API.</p>
 
-<p>With Event Reporting, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are create, update, load, and delete of sheets, reports, dashboards, attachments, and users. Not all events will be included in the initial release but we plan to add more events in subsequent releases.</p>
+<p>With Event Reporting, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are create, update, load, and delete of sheets, reports, dashboards, attachments, and users. Note: while the current list of events covers most of Smartsheet functionality, new events will be added to the list as Smartsheet introduces new functionality.</p>
 
 <p>See <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.</p>
 
@@ -29801,12 +29801,12 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td><strong>objectType</strong></td>
 <td>string</td>
-<td>The Smartsheet resource impacted by the event, such as, DISCUSSION or FOLDER.</td>
+<td>The Smartsheet resource impacted by the event, such as, SHEET or WORKSPACE.</td>
 </tr>
 <tr>
 <td><strong>action</strong></td>
 <td>string</td>
-<td>The action applied to the specified object, such as SEND_COMMENT or SAVE_AS_NEW.</td>
+<td>The action applied to the specified object, such as CREATE or DELETE.</td>
 </tr>
 <tr>
 <td><strong>objectId</strong></td>
@@ -29884,7 +29884,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </blockquote>
 
 <pre class="highlight shell tab-shell"><code>// Example 1: Return events starting from the oldest event available
-curl https://api.smartsheet.com/2.0/events?since<span class="o">=</span>0 <span class="se">\</span>
+curl https://api.smartsheet.com/2.0/events?since<span class="o">=</span>2010-01-01T00:00:00Z <span class="se">\</span>
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
 -H <span class="s2">"Accept-Encoding: gzip"</span>
 
@@ -29924,7 +29924,7 @@ curl https://api.smartsheet.com/2.0/events?streamPosition<span class="o">=</span
 
 <p>Gets events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc.</p>
 
-<p>Each event type has a distinct combination of <code>objectType</code> and <code>action</code>. Many event types have additional information returned under an <code>additionalDetails</code> object. See the <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> if you need specific information about an event type&#39;s additionalDetails field.</p>
+<p>Each event type has a distinct combination of <code>objectType</code> and <code>action</code>. Many event types have additional information returned under an <code>additionalDetails</code> object. See the <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for a complete list of all currently supported events, including their respective objectType, action, and additionalDetails properties.</p>
 
 <table><thead>
 <tr>
