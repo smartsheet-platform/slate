@@ -2,7 +2,7 @@
 
 The following section describes the specific event types and payloads returned from the Smartsheet Events API.
 
-With Event Reporting, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are create, update, load, and delete of sheets, reports, dashboards, attachments, and users. Not all events will be included in the initial release but we plan to add more events in subsequent releases.
+With Event Reporting, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are create, update, load, and delete of sheets, reports, dashboards, attachments, and users. Note: while the current list of events covers most of Smartsheet functionality, new events will be added to the list as Smartsheet introduces new functionality.
 
 See <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.
 
@@ -35,8 +35,8 @@ See [Authentication and Access Tokens](#authentication-and-access-tokens) for mo
      |     |     |
 -----|-----|-----|
 **eventId** | string | Unique event identifier.
-**objectType** | string | The Smartsheet resource impacted by the event, such as, DISCUSSION or FOLDER.
-**action** | string |  The action applied to the specified object, such as SEND_COMMENT or SAVE_AS_NEW.
+**objectType** | string | The Smartsheet resource impacted by the event, such as, SHEET or WORKSPACE.
+**action** | string |  The action applied to the specified object, such as CREATE or DELETE.
 **objectId** | string or long | The identifier of the object impacted by the event.
 **eventTimestamp** | string | Date and time of the event. Defaults to ISO-8601 format. See [dates and times](#dates-and-times) for more information.
 **userId** | long | User assumed as the one who initiated the event. Usually the `userId` property and the `requestUserId` property (below) have the same value. However, if the request is an API call with [`Assume-User` header](#assume-user) then the `userId` property identifies the user whose email matches the value in the `Assume-User` header.
@@ -69,7 +69,7 @@ See [Authentication and Access Tokens](#authentication-and-access-tokens) for mo
 
 ```shell
 // Example 1: Return events starting from the oldest event available
-curl https://api.smartsheet.com/2.0/events?since=0 \
+curl https://api.smartsheet.com/2.0/events?since=2010-01-01T00:00:00Z \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Accept-Encoding: gzip"
 
@@ -123,7 +123,7 @@ curl https://api.smartsheet.com/2.0/events?streamPosition=XyzAb1234cdefghijklmno
 
 Gets events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc.
 
-Each event type has a distinct combination of `objectType` and `action`. Many event types have additional information returned under an `additionalDetails` object. See the <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> if you need specific information about an event type's additionalDetails field.
+Each event type has a distinct combination of `objectType` and `action`. Many event types have additional information returned under an `additionalDetails` object. See the <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for a complete list of all currently supported events, including their respective objectType, action, and additionalDetails properties.
 
      |     |
 -----|-----|
