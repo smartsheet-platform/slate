@@ -5441,7 +5441,7 @@ Creates a copy of the specified sheet.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>**attachments**</li><li>**cellLinks** -- includes cross-sheet references</li><li>**data** -- includes formatting</li><li>**discussions** -- includes comments</li><li>**filters**</li><li>**forms**</li><li>**ruleRecipients** -- includes notification recipients, must also include **rules** when using this attribute</li><li>**rules** -- includes notifications and workflow rules</li><li>**shares**</li><li>**all** - deprecated</li></ul>**NOTE:** Cell history is not copied, regardless of which **include** parameter values are specified.
- | **omit** (optional) -- when specified with a value of **sheetHyperlinks**, excludes this category from the response
+ | **exclude** (optional) -- when specified with a value of **sheetHyperlinks**, excludes this category from the response
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object)
 <%= RETURNS %> | [Result object](#result-object) containing a [Sheet object](#sheet-object) for the newly created sheet, limited to the following attributes:<ul><li>**accessLevel**</li><li>**id**</li><li>**name**</li><li>**permalink**</li></ul>
 <%= SCOPE %> | CREATE_SHEETS
