@@ -3470,6 +3470,7 @@ Gets the column specified in the URL.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
 <%= RETURNS %> | [Column object](#column-object)
 <%= SCOPE %> | READ_SHEETS
 
@@ -3574,6 +3575,7 @@ Gets a list of all columns belonging to the sheet specified in the URL.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
+  | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Column objects](#column-object)
 <%= SCOPE %> | READ_SHEETS
 
