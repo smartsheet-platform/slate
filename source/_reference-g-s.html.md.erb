@@ -1294,7 +1294,11 @@ A report is a filtered view of the data from one or more sheets. Like a sheet, a
   "createdAt": "2012-07-24T18:22:29-07:00",
   "modifiedAt": "2012-07-24T18:30:52-07:00",
   "columns": [],
-  "rows": []
+  "rows": [],
+  "scope": {
+    "sheets": [],
+    "workspaces": []
+  }
 }
 ```
 
@@ -1342,6 +1346,35 @@ Extends the [Row object](#row-object), adding the following:
 **readOnlyFullEnabled** | Boolean | (Required) If **true**, a rich version of the report is published with the ability to download row attachments and discussions.
 **readOnlyFullShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published report<br/>Only returned in a response if **readOnlyFullEnabled** = **true**.
+
+### Scope Object
+
+> Example: Scope object
+
+```json
+"scope": {
+  "sheets": [
+    {
+      "id": 4583173393803140,
+    },
+    {
+      "id": 2331373580117892,
+    }
+  ],
+  "workspaces": [
+    {
+      "id": 5709073300645764
+    }
+  ]
+}
+```
+
+Extends the [Row object](#row-object), adding the following: 
+
+     |     |     |
+-----|-----|-----|
+**sheetIds** | [Sheet](#sheet-object)[] | Array of Sheet object Ids of any sheets that the requestor has access to that make up the report
+**workspaceIds** | [Workspace](#workspace-object) | Array of Workspace object Ids that the requestor has access to that make up the report
 
 ## Get Report
 
