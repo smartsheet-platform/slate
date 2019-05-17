@@ -156,7 +156,7 @@ PagedResult<Sheet> sheets = smartsheet.sheetResources().listSheets(include_param
 ```
 
 ```python
-response = ss_client.Sheets.list_sheets(include="attachments,source", include_all=True)
+response = smartsheet_client.Sheets.list_sheets(include="attachments,source", include_all=True)
 sheets = response.data
 ```
 
@@ -222,10 +222,10 @@ UserProfile userProfile = smartsheet.userResources().getCurrentUser();
 
 ```python
 # Create base client object and set the access token
-ss_client = smartsheet.Smartsheet('ll352u9jujauoqz4gstvsae05')
+smartsheet_client = smartsheet.Smartsheet('ll352u9jujauoqz4gstvsae05')
 
 # Get current user
-user_profile = ss_client.Users.get_current_user()
+user_profile = smartsheet_client.Users.get_current_user()
 ```
 
 ```ruby
@@ -528,10 +528,10 @@ Smartsheet smartsheet = new SmartsheetBuilder()
 import smartsheet
 
 # Initialize client
-ss_client = smartsheet.Smartsheet(access_token)
+smartsheet_client = smartsheet.Smartsheet(access_token)
 
 # Make sure we don't miss any errors
-ss_client.errors_as_exceptions(True)
+smartsheet_client.errors_as_exceptions(True)
 ```
 
 ```ruby
@@ -630,7 +630,7 @@ smartsheet.setAssumedUser("jane.doe@smartsheet.com");
 ```
 
 ```python
-ss_client.assume_user("jane.doe@smartsheet.com")
+smartsheet_client.assume_user("jane.doe@smartsheet.com")
 ```
 
 ```ruby
@@ -1136,7 +1136,7 @@ PagedResult<Sheet> sheets = smartsheet.sheetResources().listSheets(include_param
 ```
 
 ```python
-response = ss_client.Sheets.list_sheets(include="attachments,source", include_all=True)
+response = smartsheet_client.Sheets.list_sheets(include="attachments,source", include_all=True)
 sheets = response.data
 ```
 

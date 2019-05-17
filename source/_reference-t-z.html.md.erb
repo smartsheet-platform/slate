@@ -66,7 +66,7 @@ PagedResult<Template> templates = smartsheet.templateResources().listPublicTempl
 ```
 
 ```python
-response = ss_client.Templates.list_public_templates(
+response = smartsheet_client.Templates.list_public_templates(
   page_size=10,
   page=1)
 pages = response.total_pages
@@ -122,7 +122,7 @@ PagedResult<Template> templates = smartsheet.templateResources().listUserCreated
 ```
 
 ```python
-response = ss_client.Templates.list_user_created_templates(
+response = smartsheet_client.Templates.list_user_created_templates(
   page_size=10,
   page=1)
 pages = response.total_pages
@@ -373,7 +373,7 @@ smartsheet.tokenResources().revokeAccessToken();
 ```
 
 ```python
-ss_client.Token.revoke_access_token()
+smartsheet_client.Token.revoke_access_token()
 ```
 
 ```ruby
@@ -599,8 +599,8 @@ User newUser = smartsheet.userResources().addUser(userSpecification);
 ```
 
 ```python
-new_user = ss_client.Users.add_user(
-  ss_client.models.User({
+new_user = smartsheet_client.Users.add_user(
+  smartsheet.models.User({
     'first_name': 'John',
     'last_name': 'Doe',
     'email': 'john.doe@smartsheet.com',
@@ -724,10 +724,10 @@ smartsheet.users.addAlternateEmail(options)
 ```
 
 ```python
-response = ss_client.Users.add_alternate_email(
+response = smartsheet_client.Users.add_alternate_email(
   4495214342629252,          # user_id
   [
-    ss_client.models.AlternateEmail({
+    smartsheet.models.AlternateEmail({
         'email': 'John.Doe@smartsheet.com'
     })
   ]
@@ -819,7 +819,7 @@ AlternateEmail primaryEmail = smartsheet.UserResources.PromoteAlternateEmail(
 ```
 
 ```python
-response = ss_client.Users.promote_alternate_email(
+response = smartsheet_client.Users.promote_alternate_email(
   401090454808452,        # user_id
   123456789012345)        # alt_id
 ```
@@ -902,7 +902,7 @@ smartsheet.userResources().deleteAlternateEmail(
 ```
 
 ```python
-ss_client.Users.delete_alternate_email(
+smartsheet_client.Users.delete_alternate_email(
   401090454808452,        # user_id
   123456789012345)        # alternate_email_id
 ```
@@ -974,7 +974,7 @@ smartsheet.userResources().getAlternateEmail(
 ```
 
 ```python
-alt_email = ss_client.Users.get_alternate_email(
+alt_email = smartsheet_client.Users.get_alternate_email(
   401090454808452,        # user_id
   123456789012345)        # alternate_email_id
 ```
@@ -1048,7 +1048,7 @@ PagedResult<AlternateEmail> results = smartsheet.userResources().listAlternateEm
 ```
 
 ```python
-response = ss_client.Users.list_alternate_emails(
+response = smartsheet_client.Users.list_alternate_emails(
   123456789012345)        # user_id
 emails = response.data
 ```
@@ -1115,7 +1115,7 @@ UserProfile userProfile = smartsheet.userResources().getCurrentUser();
 ```
 
 ```python
-user_profile = ss_client.Users.get_current_user()
+user_profile = smartsheet_client.Users.get_current_user()
 ```
 
 ```ruby
@@ -1216,7 +1216,7 @@ UserProfile userProfile = smartsheet.userResources().getUser(
 ```
 
 ```python
-user_profile = ss_client.Users.get_user(
+user_profile = smartsheet_client.Users.get_user(
   48569348493401200)          # user_id
 ```
 
@@ -1334,11 +1334,11 @@ PagedResult<User> users = smartsheet.userResources().listUsers( new HashSet(Arra
 
 ```python
 # Sample 1; List all
-response = ss_client.Users.list_users(include_all=True)
+response = smartsheet_client.Users.list_users(include_all=True)
 users = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Users.list_users(
+response = smartsheet_client.Users.list_users(
   page_size=100,
   page=1)
 pages = response.total_pages
@@ -1446,7 +1446,7 @@ smartsheet.userResources().deleteUser(
 ```
 
 ```python
-ss_client.Users.remove_user(
+smartsheet_client.Users.remove_user(
   94094820842,                # user_id
   transfer_to=62123820842,    # ownership of groups and sheets transfer to user_id
   remove_from_sharing=True)
@@ -1547,9 +1547,9 @@ User updatedUser = smartsheet.userResources().updateUser(userSpecification);
 ```
 
 ```python
-updated_user = ss_client.Users.update_user(
+updated_user = smartsheet_client.Users.update_user(
   82349925918590,     # user_id
-  ss_client.models.User({
+  smartsheet.models.User({
     'licensed_sheet_creator': True,
     'admin': True
   })
@@ -1783,9 +1783,9 @@ Workspace workspace = smartsheet.workspaceResources().copyWorkspace(
 ```
 
 ```python
-new_workspace = ss_client.Workspaces.copy_workspace(
+new_workspace = smartsheet_client.Workspaces.copy_workspace(
   7116448184199044,           # workspace_id
-  ss_client.models.ContainerDestination({
+  smartsheet.models.ContainerDestination({
     'new_name': 'newWorkspaceName'
   })
 )
@@ -1883,8 +1883,8 @@ Workspace newWorkspace = smartsheet.workspaceResources().createWorkspace(workspa
 ```
 
 ```python
-workspace = ss_client.Workspaces.create_workspace(
-  ss_client.models.Workspace({
+workspace = smartsheet_client.Workspaces.create_workspace(
+  smartsheet.models.Workspace({
     'name': 'New workspace'
   })
 )
@@ -1968,7 +1968,7 @@ smartsheet.workspaceResources().deleteWorkspace(
 ```
 
 ```python
-ss_client.Workspaces.delete_workspace(
+smartsheet_client.Workspaces.delete_workspace(
   6621332407379844)       # workspace_id
 ```
 
@@ -2055,7 +2055,7 @@ Workspace workspace = smartsheet.workspaceResources().getWorkspace(
 ```
 
 ```python
-workspace = ss_client.Workspaces.get_workspace(
+workspace = smartsheet_client.Workspaces.get_workspace(
   6621332407379844)       # workspace_id
 ```
 
@@ -2137,11 +2137,11 @@ PagedResult<Workspace> workspaces = smartsheet.workspaceResources().listWorkspac
 
 ```python
 # Sample 1: List all
-response = ss_client.Workspaces.list_workspaces(include_all=True)
+response = smartsheet_client.Workspaces.list_workspaces(include_all=True)
 workspaces = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Workspaces.list_workspaces(
+response = smartsheet_client.Workspaces.list_workspaces(
   page_size=20,
   page=1)
 pages = response.total_pages
@@ -2250,9 +2250,9 @@ Workspace updatedWorkspace = smartsheet.workspaceResources().updateWorkspace(wor
 ```
 
 ```python
-updated_workspace = ss_client.Workspaces.update_workspace(
+updated_workspace = smartsheet_client.Workspaces.update_workspace(
   7960873114331012,       # workspace_id
-  ss_client.models.Workspace({
+  smartsheet.models.Workspace({
     'name': 'Updated workspace'
   })
 )
