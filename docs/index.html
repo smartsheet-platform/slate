@@ -1774,6 +1774,23 @@
             <a href="#troubleshooting" class="toc-h1 toc-link" data-title="Troubleshooting">Troubleshooting</a>
           </li>
           <li>
+            <a href="#event-reporting" class="toc-h1 toc-link" data-title="Event Reporting"><span class="customTOCSectionHeading">Event Reporting</span></a>
+          </li>
+          <li>
+            <a href="#objects-29" class="toc-h1 toc-link" data-title="Objects">Objects</a>
+              <ul class="toc-list-subhead">
+                  <li>
+                    <a href="#event-object" class="toc-h2 toc-link" data-title="Event Object">Event Object</a>
+                  </li>
+                  <li>
+                    <a href="#streamresult-object" class="toc-h2 toc-link" data-title="StreamResult Object">StreamResult Object</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#get-events" class="toc-h1 toc-link" data-title="Get Events">Get Events</a>
+          </li>
+          <li>
             <a href="#webhooks" class="toc-h1 toc-link" data-title="Webhooks"><span class="customTOCSectionHeading">Webhooks</span></a>
           </li>
           <li>
@@ -1833,7 +1850,7 @@
             <a href="#webhooks-reference" class="toc-h1 toc-link" data-title="Webhooks Reference"><span class="customTOCSectionHeading">Webhooks Reference</span></a>
           </li>
           <li>
-            <a href="#objects-29" class="toc-h1 toc-link" data-title="Objects">Objects</a>
+            <a href="#objects-30" class="toc-h1 toc-link" data-title="Objects">Objects</a>
               <ul class="toc-list-subhead">
                   <li>
                     <a href="#callback-object" class="toc-h2 toc-link" data-title="Callback Object">Callback Object</a>
@@ -1877,7 +1894,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2019-03-29</p>
+<p>Updated 2019-04-30</p>
 
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
@@ -1907,7 +1924,7 @@
 <ul>
 <li>Read and update sheets</li>
 <li>Manage folders and workspaces</li>
-<li>Administer users and accounts</li>
+<li>Administer user accounts and organization account</li>
 </ul>
 
 <p>You can view code examples in the programming language of your choice by clicking the corresponding tab in the dark-blue area in the rightmost pane. Each tab corresponds to a Software Development Kit (SDK) that Smartsheet provides to make working in that programming language easier. See <a href="#sdks-and-sample-code">SDKs and Sample Code</a>.</p>
@@ -2621,7 +2638,7 @@ For example, having the access scope of <strong>WRITE_SHEETS</strong> does not a
 </tr>
 <tr>
 <td><strong>ADMIN_USERS</strong></td>
-<td>Add and remove users from your Smartsheet organization; create groups and manage membership.</td>
+<td>Add and remove users from your Smartsheet organization account; create groups and manage membership.</td>
 </tr>
 <tr>
 <td><strong>ADMIN_WEBHOOKS</strong></td>
@@ -2661,7 +2678,7 @@ For example, having the access scope of <strong>WRITE_SHEETS</strong> does not a
 </tr>
 <tr>
 <td><strong>READ_USERS</strong></td>
-<td>Retrieve users and groups for your Smartsheet organization.</td>
+<td>Retrieve users and groups for your Smartsheet organization account.</td>
 </tr>
 <tr>
 <td><strong>SHARE_SHEETS</strong></td>
@@ -5661,7 +5678,7 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 </tr>
 <tr>
 <td><strong>AUTOMATION_NOT_ENABLED_FOR_ORG</strong></td>
-<td>To create or edit automated actions, you need to upgrade your account to a Business or Enterprise plan.</td>
+<td>To create or edit automated actions, you need to upgrade your organization account to a Business or Enterprise plan.</td>
 </tr>
 <tr>
 <td><strong>COLUMN_MISSING</strong></td>
@@ -12632,7 +12649,7 @@ These API operations allow you to access the user&#39;s favorite API-supported o
 </tr>
 <tr>
 <td>Request Body</td>
-<td><a href="#group-object">Group object</a>, limited to the following attributes:<ul><li><strong>name</strong> (required) -- must be unique within the organization</li><li><strong>description</strong> (optional)</li><li><strong>members</strong> (optional) -- array of <a href="#groupmember-object">GroupMember objects</a>, each limited to the following attribute:<ul><li><strong>email</strong></li></ul></li></ul></td>
+<td><a href="#group-object">Group object</a>, limited to the following attributes:<ul><li><strong>name</strong> (required) -- must be unique within the organization account</li><li><strong>description</strong> (optional)</li><li><strong>members</strong> (optional) -- array of <a href="#groupmember-object">GroupMember objects</a>, each limited to the following attribute:<ul><li><strong>email</strong></li></ul></li></ul></td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -12862,7 +12879,7 @@ These API operations allow you to access the user&#39;s favorite API-supported o
 
 <p><code>GET /groups</code></p>
 
-<p>Gets a list of all groups in an organization. To fetch the members of an individual group, use the <a href="#get-group">Get Group</a> operation.</p>
+<p>Gets a list of all groups in an organization account. To fetch the members of an individual group, use the <a href="#get-group">Get Group</a> operation.</p>
 
 <table><thead>
 <tr>
@@ -12994,7 +13011,7 @@ These API operations allow you to access the user&#39;s favorite API-supported o
 </tr>
 <tr>
 <td>Request Body</td>
-<td><a href="#group-object">Group object</a>, limited to the following attributes:<ul><li><strong>description</strong> (optional)</li><li><strong>name</strong> (optional) -- must be unique within the organization</li><li><strong>ownerId</strong> (optional): Id of an admin user to whom the group ownership is transferred</li></ul></td>
+<td><a href="#group-object">Group object</a>, limited to the following attributes:<ul><li><strong>description</strong> (optional)</li><li><strong>name</strong> (optional) -- must be unique within the organization account</li><li><strong>ownerId</strong> (optional): Id of an admin user to whom the group ownership is transferred</li></ul></td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -13970,7 +13987,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 <tr>
 <td><strong>readOnlyFullAccessibleBy</strong></td>
 <td>string</td>
-<td>Indicates who can access the &#39;Read-Only Full&#39; view of the published report:<ul><li>If <strong>ALL</strong>, it is available to anyone who has the link.</li><li>If <strong>ORG</strong>, it is available only to members of the report owner&#39;s Smartsheet organization.</li></ul>Only returned in a response if <strong>readOnlyFullEnabled</strong> = <strong>true</strong>.</td>
+<td>Indicates who can access the &#39;Read-Only Full&#39; view of the published report:<ul><li>If <strong>ALL</strong>, it is available to anyone who has the link.</li><li>If <strong>ORG</strong>, it is available only to members of the report owner&#39;s Smartsheet organization account.</li></ul>Only returned in a response if <strong>readOnlyFullEnabled</strong> = <strong>true</strong>.</td>
 </tr>
 <tr>
 <td><strong>readOnlyFullDefaultView</strong></td>
@@ -14556,7 +14573,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 </tbody></table>
 
-<aside class="notice">For Read Only, if you do not specify <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level "Report Publishing" setting (if the report owner belongs to an organization) or to <b>ALL</b> (if the report owner does not belong to an organization).</aside>
+<aside class="notice">For Read Only, if you do not specify <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level "Report Publishing" setting (if the report owner belongs to an organization account) or to <b>ALL</b> (if the report owner does not belong to an organization account).</aside>
 <h2 id='send-report-via-email'>Send Report via Email</h2>
 
 <blockquote>
@@ -19895,7 +19912,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <tr>
 <td><strong>readOnlyFullAccessibleBy</strong></td>
 <td>string</td>
-<td>Indicates who can access the &#39;Read-Only Full&#39; view of the published sheet:<ul><li><strong>ALL</strong> -- available to anyone who has the link.</li><li><strong>ORG</strong> -- available only to members of the sheet owner&#39;s Smartsheet organization.</li></ul>Only returned in a response if <strong>readOnlyFullEnabled = true</strong>.</td>
+<td>Indicates who can access the &#39;Read-Only Full&#39; view of the published sheet:<ul><li><strong>ALL</strong> -- available to anyone who has the link.</li><li><strong>ORG</strong> -- available only to members of the sheet owner&#39;s Smartsheet organization account.</li></ul>Only returned in a response if <strong>readOnlyFullEnabled = true</strong>.</td>
 </tr>
 <tr>
 <td><strong>readOnlyFullDefaultView</strong></td>
@@ -19935,7 +19952,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <tr>
 <td><strong>readWriteAccessibleBy</strong></td>
 <td>string</td>
-<td>Indicates who can access the &#39;Edit by Anyone&#39; view of the published sheet:<ul><li><strong>ALL</strong> -- available to anyone who has the link.</li><li><strong>ORG</strong> -- available only to members of the sheet owner&#39;s Smartsheet organization.</li></ul>Only returned in a response if <strong>readWriteEnabled = true</strong>.</td>
+<td>Indicates who can access the &#39;Edit by Anyone&#39; view of the published sheet:<ul><li><strong>ALL</strong> -- available to anyone who has the link.</li><li><strong>ORG</strong> -- available only to members of the sheet owner&#39;s Smartsheet organization account.</li></ul>Only returned in a response if <strong>readWriteEnabled = true</strong>.</td>
 </tr>
 <tr>
 <td><strong>readWriteDefaultView</strong></td>
@@ -21732,7 +21749,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 
 <p><code>GET /users/sheets</code></p>
 
-<p>Gets a summarized list of all sheets owned by the members of the account (organization). </p>
+<p>Gets a summarized list of all sheets owned by the members of the organization account. </p>
 
 <aside class="notice">This operation is only available to system administrators.</aside>
 
@@ -22199,9 +22216,9 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 </tbody></table>
 
-<aside class="notice">For Read Only, if you do not specify a value for <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the sheet owner belongs to an organization) or to <b>ALL</b> (if the sheet owner does not belong to an organization).</aside>
+<aside class="notice">For Read Only, if you do not specify a value for <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the sheet owner belongs to an organization account) or to <b>ALL</b> (if the sheet owner does not belong to an organization account).</aside>
 
-<aside class="notice">For Read Write, if you do not specify a value for <b>readWriteAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the sheet owner belongs to an organization) or to <b>ALL</b> (if the sheet owner does not belong to an organization).</aside>
+<aside class="notice">For Read Write, if you do not specify a value for <b>readWriteAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the sheet owner belongs to an organization account) or to <b>ALL</b> (if the sheet owner does not belong to an organization account).</aside>
 <h2 id='search-sheet-2'>Search Sheet</h2>
 
 <blockquote>
@@ -22895,7 +22912,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td><strong>readOnlyFullAccessibleBy</strong></td>
 <td>string</td>
-<td>Indicates who can access the &#39;Read-Only Full&#39; view of the published Sight:<ul><li><strong>ALL</strong> -- available to anyone who has the link.</li><li><strong>ORG</strong> -- available only to members of the Sight owner&#39;s Smartsheet organization.</li></ul>Only returned in a response if <strong>readOnlyFullEnabled = true</strong>.</td>
+<td>Indicates who can access the &#39;Read-Only Full&#39; view of the published Sight:<ul><li><strong>ALL</strong> -- available to anyone who has the link.</li><li><strong>ORG</strong> -- available only to members of the Sight owner&#39;s Smartsheet organization account.</li></ul>Only returned in a response if <strong>readOnlyFullEnabled = true</strong>.</td>
 </tr>
 <tr>
 <td><strong>readOnlyFullEnabled</strong></td>
@@ -24100,7 +24117,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 </tbody></table>
 
-<aside class="notice">If <b>readOnlyFullEnabled</b> is set to <b>true</b> in the request, but <b>readOnlyFullAccessibleBy</b> is not specified, the value of <b>readOnlyFullAccessibleBy</b> defaults to the organization-level 'Sight Publishing' setting (if the Sight owner belongs to an organization) or to <b>ALL</b> (if the Sight owner does not belong to an organization).</aside>
+<aside class="notice">If <b>readOnlyFullEnabled</b> is set to <b>true</b> in the request, but <b>readOnlyFullAccessibleBy</b> is not specified, the value of <b>readOnlyFullAccessibleBy</b> defaults to the organization-level 'Sight Publishing' setting (if the Sight owner belongs to an organization account) or to <b>ALL</b> (if the Sight owner does not belong to an organization account).</aside>
 <h2 id='share-sight-2'>Share Sight</h2>
 
 <p>For details about Sight sharing, see <a href="#sight-sharing">Sight Sharing</a>.</p>
@@ -26096,7 +26113,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td><strong>admin</strong></td>
 <td>Boolean</td>
-<td>Indicates whether the user is a system admin (can manage users and account)</td>
+<td>Indicates whether the user is a system admin (can manage user accounts and organization account)</td>
 </tr>
 <tr>
 <td><strong>customWelcomeScreenViewed</strong></td>
@@ -26151,7 +26168,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td><strong>sheetCount</strong></td>
 <td>number</td>
-<td>The number of sheets owned by the current user within the organization</td>
+<td>The number of sheets owned by the current user within the organization account</td>
 </tr>
 <tr>
 <td><strong>status</strong></td>
@@ -26180,7 +26197,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td><strong>admin</strong></td>
 <td>Boolean</td>
-<td>Indicates whether the user is a system admin (can manage users and account)</td>
+<td>Indicates whether the user is a system admin (can manage user accounts and organization account)</td>
 </tr>
 <tr>
 <td><strong>alternateEmails</strong></td>
@@ -26275,7 +26292,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td><strong>sheetCount</strong></td>
 <td>number</td>
-<td>The number of sheets owned by the current user within the organization</td>
+<td>The number of sheets owned by the current user within the organization account</td>
 </tr>
 <tr>
 <td><strong>timeZone</strong></td>
@@ -26444,7 +26461,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </span></code></pre>
 <p><code>POST /users</code></p>
 
-<p>Adds a user to the organization.</p>
+<p>Adds a user to the organization account.</p>
 
 <aside class="notice">This operation is only available to system administrators.</aside>
 
@@ -26482,9 +26499,9 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 
 <aside class="notice">If successful, and user auto provisioning (UAP) is on, and user matches the auto provisioning rules, user is added to the org.  If UAP is off, or user does not match UAP rules, user is invited to the org and must explicitly accept the invitation to join.</aside>
 
-<aside class="notice">In some specific scenarios, supplied attributes such as <b>firstName</b> and <b>lastName</b> may be ignored.  For example, if you are inviting an existing Smartsheet user to join your organization, and the invited user has not yet accepted your invitation, any supplied <b>firstName</b> and <b>lastName</b> are ignored.</aside>
+<aside class="notice">In some specific scenarios, supplied attributes such as <b>firstName</b> and <b>lastName</b> may be ignored.  For example, if you are inviting an existing Smartsheet user to join your organization account, and the invited user has not yet accepted your invitation, any supplied <b>firstName</b> and <b>lastName</b> are ignored.</aside>
 <h2 id='alternate-email-addresses'>Alternate Email Addresses</h2>
-<p>A <a href="#user-object">User</a> in Smartsheet must have a <em>primary</em> email address associated with their account (<strong>User.email</strong>) and may optionally have one or more alternate email addresses associated with their account (<strong>User.alternateEmails</strong>). </p>
+<p>A <a href="#user-object">User</a> in Smartsheet must have a <em>primary</em> email address associated with their user account (<strong>User.email</strong>) and may optionally have one or more alternate email addresses associated with their account (<strong>User.alternateEmails</strong>). </p>
 
 <aside class="notice">The following operations must be performed using an user's primary email address:<ul><li><a href="#add-group-members">Add Group Members</a></li><li><a href="#add-user">Add User</a></li><li><a href="#create-update-request">Create Update Request</a></li><li><a href="#report-sharing">Share Report</a></li><li><a href="#share-sheet">Share Sheet</a></li><li><a href="#workspace-sharing">Share Workspace</a></li></ul>Attempting to specify a user's alternate email address for any of the above operations results in an error.</aside>
 <h3 id='add-alternate-emails'>Add Alternate Emails</h3>
@@ -27152,7 +27169,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </span></code></pre>
 <p><code>GET /users</code></p>
 
-<p>Gets a list of users in the organization. To filter by email, use the optional <strong>email</strong> query string parameter to specify a list of users&#39; email addresses.</p>
+<p>Gets a list of users in the organization account. To filter by email, use the optional <strong>email</strong> query string parameter to specify a list of users&#39; email addresses.</p>
 
 <table><thead>
 <tr>
@@ -27240,7 +27257,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </span></code></pre>
 <p><code>DELETE /users/{userId}</code></p>
 
-<p>Removes a user from an organization. User is transitioned to a free collaborator with read-only access to owned reports, sheets, Sights, workspaces, and any shared templates (unless those are optionally transferred to another user). </p>
+<p>Removes a user from an organization account. User is transitioned to a free collaborator with read-only access to owned reports, sheets, Sights, workspaces, and any shared templates (unless those are optionally transferred to another user). </p>
 
 <aside class="notice">This operation is only available to system administrators.</aside>
 
@@ -27256,7 +27273,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>removeFromSharing</strong> (optional): Set to <strong>true</strong> to remove the user from sharing for all sheets/workspaces in the organization. If not specified, user is not removed from sharing.</td>
+<td><strong>removeFromSharing</strong> (optional): Set to <strong>true</strong> to remove the user from sharing for all sheets/workspaces in the organization account. If not specified, user is not removed from sharing.</td>
 </tr>
 <tr>
 <td></td>
@@ -27278,7 +27295,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 
 <aside class="notice">If the <b>transferTo</b> parameter is specified and the removed user owns groups, the user specified via the <b>transferTo</b> parameter must have group admin rights.</aside>
 
-<aside class="notice">The <b>transferTo</b> and <b>transferSheets</b> parameters cannot be specified for a user who has not yet accepted an invitation to join the organization (that is, if user <b>status=PENDING</b>).</aside>
+<aside class="notice">The <b>transferTo</b> and <b>transferSheets</b> parameters cannot be specified for a user who has not yet accepted an invitation to join the organization account (that is, if user <b>status=PENDING</b>).</aside>
 <h2 id='update-user'>Update User</h2>
 <blockquote>
 <p>Example request: update user</p>
@@ -29308,6 +29325,21 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>400</td>
+<td>1227</td>
+<td>The query parameters &#39;{0}&#39; and &#39;{1}&#39; are mutually exclusive. Only one may be set.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1228</td>
+<td>You must specify one of the following query parameters: &#39;{0}&#39; or &#39;{1}&#39;.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1229</td>
+<td>The value &#39;{0}&#39; was not valid for the parameter &#39;{1}&#39;. The value must be between &#39;{2}&#39; and &#39;{3}&#39;.</td>
+</tr>
+<tr>
+<td>400</td>
 <td>1255</td>
 <td>Attachment type &#39;{0}&#39; is not supported.</td>
 </tr>
@@ -29723,6 +29755,216 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </ul></li>
 <li>Check for capitalization errors. <strong>NOTE:</strong> URL endpoints are all lower case, while object properties and query parameters are camelCase.</li>
 </ol>
+
+<h1 id='event-reporting'><span class="customTOCSectionHeading">Event Reporting</span></h1>
+
+<p>The following section describes the specific event types and payloads returned from the Smartsheet Events API.</p>
+
+<p>With Event Reporting, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are create, update, load, and delete of sheets, reports, dashboards, attachments, and users. Note: while the current list of events covers most of Smartsheet functionality, new events will be added to the list as Smartsheet introduces new functionality.</p>
+
+<p>See <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.</p>
+
+<p>See <a href="#authentication-and-access-tokens">Authentication and Access Tokens</a> for more information.</p>
+
+<aside class="notice">Event Reporting is a premium add-on for Enterprise and Premier plans only. For details on the Enterprise and Premier plans, see our <a href="https://www.smartsheet.com/pricing">Pricing</a> page.</aside>
+
+<h1 id='objects-29'>Objects</h1><h2 id='event-object'>Event Object</h2>
+<blockquote>
+<p>Example: Event object</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"eventId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"4b12345abc444def333g149he2b15b3j"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"objectType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"SHEET"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"action"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"CREATE"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"objectId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">345678901234</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"eventTimestamp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-04-29T08:28:33Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"userId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">123457654321</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"requestUserId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">133445566778</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"source"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"WEB_APP"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"additionalDetails"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"sheetName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Sheet"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>eventId</strong></td>
+<td>string</td>
+<td>Unique event identifier.</td>
+</tr>
+<tr>
+<td><strong>objectType</strong></td>
+<td>string</td>
+<td>The Smartsheet resource impacted by the event, such as, SHEET or WORKSPACE.</td>
+</tr>
+<tr>
+<td><strong>action</strong></td>
+<td>string</td>
+<td>The action applied to the specified object, such as CREATE or DELETE.</td>
+</tr>
+<tr>
+<td><strong>objectId</strong></td>
+<td>string or long</td>
+<td>The identifier of the object impacted by the event.</td>
+</tr>
+<tr>
+<td><strong>eventTimestamp</strong></td>
+<td>string</td>
+<td>Date and time of the event. Defaults to ISO-8601 format. See <a href="#dates-and-times">dates and times</a> for more information.</td>
+</tr>
+<tr>
+<td><strong>userId</strong></td>
+<td>long</td>
+<td>User assumed as the one who initiated the event. Usually the <code>userId</code> property and the <code>requestUserId</code> property (below) have the same value. However, if the request is an API call with <a href="#assume-user"><code>Assume-User</code> header</a> then the <code>userId</code> property identifies the user whose email matches the value in the <code>Assume-User</code> header.</td>
+</tr>
+<tr>
+<td><strong>requestUserId</strong></td>
+<td>long</td>
+<td>User whose authentication credential is embedded in the request that initiated the event. For example, if the request is an API call with an <a href="#authentication-and-access-tokens">access token</a> then <code>requestUserId</code> identifies the user whose data can be accessed via the access token (i.e., the user who authorized the creation of the access token). On the other hand, if the request comes from a UI session, then <code>requestUserId</code> identifies the user logged-in to the UI.</td>
+</tr>
+<tr>
+<td><strong>accessTokenName</strong></td>
+<td>string</td>
+<td>Name of the access token embedded in the request. This property is omitted if there is no <a href="#authentication-and-access-tokens">access token</a> in the request (i.e., it isn&#39;t an API call) or if the access token wasn&#39;t given a name when created (only access tokens generated via the Smartsheet desktop UI can be given a name at creation time).</td>
+</tr>
+<tr>
+<td><strong>source</strong></td>
+<td>string</td>
+<td>Identifies the type of action that triggered the event.</td>
+</tr>
+<tr>
+<td><strong>additionalDetails</strong></td>
+<td>object</td>
+<td>Container object for additional event-specific properties. Properties depend upon the event type. See <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.</td>
+</tr>
+</tbody></table>
+<h2 id='streamresult-object'>StreamResult Object</h2>
+<blockquote>
+<p>Example: StreamResult object</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"nextStreamPosition"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XyzAb1234cdefghijklmnofpq"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"moreAvailable"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>nextStreamPosition</strong></td>
+<td>string</td>
+<td>This string should be passed back to the next GET events call to obtain subsequent events</td>
+</tr>
+<tr>
+<td><strong>moreAvailable</strong></td>
+<td>Boolean</td>
+<td>True if more results are available. This is typically due to event counts exceeding the <code>maxCount</code> parameter passed in</td>
+</tr>
+<tr>
+<td><strong>data</strong></td>
+<td><a href="#event-object">Event</a>[]</td>
+<td>Array of event information.</td>
+</tr>
+</tbody></table>
+<h1 id='get-events'>Get Events</h1>
+
+<blockquote>
+<p>Example request: get events</p>
+</blockquote>
+
+<pre class="highlight shell tab-shell"><code>// Example 1: Return events starting from the oldest event available
+curl https://api.smartsheet.com/2.0/events?since<span class="o">=</span>2010-01-01T00:00:00Z <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
+-H <span class="s2">"Accept-Encoding: gzip"</span>
+
+// Example 2: Return events from a given stream position on
+curl https://api.smartsheet.com/2.0/events?streamPosition<span class="o">=</span>XyzAb1234cdefghijklmnofpq <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
+-H <span class="s2">"Accept-Encoding: gzip"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Coming soon</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Coming soon</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// Coming soon</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Coming soon</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># Coming soon</span>
+</code></pre>
+
+<blockquote>
+<p>Example response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"nextStreamPosition"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XyzAb1234cdefghijklmnofpq"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"moreAvailable"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="s2">"eventId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"4b12345abc444def333g149he2b15b3j"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"objectType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"SHEET"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"action"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"LOAD"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"objectId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">345678901234</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"eventTimestamp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">2019-04-29</span><span class="err">T</span><span class="mi">08</span><span class="p">:</span><span class="mi">28</span><span class="p">:</span><span class="mi">33</span><span class="err">Z</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"userId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">123457654321</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"requestUserId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">133445566778</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"source"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"WEB_APP"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"additionalDetails"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><code>GET /events</code></p>
+
+<p>Gets events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc.</p>
+
+<p>Each event type has a distinct combination of <code>objectType</code> and <code>action</code>. Many event types have additional information returned under an <code>additionalDetails</code> object. See the <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for a complete list of all currently supported events, including their respective objectType, action, and additionalDetails properties.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Headers</td>
+<td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
+</tr>
+<tr>
+<td></td>
+<td>Accept-Encoding -- Strongly recommended to make sure payload is compressed. Must be set to one of the following values:<ul><li><strong>deflate</strong></li><li><strong>gzip</strong></li></ul></td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td><strong>since</strong>: Starting time for events to return. Intended for use only at client startup or recovery. <br/>This is intended for backfilling data and not for fine-grained date-based queries. Therefore, resolution is limited to the nearest hour. Interpreted as ISO-8601 format, unless <code>numericDates</code> is specified (see details about numericDates below) <br/>You must pass in a value for either <code>since</code> or <code>streamPosition</code> and never both.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>streamPosition</strong>: Indicates next set of events to return. Use value of <code>nextStreamPosition</code> returned from the previous call.<br/>You must pass in a value for either <code>since</code> or <code>streamPosition</code> and never both.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>maxCount</strong> (optional): Maximum number of events to return as response to this call. <br/>Must be between 1 through 10,000 (inclusive).<br/>Defaults to 1,000 if not specified.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>numericDates</strong> (optional): If true, dates are accepted and returned in Unix epoch time (milliseconds since midnight on January 1, 1970 in UTC time). <br/>Default is false, which means ISO-8601 format.</td>
+</tr>
+<tr>
+<td>Returns</td>
+<td><a href="#streamresult-object">StreamResult object</a>, populated according to the specified parameters</td>
+</tr>
+<tr>
+<td>Access Scope</td>
+<td>READ_EVENTS</td>
+</tr>
+</tbody></table>
 
 <h1 id='webhooks'><span class="customTOCSectionHeading">Webhooks</span></h1><h1 id='intro-to-webhooks'>Intro to Webhooks</h1>
 
@@ -30223,7 +30465,7 @@ Use this information to implement error handling logic according to the followin
 
 <p>For more information, see <a href="#intro-to-webhooks">Intro to Webhooks</a>.</p>
 
-<h1 id='objects-29'>Objects</h1><h2 id='callback-object'>Callback Object</h2>
+<h1 id='objects-30'>Objects</h1><h2 id='callback-object'>Callback Object</h2>
 <table><thead>
 <tr>
 <th></th>

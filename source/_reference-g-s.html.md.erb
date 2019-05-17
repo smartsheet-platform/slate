@@ -166,7 +166,7 @@ Creates a new group.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>**name** (required) -- must be unique within the organization</li><li>**description** (optional)</li><li>**members** (optional) -- array of [GroupMember objects](#groupmember-object), each limited to the following attribute:<ul><li>**email**</li></ul></li></ul>
+<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>**name** (required) -- must be unique within the organization account</li><li>**description** (optional)</li><li>**members** (optional) -- array of [GroupMember objects](#groupmember-object), each limited to the following attribute:<ul><li>**email**</li></ul></li></ul>
 <%= RETURNS %> | [Result object](#result-object), containing a [Group object](#group-object) for the newly created group
 <%= SCOPE %> | ADMIN_USERS
 
@@ -399,7 +399,7 @@ groups = response[:data]
 
 `GET /groups`
 
-Gets a list of all groups in an organization. To fetch the members of an individual group, use the [Get Group](#get-group) operation.
+Gets a list of all groups in an organization account. To fetch the members of an individual group, use the [Get Group](#get-group) operation.
 
      |     |
 -----|-----|
@@ -518,7 +518,7 @@ Updates the Group specified in the URL.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>**description** (optional)</li><li>**name** (optional) -- must be unique within the organization</li><li>**ownerId** (optional): Id of an admin user to whom the group ownership is transferred</li></ul>
+<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>**description** (optional)</li><li>**name** (optional) -- must be unique within the organization account</li><li>**ownerId** (optional): Id of an admin user to whom the group ownership is transferred</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the [Group object](#group-object) for the updated group
 <%= SCOPE %> | ADMIN_USERS
 
@@ -1337,7 +1337,7 @@ Extends the [Row object](#row-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published report:<ul><li>If **ALL**, it is available to anyone who has the link.</li><li>If **ORG**, it is available only to members of the report owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled** = **true**.
+**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published report:<ul><li>If **ALL**, it is available to anyone who has the link.</li><li>If **ORG**, it is available only to members of the report owner's Smartsheet organization account.</li></ul>Only returned in a response if **readOnlyFullEnabled** = **true**.
 **readOnlyFullDefaultView** | string | Indicates which view the user has set for a read-only, default view of the published report. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
 **readOnlyFullEnabled** | Boolean | (Required) If **true**, a rich version of the report is published with the ability to download row attachments and discussions.
 **readOnlyFullShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
@@ -1933,7 +1933,7 @@ Sets the publish status of the report and returns the new status, including the 
 <%= RETURNS %> | [Result object](#result-object) containing a [ReportPublish object](#reportpublish-object)
 <%= SCOPE %> | ADMIN_SHEETS
 
-<aside class="notice">For Read Only, if you do not specify <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level "Report Publishing" setting (if the report owner belongs to an organization) or to <b>ALL</b> (if the report owner does not belong to an organization).</aside>
+<aside class="notice">For Read Only, if you do not specify <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level "Report Publishing" setting (if the report owner belongs to an organization account) or to <b>ALL</b> (if the report owner does not belong to an organization account).</aside>
 
 ## Send Report via Email
 
@@ -5260,7 +5260,7 @@ Represents the project settings dependencies for a specific sheet.  Project sett
 -----|-----|-----|
 **icalEnabled** | Boolean | If **true**, a webcal is available for the calendar in the sheet.
 **icalUrl** | string | URL for **iCal** view of the published sheet<br/>Only returned in a response if **icalEnabled = true**.
-**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published sheet:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the sheet owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled = true**.
+**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published sheet:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the sheet owner's Smartsheet organization account.</li></ul>Only returned in a response if **readOnlyFullEnabled = true**.
 **readOnlyFullDefaultView** | string | Indicates which view the user has set for a read-only, default view of the published sheet. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
 **readOnlyFullEnabled** | Boolean | If **true**, a rich version of the sheet is published with the ability to download row attachments and discussions.
 **readOnlyFullShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
@@ -5268,7 +5268,7 @@ Represents the project settings dependencies for a specific sheet.  Project sett
 **readOnlyLiteEnabled** | Boolean | If **true**, a lightweight version of the sheet is published without row attachments and discussions.
 **readOnlyLiteSslUrl** | string | URL for 'Read-Only' view of the published sheet when SSL is enabled. 
 **readOnlyLiteUrl** | string | URL for 'Read-Only HTML' view of the published sheet<br/>Only returned in a response if **readOnlyLiteEnabled = true**.
-**readWriteAccessibleBy** | string | Indicates who can access the 'Edit by Anyone' view of the published sheet:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the sheet owner's Smartsheet organization.</li></ul>Only returned in a response if **readWriteEnabled = true**.
+**readWriteAccessibleBy** | string | Indicates who can access the 'Edit by Anyone' view of the published sheet:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the sheet owner's Smartsheet organization account.</li></ul>Only returned in a response if **readWriteEnabled = true**.
 **readWriteDefaultView** | string | Indicates which view the user has set for a read-write, default view of the published sheet. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
 **readWriteEnabled** | Boolean | If **true**, a rich version of the sheet is published with the ability to edit cells and manage attachments and discussions.
 **readWriteShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
@@ -7262,9 +7262,9 @@ Sets the publish status of the sheet and returns the new status, including the U
 <%= RETURNS %> | [Result object](#result-object) containing a [SheetPublish object](#sheetpublish-object)
 <%= SCOPE %> | ADMIN_SHEETS
 
-<aside class="notice">For Read Only, if you do not specify a value for <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the sheet owner belongs to an organization) or to <b>ALL</b> (if the sheet owner does not belong to an organization).</aside>
+<aside class="notice">For Read Only, if you do not specify a value for <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the sheet owner belongs to an organization account) or to <b>ALL</b> (if the sheet owner does not belong to an organization account).</aside>
 
-<aside class="notice">For Read Write, if you do not specify a value for <b>readWriteAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the sheet owner belongs to an organization) or to <b>ALL</b> (if the sheet owner does not belong to an organization).</aside>
+<aside class="notice">For Read Write, if you do not specify a value for <b>readWriteAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the sheet owner belongs to an organization account) or to <b>ALL</b> (if the sheet owner does not belong to an organization account).</aside>
 
 ## Search Sheet 
 
@@ -7621,7 +7621,7 @@ Smartsheet Sights(TM) are a collection of widgets that can contain data from a v
 
      |     |     |
 -----|-----|-----|
-**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published Sight:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the Sight owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled = true**.
+**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published Sight:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the Sight owner's Smartsheet organization account.</li></ul>Only returned in a response if **readOnlyFullEnabled = true**.
 **readOnlyFullEnabled** | Boolean | If **true**, a rich version of the Sight is published with the ability to use shortcuts and widget interactions.
 **readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published Sight.<br/>Only returned in a response if **readOnlyFullEnabled = true**.
 
@@ -8450,7 +8450,7 @@ Publishes or unpublishes a Sight.
 <%= RETURNS %> | [Result object](#result-object) containing a [SightPublish object](#sightpublish-object)
 <%= SCOPE %> | ADMIN_SIGHTS
 
-<aside class="notice">If <b>readOnlyFullEnabled</b> is set to <b>true</b> in the request, but <b>readOnlyFullAccessibleBy</b> is not specified, the value of <b>readOnlyFullAccessibleBy</b> defaults to the organization-level 'Sight Publishing' setting (if the Sight owner belongs to an organization) or to <b>ALL</b> (if the Sight owner does not belong to an organization).</aside>
+<aside class="notice">If <b>readOnlyFullEnabled</b> is set to <b>true</b> in the request, but <b>readOnlyFullAccessibleBy</b> is not specified, the value of <b>readOnlyFullAccessibleBy</b> defaults to the organization-level 'Sight Publishing' setting (if the Sight owner belongs to an organization account) or to <b>ALL</b> (if the Sight owner does not belong to an organization account).</aside>
 
 ## Share Sight
 
