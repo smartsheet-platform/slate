@@ -1915,6 +1915,8 @@ Returns all automation rules associated with the specified sheet.
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [AutomationRule objects](#automationrule-object).
 <%= SCOPE %> | READ_SHEETS
 
+<aside class="notice">Multistep workflows are not returned via the API. Instead, you'll see an error 400 - 1266: This rule is not accessible through the API. Only single-action notifications, approval requests, or update requests qualify.</aside> 
+
 <aside class="notice">For users of Smartsheet for Slack, note that Slack notifications are not returned.</aside> 
 
 ## Update an Automation Rule
