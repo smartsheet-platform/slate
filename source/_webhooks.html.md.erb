@@ -323,7 +323,7 @@ If the values match, you can be sure the request originated from Smartsheet and 
 ```
 
 ```python
-
+smartsheet_client.with_change_agent('MyChangeAgent')
 ```
 
 ```ruby
@@ -526,8 +526,8 @@ Webhook newWebhook = smartsheet.webhookResources().createWebhook(
 ```
 
 ```python
-Webhook = ss_client.Webhooks.create_webhook(
-  ss_client.models.Webhook({
+Webhook = smartsheet_client.Webhooks.create_webhook(
+  smartsheet.models.Webhook({
     'name': 'Webhook #4',
     'callbackUrl': 'https://www.myApp.com/webhooks',
     'scope': 'sheet',
@@ -630,7 +630,7 @@ smartsheet.webhookResources().deleteWebhook(
 ```
 
 ```python
-ss_client.Webhooks.delete_webhook(
+smartsheet_client.Webhooks.delete_webhook(
   401090454808452)       # webhook_id
 ```
 
@@ -699,7 +699,7 @@ Webhook webhook = smartsheet.webhookResources().getWebhook(
 ```
 
 ```python
-Webhook = ss_client.Webhooks.get_webhook(
+Webhook = smartsheet_client.Webhooks.get_webhook(
   401090454808452)       # webhook_id
 ```
 
@@ -777,7 +777,7 @@ PagedResult<Webhook> webhooks = smartsheet.webhookResources().listWebhooks(
 ```
 
 ```python
-IndexResult = ss_client.Webhooks.list_webhooks(
+IndexResult = smartsheet_client.Webhooks.list_webhooks(
   page_size=100,
   page=1,
   include_all=False)
@@ -866,7 +866,7 @@ WebhookSharedSecret newSecret = smartsheet.webhookResources().ResetSharedSecret(
 ```
 
 ```python
-Webhook = ss_client.Webhooks.reset_shared_secret(
+Webhook = smartsheet_client.Webhooks.reset_shared_secret(
   401090454808452)       # webhook_id
 ```
 
@@ -965,7 +965,7 @@ Webhook updatedWebhook = smartsheet.webhookResources().updateWebhook(
 ```
 
 ```python
-Webhook = ss_client.Webhooks.update_webhook(
+Webhook = smartsheet_client.Webhooks.update_webhook(
   8444254503626628,       # webhook_id
   ss_client.models.Webhook({
     'enabled': True}))
