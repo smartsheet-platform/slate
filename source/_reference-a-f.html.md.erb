@@ -3304,7 +3304,7 @@ Inserts one or more columns into the sheet specified in the URL. <%= SUPPORTS_MU
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Column object](#column-object) or an array of Column objects, with the following attributes:<ul><li>**title**</li><li>**type**</li><li>**autoNumberFormat** (optional)</li><li>**description** (optional)</li><li>**index** (zero-based, optional)</li><li>**locked** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**validation** (optional)</li><li>**width** (optional)</li></ul>
+<%= REQUEST %> | [Column object](#column-object) or an array of Column objects, with the following attributes:<ul><li>**title**</li><li>**type**</li><li>**index** (zero-based)</li><li>**autoNumberFormat** (optional)</li><li>**description** (optional)</li><li>**locked** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**validation** (optional)</li><li>**width** (optional)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the newly created columns -- either a single [Column object](#column-object) or an array of Column objects, corresponding to what was specified in the request.
 <%= SCOPE %> | ADMIN_SHEETS
 
