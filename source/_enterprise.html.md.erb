@@ -250,7 +250,68 @@ while events_list.more_available:
 ```
 
 ```ruby
-# Coming soon
+require 'smartsheet'
+require 'time'
+require 'date'
+require 'pp'
+
+# Initialize the client - use your access token here
+$smartsheet_client = Smartsheet::Client.new(token: '1234')
+# The `client` variable now contains access to all of the APIs
+
+today = (DateTime.now)
+date_week_ago = (today - 7).to_time.utc.iso8601 
+
+
+def get_events(params)
+  result = $smartsheet_client.events.get(params: params)
+  # pp result
+  print_new_sheet_events(result[:data])
+
+  more_events_available = result[:more_available]
+  next_stream_position = result[:next_stream_position]
+  get_next_stream_of_events(more_events_available, next_stream_position)
+end 
+
+# Subsequent calls require the streamPosition property
+def get_next_stream_of_events(more_events_available, next_stream_position)
+  params = {
+    stream_position: next_stream_position,
+    max_count: 1
+  }
+
+  if more_events_available 
+    get_events(params);
+  end
+end 
+
+# This example is looking specifically for new sheet events
+def print_new_sheet_events(data)
+  data.each do |value|
+    # Find all created sheets
+    if value[:object_type] == "SHEET" && value[:action] == "CREATE"
+        pp value
+    end    
+  end
+end 
+
+
+begin
+  params = {
+    since: date_week_ago,
+    max_count: 1
+  }
+
+  # The first call to the events reporting API
+  # requires the since query parameter.
+  # If you pass in an UNIX epoch date, numericDates must be true
+  get_events(params)
+
+rescue Smartsheet::ApiError => e
+  puts "Error Code: #{e.error_code}"
+  puts "Message: #{e.message}"
+  puts "Ref Id: #{e.ref_id}"
+end
 ```
 
 > Example response
