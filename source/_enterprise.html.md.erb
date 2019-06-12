@@ -84,7 +84,47 @@ curl https://api.smartsheet.com/2.0/events?streamPosition=XyzAb1234cdefghijklmno
 ```
 
 ```csharp
-// Coming soon
+class Program
+{
+  // This example is looking specifically for new sheet events
+  private static void PrintNewSheetEventsInList(IList<Event> events)
+  {
+    //  enumerate all events in the list of returned events
+    foreach (Event _event in events)
+    {
+      // find all created sheets
+      if (_event.ObjectType == EventObjectType.SHEET && _event.Action == EventAction.CREATE)
+      {
+        // additional details are available for some events, they can be accessed as a Dictionary
+        // in the AdditionalDetails property
+        if (_event.AdditionalDetails.ContainsKey("sheetName"))
+        {
+          Console.WriteLine(_event.AdditionalDetails["sheetName"]);
+        }
+      }
+    }
+  }
+
+  static void Main(string[] args)
+  {
+    // Initialize client
+    SmartsheetClient smartsheet = new SmartsheetBuilder().Build();
+
+    // Begin listing events in the stream starting with the `since` parameter
+    DateTime lastWeek = DateTime.Today.AddDays(-7);
+    // This example looks at the previous 7 days of events by providing a since argument set to last week's date 
+    EventResult eventResult = smartsheet.EventResources.ListEvents(lastWeek, null, 1000, false);
+    PrintNewSheetEventsInList(eventResult.Data);
+
+    // Continue listing events in the stream by using the `StreamPosition`, if the previous response indicates 
+    // that more data is available.
+    while(eventResult.MoreAvailable == true)
+    {
+      eventResult = smartsheet.EventResources.ListEvents(null, eventResult.NextStreamPosition, 10000, true);
+      PrintNewSheetEventsInList(eventResult.Data);
+    }
+  }
+}
 ```
 
 ```java
