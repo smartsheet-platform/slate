@@ -169,7 +169,31 @@ public class Sample {
 ```
 
 ```python
-# Coming soon
+# This example is looking specifically for new sheet events
+def print_new_sheet_events_in_list(events_list):
+  # Enumerate all events in the list of returned events
+  for event in events_list.data:
+    # Find all created sheets
+    if event.object_type == smartsheet.models.enums.EventObjectType.SHEET and event.action == smartsheet.models.enums.EventAction.CREATE:
+        # Additional details are available for some events, they can be accessed as a Python dictionary
+        # in the additional_details attribute
+        print(event.additional_details['sheetName'])
+
+smartsheet_client = smartsheet.Smartsheet()
+smartsheet_client.errors_as_exceptions()
+
+# Begin listing events in the stream starting with the `since` parameter
+last_week = datetime.now() - timedelta(days=7)
+# This example looks at the previous 7 days of events by providing a `since` argument set to last week's date in ISO format
+events_list = smartsheet_client.Events.list_events(since=last_week.isoformat(), max_count=1000)
+print_new_sheet_events_in_list(events_list)
+
+# Continue listing events in the stream by using the stream_position, if the previous response indicates that more 
+# data is available.
+while events_list.more_available:
+  events_list = smartsheet_client.Events.list_events(stream_position=events_list.next_stream_position, max_count=10000,
+                                      numeric_dates=True)
+  print_new_sheet_events_in_list(events_list)
 ```
 
 ```ruby
