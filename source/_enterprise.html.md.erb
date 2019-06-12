@@ -128,7 +128,44 @@ class Program
 ```
 
 ```java
-// Coming soon
+public class Sample {
+    
+  public static void main(String[] args) throws SmartsheetException {
+    SampleProgram();
+  }
+  
+  // This example is looking specifically for new sheet events
+  private static void printNewSheetEventsInList(List<Event> events)
+  {
+    //  Enumerate all events in the list of returned events
+    for(Event event: events) {
+      // find all created sheets
+      if(event.getObjectType() == EventObjectType.SHEET && event.getAction() == EventAction.CREATE) {
+        // additional details are available for some events, they can be accessed as a HashMap
+        // in the additionalDetails property
+        System.out.println(event.getAdditionalDetails().get("sheetName"));
+      }
+    }
+  }
+
+  public static void SampleProgram() throws SmartsheetException{
+
+    Smartsheet smartsheet = SmartsheetFactory.createDefaultClient();
+
+    // Begin listing events in the stream starting with the `since` parameter
+    Date lastWeek = new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7));
+    // this example looks at the previous 7 days of events by providing a since argument set to last week's date 
+    EventResult eventResult = smartsheet.eventResources().listEvents(lastWeek, null, 1000, false);
+    printNewSheetEventsInList(eventResult.getData());
+
+    // Continue listing events in the stream by using the `streamPosition`, if the previous response indicates 
+    // that more data is available.
+    while(eventResult.getMoreAvailable()) {
+      eventResult = smartsheet.eventResources().listEvents(null, eventResult.getNextStreamPosition(), 10000, true);
+      printNewSheetEventsInList(eventResult.getData());
+    }
+  }
+}
 ```
 
 ```python
