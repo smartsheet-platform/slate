@@ -80,23 +80,238 @@ curl https://api.smartsheet.com/2.0/events?streamPosition=XyzAb1234cdefghijklmno
 ```
 
 ```javascript
-// Coming soon
+// Initialize the client
+var client = require('smartsheet');
+var smartsheet = client.createClient({
+  accessToken: '1234',
+  logLevel: 'info'
+});
+
+const currentDate = new Date();
+const dateWeekAgo = currentDate.setDate(currentDate.getDate() - 7);
+// The first call to the events reporting API
+// requires the since query parameter.
+// If you pass in an UNIX epoch date, numericDates must be true
+let options = {
+  queryParameters: {
+    since: dateWeekAgo,
+    maxCount: 10,
+    numericDates: true
+  }
+}
+
+function getEvents(options) {
+  smartsheet.events.getEvents(options)
+  .then((result) => {
+    printNewSheetEvents(result);
+    getNextStreamOfEvents(result.moreAvailable, result.nextStreamPosition);
+  })
+  .catch((error) => console.log(JSON.stringify(error)));
+}
+
+function getNextStreamOfEvents(moreEventsAvailable, nextStreamPosition) {
+  // Subsequent calls require the streamPosition property
+  options = {
+    queryParameters: {
+      streamPosition: nextStreamPosition,
+      maxCount: 10
+    }
+  }
+
+  if (moreEventsAvailable) {
+    getEvents(options);
+  } 
+}
+
+// This example is looking specifically for new sheet events
+function printNewSheetEvents(result) {
+  // Find all created sheets
+  result.data.forEach(function (item) {
+    if (item.objectType === "SHEET" && item.action === "CREATE") {
+      console.log(item.additionalDetails.sheetName)
+    }
+  })
+}
+
+getEvents(options);
 ```
 
 ```csharp
-// Coming soon
+class Program
+{
+  // This example is looking specifically for new sheet events
+  private static void PrintNewSheetEventsInList(IList<Event> events)
+  {
+    //  enumerate all events in the list of returned events
+    foreach (Event _event in events)
+    {
+      // find all created sheets
+      if (_event.ObjectType == EventObjectType.SHEET && _event.Action == EventAction.CREATE)
+      {
+        // additional details are available for some events, they can be accessed as a Dictionary
+        // in the AdditionalDetails property
+        if (_event.AdditionalDetails.ContainsKey("sheetName"))
+        {
+          Console.WriteLine(_event.AdditionalDetails["sheetName"]);
+        }
+      }
+    }
+  }
+
+  static void Main(string[] args)
+  {
+    // Initialize client
+    SmartsheetClient smartsheet = new SmartsheetBuilder().Build();
+
+    // Begin listing events in the stream starting with the `since` parameter
+    DateTime lastWeek = DateTime.Today.AddDays(-7);
+    // This example looks at the previous 7 days of events by providing a since argument set to last week's date 
+    EventResult eventResult = smartsheet.EventResources.ListEvents(lastWeek, null, 1000, false);
+    PrintNewSheetEventsInList(eventResult.Data);
+
+    // Continue listing events in the stream by using the `StreamPosition`, if the previous response indicates 
+    // that more data is available.
+    while(eventResult.MoreAvailable == true)
+    {
+      eventResult = smartsheet.EventResources.ListEvents(null, eventResult.NextStreamPosition, 10000, true);
+      PrintNewSheetEventsInList(eventResult.Data);
+    }
+  }
+}
 ```
 
 ```java
-// Coming soon
+public class Sample {
+    
+  public static void main(String[] args) throws SmartsheetException {
+    SampleProgram();
+  }
+  
+  // This example is looking specifically for new sheet events
+  private static void printNewSheetEventsInList(List<Event> events)
+  {
+    //  Enumerate all events in the list of returned events
+    for(Event event: events) {
+      // find all created sheets
+      if(event.getObjectType() == EventObjectType.SHEET && event.getAction() == EventAction.CREATE) {
+        // additional details are available for some events, they can be accessed as a HashMap
+        // in the additionalDetails property
+        System.out.println(event.getAdditionalDetails().get("sheetName"));
+      }
+    }
+  }
+
+  public static void SampleProgram() throws SmartsheetException{
+
+    Smartsheet smartsheet = SmartsheetFactory.createDefaultClient();
+
+    // Begin listing events in the stream starting with the `since` parameter
+    Date lastWeek = new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7));
+    // this example looks at the previous 7 days of events by providing a since argument set to last week's date 
+    EventResult eventResult = smartsheet.eventResources().listEvents(lastWeek, null, 1000, false);
+    printNewSheetEventsInList(eventResult.getData());
+
+    // Continue listing events in the stream by using the `streamPosition`, if the previous response indicates 
+    // that more data is available.
+    while(eventResult.getMoreAvailable()) {
+      eventResult = smartsheet.eventResources().listEvents(null, eventResult.getNextStreamPosition(), 10000, true);
+      printNewSheetEventsInList(eventResult.getData());
+    }
+  }
+}
 ```
 
 ```python
-# Coming soon
+# This example is looking specifically for new sheet events
+def print_new_sheet_events_in_list(events_list):
+  # Enumerate all events in the list of returned events
+  for event in events_list.data:
+    # Find all created sheets
+    if event.object_type == smartsheet.models.enums.EventObjectType.SHEET and event.action == smartsheet.models.enums.EventAction.CREATE:
+        # Additional details are available for some events, they can be accessed as a Python dictionary
+        # in the additional_details attribute
+        print(event.additional_details['sheetName'])
+
+smartsheet_client = smartsheet.Smartsheet()
+smartsheet_client.errors_as_exceptions()
+
+# Begin listing events in the stream starting with the `since` parameter
+last_week = datetime.now() - timedelta(days=7)
+# This example looks at the previous 7 days of events by providing a `since` argument set to last week's date in ISO format
+events_list = smartsheet_client.Events.list_events(since=last_week.isoformat(), max_count=1000)
+print_new_sheet_events_in_list(events_list)
+
+# Continue listing events in the stream by using the stream_position, if the previous response indicates that more 
+# data is available.
+while events_list.more_available:
+  events_list = smartsheet_client.Events.list_events(stream_position=events_list.next_stream_position, max_count=10000,
+                                      numeric_dates=True)
+  print_new_sheet_events_in_list(events_list)
 ```
 
 ```ruby
-# Coming soon
+require 'smartsheet'
+require 'time'
+require 'date'
+require 'pp'
+
+# Initialize the client - use your access token here
+$smartsheet_client = Smartsheet::Client.new(token: '1234')
+# The `client` variable now contains access to all of the APIs
+
+today = (DateTime.now)
+date_week_ago = (today - 7).to_time.utc.iso8601 
+
+
+def get_events(params)
+  result = $smartsheet_client.events.get(params: params)
+  # pp result
+  print_new_sheet_events(result[:data])
+
+  more_events_available = result[:more_available]
+  next_stream_position = result[:next_stream_position]
+  get_next_stream_of_events(more_events_available, next_stream_position)
+end 
+
+# Subsequent calls require the streamPosition property
+def get_next_stream_of_events(more_events_available, next_stream_position)
+  params = {
+    stream_position: next_stream_position,
+    max_count: 1
+  }
+
+  if more_events_available 
+    get_events(params);
+  end
+end 
+
+# This example is looking specifically for new sheet events
+def print_new_sheet_events(data)
+  data.each do |value|
+    # Find all created sheets
+    if value[:object_type] == "SHEET" && value[:action] == "CREATE"
+        pp value
+    end    
+  end
+end 
+
+
+begin
+  params = {
+    since: date_week_ago,
+    max_count: 1
+  }
+
+  # The first call to the events reporting API
+  # requires the since query parameter.
+  # If you pass in an UNIX epoch date, numericDates must be true
+  get_events(params)
+
+rescue Smartsheet::ApiError => e
+  puts "Error Code: #{e.error_code}"
+  puts "Message: #{e.message}"
+  puts "Ref Id: #{e.ref_id}"
+end
 ```
 
 > Example response
@@ -124,6 +339,10 @@ curl https://api.smartsheet.com/2.0/events?streamPosition=XyzAb1234cdefghijklmno
 Gets events that are occurring in your Smartsheet organization account. Examples of events are creation, update, load, and delete of sheets, reports, dashboards, attachments, users, etc.
 
 Each event type has a distinct combination of `objectType` and `action`. Many event types have additional information returned under an `additionalDetails` object. See the <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for a complete list of all currently supported events, including their respective objectType, action, and additionalDetails properties.
+
+<aside class="notice">Event Reporting is a premium add-on for Enterprise and Premier plans only. For details on the Enterprise and Premier plans, see our <a href="https://www.smartsheet.com/pricing">Pricing</a> page.</aside>
+
+<aside class="notice">This operation is only available to system administrators.</aside>
 
      |     |
 -----|-----|
