@@ -1306,7 +1306,9 @@ Extends the [Sheet object](#sheet-object), adding the following:
 
      |     |     |
 -----|-----|-----|
+**scope** | [Scope](#scope-object) | A report's scope can be defined as the sheet ids and workspace ids that make up the report.
 **sourceSheets** | [Sheet](#sheet-object)[] | Array of Sheet objects (without rows), representing the sheets that rows in the report originated from.  Only included in the [Get Report](#get-report) response if the **include** parameter specifies **sourceSheets**.
+
 
 ### ReportCell Object
 
@@ -1369,12 +1371,10 @@ Extends the [Row object](#row-object), adding the following:
 }
 ```
 
-Extends the [Row object](#row-object), adding the following: 
-
      |     |     |
 -----|-----|-----|
-**sheetIds** | [Sheet](#sheet-object)[] | Array of Sheet object Ids of any sheets that the requestor has access to that make up the report
-**workspaceIds** | [Workspace](#workspace-object) | Array of Workspace object Ids that the requestor has access to that make up the report
+**sheets** | [Sheet](#sheet-object)[] | Array of Sheet objects (containing just the sheet ID) of any sheets that the requestor has access to that make up the report
+**workspaces** | [Workspace](#workspace-object)[] | Array of Workspace objects (containing just the workspace ID) that the requestor has access to that make up the report
 
 ## Get Report
 
@@ -1521,7 +1521,7 @@ Gets the report, including one page of rows, and optionally populated with attac
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**attachments**</li><li>**discussions**</li><li>**format** -- see [Formatting](#formatting)</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**source** -- adds the [Source object](#source-object) indicating which report the report was created from, if any</li><li>**sourceSheets**</li></ul> 
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**attachments**</li><li>**discussions**</li><li>**format** -- see [Formatting](#formatting)</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**scope** -- adds the report's [scope](#scope-object) to the response</li><li>**source** -- adds the [Source object](#source-object) indicating which report the report was created from, if any</li><li>**sourceSheets**</li></ul> 
   | **exclude** (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li></ul>
   | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
   | **pageSize** (optional): Number of rows per page.  If not specified, the default value is 100.  If you need larger sets of data from your report, this operation can return a maximum of 10,000 rows per request (report limit is 50,000 rows).
@@ -5226,7 +5226,7 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 **totalRowCount** | number | The total number of rows in the sheet
 **userSettings** | [SheetUserSettings](#sheetusersettings-object) | A SheetUserSettings object containing the current user's sheet-specific settings.
 **version** | number | A number that is incremented every time a sheet is modified
-**workspace** | [Workspace](#workspace-object) | A Workspace object containing the workspace Id and name.<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **ownerInfo**.
+**workspace** | [Workspace](#workspace-object) | A Workspace object containing the workspace Id and name.
 
 ### Criteria Object
 
@@ -7648,6 +7648,7 @@ Smartsheet Sights(TM) are a collection of widgets that can contain data from a v
 **modifiedAt** | timestamp | Time of last modification
 **name** | string | Sight name 
 **permalink** | string | URL that represents a direct link to the Sight in Smartsheet
+**source** | [source](#source-object) | A Source object indicating the Sight (aka dashboard) from which this Sight was created, if any
 **widgets** | [widget](#widget-object)[] | Array of Widget objects
 **workspace** | [Workspace](#workspace-object) | A Workspace object, limited to only 2 attributes: <ul><li>**id**</li> <li>**name**</li></ul> NOTE: this attribute is only present if the Sight resides within a workspace.
 
@@ -7714,7 +7715,7 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 **sheetId** | number | The Id of the sheet from which the cell data originates
 **cellData** | [CellDataItem](#celldataitem-object)[] | Array of CellDataItem objects
 **columns** | [Column](#column-object)[] | Array of Column objects
-**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
+**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
 
 ### CellDataItem Object
 
@@ -7738,7 +7739,7 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 **reportId** | number | Report Id denoting container source, if applicable
 **sheetId** | number | Sheet Id denoting container source, if applicable
 **axes** | Axes[] | Array of Axes objects
-**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
+**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
 **includedColumnIds** |  includedColumnIds[]] | Array of columnIds if the range was selected through the UI
 **legend** | string | The location in the widget where Smartsheet renders the legend, for example, **RIGHT**
 **selectionRanges** | [SelectionRange](#selectionrange-object)[] | If the source is a sheet
@@ -7752,7 +7753,7 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 **fileName** | string | Name of the image file
 **format** | string | [formatDescriptor](#formatting)
 **height** | integer | Original height of the image in pixels
-**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
+**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
 **width** | integer | Original width of the image in pixels
 
 ### ReportWidgetContent Object
@@ -7761,7 +7762,7 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 -----|-----|-----|
 **reportId** | number | Report Id denoting container source
 **htmlContent** | string | HTML snippet to render report
-**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
+**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
 
 ### RichTextWidgetContent Object
 
