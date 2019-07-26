@@ -1897,7 +1897,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2019-06-14</p>
+<p>Updated 2019-07-26</p>
 
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
@@ -7179,7 +7179,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <tr>
 <td><strong>tags</strong></td>
 <td>string[]</td>
-<td>Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li><strong>CALENDAR_END_DATE</strong></li><li><strong>CALENDAR_START_DATE</strong></li><li><strong>GANTT_ALLOCATION</strong></li><li><strong>GANTT_ASSIGNED_RESOURCE</strong></li><li><strong>GANTT_DISPLAY_LABEL</strong></li><li><strong>GANTT_DURATION</strong></li><li><strong>GANTT_END_DATE</strong></li><li><strong>GANTT_PERCENT_COMPLETE</strong></li><li><strong>GANTT_PREDECESSOR</strong></li><li><strong>GANTT_START_DATE</strong></li></ul></td>
+<td>Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li><strong>CALENDAR_END_DATE</strong></li><li><strong>CALENDAR_START_DATE</strong></li><li><strong>CARD_DONE</strong></li><li><strong>GANTT_ALLOCATION</strong></li><li><strong>GANTT_ASSIGNED_RESOURCE</strong></li><li><strong>GANTT_DISPLAY_LABEL</strong></li><li><strong>GANTT_DURATION</strong></li><li><strong>GANTT_END_DATE</strong></li><li><strong>GANTT_PERCENT_COMPLETE</strong></li><li><strong>GANTT_PREDECESSOR</strong></li><li><strong>GANTT_START_DATE</strong></li></ul></td>
 </tr>
 <tr>
 <td><strong>title</strong></td>
@@ -13945,6 +13945,11 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 </thead><tbody>
 <tr>
+<td><strong>scope</strong></td>
+<td><a href="#scope-object">Scope</a></td>
+<td>A report&#39;s scope can be defined as the sheet ids and workspace ids that make up the report.</td>
+</tr>
+<tr>
 <td><strong>sourceSheets</strong></td>
 <td><a href="#sheet-object">Sheet</a>[]</td>
 <td>Array of Sheet objects (without rows), representing the sheets that rows in the report originated from.  Only included in the <a href="#get-report">Get Report</a> response if the <strong>include</strong> parameter specifies <strong>sourceSheets</strong>.</td>
@@ -14060,8 +14065,6 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>Extends the <a href="#row-object">Row object</a>, adding the following: </p>
-
 <table><thead>
 <tr>
 <th></th>
@@ -14070,14 +14073,14 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 </thead><tbody>
 <tr>
-<td><strong>sheetIds</strong></td>
+<td><strong>sheets</strong></td>
 <td><a href="#sheet-object">Sheet</a>[]</td>
-<td>Array of Sheet object Ids of any sheets that the requestor has access to that make up the report</td>
+<td>Array of Sheet objects (containing just the sheet ID) of any sheets that the requestor has access to that make up the report</td>
 </tr>
 <tr>
-<td><strong>workspaceIds</strong></td>
-<td><a href="#workspace-object">Workspace</a></td>
-<td>Array of Workspace object Ids that the requestor has access to that make up the report</td>
+<td><strong>workspaces</strong></td>
+<td><a href="#workspace-object">Workspace</a>[]</td>
+<td>Array of Workspace objects (containing just the workspace ID) that the requestor has access to that make up the report</td>
 </tr>
 </tbody></table>
 <h2 id='get-report'>Get Report</h2>
@@ -14221,7 +14224,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>attachments</strong></li><li><strong>discussions</strong></li><li><strong>format</strong> -- see <a href="#formatting">Formatting</a></li><li><strong>objectValue</strong> -- when used in combination with a <strong>level</strong> query parameter, includes the email addresses for multi-contact data</li><li><strong>source</strong> -- adds the <a href="#source-object">Source object</a> indicating which report the report was created from, if any</li><li><strong>sourceSheets</strong></li></ul></td>
+<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>attachments</strong></li><li><strong>discussions</strong></li><li><strong>format</strong> -- see <a href="#formatting">Formatting</a></li><li><strong>objectValue</strong> -- when used in combination with a <strong>level</strong> query parameter, includes the email addresses for multi-contact data</li><li><strong>scope</strong> -- adds the report&#39;s <a href="#scope-object">scope</a> to the response</li><li><strong>source</strong> -- adds the <a href="#source-object">Source object</a> indicating which report the report was created from, if any</li><li><strong>sourceSheets</strong></li></ul></td>
 </tr>
 <tr>
 <td></td>
@@ -19833,7 +19836,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <tr>
 <td><strong>workspace</strong></td>
 <td><a href="#workspace-object">Workspace</a></td>
-<td>A Workspace object containing the workspace Id and name.<br/>Only returned if the <a href="#get-sheet"><strong>include</strong></a> query string parameter contains <strong>ownerInfo</strong>.</td>
+<td>A Workspace object containing the workspace Id and name.</td>
 </tr>
 </tbody></table>
 <h3 id='criteria-object'>Criteria Object</h3>
@@ -22971,6 +22974,11 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td>URL that represents a direct link to the Sight in Smartsheet</td>
 </tr>
 <tr>
+<td><strong>source</strong></td>
+<td><a href="#source-object">source</a></td>
+<td>A Source object indicating the Sight (aka dashboard) from which this Sight was created, if any</td>
+</tr>
+<tr>
 <td><strong>widgets</strong></td>
 <td><a href="#widget-object">widget</a>[]</td>
 <td>Array of Widget objects</td>
@@ -23171,7 +23179,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td><strong>hyperlink</strong></td>
-<td><a href="#hyperlink-object">Hyperlink</a></td>
+<td><a href="#widgethyperlink-object">WidgetHyperlink</a></td>
 <td>The widget has <strong>when clicked</strong> attribute set to that hyperlink (if present and non-null)</td>
 </tr>
 </tbody></table>
@@ -23259,7 +23267,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td><strong>hyperlink</strong></td>
-<td><a href="#hyperlink-object">Hyperlink</a></td>
+<td><a href="#widgethyperlink-object">WidgetHyperlink</a></td>
 <td>The widget has <strong>when clicked</strong> attribute set to that hyperlink (if present and non-null)</td>
 </tr>
 <tr>
@@ -23313,7 +23321,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td><strong>hyperlink</strong></td>
-<td><a href="#hyperlink-object">Hyperlink</a></td>
+<td><a href="#widgethyperlink-object">WidgetHyperlink</a></td>
 <td>The widget has <strong>when clicked</strong> attribute set to that hyperlink (if present and non-null). Hyperlinks will have <strong>interactionType</strong>.</td>
 </tr>
 <tr>
@@ -23342,7 +23350,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td><strong>hyperlink</strong></td>
-<td><a href="#hyperlink-object">Hyperlink</a></td>
+<td><a href="#widgethyperlink-object">WidgetHyperlink</a></td>
 <td>The widget has <strong>when clicked</strong> attribute set to that hyperlink (if present and non-null). Hyperlinks will have <strong>interactionType</strong>.</td>
 </tr>
 </tbody></table>
@@ -28014,7 +28022,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td></td>
-<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>ownerInfo</strong> - owner&#39;s email address and user Id for each sheet</li><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li></ul></td>
+<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>ownerInfo</strong> - owner&#39;s email address and user Id for each sheet</li><li><strong>source</strong> - the <a href="#source-object">Source object</a> for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li><li><strong>sheetVersion</strong> - current version number of each sheet</li></ul></td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -28103,7 +28111,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- a comma-separated list of optional elements to include in the response:<ul><li><strong>sheetVersion</strong> - current version number of each sheet, should not be combined with pagination</li></ul>This operation supports query string parameters for pagination of results. For more information, see <a href="#paging-query-string-parameters">Paging Query String Parameters</a>.</td>
+<td>This operation supports query string parameters for pagination of results. For more information, see <a href="#paging-query-string-parameters">Paging Query String Parameters</a>.</td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -29531,7 +29539,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 
 <h1 id='formatting'>Formatting</h1>
 
-<p>To set or read formatting programmatically, Smartsheet uses a compact format string, <strong>cell.format</strong>, which looks something like this: <code>&quot;,,1,1,,,,,,,,,,,,&quot;</code>. The position and sample values in this string are explained in the following format descriptor table:</p>
+<p>To set or read formatting programmatically, Smartsheet uses a compact format string, <strong>cell.format</strong>, which looks something like this: <code>&quot;,,1,1,,,,,,,,,,,,,&quot;</code>. The position and sample values in this string are explained in the following format descriptor table:</p>
 
 <h2 id='format-descriptor-table'>Format Descriptor Table</h2>
 
@@ -29547,101 +29555,107 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td>0</td>
 <td><strong>fontFamily</strong></td>
 <td>0 = Arial, default</td>
-<td><code>&quot;0,,,,,,,,,,,,,,,&quot;</code></td>
+<td><code>&quot;0,,,,,,,,,,,,,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>1</td>
 <td><strong>fontSize</strong></td>
 <td>0 = 8 pt, default</td>
-<td><code>&quot;,0,,,,,,,,,,,,,,&quot;</code></td>
+<td><code>&quot;,0,,,,,,,,,,,,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>2</td>
 <td><strong>bold</strong></td>
 <td>1 = on</td>
-<td><code>&quot;,,1,,,,,,,,,,,,,&quot;</code></td>
+<td><code>&quot;,,1,,,,,,,,,,,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>3</td>
 <td><strong>italic</strong></td>
 <td>1 = on</td>
-<td><code>&quot;,,,1,,,,,,,,,,,,&quot;</code></td>
+<td><code>&quot;,,,1,,,,,,,,,,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>4</td>
 <td><strong>underline</strong></td>
 <td>1 = on</td>
-<td><code>&quot;,,,,1,,,,,,,,,,,&quot;</code></td>
+<td><code>&quot;,,,,1,,,,,,,,,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>5</td>
 <td><strong>strikethrough</strong></td>
 <td>1 = on</td>
-<td><code>&quot;,,,,,1,,,,,,,,,,&quot;</code></td>
+<td><code>&quot;,,,,,1,,,,,,,,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>6</td>
 <td><strong>horizontalAlign</strong></td>
 <td>2 = center</td>
-<td><code>&quot;,,,,,,2,,,,,,,,,&quot;</code></td>
+<td><code>&quot;,,,,,,2,,,,,,,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>7</td>
 <td><strong>verticalAlign</strong></td>
 <td>2 = middle</td>
-<td><code>&quot;,,,,,,,2,,,,,,,,&quot;</code></td>
+<td><code>&quot;,,,,,,,2,,,,,,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>8</td>
 <td><strong>color</strong> (text)</td>
 <td>4 = #FEEEF0</td>
-<td><code>&quot;,,,,,,,,4,,,,,,,&quot;</code></td>
+<td><code>&quot;,,,,,,,,4,,,,,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>9</td>
 <td><strong>color</strong> (background)</td>
 <td>8 = #E6F5FE</td>
-<td><code>&quot;,,,,,,,,,8,,,,,,&quot;</code></td>
+<td><code>&quot;,,,,,,,,,8,,,,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>10</td>
 <td><strong>color</strong> (taskbar)</td>
 <td>9 = #F3E5FA</td>
-<td><code>&quot;,,,,,,,,,,9,,,,,&quot;</code></td>
+<td><code>&quot;,,,,,,,,,,9,,,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>11</td>
 <td><strong>currency</strong></td>
 <td>13 = USD</td>
-<td><code>&quot;,,,,,,,,,,,13,,,,&quot;</code></td>
+<td><code>&quot;,,,,,,,,,,,13,,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>12</td>
 <td><strong>decimalCount</strong></td>
 <td>3 = three decimal places</td>
-<td><code>&quot;,,,,,,,,,,,,3,,,&quot;</code></td>
+<td><code>&quot;,,,,,,,,,,,,3,,,,&quot;</code></td>
 </tr>
 <tr>
 <td>13</td>
 <td><strong>thousandsSeparator</strong></td>
 <td>1 = on</td>
-<td><code>&quot;,,,,,,,,,,,,,1,,&quot;</code></td>
+<td><code>&quot;,,,,,,,,,,,,,1,,,&quot;</code></td>
 </tr>
 <tr>
 <td>14</td>
 <td><strong>numberFormat</strong></td>
 <td>2 = currency</td>
-<td><code>&quot;,,,,,,,,,,,,,,2,&quot;</code></td>
+<td><code>&quot;,,,,,,,,,,,,,,2,,&quot;</code></td>
 </tr>
 <tr>
 <td>15</td>
 <td><strong>textWrap</strong></td>
 <td>1 = on</td>
-<td><code>&quot;,,,,,,,,,,,,,,,1&quot;</code></td>
+<td><code>&quot;,,,,,,,,,,,,,,,1,&quot;</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td><strong>dateFormat</strong></td>
+<td>1 = mmmm d yyyy (December 8, 1997)</td>
+<td><code>&quot;,,,,,,,,,,,,,,,,1&quot;</code></td>
 </tr>
 </tbody></table>
 
-<aside class="notice">Formats that have not been explicitly set are omitted in the descriptor string. For example, a cell that has been set to bold and italic, but has no other formats applied to it, has a format descriptor of <code>",,1,1,,,,,,,,,,,,"</code>.</aside>
+<aside class="notice">Formats that have not been explicitly set are omitted in the descriptor string. For example, a cell that has been set to bold and italic, but has no other formats applied to it, has a format descriptor of <code>",,1,1,,,,,,,,,,,,,"</code>.</aside>
 
 <aside class="notice">Use <code>GET /serverinfo</code> to return the <a href="#formattables-object">FormatTables object</a>, which tells you both the default settings and what formatting options are available.</aside>
 
@@ -29704,6 +29718,10 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td><strong>currency</strong></td>
 <td>Currency codes and symbols</td>
+</tr>
+<tr>
+<td><strong>dateFormat</strong></td>
+<td>Array of strings containing available date formats</td>
 </tr>
 <tr>
 <td><strong>decimalCount</strong></td>
