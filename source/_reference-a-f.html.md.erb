@@ -31,7 +31,7 @@ Attachments can exist on a [comment](#comments) (that is, within a discussion), 
 -----|-----|-----|
 **id** | number | Attachment Id
 **parentId** | number | The Id of the parent 
-**attachmentType** | string | Attachment type (one of <b>BOX_COM</b>, <b>DROPBOX</b>, <b>EGNYTE</b>, <b>EVERNOTE</b>, <b>FILE</b>, <b>GOOGLE_DRIVE</b>, <b>LINK</b>, or <b>ONEDRIVE</b>)
+**attachmentType** | string | Attachment type (one of <b>BOX_COM</b>, <b>DROPBOX*</b>, <b>EGNYTE*</b>, <b>EVERNOTE*</b>, <b>FILE</b>, <b>GOOGLE_DRIVE</b>, <b>LINK</b>, or <b>ONEDRIVE</b>) *Not supported for all account types, see below.
 **attachmentSubType** | string | Attachment sub type, valid only for the following:<ul><li><b>EGNYTE</b> values: <b>FOLDER</b></li><li><b>GOOGLE_DRIVE</b> values: <b>DOCUMENT</b>, <b>DRAWING</b>, <b>PDF</b>, <b>PRESENTATION</b>, or <b>SPREADSHEET</b></li></ul>
 **mimeType** | string | Attachment MIME type (PNG, etc.)
 **parentType** | string | The type of object the attachment belongs to (one of <b>COMMENT</b>, <b>ROW</b>, or <b>SHEET</b>)
@@ -41,6 +41,8 @@ Attachments can exist on a [comment](#comments) (that is, within a discussion), 
 **sizeInKb** | number | The size of the file, if the attachmentType is <b>FILE</b>  
 **url** | string | Attachment temporary URL (files only)
 **urlExpiresInMillis** | number | Attachment temporary URL time to live (files only) 
+
+<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
 
 ## Post an Attachment
 
@@ -183,7 +185,7 @@ Attachment attachment = smartsheet.sheetResources().commentResources().attachmen
 ```
 
 ```python
-updated_attachment = ss_client.Attachments.attach_file_to_comment(
+updated_attachment = smartsheet_client.Attachments.attach_file_to_comment(
   9283173393803140,       # sheet_id
   1234567890234568,       # comment_id
   ('ProgressReport.docx', 
@@ -288,7 +290,7 @@ Attachment attachment = smartsheet.sheetResources().rowResources().attachmentRes
 ```
 
 ```python
-updated_attachment = ss_client.Attachments.attach_file_to_row(
+updated_attachment = smartsheet_client.Attachments.attach_file_to_row(
   9283173393803140,       # sheet_id
   0123456789012345,       # row_id
   ('ProgressReport.docx', 
@@ -390,7 +392,7 @@ Attachment attachment = smartsheet.sheetResources().attachmentResources().attach
 ```
 
 ```python
-updated_attachment = ss_client.Attachments.attach_file_to_sheet(
+updated_attachment = smartsheet_client.Attachments.attach_file_to_sheet(
   9283173393803140,       # sheet_id
   ('ProgressReport.docx', 
     open('/path/to/ProgressReport.docx', 'rb'), 
@@ -503,14 +505,14 @@ Attachment updatedAttachment = smartsheet.sheetResources().commentResources().at
 
 ```python
 # Create URL attachment
-url_spec = ss_client.models.Attachment({
+url_spec = smartsheet.models.Attachment({
   'name': 'Search Engine',
   'attachment_type': 'LINK',
   'url': 'http://www.google.com'
 })
 
 # Attach URL to comment
-updated_attachment = ss_client.Attachments.attach_url_to_comment(
+updated_attachment = smartsheet_client.Attachments.attach_url_to_comment(
   9283173393803140,       # sheet_id
   0123456789012345,       # comment_id
   url_spec)
@@ -616,7 +618,7 @@ Attachment updatedAttachment = smartsheet.sheetResources().rowResources().attach
 
 ```python
 # Create URL attachment
-url_spec = ss_client.models.Attachment({
+url_spec = smartsheet.models.Attachment({
   'name': 'Search Engine',
   'description': 'A popular search engine.'
   'attachment_type': 'LINK',
@@ -624,7 +626,7 @@ url_spec = ss_client.models.Attachment({
 })
 
 # Attach URL to row
-updated_attachment = ss_client.Attachments.attach_url_to_row(
+updated_attachment = smartsheet_client.Attachments.attach_url_to_row(
   9283173393803140,       # sheet_id
   0123456789012345,       # row_id
   url_spec)
@@ -729,7 +731,7 @@ Attachment updatedAttachment = smartsheet.sheetResources().attachmentResources()
 
 ```python
 # Create URL attachment
-url_spec = ss_client.models.Attachment({
+url_spec = smartsheet.models.Attachment({
   'name': 'Search Engine',
   'description': 'A popular search engine.',
   'attachment_type': 'LINK',
@@ -737,7 +739,7 @@ url_spec = ss_client.models.Attachment({
 })
 
 # Attach URL to sheet
-updated_attachment = ss_client.Attachments.attach_url_to_sheet(
+updated_attachment = smartsheet_client.Attachments.attach_url_to_sheet(
   9283173393803140,       # sheet_id
   url_spec)
 ```
@@ -811,7 +813,7 @@ smartsheet.sheetResources().attachmentResources().deleteAttachment(
 ```
 
 ```python
-ss_client.Attachments.delete_attachment(
+smartsheet_client.Attachments.delete_attachment(
   9283173393803140,       # sheet_id
   7169782752536452)       # attachment_id
 ```
@@ -885,7 +887,7 @@ Attachment attachment = smartsheet.sheetResources().attachmentResources().getAtt
 ```
 
 ```python
-attachment = ss_client.Attachments.get_attachment(
+attachment = smartsheet_client.Attachments.get_attachment(
   9283173393803140,       # sheet_id
   4583173393803140)       # attachment_id
 ```
@@ -963,13 +965,13 @@ PagedResult<Attachment> attachments = smartsheet.sheetResources().attachmentReso
 
 ```python
 # Sample 1: List All
-response = ss_client.Attachments.list_all_attachments(
+response = smartsheet_client.Attachments.list_all_attachments(
   9283173393803140,       # sheet_id
   include_all=True)
 attachments = response.data
 
 # Sample 2: Paginate the list of attachments
-response = ss_client.Attachments.list_all_attachments(
+response = smartsheet_client.Attachments.list_all_attachments(
   9283173393803140,       # sheet_id
   page_size=10, 
   page=1)
@@ -1070,14 +1072,14 @@ PagedResult<Attachment> attachments = smartsheet.sheetResources().discussionReso
 
 ```python
 # Sample 1: List All
-response = ss_client.Attachments.list_discussion_attachments(
+response = smartsheet_client.Attachments.list_discussion_attachments(
   9283173393803140,       # sheet_id 
   1234567890123456,       # discussion_id 
   include_all=True)
 attachments = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Attachments.list_discussion_attachments(
+response = smartsheet_client.Attachments.list_discussion_attachments(
   9283173393803140,       # sheet_id
   1234567890123456,       # discussion_id 
   page_size=10, 
@@ -1180,14 +1182,14 @@ PagedResult<Attachment> attachments = smartsheet.sheetResources().rowResources()
 
 ```python
 # Sample 1: List all
-response = ss_client.Attachments.list_row_attachments(
+response = smartsheet_client.Attachments.list_row_attachments(
   2252168947361668,       # sheet_id 
   4293147074291588,       # row_id 
   include_all=True)
 attachments = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Attachments.list_row_attachments(
+response = smartsheet_client.Attachments.list_row_attachments(
   2252168947361668,       # sheet_id 
   4293147074291588,       # row_id 
   page_size=10, 
@@ -1306,7 +1308,7 @@ Attachment attachment = smartsheet.sheetResources().attachmentResources().versio
 ```
 
 ```python
-response = ss_client.Attachments.attach_new_version(
+response = smartsheet_client.Attachments.attach_new_version(
   9283173393803140,       # sheet_id
   0123456789123456,       # attachment_id
   ('ProgressReport.docx',
@@ -1408,7 +1410,7 @@ smartsheet.sheetResources().attachmentResources().versioningResources().deleteAl
 ```
 
 ```python
-ss_client.Attachments.delete_attachment_versions(
+smartsheet_client.Attachments.delete_attachment_versions(
   9283173393803140,       # sheet_id
   0123456789123456)       # attachment_id
 ```
@@ -1486,14 +1488,14 @@ PagedResult<Attachment> attachments = smartsheet.sheetResources().attachmentReso
 
 ```python
 # Sample 1: List all
-response = ss_client.Attachments.list_attachment_versions(
+response = smartsheet_client.Attachments.list_attachment_versions(
   2252168947361668,       # sheet_id 
   5510069950408580,       # attachment_id
   include_all=True)
 versions = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Attachments.list_attachment_versions(
+response = smartsheet_client.Attachments.list_attachment_versions(
   2252168947361668,       # sheet_id  
   5510069950408580,       # attachment_id 
   page_size=5, 
@@ -1629,7 +1631,7 @@ Gets a list of all versions of the given attachmentId in order from newest to ol
 **includedColumnIds** | long[] | Specifies which columns to include in message.
 **recipientColumnIds** | long[] | Array of column Ids from which to collect email recipients.
 **type** | string | One of three types: **APPROVAL_REQUEST_ACTION**, **NOTIFICATION_ACTION**, or **UPDATE_REQUEST_ACTION**.
-**frequency** | string | Must be one of the following values: **DAILY**, **HOURLY**, **IMMEDIATELY**, or **WEEKLY**.
+**frequency** | string | Must be one of the following values: **DAILY**, **HOURLY**, **IMMEDIATELY**, or **WEEKLY**. Ignored for date-based rules.
 **includeAllColumns** | Boolean | If **true** (default), all columns are included in email contents.
 **includeAttachments** | Boolean | If **true**, includes attachments.
 **includeDiscussions** | Boolean | If **true**, includes discussions.
@@ -1913,6 +1915,8 @@ Returns all automation rules associated with the specified sheet.
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [AutomationRule objects](#automationrule-object).
 <%= SCOPE %> | READ_SHEETS
 
+<aside class="notice">Multistep workflows are not returned via the API. Instead, you'll see an error 400 - 1266: This rule is not accessible through the API. Only single-action notifications, approval requests, or update requests qualify.</aside> 
+
 <aside class="notice">For users of Smartsheet for Slack, note that Slack notifications are not returned.</aside> 
 
 ## Update an Automation Rule
@@ -2056,7 +2060,7 @@ Updates an existing automation rule.
 -----|-----|
 **APPROVAL_COLUMN_MISSING** | This rule's approval status column has been deleted.
 **APPROVAL_COLUMN_WRONG_TYPE** | The approval column must be a dropdown column.
-**AUTOMATION_NOT_ENABLED_FOR_ORG** | To create or edit automated actions, you need to upgrade your account to a Business or Enterprise plan.
+**AUTOMATION_NOT_ENABLED_FOR_ORG** | To create or edit automated actions, you need to upgrade your organization account to a Business or Enterprise plan.
 **COLUMN_MISSING** | A column referenced by this rule has been deleted.
 **COLUMN_TYPE_INCOMPATIBLE** | A column referenced by this rule has been changed to an incompatible column type.
 **NO_POTENTIAL_RECIPIENTS** | This rule has no recipients that will be able to receive notifications based on this sheet's permission settings or this account's approved domain sharing list.
@@ -2093,7 +2097,7 @@ A collection of cells comprises each row in a sheet.
 **image** | [Image](#image-object) | The image that the cell contains.<br/>Only returned if the cell contains an image.
 **linkInFromCell** | [CellLink](#celllink-object) | An inbound link from a cell in another sheet.  This cell's value mirrors the linked cell's value.
 **linksOutToCells** | [CellLink](#celllink-object)[] | An array of [CellLink objects](#celllink-object).  Zero or more outbound links from this cell to cells in other sheets whose values mirror this cell's value.
-**objectValue** | [ObjectValue](#objectvalue-object) | [Optionally included](#row-include-flags) object representation of the cell's value. Used for updating predecessor cell values.
+**objectValue** | [ObjectValue](#objectvalue-object) | [Optionally included](#row-include-flags) object representation of the cell's value. Used for updating predecessor cell values or for multi-contact details.
 **overrideValidation** | Boolean | (Admin only) Indicates whether the cell value can contain a value outside of the validation limits (value = **true**). When using this parameter, you must also set **strict** to **false** to bypass value type checking. This property is honored for `POST` or `PUT` actions that update rows.
 **strict** | Boolean | Set to **false** to enable lenient parsing. Defaults to **true**. <%= REQUEST_ONLY_ATTRIBUTE %> See [Cell Value Parsing](#cell-value-parsing) for more information about using this attribute. 
 **value** | string,<br/>number,<br/>or Boolean | A string, a number, or a Boolean value -- depending on the cell type and the data in the cell.  Cell values larger than 4000 characters are silently truncated. An empty cell returns no value. See [Cell Reference](#cell-reference).
@@ -2159,7 +2163,7 @@ This object itself is not used directly.
 
      |     |     |
 -----|-----|-----|
-**objectType** | string | One of **ABSTRACT_DATETIME**, **CONTACT**, **DATE**, **DATETIME**, **DURATION**, or **PREDECESSOR_LIST**
+**objectType** | string | One of **ABSTRACT_DATETIME**, **CONTACT**, **DATE**, **DATETIME**, **DURATION**, **MULTI_CONTACT**, or **PREDECESSOR_LIST**
 
 ### Predecessor Object
 
@@ -2288,7 +2292,7 @@ PagedResult<CellHistory> cellHistory = smartsheet.sheetResources().rowResources(
 
 ```python
 # Sample 1: Get history
-response = ss_client.Cells.get_cell_history(
+response = smartsheet_client.Cells.get_cell_history(
   9283173393803140,       # sheet_id
   0123456789012345,       # row_id
   4567890123456789,       # column_id
@@ -2296,7 +2300,7 @@ response = ss_client.Cells.get_cell_history(
 revisions = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Cells.get_cell_history(
+response = smartsheet_client.Cells.get_cell_history(
   9283173393803140,       # sheet_id
   0123456789012345,       # row_id
   4567890123456789,       # column_id
@@ -2370,7 +2374,8 @@ Gets the cell modification history.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional): when specified with a value of **columnType**, response includes the **columnType** attribute for each [Cell object](#cell-object)
+<%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>**columnType** -- includes the **columnType** attribute for each [Cell object](#cell-object)</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for a multi-contact cell.</li></ul>
+ | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Cell History objects](#cell-history-object). For more details, see [Cell Reference](#cell-reference).
 <%= SCOPE %> | READ_SHEETS
@@ -2397,8 +2402,7 @@ A cell may not contain both a hyperlink and a cell link, so **hyperlink** and **
 #### Cell Value Representation
 
 [Cell objects](#cell-object) retrieved through the Smartsheet APIs have two main attributes representing cell values: **Cell.value**, and
-**Cell.displayValue**.  A third attribute, **Cell.objectValue** is currently used only for adding and updating predecessors.
-An empty cell returns no value.
+**Cell.displayValue**. A third attribute, **Cell.objectValue** is currently used only for adding and updating predecessors, or for multi-contact details, such as email addresses. An empty cell returns no value.
 
 **Cell.displayValue** is always a string and is only returned for certain column types (see below).  It represents the formatted value as it should
 be displayed to an end-user.  For example, if a TEXT_NUMBER column is formatted as a US Dollar currency, its **value** may be a number
@@ -2416,13 +2420,16 @@ CHECKBOX | Boolean: **true** if the checkbox is checked, **false** if unchecked,
 CONTACT_LIST | string: an email address representing a contact, or a free-form text value. | Yes: same as **value** for free-form strings; for contacts, the contact's name if any, else their email address.
 DATE | string: a date in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format, or a free-form text value.<br/>number: see [Dates and Times](#dates-and-times) for how to request dates to be returned as numbers. | No.
 DURATION | string: a duration value such as "4d 6h 30m" in the user's locale, or a free-form text value.<br/>See the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>) for more information on durations. | Yes: same as **value**
+MULTI_CONTACT_LIST | string: only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying, otherwise the column type is TEXT_NUMBER. | Yes: same as **value**; to see actual email addresses, see below.
 PICKLIST | string: one of the picklist's column options, or a free-form text value.<br/>number: numeric values | Yes: same as **value** for strings; for number values, the number with formatting applied.
 PREDECESSOR	| string: a comma-delimited predecessor list such as "12FS +3d 4h, 14SS", or a free-form text value.<br/>See the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>) for more information on predecessors. | Yes: same as **value**
 TEXT_NUMBER	| string: free-form text values<br/>number: numeric values | Yes: same as **value** for strings; for number values, the number with formatting applied.
 
-**Cell.objectValue** is an object representation of a cell's value and is currently used for adding or updating predecessor cell values.
-It provides a more "programmer friendly" format for assembling predecessors. To update a cell's predecessors, set **objectValue** to a
+**Cell.objectValue** is an object representation of a cell's value and is currently used for adding or updating predecessor cell values, or for multi-contact details, such as email addresses.
+
+* For predecessors, it provides a more "programmer friendly" format for assembling predecessors. To update a cell's predecessors, set **objectValue** to a
 [PredecessorList object](#predecessorlist-object) containing [Predecessor objects](#predecessor-object).
+* For multi-contact details, use both a level query parameter *and* an **include=objectValue** query to see email addresses rather than display names.
 
 #### Cell Value Parsing
 
@@ -2481,6 +2488,12 @@ The parsing rules for the various column types are as follows:
 **strict** | Only valid duration strings in the user's locale are valid. Information on duration strings can be found in [Help Center](<%= PROJECT_COLUMN_HELP_URL %>).
 
 <aside class="notice">You may use the query string parameter <b>projectParseLocale</b> with a <a href="#server-information">supported locale string</a> to force parsing in the specified locale (for example, using <b>en_US</b> lets you send in English values regardless of the user's locale).</aside>
+
+**MULTI_CONTACT_LIST**
+
+     |     |
+-----|-----|
+N/A | Set using the **objectValue** attribute for the Cell object, which is inherently strict. See [Cell Reference](#cell-reference).
 
 **PICKLIST**
 
@@ -2651,7 +2664,7 @@ column_id = 74761903175665540
 row_id = 1049441315358596
 caution_pic = "/Users/jdoe/Documents/images/img_pl_decisionshapesHold.png"
 file_type = "png"
-ss_client.Cells.add_image_to_cell(sheet_id, row_id, column_id, caution_pic, file_type)
+smartsheet_client.Cells.add_image_to_cell(sheet_id, row_id, column_id, caution_pic, file_type)
 ```
 
 ```ruby
@@ -2757,7 +2770,39 @@ curl -o "stanley_hotel.png" "https://aws.smartsheet.com/storageProxy/image/image
 ```
 
 ```javascript
-// [todo]
+var fs = require('fs');
+var request = require('request');
+
+var sheetId = 1639534409607044;
+var rowId = 3344087179913092;
+var columnId = 1735559124150148;
+
+//  Step 1: Identify the cell that contains an image
+
+smartsheet.sheets.getRow({
+  sheetId: sheetId,
+  rowId: rowId
+}).then(row => {
+  var cell = row.cells.find(cell => cell.columnId === columnId);
+
+// Step 2: Get image info from cell
+
+  var image = cell.image;
+  var imageId = image.id;
+  var localFileName = image.altText;
+
+// Step 3: Build list of image URLs
+
+smartsheet.images.listImageUrls({
+    body: [{imageId: imageId}]
+  }).then(result => {
+    var imageUrl = result.imageUrls[0].url;
+
+// Step 4: Download the image
+
+    request(imageUrl).pipe(fs.createWriteStream(localFileName));
+  });
+});
 ```
 
 ```csharp
@@ -2829,7 +2874,7 @@ rowId = 3344087179913092
 columnId = 1735559124150148
 
 # Steps 1 and 2: Locate the cell and obtain the imageId
-row = ss_client.Sheets.get_row(sheet_id, row_id)
+row = smartsheet_client.Sheets.get_row(sheet_id, row_id)
 cell = row.get_column(column_id)
 image = cell.image
 image_id = image.id
@@ -2838,8 +2883,8 @@ image_id = image.id
 filename = getattr(image, 'alt_text', default_filename)
 
 # Step 3: Obtain a temporary image URL
-imageUrl = ss_client.models.ImageUrl( { "imageId": image_id } )
-response = ss_client.Images.get_image_urls([imageUrl])
+imageUrl = smartsheet.models.ImageUrl( { "imageId": image_id } )
+response = smartsheet_client.Images.get_image_urls([imageUrl])
 url = response.image_urls[0].url
 
 # Step 4: Download the image
@@ -2947,7 +2992,7 @@ String temporaryUrl = smartsheet.imageUrlResources().getImageUrls(imageUrls).get
 ```
 
 ```python
-imageUrl = ss_client.models.ImageUrl(
+imageUrl = smartsheet.models.ImageUrl(
   {
     "imageId": 'jpbGklqdfZuL4Jw-kZhdZA',
     "height": 256,
@@ -2955,7 +3000,7 @@ imageUrl = ss_client.models.ImageUrl(
   }
 )
 
-response = ss_client.Images.get_image_urls([imageUrl])
+response = smartsheet_client.Images.get_image_urls([imageUrl])
 url = response.image_urls[0].url
 ```
 
@@ -3030,12 +3075,15 @@ A column is a component of a sheet or report.
 
 ```json
 {
-	"id": 7960873114331012,
-	"index": 0,
-	"symbol": "STAR",
-	"title": "Favorite",
-	"type": "CHECKBOX",
-	"validation": false
+  "id": 7960873114331012,
+  "version": 0,
+  "index": 0,
+  "symbol": "STAR",
+  "title": "Favorite",
+  "description": "Sample description",
+  "type": "CHECKBOX",
+  "validation": false,
+  "width": 150
 }
 ```
 
@@ -3043,9 +3091,10 @@ A column is a component of a sheet or report.
 -----|-----|-----|
 **id** | number | Column Id
 **systemColumnType** | string | When applicable, one of: **AUTO_NUMBER**, **CREATED_BY**, **CREATED_DATE**, **MODIFIED_BY**, **MODIFIED_DATE**. See [System Columns](#system-columns).
-**type** | string | One of:<ul><li>**ABSTRACT_DATETIME**</li><li>**CHECKBOX**</li><li>**CONTACT_LIST**</li><li>**DATE**</li><li>**DATETIME**</li><li>**DURATION**</li><li>**PICKLIST**</li><li>**PREDECESSOR**</li><li>**TEXT_NUMBER**</li></ul>See [Column Types](#column-types).
+**type** | string | One of:<ul><li>**ABSTRACT_DATETIME**</li><li>**CHECKBOX**</li><li>**CONTACT_LIST**</li><li>**DATE**</li><li>**DATETIME**</li><li>**DURATION**</li><li>**MULTI_CONTACT_LIST**</li><li>**PICKLIST**</li><li>**PREDECESSOR**</li><li>**TEXT_NUMBER**</li></ul>See [Column Types](#column-types).
 **autoNumberFormat** | [AutoNumberFormat](#autonumberformat-object) | Present when **systemColumnType** == **AUTO_NUMBER**
 **contactOptions** | [ContactOption](#contactoption-object)[] | Array of ContactOption objects to specify a pre-defined list of values for the column. Column **type** must be **CONTACT_LIST** 
+**description** | string | Column description. 
 **format** | string | The format descriptor (see [Formatting](#formatting))<br/>Only returned if the **include** query string parameter contains **format** and this column has a non-default format applied to it.
 **hidden** | Boolean | Indicates whether the column is hidden
 **index** | number | Column index or position. This number is zero-based. 
@@ -3054,9 +3103,10 @@ A column is a component of a sheet or report.
 **options** | string[] | Array of the options available for the column
 **primary** | Boolean | Returned only if the column is the Primary Column (value = **true**)
 **symbol** | string | When applicable for **CHECKBOX** or **PICKLIST** column types. See [Symbol Columns](#symbol-columns).
-**tags** | string[] | Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li>**CALENDAR_END_DATE**</li><li>**CALENDAR_START_DATE**</li><li>**GANTT_ALLOCATION**</li><li>**GANTT_ASSIGNED_RESOURCE**</li><li>**GANTT_DISPLAY_LABEL**</li><li>**GANTT_DURATION**</li><li>**GANTT_END_DATE**</li><li>**GANTT_PERCENT_COMPLETE**</li><li>**GANTT_PREDECESSOR**</li><li>**GANTT_START_DATE**</li></ul>
+**tags** | string[] | Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li>**CALENDAR_END_DATE**</li><li>**CALENDAR_START_DATE**</li><li>**CARD_DONE**</li><li>**GANTT_ALLOCATION**</li><li>**GANTT_ASSIGNED_RESOURCE**</li><li>**GANTT_DISPLAY_LABEL**</li><li>**GANTT_DURATION**</li><li>**GANTT_END_DATE**</li><li>**GANTT_PERCENT_COMPLETE**</li><li>**GANTT_PREDECESSOR**</li><li>**GANTT_START_DATE**</li></ul>
 **title** | string | Column title
 **validation** | Boolean | Indicates whether validation has been enabled for the column (value = **true**)
+**version** | number | A zero-based integer indicating whether the column allows multi-contact data. A value of **0** indicates the data will be stored as text and the column type will be TEXT_NUMBER, a value of **1** for sheets and reports or a value of **2** for Sights (aka dashboards) indicates the data will be stored as contacts and the column type will be MULTI_CONTACT_LIST. If not specified, the default value is 0 for sheets and reports or 1 for Sights (aka dashboards). 
 **width** | number | Display width of the column in pixels
 
 ### ContactOption Object
@@ -3165,7 +3215,7 @@ List<Column> newColumns = smartsheet.sheetResources().columnResources().addColum
 
 ```python
 # Create the columns
-column1 = ss_client.models.Column({
+column1 = smartsheet.models.Column({
   'title': 'New Picklist Column 1',
   'type': 'PICKLIST',
   'options': [
@@ -3176,15 +3226,15 @@ column1 = ss_client.models.Column({
   'index': 4
 })
 
-column2 = ss_client.models.Column({
+column2 = smartsheet.models.Column({
   'title': 'New Date Column',
   'type': 'DATE',
-  'validation': 'true',
+  'validation': 'True',
   'index': 4
 })
 
 # Add columns to the sheet
-new_columns = ss_client.Sheets.add_columns(
+new_columns = smartsheet_client.Sheets.add_columns(
   2252168947361668,       # sheet_id
   [column1, column2])
 ```
@@ -3254,7 +3304,7 @@ Inserts one or more columns into the sheet specified in the URL. <%= SUPPORTS_MU
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Column object](#column-object) or an array of Column objects, with the following attributes:<ul><li>**title**</li><li>**type**</li><li>**autoNumberFormat** (optional)</li><li>**index** (zero-based, optional)</li><li>**locked** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**validation** (optional)</li><li>**width** (optional)</li></ul>
+<%= REQUEST %> | [Column object](#column-object) or an array of Column objects, with the following attributes:<ul><li>**title**</li><li>**type**</li><li>**index** (zero-based)</li><li>**autoNumberFormat** (optional)</li><li>**description** (optional)</li><li>**locked** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**validation** (optional)</li><li>**width** (optional)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the newly created columns -- either a single [Column object](#column-object) or an array of Column objects, corresponding to what was specified in the request.
 <%= SCOPE %> | ADMIN_SHEETS
 
@@ -3302,7 +3352,7 @@ smartsheet.sheetResources().columnResources().deleteColumn(
 ```
 
 ```python
-ss_client.Sheets.delete_column(
+smartsheet_client.Sheets.delete_column(
   9283173393803140,       # sheet_id
   0123456789012345)       # column_id
 ```
@@ -3392,7 +3442,7 @@ Column column = smartsheet.sheetResources().columnResources().getColumn(
 ```
 
 ```python
-column = ss_client.Sheets.get_column(
+column = smartsheet_client.Sheets.get_column(
   9283173393803140,       # sheet_id
   7960873114331012)       # column_id
 ```
@@ -3424,6 +3474,7 @@ Gets the column specified in the URL.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
 <%= RETURNS %> | [Column object](#column-object)
 <%= SCOPE %> | READ_SHEETS
 
@@ -3471,7 +3522,7 @@ PagedResult<Column> columns = smartsheet.sheetResources().columnResources().list
 ```
 
 ```python
-response = ss_client.Sheets.get_columns(
+response = smartsheet_client.Sheets.get_columns(
   9283173393803140,       # sheet_id
   include_all=True)
 columns = response.data
@@ -3528,6 +3579,7 @@ Gets a list of all columns belonging to the sheet specified in the URL.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
+  | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Column objects](#column-object)
 <%= SCOPE %> | READ_SHEETS
 
@@ -3603,7 +3655,7 @@ Column updatedColumn = smartsheet.sheetResources().columnResources().updateColum
 
 ```python
 # Specify column properties
-column_spec = ss_client.models.Column({
+column_spec = smartsheet.models.Column({
   'title': 'First Column',
   'type': 'PICKLIST',
   'options': ["One", "Two"],
@@ -3611,7 +3663,7 @@ column_spec = ss_client.models.Column({
 })
 
 # Update column
-response = ss_client.Sheets.update_column(
+response = smartsheet_client.Sheets.update_column(
   2252168947361668,       # sheet_id
   5005385858869124,       # column_id
   column_spec)
@@ -3670,7 +3722,7 @@ Updates properties of the column, moves the column, and/or renames the column.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | A [Column object](#column-object) that contains the following attributes:<ul><li>**index**</li><li>**title** -- required when creating a column, optional after that</li><li>**autoNumberFormat** (optional)</li><li>**contactOptions** (optional) -- must have set column type to **CONTACT_LIST**</li><li>**format** (optional)</li><li>**hidden** (optional)</li><li>**locked** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**type** (optional)</li><li>**validation** (optional)</li><li>**width** (optional)</li></ul>
+<%= REQUEST %> | A [Column object](#column-object) that contains the following attributes:<ul><li>**index**</li><li>**autoNumberFormat** (optional)</li><li>**contactOptions** (optional) -- must have set column type to **CONTACT_LIST**</li><li>**description** (optional)</li><li>**format** (optional)</li><li>**hidden** (optional)</li><li>**locked** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**title** (optional)</li><li>**type** (optional)</li><li>**validation** (optional)</li><li>**width** (optional)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the [Column object](#column-object) that was modified
 <%= SCOPE %> | ADMIN_SHEETS
 
@@ -3684,7 +3736,8 @@ Column Type | Column.type Value | Notes |
 ------------|--------------------------|-------|
 Checkbox 		| **CHECKBOX**		| Checkbox, star, and flag types
 Contact List	| **CONTACT_LIST**	| List containing contacts or roles for a project. **NOTE:** You can use the [contactOptions](#contactoption-object) property to specify a pre-defined list of values for the column, which can also become lanes in card view. 
-Date			| **DATE**			|
+Contact List | **MULTI_CONTACT_LIST** | List where single cells can contain more than one contact. Only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying. To see email addresses behind the display names, combine an **include=objectValue** query parameter with a **level** query parameter. 
+Date			| **DATE** |
 Date/Time 		| **ABSTRACT_DATETIME** | Represents a project sheet's start and end dates.<br/>**Only for dependency-enabled project sheets**<br/>The API does not support setting a column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.) Additionally, the API does not support updating data in the "End Date" column under any circumstance, and does not support updating data in the "Start Date" column if "Predecessor" is set for that row.
 Date/Time		| **DATETIME**		| Used only by the following system-generated columns: <ul><li>Created (Date) (**Column.systemColumnType** = **CREATED_DATE**)</li><li>Modified (Date) (**Column.systemColumnType** = **MODIFIED_DATE**)</li></ul>
 Dropdown List	| **PICKLIST**		| Custom, RYG, Harvey ball, priority types, etc.
@@ -3848,10 +3901,10 @@ Comment newComment = smartsheet.sheetResources().discussionResources().commentRe
 ```
 
 ```python
-response = ss_client.Discussions.add_comment_to_discussion(
+response = smartsheet_client.Discussions.add_comment_to_discussion(
   2252168947361668,       # sheet_id
   3962273862576004,       # discussion_id
-  ss_client.models.Comment({
+  smartsheet.models.Comment({
     'text': 'This is a new comment.'
   })
 )
@@ -3920,12 +3973,12 @@ smartsheet.sheetResources().discussionResources().commentResources().addCommentW
 
 ```python
 # Create comment
-comment = ss_client.models.Comment({
+comment = smartsheet.models.Comment({
   'text': 'This is a new comment.'
 })
 
 # Add comment (with attachment) to discussion
-response = ss_client.Discussions.add_comment_to_discussion_with_attachment(
+response = smartsheet_client.Discussions.add_comment_to_discussion_with_attachment(
   2252168947361668,           # sheet_id
   3962273862576004,           # discussion_id
   comment,
@@ -4031,10 +4084,10 @@ Comment updatedComment = smartsheet.SheetResources.DiscussionResources.CommentRe
 ```
 
 ```python
-comment = ss_client.Discussions.update_comment(
+comment = smartsheet_client.Discussions.update_comment(
   3285357287499652,       # sheet_id
   7144101943502724,       # comment_id
-  ss_client.models.Comment({
+  smartsheet.models.Comment({
     'text': 'This is the updated comment text'}))
 ```
 
@@ -4127,7 +4180,7 @@ smartsheet.sheetResources().commentResources().deleteComment(
 ```
 
 ```python
-ss_client.Discussions.delete_discussion_comment(
+smartsheet_client.Discussions.delete_discussion_comment(
   2252168947361668,       # sheet_id
   4952999001909124)       # comment_id
 ```
@@ -4200,7 +4253,7 @@ Comment comment = smartsheet.sheetResources().commentResources().getComment(
 ```
 
 ```python
-comment = ss_client.Discussions.get_discussion_comment(
+comment = smartsheet_client.Discussions.get_discussion_comment(
   2252168947361668,       # sheet_id
   4856934849340120)       # comment_id
 ```
@@ -4303,7 +4356,7 @@ Contact contact = smartsheet.contactResources().getContact(
 ```
 
 ```python
-contact = ss_client.Contacts.get_contact(
+contact = smartsheet_client.Contacts.get_contact(
   'AAAAATYU54QAD7_fNhTnhA')       # contact_id
 ```
 
@@ -4368,11 +4421,11 @@ PagedResult<Contact> contacts = smartsheet.contactResources().listContacts(
 
 ```python
 # Sample 1: List all
-response = ss_client.Contacts.list_contacts(include_all=True)
+response = smartsheet_client.Contacts.list_contacts(include_all=True)
 contacts = response.data
 
 # Sample 2: Paginate the list (100 contacts per page)
-response = ss_client.Contacts.list_contacts(
+response = smartsheet_client.Contacts.list_contacts(
   page_size=100,
   page=1)
 pages = response.total_pages
@@ -4476,7 +4529,24 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences \
 ```
 
 ```javascript
-// Not yet implemented
+var body = {
+  name: "my cross sheet reference",
+  sourceSheetId: 154378742065028,
+  startRowId: 4089096300717956,
+  endRowId: 2681721417164676,
+  "startColumnId": 824812248557444,
+	"endColumnId": 824812248557444
+};
+
+smartsheet.sheets.createCrossSheetReference({sheetId: 456745674567, body: body})
+  .then((result) => {
+    console.log("success");
+    console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 
 ```csharp
@@ -4488,7 +4558,16 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences \
 ```
 
 ```python
-# Not yet implemented
+xref = smartsheet.models.CrossSheetReference({
+    'name': 'Sample Time Log Sheet Range 1',
+    'source_sheet_id': 154378742065028,
+    'start_row_id': 4089096300717956,
+    'end_row_id': 2681721417164676,
+    'start_column_id': 824812248557444,
+    'end_column_id': 824812248557444
+})
+result = smartsheet_client.Sheets.create_cross_sheet_reference(
+  1755440242550660, xref)
 ```
 
 ```ruby
@@ -4543,7 +4622,15 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences/{cross
 ```
 
 ```javascript
-// Not yet implemented
+smartsheet.sheets.getCrossSheetReference({sheetId: 9283173393803140, crossSheetReferenceId: 8157685695702916})
+  .then((result) => {
+    console.log("success");
+    console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 
 ```csharp
@@ -4555,7 +4642,8 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences/{cross
 ```
 
 ```python
-# Not yet implemented
+result = smartsheet_client.Sheets.get_cross_sheet_reference(
+  9283173393803140, 8157685695702916)
 ```
 
 ```ruby
@@ -4600,7 +4688,15 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences \
 ```
 
 ```javascript
-// Not yet implemented
+smartsheet.sheets.listCrossSheetReferences({sheetId: 9283173393803140})
+  .then((result) => {
+    console.log("success");
+    console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+    console.log("error");
+    console.log(JSON.stringify(error));
+  });
 ```
 
 ```csharp
@@ -4612,7 +4708,8 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/crosssheetreferences \
 ```
 
 ```python
-# Not yet implemented
+result = smartsheet_client.Sheets.list_cross_sheet_references(
+  9283173393803140)
 ```
 
 ```ruby
@@ -4792,11 +4889,11 @@ Discussion newDiscussion = smartsheet.sheetResources().rowResources().discussion
 ```
 
 ```python
-response = ss_client.Discussions.create_discussion_on_row(
+response = smartsheet_client.Discussions.create_discussion_on_row(
   9283173393803140,           # sheet_id
   0123456789012345,           # row_id
-  ss_client.models.Discussion({
-    'comment': ss_client.models.Comment({
+  smartsheet.models.Discussion({
+    'comment': smartsheet.models.Comment({
       'text': 'This text is the body of the first comment'
     })
   })
@@ -4881,11 +4978,11 @@ Discussion newDiscussion = smartsheet.sheetResources().rowResources().discussion
 
 ```python
 # Add discussion to row
-response = ss_client.Discussions.create_discussion_on_row_with_attachment(
+response = smartsheet_client.Discussions.create_discussion_on_row_with_attachment(
   9283173393803140,       # sheet_id
   0123456789012345,       # row_id
-  ss_client.models.Discussion({
-    'comment': ss_client.models.Comment({
+  smartsheet.models.Discussion({
+    'comment': smartsheet.models.Comment({
       'text': 'This text is the body of the first comment'
     })
   }),
@@ -4986,10 +5083,10 @@ Discussion newDiscussion = smartsheet.sheetResources().discussionResources().cre
 ```
 
 ```python
-response = ss_client.Discussions.create_discussion_on_sheet(
+response = smartsheet_client.Discussions.create_discussion_on_sheet(
   9283173393803140,           # sheet_id
-  ss_client.models.Discussion({
-    'comment': ss_client.models.Comment({
+  smartsheet.models.Discussion({
+    'comment': smartsheet.models.Comment({
       'text': 'This text is the body of the first comment'
     })
   })
@@ -5069,10 +5166,10 @@ Discussion newDiscussion = smartsheet.sheetResources().discussionResources().cre
 ```
 
 ```python
-response = ss_client.Discussions.create_discussion_on_sheet_with_attachment(
+response = smartsheet_client.Discussions.create_discussion_on_sheet_with_attachment(
   9283173393803140,           # sheet_id
-  ss_client.models.Discussion({
-    'comment': ss_client.models.Comment({
+  smartsheet.models.Discussion({
+    'comment': smartsheet.models.Comment({
       'text': 'This text is the body of the first comment'
     })
   }),
@@ -5144,7 +5241,7 @@ smartsheet.sheetResources().discussionResources().deleteDiscussion(
 ```
 
 ```python
-ss_client.Discussions.delete_discussion(
+smartsheet_client.Discussions.delete_discussion(
   9283173393803140,       # sheet_id
   0123456789012345)       # discussion_id
 ```
@@ -5241,13 +5338,13 @@ PagedResult<Discussion> results = smartsheet.sheetResources().discussionResource
 
 ```python
 # Sample 1: List all
-response = ss_client.Discussions.get_all_discussions(
+response = smartsheet_client.Discussions.get_all_discussions(
   9283173393803140,       # sheet_id
   include_all=True)
 discussions = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Discussions.get_all_discussions(
+response = smartsheet_client.Discussions.get_all_discussions(
   9283173393803140,       # sheet_id
   page_size=10,
   page=1)
@@ -5313,11 +5410,11 @@ Discussion discussion = smartsheet.sheetResources().discussionResources().getDis
 ```
 
 ```python
-discussion = ss_client.Discussions.get_discussion(
+discussion = smartsheet_client.Discussions.get_discussion(
   9283173393803140,       # sheet_id
   0123456789012345)       # discussion_id
 
-# discussion is an instance of ss_client.models.Discussion
+# discussion is an instance of smartsheet.models.Discussion
 ```
 
 ```ruby
@@ -5428,14 +5525,14 @@ PagedResult<Discussion> results = smartsheet.sheetResources().rowResources().dis
 
 ```python
 # Sample 1: List all
-response = ss_client.Discussions.get_row_discussions(
+response = smartsheet_client.Discussions.get_row_discussions(
   2252168947361668,               # sheet_id
   4293147074291588,               # row_id
   include_all=True)
 discussions = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Discussions.get_row_discussions(
+response = smartsheet_client.Discussions.get_row_discussions(
   2252168947361668,               # sheet_id
   4293147074291588,               # row_id
   page_size=10)
@@ -5558,8 +5655,8 @@ List<Favorite> newFavorite = smartsheet.favoriteResources().addFavorites(Arrays.
 ```
 
 ```python
-response = ss_client.Favorites.add_favorites([
-  ss_client.models.Favorite({
+response = smartsheet_client.Favorites.add_favorites([
+  smartsheet.models.Favorite({
     'type': 'sheet',
     'object_id': 8400677765441412
   })
@@ -5639,7 +5736,7 @@ PagedResult<Favorite> results = smartsheet.favoriteResources().listFavorites(
 ```
 
 ```python
-response = ss_client.Favorites.list_favorites(include_all=True)
+response = smartsheet_client.Favorites.list_favorites(include_all=True)
 faves = response.data
 ```
 
@@ -5723,7 +5820,7 @@ smartsheet.favoriteResources().removeFavorites(
 ```
 
 ```python
-ss_client.Favorites.remove_favorites(
+smartsheet_client.Favorites.remove_favorites(
   'folder', 
   2252168947361668        # folder_id
 )
@@ -5786,7 +5883,7 @@ smartsheet.favoriteResources().removeFavorites(
 ```
 
 ```python
-ss_client.Favorites.remove_favorites(
+smartsheet_client.Favorites.remove_favorites(
   'report', 
   2252168947361668        # report_id
 )
@@ -5849,7 +5946,7 @@ smartsheet.favoriteResources().removeFavorites(
 ```
 
 ```python
-ss_client.Favorites.remove_favorites(
+smartsheet_client.Favorites.remove_favorites(
   'sheet', 
   2252168947361668        # sheet_id
 )
@@ -5906,7 +6003,7 @@ smartsheet.favorites.removeSightFromFavorites(options)
 ```
 
 ```python
-ss_client.Favorites.remove_favorites(
+smartsheet_client.Favorites.remove_favorites(
   'sight',
   6327127650920324        # sight_id
 )
@@ -5978,7 +6075,7 @@ smartsheet.favoriteResources().removeFavorites(
 ```
 
 ```python
-ss_client.Favorites.remove_favorites(
+smartsheet_client.Favorites.remove_favorites(
   'template', 
   2252168947361668        # template_id
 )
@@ -6041,7 +6138,7 @@ smartsheet.favoriteResources().removeFavorites(
 ```
 
 ```python
-ss_client.Favorites.remove_favorites(
+smartsheet_client.Favorites.remove_favorites(
   'workspace', 
   2252168947361668        # workspace_id
 )
@@ -6108,7 +6205,7 @@ smartsheet.favoriteResources().removeFavorites(
 ```
 
 ```python
-ss_client.Favorites.remove_favorites(
+smartsheet_client.Favorites.remove_favorites(
   'folder', 
   [2252168947361668, 2252168947361669]        # folder_ids
 )
@@ -6173,7 +6270,7 @@ smartsheet.favoriteResources().removeFavorites(
 ```
 
 ```python
-ss_client.Favorites.remove_favorites(
+smartsheet_client.Favorites.remove_favorites(
   'report', 
   [2252168947361668, 2252168947361669]        # report_ids
 )
@@ -6238,7 +6335,7 @@ smartsheet.favoriteResources().removeFavorites(
 ```
 
 ```python
-ss_client.Favorites.remove_favorites(
+smartsheet_client.Favorites.remove_favorites(
   'sheet', 
   [2252168947361668, 2252168947361669]        # sheet_ids
 )
@@ -6297,7 +6394,7 @@ smartsheet.favorites.removeSightsFromFavorites(options)
 ```
 
 ```python
-ss_client.Favorites.remove_favorites(
+smartsheet_client.Favorites.remove_favorites(
   'sight',
   [6327127650920324, 3404239197235076]        # sight_ids
 )
@@ -6362,7 +6459,7 @@ smartsheet.favoriteResources().removeFavorites(
 ```
 
 ```python
-ss_client.Favorites.remove_favorites(
+smartsheet_client.Favorites.remove_favorites(
   'template', 
   [2252168947361668, 2252168947361669]        # template_ids
 )
@@ -6427,7 +6524,7 @@ smartsheet.favoriteResources().removeFavorites(
 ```
 
 ```python
-ss_client.Favorites.remove_favorites(
+smartsheet_client.Favorites.remove_favorites(
   'workspace', 
   [2252168947361668, 2252168947361669]        # workspace_ids
 )
@@ -6579,9 +6676,9 @@ Folder folder = smartsheet.folderResources().copyFolder(
 ```
 
 ```python
-response = ss_client.Folders.copy_folder(
+response = smartsheet_client.Folders.copy_folder(
   2252168947361668,                           # folder_id
-  ss_client.models.ContainerDestination({
+  smartsheet.models.ContainerDestination({
     'destination_id': 7960873114331012,
     'destination_type': 'folder',
     'new_name': 'newFolderName'
@@ -6626,7 +6723,6 @@ Creates a copy of the specified folder.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>**attachments**</li><li>**cellLinks**</li><li>**data** -- includes formatting</li><li>**discussions** -- includes comments</li><li>**filters**</li><li>**forms**</li><li>**ruleRecipients** -- includes notification recipients, must also include **rules** when using this attribute</li><li>**rules** -- includes notifications and workflow rules</li><li>**shares**</li><li>**all** - deprecated</li></ul><i>NOTE</i>: Cell history is not copied, regardless of which **include** parameter values are specified.
- | **omit** (optional) -- when specified with a value of **sheetHyperlinks**, excludes this category from the response
  | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created folder:<ul><li>**cellLinks**</li><li>**reports**</li><li>**sheetHyperlinks**</li><li>**sights**</li></ul>By default, all cell links, reports, sheet hyperlinks, and Sights that reference objects in the source folder are re-mapped to reference corresponding objects in the newly created folder. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If **cellLinks** is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created folder continue to point to the original source sheets.</li><li>If **reports** is specified in the <b>skipRemap</b> parameter value, the reports within the newly created folder continue to point to the original source sheets.</li><li>If **sheetHyperlinks** is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created folder continue to point to the original source sheets.</li><li>If **sights** is specified in the <b>skipRemap</b> parameter value, the widgets within Sights in the newly created folder continue to point to the original source sheets / reports.</li></ul>
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Folder object](#folder-object) for the newly created folder
@@ -6687,7 +6783,7 @@ Folder newFolder = smartsheet.homeResources().folderResources().createFolder(fol
 ```
 
 ```python
-new_folder = ss_client.Home.create_folder('New Folder')
+new_folder = smartsheet_client.Home.create_folder('New Folder')
 ```
 
 ```ruby
@@ -6766,7 +6862,7 @@ Folder newFolder = smartsheet.folderResources().createFolder(
 ```
 
 ```python
-response = ss_client.Folders.create_folder_in_folder(
+response = smartsheet_client.Folders.create_folder_in_folder(
   7960873114331012,       # folder_id
   'New folder')
 ```
@@ -6850,7 +6946,7 @@ Folder newFolder = smartsheet.workspaceResources().folderResources().createFolde
 ```
 
 ```python
-new_workspace = ss_client.Workspaces.create_folder_in_workspace(
+new_workspace = smartsheet_client.Workspaces.create_folder_in_workspace(
   1656220827314052,       # workspace_id
   'New folder')
 ```
@@ -6915,7 +7011,7 @@ smartsheet.folderResources().deleteFolder(
 ```
 
 ```python
-ss_client.Folders.delete_folder(
+smartsheet_client.Folders.delete_folder(
   7960873114331012)       # folder_id
 ```
 
@@ -6999,7 +7095,7 @@ Folder folder = smartsheet.folderResources().getFolder(
 ```
 
 ```python
-folder = ss_client.Folders.get_folder(
+folder = smartsheet_client.Folders.get_folder(
   7116448184199044)       # folder_id
 ```
 
@@ -7054,7 +7150,7 @@ Gets the specified folder (and lists its contents).
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li></ul>
 <%= RETURNS %> | [Folder object](#folder-object), populated according to the **include** parameter<br/><br/>NOTE: If no folders, reports, sheets, Sights, or templates are present in the folder, the corresponding attribute (for example, **folders**, **sheets**) is not present in the response.
 <%= SCOPE %> | READ_SHEETS
 
@@ -7098,11 +7194,11 @@ PagedResult<Folder> folders = smartsheet.homeResources().folderResources().listF
 
 ```python
 # Sample 1: List all
-response = ss_client.Home.list_folders(include_all=True)
+response = smartsheet_client.Home.list_folders(include_all=True)
 home_sheets_folders = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Home.list_folders(
+response = smartsheet_client.Home.list_folders(
   page_size=5,
   page=1)
 pages = response.total_pages
@@ -7168,13 +7264,13 @@ PagedResult<Folder> folders = smartsheet.folderResources().listFolders(
 
 ```python
 # Sample 1: List all
-response = ss_client.Folders.list_folders(
+response = smartsheet_client.Folders.list_folders(
   5107651446105988,       # folder_id
   include_all=True)
 folders = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Folders.list_folders(
+response = smartsheet_client.Folders.list_folders(
   5107651446105988,       # folder_id
   page_size=5,
   page=1)
@@ -7243,13 +7339,13 @@ PagedResult<Folder> folders = smartsheet.workspaceResources().folderResources().
 
 ```python
 # Sample 1: List all
-response = ss_client.Workspaces.list_folders(
+response = smartsheet_client.Workspaces.list_folders(
   1656220827314052,       # workspace_id
   include_all=True)
 folders = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Workspaces.list_folders(
+response = smartsheet_client.Workspaces.list_folders(
   1656220827314052,       # workspace_id
   page_size=5,
   page=1)
@@ -7340,9 +7436,9 @@ Folder folder = smartsheet.folderResources().moveFolder(
 ```
 
 ```python
-folder = ss_client.Folders.move_folder(
+folder = smartsheet_client.Folders.move_folder(
   4509918431602564,                           # folder_id to be moved
-  ss_client.models.Destination({
+  smartsheet.models.Destination({
     'destination_id': 7960873114331012,     # destination folder_id
     'destination_type': 'folder'
   })
@@ -7444,7 +7540,7 @@ Folder updatedFolder = smartsheet.folderResources().updateFolder(folderSpecifica
 ```
 
 ```python
-updated_folder = ss_client.Folders.update_folder(
+updated_folder = smartsheet_client.Folders.update_folder(
   7960873114331012,       # folder_id
   'New name for folder')
 ```

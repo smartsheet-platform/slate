@@ -66,7 +66,7 @@ PagedResult<Template> templates = smartsheet.templateResources().listPublicTempl
 ```
 
 ```python
-response = ss_client.Templates.list_public_templates(
+response = smartsheet_client.Templates.list_public_templates(
   page_size=10,
   page=1)
 pages = response.total_pages
@@ -122,7 +122,7 @@ PagedResult<Template> templates = smartsheet.templateResources().listUserCreated
 ```
 
 ```python
-response = ss_client.Templates.list_user_created_templates(
+response = smartsheet_client.Templates.list_user_created_templates(
   page_size=10,
   page=1)
 pages = response.total_pages
@@ -159,8 +159,7 @@ The Smartsheet API utilizes OAuth 2.0 for authentication and authorization. An *
   "access_token": "ll352u9jujauoqz4gstvsae05",
   "token_type": "bearer",
   "refresh_token": "e9x352a9mp4151le2505",
-  "expires_in": 604799,
-  "expires_at": "2017-11-21T23:32:22.180Z"
+  "expires_in": 604799
 }
 ```
 
@@ -168,7 +167,6 @@ The Smartsheet API utilizes OAuth 2.0 for authentication and authorization. An *
 -----|-----|-----|
 **access_token** | string | A credential that can be used by a client to access the Smartsheet API.
 **token_type** | enum | How an access token will be generated and presented. Smartsheet uses the bearer parameter, which means essentially give access to the bearer of this token.
-**expires_at** | timestamp | The date, time, and time zone for when the access token expires.
 **expires_in** | number | Number of seconds token is valid once issued; this is currently 604799 seconds, or approx. 7 days.
 **refresh_token** | string | A credential tied to the access token that can be used to obtain a fresh access token with the same permissions, without further involvement from a user.
 
@@ -240,8 +238,7 @@ smartsheet.token.get(
 		"access_token": "ll352u9jujauoqz4gstvsae05",
 		"token_type": "bearer",
 		"refresh_token": "e9x352a9mp4151le2505",
-		"expires_in": 604799,
-		"expires_at": "2017-11-21T23:32:22.180Z"
+		"expires_in": 604799
 	}
 }
 ```
@@ -329,8 +326,7 @@ smartsheet.token.refresh(
 		"access_token": "new52u9jujauoqz4gstvsae05",
 		"token_type": "bearer",
 		"refresh_token": "new352a9mp4151le2505",
-		"expires_in": 604799,
-		"expires_at": "2017-11-21T23:32:22.180Z"
+		"expires_in": 604799
 	}
 }
 ```
@@ -377,7 +373,7 @@ smartsheet.tokenResources().revokeAccessToken();
 ```
 
 ```python
-ss_client.Token.revoke_access_token()
+smartsheet_client.Token.revoke_access_token()
 ```
 
 ```ruby
@@ -400,6 +396,7 @@ Revokes the access token used to make this request.  The access token is no long
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **deleteAllForApiClient** (optional): The client Id and user Id is fetched based on the token that is used to make this API call. A value of **true** deletes all tokens associated to the given client Id and user Id. Defaults to **false**.
 <%= RETURNS %> | [Result object](#result-object)
 
 # Update Requests
@@ -474,7 +471,7 @@ Revokes the access token used to make this request.  The access token is no long
      |     |     |
 -----|-----|-----|
 **id** | number | User Id
-**admin** | Boolean | Indicates whether the user is a system admin (can manage users and account)
+**admin** | Boolean | Indicates whether the user is a system admin (can manage user accounts and organization account)
 **customWelcomeScreenViewed** | timestamp | Timestamp of viewing an Enterprise [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) by the current user
 **email** | string | User's primary email address
 **firstName** | string | User's first name
@@ -485,7 +482,7 @@ Revokes the access token used to make this request.  The access token is no long
 **name** | string | User's full name (read-only)
 **profileImage** | [Image](#image-object) | An [Image object](#image-object) representing the profile image associated with the user account
 **resourceViewer** | Boolean | Indicates whether the user is a resource viewer (can access resource views)
-**sheetCount** | number | The number of sheets owned by the current user within the organization
+**sheetCount** | number | The number of sheets owned by the current user within the organization account
 **status** | string |  User status, set to one of the following values: **ACTIVE**, **DECLINED**, or **PENDING**
 
 ### UserProfile Object
@@ -494,7 +491,7 @@ Revokes the access token used to make this request.  The access token is no long
 -----|-----|-----|
 **id** | number | Current user's Id
 **account** | [Account](#account-object) | Account object representing the current user's customer account
-**admin** | Boolean | Indicates whether the user is a system admin (can manage users and account)
+**admin** | Boolean | Indicates whether the user is a system admin (can manage user accounts and organization account)
 **alternateEmails** | [AlternateEmail](#alternateemail-object)[] | An array of [AlternateEmail objects](#alternateemail-object) representing the alternate email addresses associated with the user account
 **company** | string | User's company
 **customWelcomeScreenViewed** | timestamp | Timestamp of viewing an Enterprise [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>) by the current user
@@ -513,7 +510,7 @@ Revokes the access token used to make this request.  The access token is no long
 **role** | string | User's role
 **salesforceAdmin** | Boolean | Indicates whether the user is a Salesforce admin
 **salesforceUser** | Boolean | Indicates whether the user is a registered Salesforce user
-**sheetCount** | number | The number of sheets owned by the current user within the organization
+**sheetCount** | number | The number of sheets owned by the current user within the organization account
 **timeZone** | string | Current user's time zone Id
 **title** | string | User's title
 **workPhone** | string | User's work phone number
@@ -602,8 +599,8 @@ User newUser = smartsheet.userResources().addUser(userSpecification);
 ```
 
 ```python
-new_user = ss_client.Users.add_user(
-  ss_client.models.User({
+new_user = smartsheet_client.Users.add_user(
+  smartsheet.models.User({
     'first_name': 'John',
     'last_name': 'Doe',
     'email': 'john.doe@smartsheet.com',
@@ -659,7 +656,7 @@ new_user = response[:result]
 
 `POST /users`
 
-Adds a user to the organization.
+Adds a user to the organization account.
 
 <aside class="notice">This operation is only available to system administrators.</aside>
 
@@ -674,11 +671,11 @@ Adds a user to the organization.
 
 <aside class="notice">If successful, and user auto provisioning (UAP) is on, and user matches the auto provisioning rules, user is added to the org.  If UAP is off, or user does not match UAP rules, user is invited to the org and must explicitly accept the invitation to join.</aside>
 
-<aside class="notice">In some specific scenarios, supplied attributes such as <b>firstName</b> and <b>lastName</b> may be ignored.  For example, if you are inviting an existing Smartsheet user to join your organization, and the invited user has not yet accepted your invitation, any supplied <b>firstName</b> and <b>lastName</b> are ignored.</aside>
+<aside class="notice">In some specific scenarios, supplied attributes such as <b>firstName</b> and <b>lastName</b> may be ignored.  For example, if you are inviting an existing Smartsheet user to join your organization account, and the invited user has not yet accepted your invitation, any supplied <b>firstName</b> and <b>lastName</b> are ignored.</aside>
 
 ## Alternate Email Addresses
 
-A [User](#user-object) in Smartsheet must have a *primary* email address associated with their account (**User.email**) and may optionally have one or more alternate email addresses associated with their account (**User.alternateEmails**). 
+A [User](#user-object) in Smartsheet must have a *primary* email address associated with their user account (**User.email**) and may optionally have one or more alternate email addresses associated with their account (**User.alternateEmails**). 
 
 <aside class="notice">The following operations must be performed using an user's primary email address:<ul><li><a href="#add-group-members">Add Group Members</a></li><li><a href="#add-user">Add User</a></li><li><a href="#create-update-request">Create Update Request</a></li><li><a href="#report-sharing">Share Report</a></li><li><a href="#share-sheet">Share Sheet</a></li><li><a href="#workspace-sharing">Share Workspace</a></li></ul>Attempting to specify a user's alternate email address for any of the above operations results in an error.</aside>
 
@@ -727,10 +724,10 @@ smartsheet.users.addAlternateEmail(options)
 ```
 
 ```python
-response = ss_client.Users.add_alternate_email(
+response = smartsheet_client.Users.add_alternate_email(
   4495214342629252,          # user_id
   [
-    ss_client.models.AlternateEmail({
+    smartsheet.models.AlternateEmail({
         'email': 'John.Doe@smartsheet.com'
     })
   ]
@@ -822,7 +819,7 @@ AlternateEmail primaryEmail = smartsheet.UserResources.PromoteAlternateEmail(
 ```
 
 ```python
-response = ss_client.Users.promote_alternate_email(
+response = smartsheet_client.Users.promote_alternate_email(
   401090454808452,        # user_id
   123456789012345)        # alt_id
 ```
@@ -905,7 +902,7 @@ smartsheet.userResources().deleteAlternateEmail(
 ```
 
 ```python
-ss_client.Users.delete_alternate_email(
+smartsheet_client.Users.delete_alternate_email(
   401090454808452,        # user_id
   123456789012345)        # alternate_email_id
 ```
@@ -977,7 +974,7 @@ smartsheet.userResources().getAlternateEmail(
 ```
 
 ```python
-alt_email = ss_client.Users.get_alternate_email(
+alt_email = smartsheet_client.Users.get_alternate_email(
   401090454808452,        # user_id
   123456789012345)        # alternate_email_id
 ```
@@ -1051,7 +1048,7 @@ PagedResult<AlternateEmail> results = smartsheet.userResources().listAlternateEm
 ```
 
 ```python
-response = ss_client.Users.list_alternate_emails(
+response = smartsheet_client.Users.list_alternate_emails(
   123456789012345)        # user_id
 emails = response.data
 ```
@@ -1118,7 +1115,7 @@ UserProfile userProfile = smartsheet.userResources().getCurrentUser();
 ```
 
 ```python
-user_profile = ss_client.Users.get_current_user()
+user_profile = smartsheet_client.Users.get_current_user()
 ```
 
 ```ruby
@@ -1177,6 +1174,7 @@ Gets the current user.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **include** (optional): When specified with a value of **groups**, response includes an array of groups (groupId, name, and description only) that the user is a member of. **NOTE:** use [assume user](#assume-user) if querying about a user other than the current user.
 <%= RETURNS %> | [UserProfile object](#userprofile-object)<br/><br/><b>NOTE:</b> For system administrators, the following UserProfile attributes are included in the response:<ul><li>**customWelcomeScreenViewed** (only returned when an Enterprise user has viewed the [Custom Welcome Screen](<%= CUSTOM_WELCOME_SCREEN_URL %>))</li><li>**lastLogin** (only returned if the user has logged in)</li><li>**sheetCount** (only returned if the **status** attribute is **ACTIVE**)</li></ul>
 <%= SCOPE %> | all scopes
 
@@ -1218,7 +1216,7 @@ UserProfile userProfile = smartsheet.userResources().getUser(
 ```
 
 ```python
-user_profile = ss_client.Users.get_user(
+user_profile = smartsheet_client.Users.get_user(
   48569348493401200)          # user_id
 ```
 
@@ -1336,11 +1334,11 @@ PagedResult<User> users = smartsheet.userResources().listUsers( new HashSet(Arra
 
 ```python
 # Sample 1; List all
-response = ss_client.Users.list_users(include_all=True)
+response = smartsheet_client.Users.list_users(include_all=True)
 users = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Users.list_users(
+response = smartsheet_client.Users.list_users(
   page_size=100,
   page=1)
 pages = response.total_pages
@@ -1387,7 +1385,7 @@ users = response[:data]
 
 `GET /users`
 
-Gets a list of users in the organization. To filter by email, use the optional **email** query string parameter to specify a list of users' email addresses.
+Gets a list of users in the organization account. To filter by email, use the optional **email** query string parameter to specify a list of users' email addresses.
 
      |     |
 -----|-----|
@@ -1448,7 +1446,7 @@ smartsheet.userResources().deleteUser(
 ```
 
 ```python
-ss_client.Users.remove_user(
+smartsheet_client.Users.remove_user(
   94094820842,                # user_id
   transfer_to=62123820842,    # ownership of groups and sheets transfer to user_id
   remove_from_sharing=True)
@@ -1471,14 +1469,14 @@ smartsheet.users.remove(
 
 `DELETE /users/{userId}`
 
-Removes a user from an organization. User is transitioned to a free collaborator with read-only access to owned reports, sheets, Sights, workspaces, and any shared templates (unless those are optionally transferred to another user). 
+Removes a user from an organization account. User is transitioned to a free collaborator with read-only access to owned reports, sheets, Sights, workspaces, and any shared templates (unless those are optionally transferred to another user). 
 
 <aside class="notice">This operation is only available to system administrators.</aside>
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **removeFromSharing** (optional): Set to **true** to remove the user from sharing for all sheets/workspaces in the organization. If not specified, user is not removed from sharing.
+<%= PARAMETERS %> | **removeFromSharing** (optional): Set to **true** to remove the user from sharing for all sheets/workspaces in the organization account. If not specified, user is not removed from sharing.
   | **transferSheets** (optional): If **true**, and **transferTo** is specified, the removed user's sheets are transferred.  Else, sheets are not transferred.  Defaults to **false**.
   | **transferTo** (required if user owns groups): The Id of the user to transfer ownership to.  If the user being removed owns groups, they are transferred to this user.  If the user owns sheets, *and* **transferSheets** is true, the removed user's sheets are transferred to this user.
 <%= RETURNS %> | [Result object](#result-object)
@@ -1486,7 +1484,7 @@ Removes a user from an organization. User is transitioned to a free collaborator
 
 <aside class="notice">If the <b>transferTo</b> parameter is specified and the removed user owns groups, the user specified via the <b>transferTo</b> parameter must have group admin rights.</aside>
 
-<aside class="notice">The <b>transferTo</b> and <b>transferSheets</b> parameters cannot be specified for a user who has not yet accepted an invitation to join the organization (that is, if user <b>status=PENDING</b>).</aside>
+<aside class="notice">The <b>transferTo</b> and <b>transferSheets</b> parameters cannot be specified for a user who has not yet accepted an invitation to join the organization account (that is, if user <b>status=PENDING</b>).</aside>
 
 ## Update User
 
@@ -1549,9 +1547,9 @@ User updatedUser = smartsheet.userResources().updateUser(userSpecification);
 ```
 
 ```python
-updated_user = ss_client.Users.update_user(
+updated_user = smartsheet_client.Users.update_user(
   82349925918590,     # user_id
-  ss_client.models.User({
+  smartsheet.models.User({
     'licensed_sheet_creator': True,
     'admin': True
   })
@@ -1785,9 +1783,9 @@ Workspace workspace = smartsheet.workspaceResources().copyWorkspace(
 ```
 
 ```python
-new_workspace = ss_client.Workspaces.copy_workspace(
+new_workspace = smartsheet_client.Workspaces.copy_workspace(
   7116448184199044,           # workspace_id
-  ss_client.models.ContainerDestination({
+  smartsheet.models.ContainerDestination({
     'new_name': 'newWorkspaceName'
   })
 )
@@ -1830,7 +1828,6 @@ Creates a copy of the specified workspace.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>**attachments**</li><li>**cellLinks**</li><li>**data** -- includes formatting</li><li>**discussions** -- includes comments</li><li>**filters**</li><li>**forms**</li><li>**ruleRecipients** -- includes notification recipients, must also include **rules** when using this attribute</li><li>**rules** -- includes notifications and workflow rules</li><li>**shares**</li><li>**all** - deprecated</li></ul><b>NOTE:</b> Cell history is not copied, regardless of which **include** parameter values are specified.
- | **omit** (optional) -- when specified with a value of **sheetHyperlinks**, excludes this category from the response
  | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created workspace:<ul><li>**cellLinks**</li><li>**reports**</li><li>**sheetHyperlinks**</li><li>**sights**</li></ul>By default, all cell links, reports, sheet hyperlinks, and Sights that reference objects in the source workspace are re-mapped to reference corresponding objects in the newly created workspace. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If **cellLinks** is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created workspace continue to point to the original source sheets.</li><li>If **reports** is specified in the <b>skipRemap</b> parameter value, the reports within the newly created workspace continue to point to the original source sheets.</li><li>If **sheetHyperlinks** is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created workspace continue to point to the original source sheets.</li><li>If **sights** is specified in the <b>skipRemap</b> parameter value, the widgets within Sights in the newly created workspace continue to point to the original source sheets / reports.</li></ul>
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following attribute:<ul><li>**newName** (string) - required</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Workspace object](#workspace-object) for the newly created workspace
@@ -1885,8 +1882,8 @@ Workspace newWorkspace = smartsheet.workspaceResources().createWorkspace(workspa
 ```
 
 ```python
-workspace = ss_client.Workspaces.create_workspace(
-  ss_client.models.Workspace({
+workspace = smartsheet_client.Workspaces.create_workspace(
+  smartsheet.models.Workspace({
     'name': 'New workspace'
   })
 )
@@ -1970,7 +1967,7 @@ smartsheet.workspaceResources().deleteWorkspace(
 ```
 
 ```python
-ss_client.Workspaces.delete_workspace(
+smartsheet_client.Workspaces.delete_workspace(
   6621332407379844)       # workspace_id
 ```
 
@@ -2057,7 +2054,7 @@ Workspace workspace = smartsheet.workspaceResources().getWorkspace(
 ```
 
 ```python
-workspace = ss_client.Workspaces.get_workspace(
+workspace = smartsheet_client.Workspaces.get_workspace(
   6621332407379844)       # workspace_id
 ```
 
@@ -2096,7 +2093,7 @@ Gets the specified workspace (and lists its contents).
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **loadAll** (optional) -- **true** or **false** (defaults to **false**)
-	| **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
+	| **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li><li>**sheetVersion** - current version number of each sheet</li></ul>
 <%= RETURNS %> | [Workspace object](#workspace-object), populated according to the **include** parameter
 <%= SCOPE %> | READ_SHEETS
 
@@ -2139,11 +2136,11 @@ PagedResult<Workspace> workspaces = smartsheet.workspaceResources().listWorkspac
 
 ```python
 # Sample 1: List all
-response = ss_client.Workspaces.list_workspaces(include_all=True)
+response = smartsheet_client.Workspaces.list_workspaces(include_all=True)
 workspaces = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Workspaces.list_workspaces(
+response = smartsheet_client.Workspaces.list_workspaces(
   page_size=20,
   page=1)
 pages = response.total_pages
@@ -2187,7 +2184,7 @@ Gets a list of workspaces that the user has access to. The list contains an abbr
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li></ul><%= PAGING_PARAMETERS %>
+<%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Workspace objects](#workspace-object)
 <%= SCOPE %> | READ_SHEETS
 
@@ -2252,9 +2249,9 @@ Workspace updatedWorkspace = smartsheet.workspaceResources().updateWorkspace(wor
 ```
 
 ```python
-updated_workspace = ss_client.Workspaces.update_workspace(
+updated_workspace = smartsheet_client.Workspaces.update_workspace(
   7960873114331012,       # workspace_id
-  ss_client.models.Workspace({
+  smartsheet.models.Workspace({
     'name': 'Updated workspace'
   })
 )

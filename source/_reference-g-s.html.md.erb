@@ -103,11 +103,11 @@ Group newGroup = smartsheet.groupResources().createGroup(groupSpecification);
 ```
 
 ```python
-new_group = ss_client.Groups.create_group(
-  ss_client.models.Group({
+new_group = smartsheet_client.Groups.create_group(
+  smartsheet.models.Group({
     'name': 'API-created Group',
     'description': 'Group created via API',
-    'members': ss_client.models.GroupMember({
+    'members': smartsheet.models.GroupMember({
       'email': 'john.doe@smartsheet.com'
     })
   })
@@ -166,7 +166,7 @@ Creates a new group.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>**name** (required) -- must be unique within the organization</li><li>**description** (optional)</li><li>**members** (optional) -- array of [GroupMember objects](#groupmember-object), each limited to the following attribute:<ul><li>**email**</li></ul></li></ul>
+<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>**name** (required) -- must be unique within the organization account</li><li>**description** (optional)</li><li>**members** (optional) -- array of [GroupMember objects](#groupmember-object), each limited to the following attribute:<ul><li>**email**</li></ul></li></ul>
 <%= RETURNS %> | [Result object](#result-object), containing a [Group object](#group-object) for the newly created group
 <%= SCOPE %> | ADMIN_USERS
 
@@ -209,7 +209,7 @@ smartsheet.groupResources().deleteGroup(
 ```
 
 ```python
-ss_client.Groups.delete_group(
+smartsheet_client.Groups.delete_group(
     6932724448552836)       # group_id
 ```
 
@@ -280,9 +280,9 @@ Group group = smartsheet.groupResources().getGroup(
 ```
 
 ```python
-group = ss_client.Groups.get_group(
+group = smartsheet_client.Groups.get_group(
   6932724448552836)       # group_id
-# group is an instance of ss_client.models.Group
+# group is an instance of smartsheet.models.Group
 ```
 
 ```ruby
@@ -316,7 +316,7 @@ group = smartsheet.groups.get(
 
 `GET /groups/{groupId}`
 
-Gets the group specified in the URL.
+Gets information about and an array of members for the group specified in the URL.
 
      |     |
 -----|-----|
@@ -359,11 +359,11 @@ PagedResult<Group> groups = smartsheet.groupResources().listGroups(
 
 ```python
 # Sample 1: List all
-response = ss_client.Groups.list_groups(include_all=True)
+response = smartsheet_client.Groups.list_groups(include_all=True)
 groups = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Groups.list_groups(
+response = smartsheet_client.Groups.list_groups(
   page_size=10,
   page=1)
 pages = response.total_pages
@@ -399,7 +399,7 @@ groups = response[:data]
 
 `GET /groups`
 
-Gets a list of all groups in an organization. To fetch the members of an individual group, use the [Get Group](#get-group) operation.
+Gets a list of all groups in an organization account. To fetch the members of an individual group, use the [Get Group](#get-group) operation.
 
      |     |
 -----|-----|
@@ -467,9 +467,9 @@ Group updatedGroup = smartsheet.groupResources().updateGroup(groupSpecification)
 ```
 
 ```python
-updated_group = ss_client.Groups.update_group(
+updated_group = smartsheet_client.Groups.update_group(
   2331373580117892,       # group_id
-  ss_client.models.Group({
+  smartsheet.models.Group({
     'name': 'Renamed Group',
     'description': 'Some new description'
   })
@@ -518,7 +518,7 @@ Updates the Group specified in the URL.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>**description** (optional)</li><li>**name** (optional) -- must be unique within the organization</li><li>**ownerId** (optional): Id of an admin user to whom the group ownership is transferred</li></ul>
+<%= REQUEST %> | [Group object](#group-object), limited to the following attributes:<ul><li>**description** (optional)</li><li>**name** (optional) -- must be unique within the organization account</li><li>**ownerId** (optional): Id of an admin user to whom the group ownership is transferred</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the [Group object](#group-object) for the updated group
 <%= SCOPE %> | ADMIN_USERS
 
@@ -606,9 +606,9 @@ List<GroupMember> newMembers = smartsheet.groupResources().memberResources().add
 ```
 
 ```python
-new_members = ss_client.Groups.add_members(
+new_members = smartsheet_client.Groups.add_members(
   7917992160847748,       # group_id
-  [ss_client.models.GroupMember({'email': 'jane.doe@smartsheet.com'})]
+  [smartsheet.models.GroupMember({'email': 'jane.doe@smartsheet.com'})]
 )
 ```
 
@@ -702,7 +702,7 @@ smartsheet.groupResources().memberResources().deleteGroupMember(
 ```
 
 ```python
-ss_client.Groups.remove_member(
+smartsheet_client.Groups.remove_member(
   7917992160847748,       # group_id
   1539725208119172)       # group_member_id
 ```
@@ -809,7 +809,7 @@ Home home = smartsheet.homeResources().getHome(EnumSet.of(SourceInclusion.SOURCE
 ```
 
 ```python
-contents = ss_client.Home.list_all_contents(include='source')
+contents = smartsheet_client.Home.list_all_contents(include='source')
 ```
 
 ```ruby
@@ -863,7 +863,7 @@ Gets a nested list of all Home objects, including folders, reports, sheets, Sigh
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li></ul>
   | **exclude** (optional) -- a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**permalinks** - excludes the permalink from each data object</li></ul> 
 <%= RETURNS %> | [Home object](#home-object), populated according to the **include** parameter
 <%= SCOPE %> | READ_SHEETS
@@ -952,7 +952,7 @@ Sheet sheet = smartsheet.sheetResources().importXlsx(
 ```
 
 ```python
-imported_sheet = ss_client.Sheets.import_xlsx_sheet(
+imported_sheet = smartsheet_client.Sheets.import_xlsx_sheet(
   'D:/ProgressReport.xlsx',
   'MarketingProgressReport',  # sheet_name
   header_row_index=0
@@ -1006,7 +1006,7 @@ Imports CSV or XLSX data into a new sheet in the top-level "sheets" folder.
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
 
-<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li><li>Hierarchical relationships between rows in an external file won't import.</li></ul></aside>
 
 ## Import Sheet into Folder
 
@@ -1082,7 +1082,7 @@ Sheet sheet = smartsheet.sheetResources().importXlsxInFolder(
 ```
 
 ```python
-imported_sheet = ss_client.Folders.import_xlsx_sheet(
+imported_sheet = smartsheet_client.Folders.import_xlsx_sheet(
   8999900887877508,           # folder_id
   'D:/ProgressReport.xlsx',
   'MarketingProgressReport',  # sheet_name
@@ -1139,7 +1139,7 @@ Imports CSV or XLSX data into a new sheet in the specified folder.
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
 
-<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li><li>Hierarchical relationships between rows in an external file won't import.</li></ul></aside>
 
 ## Import Sheet into Workspace
 
@@ -1215,7 +1215,7 @@ Sheet sheet = smartsheet.sheetResources().importXlsxInWorkspace(
 ```
 
 ```python
-imported_sheet = ss_client.Workspaces.import_xlsx_sheet(
+imported_sheet = smartsheet_client.Workspaces.import_xlsx_sheet(
   4124946017347460,           # workspace_id
   'D:/ProgressReport.xlsx',
   'MarketingProgressReport',  # sheet_name
@@ -1272,7 +1272,7 @@ Imports CSV or XLSX data into a new sheet in the specified workspace.
 <%= RETURNS %> | [Result object](#result-object)
 <%= SCOPE %> | CREATE_SHEETS
 
-<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li></ul></aside>
+<aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li><li>Hierarchical relationships between rows in an external file won't import.</li></ul></aside>
 
 # Reports
 
@@ -1294,7 +1294,11 @@ A report is a filtered view of the data from one or more sheets. Like a sheet, a
   "createdAt": "2012-07-24T18:22:29-07:00",
   "modifiedAt": "2012-07-24T18:30:52-07:00",
   "columns": [],
-  "rows": []
+  "rows": [],
+  "scope": {
+    "sheets": [],
+    "workspaces": []
+  }
 }
 ```
 
@@ -1302,7 +1306,9 @@ Extends the [Sheet object](#sheet-object), adding the following:
 
      |     |     |
 -----|-----|-----|
+**scope** | [Scope](#scope-object) | A report's scope can be defined as the sheet ids and workspace ids that make up the report.
 **sourceSheets** | [Sheet](#sheet-object)[] | Array of Sheet objects (without rows), representing the sheets that rows in the report originated from.  Only included in the [Get Report](#get-report) response if the **include** parameter specifies **sourceSheets**.
+
 
 ### ReportCell Object
 
@@ -1337,11 +1343,38 @@ Extends the [Row object](#row-object), adding the following:
 
      |     |     |
 -----|-----|-----|
-**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published report:<ul><li>If **ALL**, it is available to anyone who has the link.</li><li>If **ORG**, it is available only to members of the report owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled** = **true**.
+**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published report:<ul><li>If **ALL**, it is available to anyone who has the link.</li><li>If **ORG**, it is available only to members of the report owner's Smartsheet organization account.</li></ul>Only returned in a response if **readOnlyFullEnabled** = **true**.
 **readOnlyFullDefaultView** | string | Indicates which view the user has set for a read-only, default view of the published report. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
 **readOnlyFullEnabled** | Boolean | (Required) If **true**, a rich version of the report is published with the ability to download row attachments and discussions.
-**readOnlyFullShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
+**readOnlyFullShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published report<br/>Only returned in a response if **readOnlyFullEnabled** = **true**.
+
+### Scope Object
+
+> Example: Scope object
+
+```json
+"scope": {
+  "sheets": [
+    {
+      "id": 4583173393803140,
+    },
+    {
+      "id": 2331373580117892,
+    }
+  ],
+  "workspaces": [
+    {
+      "id": 5709073300645764
+    }
+  ]
+}
+```
+
+     |     |     |
+-----|-----|-----|
+**sheets** | [Sheet](#sheet-object)[] | Array of Sheet objects (containing just the sheet ID) of any sheets that the requestor has access to that make up the report
+**workspaces** | [Workspace](#workspace-object)[] | Array of Workspace objects (containing just the workspace ID) that the requestor has access to that make up the report
 
 ## Get Report
 
@@ -1410,7 +1443,7 @@ Report report = smartsheet.reportResources().getReport(
 ```
 
 ```python
-report = ss_client.Reports.get_report(
+report = smartsheet_client.Reports.get_report(
   4583173393803140)       # report_id
 ```
 
@@ -1434,6 +1467,7 @@ report = smartsheet.reports.get(
   "columns": [
     {
       "virtualId": 4583173393803140,
+      "version": 0,
       "index": 0,
       "primary": true,
       "title": "Sheet Name",
@@ -1443,6 +1477,7 @@ report = smartsheet.reports.get(
     },
     {
       "virtualId": 2331373580117892,
+      "version": 0,
       "index": 1,
       "title": "Status",
       "type": "TEXT_NUMBER",
@@ -1486,9 +1521,10 @@ Gets the report, including one page of rows, and optionally populated with attac
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**attachments**</li><li>**discussions**</li><li>**format** -- see [Formatting](#formatting)</li><li>**sourceSheets**</li></ul> 
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**attachments**</li><li>**discussions**</li><li>**format** -- see [Formatting](#formatting)</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**scope** -- adds the report's [scope](#scope-object) to the response</li><li>**source** -- adds the [Source object](#source-object) indicating which report the report was created from, if any</li><li>**sourceSheets**</li></ul> 
   | **exclude** (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li></ul>
-  | **pageSize** (optional): Number of rows per page.  If not specified, the default value is 100.  This operation can return a maximum of 500 rows per page.
+  | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
+  | **pageSize** (optional): Number of rows per page.  If not specified, the default value is 100.  If you need larger sets of data from your report, this operation can return a maximum of 10,000 rows per request (report limit is 50,000 rows).
   | **page** (optional): Which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
 <%= RETURNS %> | [Report object](#report-object), populated according to the specified parameters
 <%= SCOPE %> | READ_SHEETS
@@ -1542,13 +1578,13 @@ smartsheet.reportResources().getReportAsExcel(
 
 ```python
 # Sample 1: Download file with filename suggested by API
-ss_client.Reports.get_report_as_excel(
+smartsheet_client.Reports.get_report_as_excel(
   3882962191181700,       # report_id
   download_folder_path
 )
 
 # Sample 2: Specify custom filename for the downloaded file
-ss_client.Reports.get_report_as_excel(
+smartsheet_client.Reports.get_report_as_excel(
   3882962191181700,       # report_id
   download_folder_path,
   'MyFileName.xslx'
@@ -1636,13 +1672,13 @@ smartsheet.reportResources().getReportAsCsv(
 
 ```python
 # Sample 1: Download file with filename suggested by API
-ss_client.Reports.get_report_as_csv(
+smartsheet_client.Reports.get_report_as_csv(
   3882962191181700,       # report_id
   download_folder_path
 )
 
 # Sample 2: Specify custom filename for the downloaded file
-ss_client.Reports.get_report_as_csv(
+smartsheet_client.Reports.get_report_as_csv(
   3882962191181700,       # report_id
   download_folder_path,
   'CallMeAl.csv'
@@ -1730,7 +1766,7 @@ PagedResult<Report> reports = smartsheet.reportResources().listReports(
 ```
 
 ```python
-response = ss_client.Reports.list_reports(include_all=True)
+response = smartsheet_client.Reports.list_reports(include_all=True)
 reports = response.data
 ```
 
@@ -1812,7 +1848,7 @@ smartsheet.reports.getReportPublishStatus(options)
 ```
 
 ```python
-status = ss_client.Reports.get_publish_status(
+status = smartsheet_client.Reports.get_publish_status(
   1653067851556740)       # report_id
 ```
 
@@ -1883,9 +1919,9 @@ smartsheet.reports.setReportPublishStatus(options)
 ```
 
 ```python
-response = ss_client.Reports.set_publish_status(
+response = smartsheet_client.Reports.set_publish_status(
   1653067851556740,       # report_id
-  ss_client.models.ReportPublish({
+  smartsheet.models.ReportPublish({
     'read_only_full_enabled': True
   })
 )
@@ -1930,7 +1966,7 @@ Sets the publish status of the report and returns the new status, including the 
 <%= RETURNS %> | [Result object](#result-object) containing a [ReportPublish object](#reportpublish-object)
 <%= SCOPE %> | ADMIN_SHEETS
 
-<aside class="notice">For Read Only, if you do not specify <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level "Report Publishing" setting (if the report owner belongs to an organization) or to <b>ALL</b> (if the report owner does not belong to an organization).</aside>
+<aside class="notice">For Read Only, if you do not specify <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level "Report Publishing" setting (if the report owner belongs to an organization account) or to <b>ALL</b> (if the report owner does not belong to an organization account).</aside>
 
 ## Send Report via Email
 
@@ -2200,7 +2236,7 @@ List<Row> newRows = smartsheet.sheetResources().rowResources().addRows(
 
 ```python
 # Specify cell values for one row
-row_a = ss_client.models.Row()
+row_a = smartsheet.models.Row()
 row_a.to_top = True
 row_a.cells.append({
   'column_id': 7960873114331012,
@@ -2213,7 +2249,7 @@ row_a.cells.append({
 })
 
 # Specify cell values for another row
-row_b = ss_client.models.Row()
+row_b = smartsheet.models.Row()
 row_b.to_top = True
 row_b.cells.append({
   'column_id': 7960873114331012,
@@ -2226,7 +2262,7 @@ row_b.cells.append({
 })
 
 # Add rows to sheet
-response = ss_client.Sheets.add_rows(
+response = smartsheet_client.Sheets.add_rows(
   2331373580117892,       # sheet_id
   [row_a, row_b])
 ```
@@ -2411,11 +2447,11 @@ CopyOrMoveRowResult results = smartsheet.sheetResources().rowResources().copyRow
 ```
 
 ```python
-response = ss_client.Sheets.copy_rows(
+response = smartsheet_client.Sheets.copy_rows(
   4583173393803140,               # sheet_id of rows to be copied
-  ss_client.models.CopyOrMoveRowDirective({
+  smartsheet.models.CopyOrMoveRowDirective({
     'row_ids': [145417762563972, 8026717110462340],
-    'to': ss_client.models.CopyOrMoveRowDestination({
+    'to': smartsheet.models.CopyOrMoveRowDestination({
       'sheet_id': 2258256056870788
     })
   })
@@ -2506,7 +2542,7 @@ smartsheet.sheetResources().rowResources().deleteRows(
 ```
 
 ```python
-ss_client.Sheets.delete_rows(
+smartsheet_client.Sheets.delete_rows(
   2252168947361668,                       # sheet_id
   [207098194749316, 207098194749317])     # row_ids
 ```
@@ -2614,7 +2650,7 @@ Row row = smartsheet.sheetResources().rowResources().getRow(
 
 ```python
 # Include discussions, attachments, columns, and columnType
-row = ss_client.Sheets.get_row(
+row = smartsheet_client.Sheets.get_row(
   4583173393803140,       # sheet_id 
   2361756178769796,       # row_id 
   include='discussions,attachments,columns,columnType'
@@ -2764,11 +2800,11 @@ CopyOrMoveRowResult results = smartsheet.sheetResources().rowResources().moveRow
 ```
 
 ```python
-response = ss_client.Sheets.move_rows(
+response = smartsheet_client.Sheets.move_rows(
   4583173393803140,           # sheet_id of rows to be moved
-  ss_client.models.CopyOrMoveRowDirective({
+  smartsheet.models.CopyOrMoveRowDirective({
     'row_ids': [145417762563972, 8026717110462340],
-    'to': ss_client.models.CopyOrMoveRowDestination({
+    'to': smartsheet.models.CopyOrMoveRowDestination({
       'sheet_id': 2258256056870788
     })
   })
@@ -2857,7 +2893,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: application/json" \
 -X PUT \
--d '[{"id": "6572427401553796", "cells": [{"columnId": 7518312134403972,"image": {"altText": "New Alt Text"},"value": "new value"}, {"columnId": 1888812600190852,"value": "A"}]}, {"id": "2068827774183300", "cells": [{"columnId": 7518312134403972,"value": "desc_updated"}, {"columnId": 1888812600190852,"value": "B"}]}]'
+-d '[{"id": "6572427401553796", "cells": [{"columnId": 7518312134403972,"image": {"altText": "New Alt Text"},"value": "new value"}, {"columnId": 1888812600190852,"value": "A"}]}, {"id": "2068827774183300", "cells": [{"columnId": 7518312134403972,"value": "desc_updated"}, {"columnId": 1888812600190852,"value": "B"}, {"columnId": 6552023773538180,"objectValue": {"objectType": "MULTI_CONTACT","values": [{"objectType": "CONTACT","email": "john.doe@smartsheet.com","name": "John Doe"}, {"objectType": "CONTACT","email": "jane.roe@smartsheet.com","name": "Jane Roe"}]}}]}]'
 ```
 
 ```javascript
@@ -2965,18 +3001,18 @@ List<Row> updatedRows = smartsheet.sheetResources().rowResources().updateRows(
 
 ```python
 # Build new cell value
-new_cell = ss_client.models.Cell()
+new_cell = smartsheet.models.Cell()
 new_cell.column_id = 7036894123976580
 new_cell.value = "new value"
 new_cell.strict = False
 
 # Build the row to update
-new_row = ss_client.models.Row()
+new_row = smartsheet.models.Row()
 new_row.id = 6809535313667972
 new_row.cells.append(new_cell)
 
 # Update rows
-updated_row = ss_client.Sheets.update_rows(
+updated_row = smartsheet_client.Sheets.update_rows(
   2068827774183300,      # sheet_id
   [new_row])
 ```
@@ -3057,6 +3093,10 @@ response = smartsheet.sheets.rows.update(
       "type": "TEXT_NUMBER",
       "value": 1,
       "displayValue": "1"
+    },
+    {
+      "columnId": 6552023773538180,
+      "displayValue": "Jane Roe, John Doe"
     }
     ]
   }
@@ -3083,6 +3123,8 @@ Updates cell values in the specified rows, expands/collapses the specified rows,
 <aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>above</b>, <b>parentId</b>, <b>siblingId</b>, <b>toBottom</b>, and <b>toTop</b> attributes must be the same for all rows in the request).</aside>
 
 <aside class="notice">In a parent row, values of the following fields are auto-calculated based upon values in the child rows (and therefore cannot be updated using the API): Duration, End Date, % Complete, Start Date.</aside>
+
+<aside class="notice">To update a multi-contact cell, you must use an <a href="#objectvalue-object">ObjectValue object</a> with an <b>objectType</b> of <b>MULTI_CONTACT</b>.</aside>
 
 ## <%= RELATED %>
 
@@ -3212,8 +3254,8 @@ SearchResult results = smartsheet.searchResources().search(query);
 query = 'stuff'
 
 # Search everything
-result = ss_client.Search.search(query)
-# result is a ss_client.models.SearchResult object
+result = smartsheet_client.Search.search(query)
+# result is a smartsheet.models.SearchResult object
 ```
 
 ```ruby
@@ -3265,7 +3307,7 @@ Searches all sheets that the user can access, for the specified text.
  | **include** (optional): when specified with a value of **favoriteFlag**, response indicates which returned items are favorites:<ul><li>**favorite** -- folders, reports, sheets, Sights, templates, and workspaces will have the property **favorite: true**</li><li>**parentObjectFavorite** -- attachments, discussions, summary fields, and rows will have the property **parentObjectFavorite: true**</li></ul>
  | **location** (optional): when specified with a value of **personalWorkspace**, limits the response to only those items in the user's workspaces.
  | <%= PARAMETER_MODIFIEDSINCE %>
- | **scopes** (optional): comma-separated list of search filters:<ul><li><b>attachments</b></li><li><b>cellData</b></li><li><b>comments</b></li><li><b>folderNames</b></li><li><b>profileFields</b></li><li><b>reportNames</b></li><li><b>sheetNames</b></li><li><b>sightNames</b></li><li><b>summaryFields</b></li><li><b>templateNames</b></li><li><b>workspaceNames</b></li></ul>
+ | **scopes** (optional): If search fails, try using an array for each type of this comma-separated list of search filters:<ul><li><b>attachments</b></li><li><b>cellData</b></li><li><b>comments</b></li><li><b>folderNames</b></li><li><b>profileFields</b></li><li><b>reportNames</b></li><li><b>sheetNames</b></li><li><b>sightNames</b></li><li><b>templateNames</b></li><li><b>workspaceNames</b></li></ul>
 <%= RETURNS %> | [SearchResult object](#searchresult-object) that contains a maximum of 100 [SearchResultems](#searchresultitem-object)
 <%= SCOPE %> | READ_SHEETS
 
@@ -3437,7 +3479,7 @@ ServerInfo serverInfo = smartsheet.serverInfoResources().getServerInfo();
 ```
 
 ```python
-info = ss_client.Server.server_info()
+info = smartsheet_client.Server.server_info()
 ```
 
 ```ruby
@@ -3546,7 +3588,7 @@ smartsheet.reportResources().shareResources().deleteShare(
 ```
 
 ```python
-ss_client.Reports.delete_share(
+smartsheet_client.Reports.delete_share(
   665829219035012,        # report_id
   'AAAQSF82F1eE')         # share_id
 ```
@@ -3609,7 +3651,7 @@ Share share = smartsheet.reportResources().shareResources().getShare(
 ```
 
 ```python
-share = ss_client.Reports.get_share(
+share = smartsheet_client.Reports.get_share(
   6932724448552836,       # report_id
   'AAAQSF82F1eE')         # share_id
 ```
@@ -3676,11 +3718,11 @@ PagedResult<Share> shares = smartsheet.reportResources().shareResources().listSh
 
 ```python
 # Sample 1: List all
-response = ss_client.Reports.list_shares(include_all=True)
+response = smartsheet_client.Reports.list_shares(include_all=True)
 shares = response.result
 
 # Sample 2: Paginate the list
-response = ss_client.Reports.list_shares(
+response = smartsheet_client.Reports.list_shares(
   page_size=10,
   page=1)
 pages = response.total_pages
@@ -3775,9 +3817,9 @@ List<Share> addressList = smartsheet.reportResources().shareResources().shareTo(
 ```
 
 ```python
-response = ss_client.Reports.share_report(
+response = smartsheet_client.Reports.share_report(
   665829219035012,        # report_id
-  ss_client.models.Share({
+  smartsheet.models.Share({
     'access_level': 'EDITOR',
     'email': 'jane.doe@smartsheet.com'
   })
@@ -3874,10 +3916,10 @@ Share updatedShare = smartsheet.reportResources().shareResources().updateShare(
 ```
 
 ```python
-updated_share = ss_client.Reports.update_share(
+updated_share = smartsheet_client.Reports.update_share(
   665829219035012,        # report_id
   'AAAFeF82FOeE',         # share_id
-  ss_client.models.Share({
+  smartsheet.models.Share({
     'access_level': 'VIEWER'
   })
 )
@@ -3949,7 +3991,7 @@ smartsheet.sheetResources().shareResources().deleteShare(
 ```
 
 ```python
-ss_client.Sheets.delete_share(
+smartsheet_client.Sheets.delete_share(
   4583614634583940,       # sheet_id
   'AAAFeF82FOeE')         # share_id
 ```
@@ -4012,7 +4054,7 @@ Share share = smartsheet.sheetResources().shareResources().getShare(
 ```
 
 ```python
-share = ss_client.Sheets.get_share(
+share = smartsheet_client.Sheets.get_share(
   4583614634583940,       # sheet_id
   'AAAASuWWFOeE')         # share_id
 ```
@@ -4078,13 +4120,13 @@ PagedResult<Share> shares = smartsheet.sheetResources().shareResources().listSha
 
 ```python
 # Sample 1: List all
-response = ss_client.Sheets.list_shares(
+response = smartsheet_client.Sheets.list_shares(
   4583614634583940,       # sheet_id
   include_all=True)
 shares = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Sheets.list_shares(
+response = smartsheet_client.Sheets.list_shares(
   4583614634583940,       # sheet_id
   page_size=10,
   page=1)
@@ -4180,9 +4222,9 @@ List<Share> addressList = smartsheet.sheetResources().shareResources().shareTo(
 ```
 
 ```python
-response = ss_client.Sheets.share_sheet(
+response = smartsheet_client.Sheets.share_sheet(
   4583614634583940,       # sheet_id
-  ss_client.models.Share({
+  smartsheet.models.Share({
     'access_level': 'EDITOR',
     'email': 'jane.doe@smartsheet.com'
   }),
@@ -4280,10 +4322,10 @@ Share updatedShare = smartsheet.sheetResources().shareResources().updateShare(
 ```
 
 ```python
-updated_share = ss_client.Sheets.update_share(
+updated_share = smartsheet_client.Sheets.update_share(
   4583614634583940,       # sheet_id
   'AAAFeF82FOeE',         # share_id
-  ss_client.models.Share({
+  smartsheet.models.Share({
     'access_level': 'VIEWER'
   })
 )
@@ -4352,7 +4394,7 @@ smartsheet.sightResources().shareResources().deleteShare(
 ```
 
 ```python
-ss_client.Sights.delete_share(
+smartsheet_client.Sights.delete_share(
   6327127650920324,       # sight_id
   'AAACOqOmFOeE')         # share_id
 ```
@@ -4419,7 +4461,7 @@ Share share = smartsheet.sightResources().shareResources().getShare(
 ```
 
 ```python
-share = ss_client.Sights.get_share(
+share = smartsheet_client.Sights.get_share(
   6327127650920324,       # sight_id
   'AAACOqOmFOeE')         # share_id
 ```
@@ -4480,13 +4522,13 @@ smartsheet.sights.listShares(options)
 
 ```python
 # Sample 1: List all
-response = ss_client.Sights.list_shares(
+response = smartsheet_client.Sights.list_shares(
   6327127650920324,       # sight_id
   include_all=True)
 shares = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Sights.list_shares(
+response = smartsheet_client.Sights.list_shares(
   6327127650920324,       # sight_id
   page_size=10,
   page=1)
@@ -4574,9 +4616,9 @@ List<Share> addressList = smartsheet.sightResources().shareResources().shareTo(
 ```
 
 ```python
-response = ss_client.Sights.share_sight(
+response = smartsheet_client.Sights.share_sight(
   6327127650920324,       # sight_id
-  ss_client.models.Share({
+  smartsheet.models.Share({
     'access_level': 'VIEWER',
     'email': 'jane.doe@smartsheet.com'
   }),
@@ -4670,10 +4712,10 @@ Share updatedShare = smartsheet.sightResources().shareResources().updateShare(
 ```
 
 ```python
-updated_share = ss_client.Sights.update_share(
+updated_share = smartsheet_client.Sights.update_share(
   6327127650920324,       # sight_id
   'AAALRqomFOeE',         # share_id
-  ss_client.models.Share({
+  smartsheet.models.Share({
     'access_level': 'VIEWER'
   })
 )
@@ -4750,7 +4792,7 @@ smartsheet.workspaceResources().shareResources().deleteShare(
 ```
 
 ```python
-ss_client.Workspaces.delete_share(
+smartsheet_client.Workspaces.delete_share(
   1656220827314052,           # workspace_id
   'AAAEQesWFOeE')             # share_id
 ```
@@ -4817,7 +4859,7 @@ Share share = smartsheet.workspaceResources().shareResources().getShare(
 ```
 
 ```python
-share = ss_client.Sheets.get_share(
+share = smartsheet_client.Sheets.get_share(
   1656220827314052,           # workspace_id
   'AAAEQesWFOeE')             # share_id
 ```
@@ -4883,13 +4925,13 @@ PagedResult<Share> shares = smartsheet.workspaceResources().shareResources().lis
 
 ```python
 # Sample 1: List all
-response = ss_client.Workspaces.list_shares(
+response = smartsheet_client.Workspaces.list_shares(
   1656220827314052,       # workspace_id
   include_all=True)
 shares = response.data
 
 # Sample 2: Paginate the list
-response = ss_client.Workspaces.list_shares(
+response = smartsheet_client.Workspaces.list_shares(
   1656220827314052,       # workspace_id
   page_size=10,
   page=1)
@@ -4988,9 +5030,9 @@ List<Share> addressList = smartsheet.workspaceResources().shareResources().share
 ```
 
 ```python
-response = ss_client.Workspaces.share_workspace(
+response = smartsheet_client.Workspaces.share_workspace(
   1656220827314052,       # workspace_id
-  ss_client.models.Share({
+  smartsheet.models.Share({
     'access_level': 'EDITOR',
     'email': 'jane.doe@smartsheet.com'
   })
@@ -5094,10 +5136,10 @@ Share updatedShare = smartsheet.workspaceResources().shareResources().updateShar
 ```
 
 ```python
-updated_share = ss_client.Workspaces.update_share(
+updated_share = smartsheet_client.Workspaces.update_share(
   1656220827314052,       # workspace_id
   'AAAFeF82FOeE',         # share_id
-  ss_client.models.Share({
+  smartsheet.models.Share({
     'access_level': 'VIEWER'
   })
 )
@@ -5183,13 +5225,13 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 **resourceManagementEnabled** | Boolean | Indicates that resource management is enabled
 **rows** | [Row](#row-object)[] | Array of Row objects
 **showParentRowsForFilters** | Boolean | Returned only if there are column filters on the sheet.  Value = **true** if "show parent rows" is enabled for the filters.
-**source** | [Source](#source-object) | A Source object indicating the sheet or template from which this sheet was created
+**source** | [Source](#source-object) | A Source object indicating the report, sheet, Sight (aka dashboard), or template from which this sheet was created, if any
 **summary** | [SheetSummary](#sheetsummary-object) | A SheetSummary object containing a list of defined fields and values for the sheet.
 **totalRowCount** | number | The total number of rows in the sheet
 **userPermissions** | [SheetUserPermissions](#sheetuserpermissions-object) | A SheetUserPermissions object indicating what summary operations are possible for the current user
 **userSettings** | [SheetUserSettings](#sheetusersettings-object) | A SheetUserSettings object containing the current user's sheet-specific settings.
 **version** | number | A number that is incremented every time a sheet is modified
-**workspace** | [Workspace](#workspace-object) | A Workspace object containing the workspace Id and name.<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **ownerInfo**.
+**workspace** | [Workspace](#workspace-object) | A Workspace object containing the workspace Id and name.
 
 ### Criteria Object
 
@@ -5256,18 +5298,18 @@ Represents the project settings dependencies for a specific sheet.  Project sett
 -----|-----|-----|
 **icalEnabled** | Boolean | If **true**, a webcal is available for the calendar in the sheet.
 **icalUrl** | string | URL for **iCal** view of the published sheet<br/>Only returned in a response if **icalEnabled = true**.
-**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published sheet:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the sheet owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled = true**.
+**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published sheet:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the sheet owner's Smartsheet organization account.</li></ul>Only returned in a response if **readOnlyFullEnabled = true**.
 **readOnlyFullDefaultView** | string | Indicates which view the user has set for a read-only, default view of the published sheet. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
 **readOnlyFullEnabled** | Boolean | If **true**, a rich version of the sheet is published with the ability to download row attachments and discussions.
-**readOnlyFullShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
+**readOnlyFullShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published sheet<br/>Only returned in a response if **readOnlyFullEnabled = true**.
 **readOnlyLiteEnabled** | Boolean | If **true**, a lightweight version of the sheet is published without row attachments and discussions.
 **readOnlyLiteSslUrl** | string | URL for 'Read-Only' view of the published sheet when SSL is enabled. 
 **readOnlyLiteUrl** | string | URL for 'Read-Only HTML' view of the published sheet<br/>Only returned in a response if **readOnlyLiteEnabled = true**.
-**readWriteAccessibleBy** | string | Indicates who can access the 'Edit by Anyone' view of the published sheet:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the sheet owner's Smartsheet organization.</li></ul>Only returned in a response if **readWriteEnabled = true**.
+**readWriteAccessibleBy** | string | Indicates who can access the 'Edit by Anyone' view of the published sheet:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the sheet owner's Smartsheet organization account.</li></ul>Only returned in a response if **readWriteEnabled = true**.
 **readWriteDefaultView** | string | Indicates which view the user has set for a read-write, default view of the published sheet. Must be one of the following values: **CALENDAR**, **CARD**, or **GRID**.
 **readWriteEnabled** | Boolean | If **true**, a rich version of the sheet is published with the ability to edit cells and manage attachments and discussions.
-**readWriteShowToolbar** | Boolean | Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
+**readWriteShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readWriteUrl** | string | URL for 'Edit by Anyone' view of the published sheet<br/>Only returned in a response if **readWriteEnabled = true**.
 
 ### SheetSummary Object
@@ -5312,8 +5354,8 @@ Represents individual user settings for a specific sheet.  User settings may be 
 
      |     |     |
 -----|-----|-----|
-**id** | number | Id of the sheet or template from which the enclosing sheet was created
-**type** | string | **sheet** or **template**
+**id** | number | Id of the report, sheet, Sight (aka dashboard), or template from which the enclosing report, sheet, Sight, or template was created
+**type** | string | **report**, **sheet**, **sight**, or **template**
 
 ### SummaryField Object
 
@@ -5432,9 +5474,9 @@ Sheet sheet = smartsheet.sheetResources().copySheet(
 ```
 
 ```python
-response = ss_client.Sheets.copy_sheet(
+response = smartsheet_client.Sheets.copy_sheet(
   4583173393803140,                               # sheet_id
-  ss_client.models.ContainerDestination({
+  smartsheet.models.ContainerDestination({
     'destination_type': 'folder',               # folder, workspace, or home
     'destination_id': 9283173393803140,         # folder_id
     'new_name': 'newSheetName'
@@ -5477,8 +5519,8 @@ Creates a copy of the specified sheet.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>**attachments**</li><li>**cellLinks**</li><li>**data** -- includes formatting</li><li>**discussions** -- includes comments</li><li>**filters**</li><li>**forms**</li><li>**ruleRecipients** -- includes notification recipients, must also include **rules** when using this attribute</li><li>**rules** -- includes notifications and workflow rules</li><li>**shares**</li><li>**all** - deprecated</li></ul>**NOTE:** Cell history is not copied, regardless of which **include** parameter values are specified.
- | **omit** (optional) -- when specified with a value of **sheetHyperlinks**, excludes this category from the response
+<%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>**attachments**</li><li>**cellLinks** -- includes cross-sheet references</li><li>**data** -- includes formatting</li><li>**discussions** -- includes comments</li><li>**filters**</li><li>**forms**</li><li>**ruleRecipients** -- includes notification recipients, must also include **rules** when using this attribute</li><li>**rules** -- includes notifications and workflow rules</li><li>**shares**</li><li>**all** - deprecated</li></ul>**NOTE:** Cell history is not copied, regardless of which **include** parameter values are specified.
+ | **exclude** (optional) -- when specified with a value of **sheetHyperlinks**, excludes this category from the response
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object)
 <%= RETURNS %> | [Result object](#result-object) containing a [Sheet object](#sheet-object) for the newly created sheet, limited to the following attributes:<ul><li>**accessLevel**</li><li>**id**</li><li>**name**</li><li>**permalink**</li></ul>
 <%= SCOPE %> | CREATE_SHEETS
@@ -5579,7 +5621,7 @@ smartsheet.sheetResources().createSheet(newSheet);
 ```
 
 ```python
-sheet_spec = ss_client.models.Sheet({
+sheet_spec = smartsheet.models.Sheet({
   'name': 'newsheet',
   'columns': [{
       'title': 'Favorite',
@@ -5592,7 +5634,7 @@ sheet_spec = ss_client.models.Sheet({
     }
   ]
 })
-response = ss_client.Home.create_sheet(sheet_spec)
+response = smartsheet_client.Home.create_sheet(sheet_spec)
 new_sheet = response.result
 ```
 
@@ -5732,7 +5774,7 @@ smartsheet.sheetResources().createSheetInFolder(
 ```
 
 ```python
-sheet_spec = ss_client.models.Sheet({
+sheet_spec = smartsheet.models.Sheet({
   'name': 'newsheet',
   'columns': [{
         'title': 'Favorite',
@@ -5745,7 +5787,7 @@ sheet_spec = ss_client.models.Sheet({
       }
   ]
 })
-response = ss_client.Folders.create_sheet_in_folder(
+response = smartsheet_client.Folders.create_sheet_in_folder(
   3734419270854532,       # folder_id
   sheet_spec)
 new_sheet = response.result
@@ -5888,7 +5930,7 @@ smartsheet.sheetResources().createSheetInWorkspace(
 ```
 
 ```python
-sheet_spec = ss_client.models.Sheet({
+sheet_spec = smartsheet.models.Sheet({
   'name': 'newsheet',
   'columns': [{
       'title': 'Favorite',
@@ -5902,7 +5944,7 @@ sheet_spec = ss_client.models.Sheet({
   ]
 })
 
-response = ss_client.Workspaces.create_sheet_in_workspace(
+response = smartsheet_client.Workspaces.create_sheet_in_workspace(
   3734419270854532,           # workspace_id
   sheet_spec)
 new_sheet = response.result
@@ -6027,8 +6069,8 @@ Sheet results = smartsheet.sheetResources().createSheetFromTemplate(
 ```
 
 ```python
-response = ss_client.Home.create_sheet_from_template(
-  ss_client.models.Sheet({
+response = smartsheet_client.Home.create_sheet_from_template(
+  smartsheet.models.Sheet({
     'name': 'newsheet',
     'from_id': 7679398137620356     # template_id
   })
@@ -6144,9 +6186,9 @@ Sheet results = smartsheet.sheetResources().createSheetInFolderFromTemplate(
 ```
 
 ```python
-response = ss_client.Folders.create_sheet_in_folder_from_template(
+response = smartsheet_client.Folders.create_sheet_in_folder_from_template(
   3734419270854532,                   # folder_id
-  ss_client.models.Sheet({
+  smartsheet.models.Sheet({
     'name': 'newsheet',
     'from_id': 7679398137620356       # template_id
   })
@@ -6262,9 +6304,9 @@ Sheet newSheet = smartsheet.sheetResources().createSheetInWorkspaceFromTemplate(
 ```
 
 ```python
-response = ss_client.Workspaces.create_sheet_in_workspace_from_template(
+response = smartsheet_client.Workspaces.create_sheet_in_workspace_from_template(
   1656220827314052,                   # workspace_id
-  ss_client.models.Sheet({
+  smartsheet.models.Sheet({
     'name': 'newsheet',
     'from_id': 7679398137620356     # template_id
   })
@@ -6333,7 +6375,7 @@ smartsheet.sheetResources().deleteSheet(
 ```
 
 ```python
-ss_client.Sheets.delete_sheet(
+smartsheet_client.Sheets.delete_sheet(
   1531988831168388)       # sheet_id
 ```
 
@@ -6398,7 +6440,7 @@ Integer version = smartsheet.sheetResources().getSheetVersion(
 ```
 
 ```python
-version = ss_client.Sheets.get_sheet_version(
+version = smartsheet_client.Sheets.get_sheet_version(
   1531988831168388)       # sheet_id
 ```
 
@@ -6464,7 +6506,7 @@ smartsheet.sheets.getSheet(options)
 ```csharp
 // Omit all parameters
 Sheet sheet = smartsheet.SheetResources.GetSheet(
-  9283173393803140,           // long sheetId
+  4583173393803140,           // long sheetId
   null,                       // IEnumerable<SheetLevelInclusion> includes
   null,                       // IEnumerable<SheetLevelExclusion> excludes
   null,                       // IEnumerable<long> rowIds
@@ -6478,7 +6520,7 @@ Sheet sheet = smartsheet.SheetResources.GetSheet(
 ```java
 // Omit all parameters
 Sheet sheet = smartsheet.sheetResources().getSheet(
-  9283173393803140L,      // long sheetId
+  4583173393803140L,      // long sheetId
   null,                   // EnumSet<SheetInclusion> includes    
   null,                   // EnumSet<ObjectExclusion> excludes
   null,                   // Set<Long> rowIds
@@ -6490,13 +6532,13 @@ Sheet sheet = smartsheet.sheetResources().getSheet(
 ```
 
 ```python
-sheet = ss_client.Sheets.get_sheet(
-  1531988831168388)           # sheet_id
+sheet = smartsheet_client.Sheets.get_sheet(
+  4583173393803140)           # sheet_id
 ```
 
 ```ruby
 sheet = smartsheet.sheets.get(
-  sheet_id: 1531988831168388
+  sheet_id: 4583173393803140
 )
 ```
 
@@ -6504,21 +6546,53 @@ sheet = smartsheet.sheets.get(
 
 ```json
 {
+  "id": 4583173393803140,
+  "name": "sheet 1",
+  "version": 6,
+  "totalRowCount": 240,
   "accessLevel": "OWNER",
+  "effectiveAttachmentOptions": [
+    "EVERNOTE",
+    "GOOGLE_DRIVE",
+    "EGNYTE",
+    "FILE",
+    "ONEDRIVE",
+    "DROPBOX",
+    "BOX_COM"
+  ],
+  "readOnly": true,
+  "ganttEnabled": true,
+  "dependenciesEnabled": true,
+  "resourceManagementEnabled": true,
+  "cellImageUploadEnabled": true,
+  "userSettings": {
+    "criticalPathEnabled": false,
+    "displaySummaryTasks": true
+  },
+  "userPermissions": {
+    "summaryPermissions": "ADMIN"
+  },
+  "workspace": {
+    "id": 825898975642500,
+    "name": "New Workspace"
+  },
   "projectSettings": {
     "workingDays": [
       "MONDAY",
       "TUESDAY",
       "WEDNESDAY"
     ],
-    "nonWorkingDays": [
-      "2018-01-01"
-    ],
-    "lengthOfDay": 6
+    "nonWorkingDays": [],
+    "lengthOfDay": 8
   },
+  "hasSummaryFields": false,
+  "permalink": "https://app.smartsheet.com/b/home?lx=pWNSDH9itjBXxBzFmyf-5w",
+  "createdAt": "2018-09-24T20:27:57Z",
+  "modifiedAt": "2018-09-26T20:45:08Z",
   "columns": [
     {
       "id": 4583173393803140,
+      "version": 0,
       "index": 0,
       "primary": true,
       "title": "Primary Column",
@@ -6527,6 +6601,7 @@ sheet = smartsheet.sheets.get(
     },
     {
       "id": 2331373580117892,
+      "version": 0,
       "index": 1,
       "options": [
         "new",
@@ -6538,11 +6613,6 @@ sheet = smartsheet.sheets.get(
       "validation": true
     }
   ],
-  "createdAt": "2012-07-24T18:22:29-07:00",
-  "id": 4583173393803140,
-  "modifiedAt": "2012-07-24T18:30:52-07:00",
-  "name": "sheet 1",
-  "permalink": "https://app.smartsheet.com/b/home?lx=pWNSDH9itjBXxBzFmyf-5w",
   "rows": []
 }
 ```
@@ -6554,10 +6624,12 @@ Gets the sheet specified in the URL. Returns the sheet, including rows, and opti
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, summaryField formatting, and cell formatting</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which sheet or template the sheet was created from, if any.
-  | **exclude** (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li>**displayValue**: excludes display values for cells, rows, or summary fields</li><li>**image**: excludes images for cells, rows, or summary fields</li><li>**imageAltText**: excludes alt text for cells, rows, or summary fields</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**nonexistentCells**: excludes cells that have never contained any data</li></ul>
+<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ganttConfig**: includes Gantt chart details</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which report, sheet, Sight (aka dashboard), or template the sheet was created from, if any.
+  | **exclude** (optional): a comma-separated list of elements to not include in the response.<br/><ul><li>**filteredOutRows**: excludes filtered out rows from response payload if a sheet filter is applied; includes total number of filtered rows</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**nonexistentCells**: excludes cells that have never contained any data</li></ul>
   | **columnIds** (optional): a comma-separated list of column Ids. The response contains only the specified columns in the "columns" array, and individual rows' "cells" array only contains cells in the specified columns.
+  | **filterId** (optional): overrides the existing include={filters} parameter if both are supplied. Applies the given filter (if accessible by the calling user) and marks the affected rows as "filteredOut": true. Format is **filterId={filterId}**
   | **ifVersionAfter** (optional): If version specified is still the current sheet version, then returns an abbreviated Sheet object with only the sheet **version** property. Otherwise, if the sheet has been modified, returns the complete Sheet object. Intended to allow clients with a cached copy to make sure they have the latest version.
+  | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
   | **page** (optional): which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
   | **pageSize** (optional): number of rows per page to include with the sheet.  If neither **pageSize** nor **page** is specified, returns all rows in the sheet.  If only page is specified, defaults to a page size of 100.
   | **rowIds** (optional): a comma-separated list of row Ids on which to filter the rows included in the result
@@ -6613,7 +6685,7 @@ smartsheet.sheetResources().getSheetAsExcel(
 ```
 
 ```python
-ss_client.Sheets.get_sheet_as_excel(
+smartsheet_client.Sheets.get_sheet_as_excel(
   1531988831168388,           # sheet_id
   download_directory_path)
 ```
@@ -6700,7 +6772,7 @@ smartsheet.sheetResources().getSheetAsPDF(
 ```
 
 ```python
-ss_client.Sheets.get_sheet_as_pdf(
+smartsheet_client.Sheets.get_sheet_as_pdf(
   1531988831168388,           # sheet_id
   download_directory_path,
   'A1')                       # paperSize
@@ -6786,7 +6858,7 @@ smartsheet.sheetResources().getSheetAsCSV(
 ```
 
 ```python
-ss_client.Sheets.get_sheet_as_csv(
+smartsheet_client.Sheets.get_sheet_as_csv(
   1531988831168388,           # sheet_id
   download_directory_path)
 ```
@@ -6897,7 +6969,7 @@ PagedResult<Sheet> sheets = smartsheet.sheetResources().listSheets(EnumSet.of(So
 ```
 
 ```python
-response = ss_client.Sheets.list_sheets(include_all=True)
+response = smartsheet_client.Sheets.list_sheets(include_all=True)
 sheets = response.data
 ```
 
@@ -6949,7 +7021,7 @@ Gets a list of all sheets that the user has access to in alphabetical order by n
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another sheet or template</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any report, sheet, Sight (aka dashboard), or template that was created from another report, sheet, Sight, or template, if any</li></ul>
  | <%= PARAMETER_MODIFIEDSINCE %>
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Sheet objects](#sheet-object) limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**createdAt**</li><li>**modifiedAt**</li><li>**name**</li><li>**permalink**</li><li>**source** (included only if **source** is specified with the **include** parameter)</li></ul>
@@ -7023,9 +7095,9 @@ Sheet sheet = smartsheet.sheetResources().moveSheet(
 ```
 
 ```python
-sheet = ss_client.Sheets.move_sheet(
+sheet = smartsheet_client.Sheets.move_sheet(
   4583173393803140,                       # sheet_id
-  ss_client.models.ContainerDestination({
+  smartsheet.models.ContainerDestination({
     'destination_type': 'folder',       # folder, workspace, or home
     'destination_id': 7960873114331012  # folder_id
   })
@@ -7112,10 +7184,10 @@ SheetPublish status = smartsheet.sheetResources().getPublishStatus(
 ```
 
 ```python
-response = ss_client.Sheets.get_publish_status(
+response = smartsheet_client.Sheets.get_publish_status(
   4583173393803140)       # sheet_id
 status = response.result
-# status is a ss_client.models.SheetPublish object
+# status is a smartsheet.models.SheetPublish object
 ```
 
 ```ruby
@@ -7219,9 +7291,9 @@ SheetPublish updatedStatus = smartsheet.sheetResources().updatePublishStatus(
 ```python
 # With the Python SDK, if fewer than all four flags are set, current status is retrieved and merged with the flags that _are_ set with this method call.
 
-updated_status = ss_client.Sheets.set_publish_status(
+updated_status = smartsheet_client.Sheets.set_publish_status(
   4583173393803140,       # sheet_id
-  ss_client.models.SheetPublish({
+  smartsheet.models.SheetPublish({
     'read_only_lite_enabled': True
   })
 )
@@ -7270,9 +7342,9 @@ Sets the publish status of the sheet and returns the new status, including the U
 <%= RETURNS %> | [Result object](#result-object) containing a [SheetPublish object](#sheetpublish-object)
 <%= SCOPE %> | ADMIN_SHEETS
 
-<aside class="notice">For Read Only, if you do not specify a value for <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the sheet owner belongs to an organization) or to <b>ALL</b> (if the sheet owner does not belong to an organization).</aside>
+<aside class="notice">For Read Only, if you do not specify a value for <b>readOnlyFullAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the sheet owner belongs to an organization account) or to <b>ALL</b> (if the sheet owner does not belong to an organization account).</aside>
 
-<aside class="notice">For Read Write, if you do not specify a value for <b>readWriteAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the sheet owner belongs to an organization) or to <b>ALL</b> (if the sheet owner does not belong to an organization).</aside>
+<aside class="notice">For Read Write, if you do not specify a value for <b>readWriteAccessibleBy</b>, the value defaults to the organization-level 'Sheet Publishing' setting (if the sheet owner belongs to an organization account) or to <b>ALL</b> (if the sheet owner does not belong to an organization account).</aside>
 
 ## Search Sheet 
 
@@ -7847,7 +7919,26 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
 ```
 
 ```javascript
-// Not yet implemented
+// Specify sort criteria
+var body = {
+  sortCriteria: [
+    {
+      columnId: 4583173393803140,
+      direction: "DESCENDING"
+    }
+  ]
+};
+
+// Sort rows
+smartsheet.sheets.sortRowsInSheet({sheetId: 9283173393803140, body: body})
+  .then((result) => {
+      console.log("success");
+      console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+      console.log("error");
+      console.log(JSON.stringify(error));
+  });
 ```
 
 ```csharp
@@ -7859,7 +7950,13 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sort \
 ```
 
 ```python
-# Not yet implemented
+sort_specifier = smartsheet.models.SortSpecifier({
+    'sort_criteria': [smartsheet.models.SortCriterion({
+        'column_id': 4583173393803140,
+        'direction': 'DESCENDING'
+    })]
+})
+sheet = smartsheet_client.Sheets.sort_sheet(9283173393803140, sort_specifier)
 ```
 
 ```ruby
@@ -7895,6 +7992,7 @@ smartsheet.sheets.rows.sort(
   "columns": [
     {
       "id": 4583173393803140,
+      "version": 0,
       "index": 0,
       "primary": true,
       "title": "Primary Column",
@@ -7903,6 +8001,7 @@ smartsheet.sheets.rows.sort(
     },
     {
       "id": 2331373580117892,
+      "version": 0,
       "index": 1,
       "options": [
         "new",
@@ -8004,11 +8103,11 @@ Sheet updatedSheet = smartsheet.sheetResources().updateSheet(sheetSpecification)
 ```
 
 ```python
-updated_sheet = ss_client.Sheets.update_sheet(
+updated_sheet = smartsheet_client.Sheets.update_sheet(
   4583173393803140,       # sheet_id
-  ss_client.models.Sheet({
+  smartsheet.models.Sheet({
     'name': 'New Sheet Name',
-    'user_settings': ss_client.models.SheetUserSettings({
+    'user_settings': smartsheet.models.SheetUserSettings({
       'critical_path_enabled': True
     })
   })
@@ -8139,6 +8238,7 @@ Smartsheet Sights(TM) are a collection of widgets that can contain data from a v
 **modifiedAt** | timestamp | Time of last modification
 **name** | string | Sight name 
 **permalink** | string | URL that represents a direct link to the Sight in Smartsheet
+**source** | [source](#source-object) | A Source object indicating the Sight (aka dashboard) from which this Sight was created, if any
 **widgets** | [widget](#widget-object)[] | Array of Widget objects
 **workspace** | [Workspace](#workspace-object) | A Workspace object, limited to only 2 attributes: <ul><li>**id**</li> <li>**name**</li></ul> NOTE: this attribute is only present if the Sight resides within a workspace.
 
@@ -8146,7 +8246,7 @@ Smartsheet Sights(TM) are a collection of widgets that can contain data from a v
 
      |     |     |
 -----|-----|-----|
-**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published Sight:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the Sight owner's Smartsheet organization.</li></ul>Only returned in a response if **readOnlyFullEnabled = true**.
+**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published Sight:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the Sight owner's Smartsheet organization account.</li></ul>Only returned in a response if **readOnlyFullEnabled = true**.
 **readOnlyFullEnabled** | Boolean | If **true**, a rich version of the Sight is published with the ability to use shortcuts and widget interactions.
 **readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published Sight.<br/>Only returned in a response if **readOnlyFullEnabled = true**.
 
@@ -8182,6 +8282,7 @@ Smartsheet Sights(TM) are a collection of widgets that can contain data from a v
 **title** | string | Title of the widget
 **titleFormat** | string | [FormatDescriptor](#formatting)
 **version** | int | Widget version number
+**viewMode** | int | **1** indicates content is centered. **2** indicates content is left aligned. Must use a query parameter of **level=2** to see this information.
 **width** | number | Number of columns that the widget occupies on the Sight
 **xPosition** | number | X-coordinate of widget's position on the Sight
 **yPosition** | number | Y-coordinate of widget's position on the Sight
@@ -8190,27 +8291,32 @@ UI widget name | type string | Object |
 -----|-----|-----|
 Chart | **CHART** | [ChartWidgetContent](#chartwidgetcontent-object) 
 Image | **IMAGE** | [ImageWidgetContent](#imagewidgetcontent-object)
-Metric | **SHEETSUMMARY** | [CellLinkWidgetContent](#celllinkwidgetcontent-object)
+Metric | **METRIC** | [CellLinkWidgetContent](#celllinkwidgetcontent-object)
 Report | **GRIDGANTT** | [ReportWidgetContent](#reportwidgetcontent-object)
 Rich Text | **RICHTEXT** | [RichTextWidgetContent](#richtextwidgetcontent-object)
-Shortcut | **SHORTCUTLIST** | [ShortcutWidgetContent](#shortcutwidgetcontent-object)
+Shortcut | **SHORTCUT** | [ShortcutWidgetContent](#shortcutwidgetcontent-object)
 Title | **TITLE** | [TitleWidgetContent](#titlewidgetcontent-object)
+Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetcontent-object)
 
 ### CellLinkWidgetContent Object
 
      |     |     |
 -----|-----|-----|
+**sheetId** | number | The Id of the sheet from which the cell data originates
 **cellData** | [CellDataItem](#celldataitem-object)[] | Array of CellDataItem objects
 **columns** | [Column](#column-object)[] | Array of Column objects
-**hyperlink** | [Hyperlink](#hyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
+**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
 
 ### CellDataItem Object
 
      |     |     |
 -----|-----|-----|
-**columnId** | number | Column Id for the cell
+**columnId** | number | Column Id for each item
+**rowId** | number | Row Id for each item
+**sheetId** | number | Sheet Id for each item
 **objectValue** | A string, number, or a Boolean value | The type of data returned depends on the cell type and the data in the cell
 **cell** | [Cell](#cell-object) | Cell object
+**dataSource** | string | **CELL**
 **label** | string | Label for the data point. This is either the column name or a user-provided string
 **labelFormat** | string | [formatDescriptor](#formatting)
 **order** | integer | The display order for the CellDataItem
@@ -8220,8 +8326,13 @@ Title | **TITLE** | [TitleWidgetContent](#titlewidgetcontent-object)
 
      |     |     |
 -----|-----|-----|
+**reportId** | number | Report Id denoting container source, if applicable
+**sheetId** | number | Sheet Id denoting container source, if applicable
 **axes** | Axes[] | Array of Axes objects
+**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
+**includedColumnIds** |  includedColumnIds[]] | Array of columnIds if the range was selected through the UI
 **legend** | string | The location in the widget where Smartsheet renders the legend, for example, **RIGHT**
+**selectionRanges** | [SelectionRange](#selectionrange-object)[] | If the source is a sheet
 **series** | Series[] | Array of Series objects
 
 ### ImageWidgetContent Object
@@ -8232,19 +8343,31 @@ Title | **TITLE** | [TitleWidgetContent](#titlewidgetcontent-object)
 **fileName** | string | Name of the image file
 **format** | string | [formatDescriptor](#formatting)
 **height** | integer | Original height of the image in pixels
+**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
 **width** | integer | Original width of the image in pixels
 
 ### ReportWidgetContent Object
 
      |     |     |
 -----|-----|-----|
+**reportId** | number | Report Id denoting container source
 **htmlContent** | string | HTML snippet to render report
+**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
 
 ### RichTextWidgetContent Object
 
      |     |     |
 -----|-----|-----|
 **html** | string | The widget content as HTML </br> </br> The Rich Text widget supports the following subset of HTML tags and CSS Styles: </br></br> <b>HTML</b><ul><li>**a** - defines a hyperlink</li> <li>**br** - inserts a single line break</li><li>**li** - defines a list item</li> <li>**ol** - defines an ordered list</li> <li>**p** - defines a paragraph</li> <li>**ul** - defines an unordered list</li> <li>**span** - defines a section in a document</li></ul> <b>CSS</b><ul><li>**color**</li> <li>**font-family**</li> <li>**font-size**</li> <li>**font-style**</li> <li>**font-weight**</li> <li>**text-align**</li> <li>**text-decoration**</li></ul>
+
+### SelectionRange Object
+
+     |     |     |
+-----|-----|-----|
+**sourceColumnId1** | number | Defines beginning edge of range when specifying one or more columns.
+**sourceColumnId2** | number | Defines ending edge of range when specifying one or more columns.
+**sourceRowId1** | number | Defines beginning edge of range when specifying one or more rows.
+**sourceRowId2** | number | Defines ending edge of range when specifying one or more rows.
 
 ### ShortcutWidgetContent Object
 
@@ -8269,6 +8392,24 @@ Title | **TITLE** | [TitleWidgetContent](#titlewidgetcontent-object)
 -----|-----|-----|
 **backgroundColor** | hex | The hex color, for instance #E6F5FE
 **htmlContent** | string | HTML snippet to render title
+
+### WebcontentWidgetContent Object
+
+     |     |     |
+-----|-----|-----|
+**url** | string | The URL
+
+### WidgetHyperlink Object
+
+     |     |     |
+-----|-----|-----|
+**interactionType** | string | Specifies what happens when a user clicks the widget. Valid values: <ul><li>**DISTI_COPY** -- a distribution link, only available if org has distribution links enabled</li><li>**NONE** -- do nothing, no other attribute required</li><li>**SMARTSHEET_ITEM** -- open a Smartsheet item that is not the SOURCE_SHEET, must also have one of the following:</li><ul><li>**folderId**</li><li>**reportId**</li><li>**sheetId**</li><li>**sightId**</li><li>**workspaceId**</li></ul><li>**SOURCE_SHEET** -- open the container where the widget data comes from, no other attribute required</li><li>**WEB** -- launch the URL, must also have **url** attribute</li></ul>
+**folderId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the folder to open
+**reportId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the report to open
+**sheetId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the sheet to open
+**sightId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the Sight (aka dashboard) to open
+**url** | string | If **interactionType** = **WEB** this is the URL to launch
+**workspaceId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the workspace to open
 
 ## Copy Sight
 
@@ -8340,9 +8481,9 @@ Sight sight = smartsheet.sightResources().copySight(
 ```
 
 ```python
-new_sight = ss_client.Sights.copy_sight(
+new_sight = smartsheet_client.Sights.copy_sight(
   6327127650920324,                           # sight_id
-  ss_client.models.ContainerDestination({
+  smartsheet.models.ContainerDestination({
     'destination_type': 'folder',           # folder, workspace, or home
     'destination_id': 3791509922310020,     # folder_id
     'new_name': 'newSightName'
@@ -8429,7 +8570,7 @@ smartsheet.sightResources().deleteSight(
 ```
 
 ```python
-ss_client.Sights.delete_sight(3404239197235076)     # sight_id
+smartsheet_client.Sights.delete_sight(3404239197235076)     # sight_id
 ```
 
 ```ruby
@@ -8495,7 +8636,7 @@ Sight sight = smartsheet.sightResources().getSight(
 ```
 
 ```python
-sight = ss_client.Sights.get_sight(
+sight = smartsheet_client.Sights.get_sight(
   6327127650920324)     # sightId
 ```
 
@@ -8530,7 +8671,7 @@ sight = smartsheet.sights.get(
     },
     {
       "id": 48092647672583496,
-      "type": "SHORTCUTLIST",
+      "type": "SHORTCUT",
       "contents": {
         "shortcutData": [
           {
@@ -8564,6 +8705,9 @@ Gets the specified Sight.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any Sight that was created from another Sight, if any</li></ul>  
+  | **level** (optional): allows you to specify whether you want to see data as text format for backwards compatibility or you want to see multi-contact data. Use **level=0** or **level=1** (default) for text or **level=2** for multi-contact. 
+  | **objectValue** (optional) -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data.
 <%= RETURNS %> | [Sight object](#sight-object)
 <%= SCOPE %> | READ_SIGHTS
 
@@ -8601,7 +8745,7 @@ PagedResult<Sight> sights = smartsheet.sightResources().listSights(
 ```
 
 ```python
-response = ss_client.Sights.list_sights(include_all=True)
+response = smartsheet_client.Sights.list_sights(include_all=True)
 sights = response.data
 ```
 
@@ -8720,9 +8864,9 @@ Sight sight = smartsheet.sightResources().moveSight(
 ```
 
 ```python
-response = ss_client.Sights.move_sight(
+response = smartsheet_client.Sights.move_sight(
   5363568917931908,                           # sight_id
-  ss_client.models.ContainerDestination({
+  smartsheet.models.ContainerDestination({
     'destination_type': 'folder',           # folder, workspace, or home
     'destination_id': 8460057768683396      # destination folder_id
   })
@@ -8808,7 +8952,7 @@ smartsheet.sights.getSightPublishStatus(options)
 ```
 
 ```python
-status = ss_client.Sights.get_publish_status(
+status = smartsheet_client.Sights.get_publish_status(
   5363568917931908)       # sight_id
 ```
 
@@ -8884,9 +9028,9 @@ smartsheet.sights.setSightPublishStatus(options)
 ```
 
 ```python
-response = ss_client.Sights.set_publish_status(
+response = smartsheet_client.Sights.set_publish_status(
   5363568917931908,       # sight_id
-  ss_client.models.SightPublish({
+  smartsheet.models.SightPublish({
     'read_only_full_enabled': True
   })
 )
@@ -8932,7 +9076,7 @@ Publishes or unpublishes a Sight.
 <%= RETURNS %> | [Result object](#result-object) containing a [SightPublish object](#sightpublish-object)
 <%= SCOPE %> | ADMIN_SIGHTS
 
-<aside class="notice">If <b>readOnlyFullEnabled</b> is set to <b>true</b> in the request, but <b>readOnlyFullAccessibleBy</b> is not specified, the value of <b>readOnlyFullAccessibleBy</b> defaults to the organization-level 'Sight Publishing' setting (if the Sight owner belongs to an organization) or to <b>ALL</b> (if the Sight owner does not belong to an organization).</aside>
+<aside class="notice">If <b>readOnlyFullEnabled</b> is set to <b>true</b> in the request, but <b>readOnlyFullAccessibleBy</b> is not specified, the value of <b>readOnlyFullAccessibleBy</b> defaults to the organization-level 'Sight Publishing' setting (if the Sight owner belongs to an organization account) or to <b>ALL</b> (if the Sight owner does not belong to an organization account).</aside>
 
 ## Share Sight
 
@@ -8981,9 +9125,9 @@ smartsheet.sights.updateSight(options)
 ```
 
 ```python
-updated_sight = ss_client.Sights.update_sight(
+updated_sight = smartsheet_client.Sights.update_sight(
   5363568917931908,           # sight_id
-  ss_client.models.Sight({
+  smartsheet.models.Sight({
     'name': 'New Sight Name'
   })
 )

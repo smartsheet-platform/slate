@@ -61,7 +61,15 @@ var body = {
     }
   ],
   subject: "Sample Monthly Update Request",
-  message: "Please update my online sheet."
+  message: "Please update my online sheet.",
+  schedule: {
+    type: "DAILY",
+    startAt: "2016-04-01T00:00:00Z",
+    endAt: "2018-12-31T00:00:00Z",
+    dayDescriptors: [
+      "WEEKDAY"
+    ]
+  }
 };
 
 // Set options
@@ -120,7 +128,7 @@ email_spec.row_ids = [6809535313667972]
 email_spec.column_ids = [7036894123976580]
 
 # Send update request
-new_update_request = ss_client.Sheets.send_update_request(
+new_update_request = ss_client.Sheets.create_update_request(
   5190835902932868,           # sheet_id
   email_spec
 )

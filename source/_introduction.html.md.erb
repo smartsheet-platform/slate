@@ -44,7 +44,7 @@
 
 * Read and update sheets
 * Manage folders and workspaces
-* Administer users and accounts
+* Administer user accounts and organization account
 
 You can view code examples in the programming language of your choice by clicking the corresponding tab in the dark-blue area in the rightmost pane. Each tab corresponds to a Software Development Kit (SDK) that Smartsheet provides to make working in that programming language easier. See [SDKs and Sample Code](#sdks-and-sample-code).
 
@@ -156,7 +156,7 @@ PagedResult<Sheet> sheets = smartsheet.sheetResources().listSheets(include_param
 ```
 
 ```python
-response = ss_client.Sheets.list_sheets(include="attachments,source", include_all=True)
+response = smartsheet_client.Sheets.list_sheets(include="attachments,source", include_all=True)
 sheets = response.data
 ```
 
@@ -222,10 +222,10 @@ UserProfile userProfile = smartsheet.userResources().getCurrentUser();
 
 ```python
 # Create base client object and set the access token
-ss_client = ss_client.Smartsheet('ll352u9jujauoqz4gstvsae05')
+smartsheet_client = smartsheet.Smartsheet('ll352u9jujauoqz4gstvsae05')
 
 # Get current user
-user_profile = ss_client.Users.get_current_user()
+user_profile = smartsheet_client.Users.get_current_user()
 ```
 
 ```ruby
@@ -297,6 +297,20 @@ The JSON representation of the objects returned from the List All REST endpoints
 
 Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. 
+
+## Working with Smartsheet Gov Accounts
+
+Smartsheet Gov has "FedRAMP Ready" status as part of Federal Risk and Authorization Management Program (FedRAMP). As an API developer working on a Smartsheet Gov account, you should be aware of the following differences from the standard API:
+
+* The base URL for each API call is smartsheetgov.com instead of smartsheet.com. This documentation uses smartsheet.com in *all* examples.
+* Smartsheetgov.com has a restriction on attachment types. Only the following attachment types are allowed: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.
+* If you use a Smartsheet SDK, you need to modify the standard config file to point to smartsheetgov.com. There are instructions specific to each SDK on how to modify the config file at the following locations:
+
+  * [C# SDK](https://github.com/smartsheet-platform/smartsheet-csharp-sdk/blob/master/ADVANCED.md#working-with-smartsheetgovcom-accounts)
+  * [Java SDK](https://github.com/smartsheet-platform/smartsheet-java-sdk/blob/master/ADVANCED.md#working-with-smartsheetgovcom-accounts)
+  * [Node.js SDK](https://github.com/smartsheet-platform/smartsheet-javascript-sdk#working-with-smartsheetgovcom-accounts)
+  * [Python SDK](https://github.com/smartsheet-platform/smartsheet-python-sdk/blob/master/ADVANCED.md#working-with-smartsheetgovcom-accounts)
+  * [Ruby SDK](https://github.com/smartsheet-platform/smartsheet-ruby-sdk#basic-configuration)
 
 # Getting Started
 
@@ -514,10 +528,10 @@ Smartsheet smartsheet = new SmartsheetBuilder()
 import smartsheet
 
 # Initialize client
-ss_client = smartsheet.Smartsheet(access_token)
+smartsheet_client = smartsheet.Smartsheet(access_token)
 
 # Make sure we don't miss any errors
-ss_client.errors_as_exceptions(True)
+smartsheet_client.errors_as_exceptions(True)
 ```
 
 ```ruby
@@ -591,7 +605,7 @@ curl https://api.smartsheet.com/2.0/sheets \
 ```javascript
 // Set options
 var options = {
-  assumeUser: "jane.doe%40smartsheet.com"
+  assumeUser: "jane.doe@smartsheet.com"
   };
 
 // List Sheets
@@ -616,7 +630,7 @@ smartsheet.setAssumedUser("jane.doe@smartsheet.com");
 ```
 
 ```python
-ss_client.assume_user("jane.doe@smartsheet.com")
+smartsheet_client.assume_user("jane.doe@smartsheet.com")
 ```
 
 ```ruby
@@ -677,7 +691,7 @@ Access Scope | Description |
 -----|-----|
 **ADMIN_SHEETS** | Modify sheet structure, including column definition, publish state, etc.
 **ADMIN_SIGHTS** | Modify Sights/dashboards structure.
-**ADMIN_USERS** | Add and remove users from your Smartsheet organization; create groups and manage membership.
+**ADMIN_USERS** | Add and remove users from your Smartsheet organization account; create groups and manage membership.
 **ADMIN_WEBHOOKS** | Create, delete, and update webhooks; get all webhooks; reset shared secret. 
 **ADMIN_WORKSPACES** | Create and manage workspaces and folders, including sharing.
 **CREATE_SHEETS** | Create new sheets.
@@ -687,7 +701,7 @@ Access Scope | Description |
 **READ_CONTACTS** | Retrieve contacts.
 **READ_SHEETS** | Read all sheet data, including attachments, discussions, and cell data.
 **READ_SIGHTS** | Read all Sights/dashboards data.
-**READ_USERS** | Retrieve users and groups for your Smartsheet organization.
+**READ_USERS** | Retrieve users and groups for your Smartsheet organization account.
 **SHARE_SHEETS** | Share sheets, including sending sheets as attachments.
 **SHARE_SIGHTS** | Share Sights/dashboards.
 **WRITE_SHEETS** | Insert and modify sheet data, including attachments, discussions, and cell data.
@@ -716,21 +730,21 @@ curl 'https://app.smartsheet.com/b/authorize?response_type=code&client_id=dheu3d
 const qs = require('querystring');
 
 function authorizeURL(params) {
-    const authUrl = 'https://app.smartsheet.com/b/authorize';
-    return `${authUrl}?${qs.stringify(params)}`;
+  const authUrl = 'https://app.smartsheet.com/b/authorize';
+  return `${authUrl}?${qs.stringify(params)}`;
 }
 
 const authorizationUri = authorizeURL({
-    response_type: 'code',
-    client_id: '1samp48lel5for68you',
-    redirect_uri: 'http://localhost:3000/callback',
-    scope: 'CREATE_SHEETS WRITE_SHEETS',
+  response_type: 'code',
+  client_id: '1samp48lel5for68you',
+  redirect_uri: 'http://localhost:3000/callback',
+  scope: 'CREATE_SHEETS WRITE_SHEETS',
 });
 
 // Initial page redirecting to Smartsheet
 app.get('/auth', (req, res) => {
-    console.log(authorizationUri);
-    res.redirect(authorizationUri);
+  console.log(authorizationUri);
+  res.redirect(authorizationUri);
 });
 ```
 
@@ -747,7 +761,9 @@ app.get('/auth', (req, res) => {
 ```
 
 ```ruby
-# [todo]
+auth_request_url = client.token.build_authorization_url(
+  client_id: 'my-client-id',
+  scopes: ['CREATE_SHEETS', 'WRITE_SHEETS'])
 ```
 
 > Successful Response:
@@ -902,8 +918,7 @@ smartsheet.token.get(
 		"access_token": "ll352u9jujauoqz4gstvsae05",
 		"token_type": "bearer",
 		"refresh_token": "e9x352a9mp4151le2505",
-		"expires_in": 604799,
-		"expires_at": "2017-11-21T23:32:22.180Z"
+		"expires_in": 604799
 	}
 }
 ```
@@ -1003,8 +1018,7 @@ smartsheet.token.refresh(
 		"access_token": "new52u9jujauoqz4gstvsae05",
 		"token_type": "bearer",
 		"refresh_token": "new352a9mp4151le2505",
-		"expires_in": 604799,
-		"expires_at": "2017-11-21T23:32:22.180Z"
+		"expires_in": 604799
 	}
 }
 ```
@@ -1122,7 +1136,7 @@ PagedResult<Sheet> sheets = smartsheet.sheetResources().listSheets(include_param
 ```
 
 ```python
-response = ss_client.Sheets.list_sheets(include="attachments,source", include_all=True)
+response = smartsheet_client.Sheets.list_sheets(include="attachments,source", include_all=True)
 sheets = response.data
 ```
 
