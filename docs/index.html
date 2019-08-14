@@ -16745,7 +16745,7 @@ a comma-delimited list of flags that indicate additional attributes to be includ
 </tr>
 <tr>
 <td></td>
-<td><strong>scopes</strong> (optional): If search fails, try using an array for each type of this comma-separated list of search filters:<ul><li><b>attachments</b></li><li><b>cellData</b></li><li><b>comments</b></li><li><b>folderNames</b></li><li><b>profileFields</b></li><li><b>reportNames</b></li><li><b>sheetNames</b></li><li><b>sightNames</b></li><li><b>templateNames</b></li><li><b>workspaceNames</b></li></ul></td>
+<td><strong>scopes</strong> (optional): If search fails, try using an array for each type of this comma-separated list of search filters:<ul><li><b>attachments</b></li><li><b>cellData</b></li><li><b>comments</b></li><li><b>folderNames</b></li><li><b>reportNames</b></li><li><b>sheetNames</b></li><li><b>sightNames</b></li><li><b>summaryFields</b></li><li><b>templateNames</b></li><li><b>workspaceNames</b></li></ul></td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -26998,7 +26998,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td><strong>customWelcomeScreenViewed</strong></td>
 <td>timestamp</td>
-<td>Timestamp of viewing an Enterprise <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only-#welcomescreen">Custom Welcome Screen</a> by the current user</td>
+<td>Timestamp of viewing an Enterprise <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only">Custom Welcome Screen</a> by the current user</td>
 </tr>
 <tr>
 <td><strong>email</strong></td>
@@ -27092,7 +27092,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td><strong>customWelcomeScreenViewed</strong></td>
 <td>timestamp</td>
-<td>Timestamp of viewing an Enterprise <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only-#welcomescreen">Custom Welcome Screen</a> by the current user</td>
+<td>Timestamp of viewing an Enterprise <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only">Custom Welcome Screen</a> by the current user</td>
 </tr>
 <tr>
 <td><strong>department</strong></td>
@@ -27858,7 +27858,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Returns</td>
-<td><a href="#userprofile-object">UserProfile object</a><br/><br/><b>NOTE:</b> For system administrators, the following UserProfile attributes are included in the response:<ul><li><strong>customWelcomeScreenViewed</strong> (only returned when an Enterprise user has viewed the <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only-#welcomescreen">Custom Welcome Screen</a>)</li><li><strong>lastLogin</strong> (only returned if the user has logged in)</li><li><strong>sheetCount</strong> (only returned if the <strong>status</strong> attribute is <strong>ACTIVE</strong>)</li></ul></td>
+<td><a href="#userprofile-object">UserProfile object</a><br/><br/><b>NOTE:</b> For system administrators, the following UserProfile attributes are included in the response:<ul><li><strong>customWelcomeScreenViewed</strong> (only returned when an Enterprise user has viewed the <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only">Custom Welcome Screen</a>)</li><li><strong>lastLogin</strong> (only returned if the user has logged in)</li><li><strong>sheetCount</strong> (only returned if the <strong>status</strong> attribute is <strong>ACTIVE</strong>)</li></ul></td>
 </tr>
 <tr>
 <td>Access Scope</td>
@@ -27956,7 +27956,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Returns</td>
-<td><a href="#userprofile-object">UserProfile object</a><br/><br/><b>NOTE:</b> For system administrators, the following UserProfile attributes are included in the response):<ul><li><strong>admin</strong></li><li><strong>customWelcomeScreenViewed</strong> (only returned when an Enterprise user has viewed the <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only-#welcomescreen">Custom Welcome Screen</a>)</li><li><strong>groupAdmin</strong></li><li><strong>lastLogin</strong> (only returned if the user has logged in)</li><li><strong>licensedSheetCreator</strong></li><li><strong>resourceViewer</strong></li><li><strong>sheetCount</strong> (only returned if the <strong>status</strong> attribute is <strong>ACTIVE</strong>)</li><li><strong>status</strong></li></ul></td>
+<td><a href="#userprofile-object">UserProfile object</a><br/><br/><b>NOTE:</b> For system administrators, the following UserProfile attributes are included in the response):<ul><li><strong>admin</strong></li><li><strong>customWelcomeScreenViewed</strong> (only returned when an Enterprise user has viewed the <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only">Custom Welcome Screen</a>)</li><li><strong>groupAdmin</strong></li><li><strong>lastLogin</strong> (only returned if the user has logged in)</li><li><strong>licensedSheetCreator</strong></li><li><strong>resourceViewer</strong></li><li><strong>sheetCount</strong> (only returned if the <strong>status</strong> attribute is <strong>ACTIVE</strong>)</li><li><strong>status</strong></li></ul></td>
 </tr>
 <tr>
 <td>Access Scope</td>
@@ -28075,7 +28075,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Returns</td>
-<td><a href="#indexresult-object">IndexResult object</a> containing an array of <a href="#user-object">User objects</a><br/><br/><b>NOTE:</b> If the API request is submitted by a system administrator, the following User object attributes are included in the response (else, they are omitted from the response):<ul><li><strong>admin</strong></li><li><strong>groupAdmin</strong></li><li><strong>licensedSheetCreator</strong></li><li><strong>resourceViewer</strong></li><li><strong>sheetCount</strong> (omitted if the <strong>status</strong> attribute is not <strong>ACTIVE</strong>)</li><li><strong>status</strong></li></ul><br/><b>NOTE:</b> If the API request is submitted by a system administrator of an Enterprise account, and <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only-#welcomescreen">Custom Welcome Screen</a> is enabled, the following User object attributes are included in the response (else, they are omitted from the response):<ul><li><strong>customWelcomeScreenViewed</strong> (omitted if the user has never viewed the Custom Welcome Screen)</li></ul></td>
+<td><a href="#indexresult-object">IndexResult object</a> containing an array of <a href="#user-object">User objects</a><br/><br/><b>NOTE:</b> If the API request is submitted by a system administrator, the following User object attributes are included in the response (else, they are omitted from the response):<ul><li><strong>admin</strong></li><li><strong>groupAdmin</strong></li><li><strong>licensedSheetCreator</strong></li><li><strong>resourceViewer</strong></li><li><strong>sheetCount</strong> (omitted if the <strong>status</strong> attribute is not <strong>ACTIVE</strong>)</li><li><strong>status</strong></li></ul><br/><b>NOTE:</b> If the API request is submitted by a system administrator of an Enterprise account, and <a href="https://help.smartsheet.com/articles/1392225-customizing-a-welcome-message-upgrade-screen-enterprise-only">Custom Welcome Screen</a> is enabled, the following User object attributes are included in the response (else, they are omitted from the response):<ul><li><strong>customWelcomeScreenViewed</strong> (omitted if the user has never viewed the Custom Welcome Screen)</li></ul></td>
 </tr>
 <tr>
 <td>Access Scope</td>
