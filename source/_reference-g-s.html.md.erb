@@ -3155,10 +3155,12 @@ Include Flag | Description |
 **columnType**	| Includes **columnType** attribute in the row's [cells](#cell-object) indicating the type of the column the cell resides in.
 **discussions**	| Includes row **discussions** array.<br/>To include discussion attachments, both **attachments** and **discussions** must be present in the include list.
 **filters**		| Includes **filteredOut** attribute indicating if the row should be displayed or hidden according to the sheet's filters.
-**format**		| Includes **format** attribute on the row and its cells.  See [Formatting](#formatting).
+**format**		| Includes **format** attribute on the row, its cells, or summary fields.  See [Formatting](#formatting).
 **objectValue** | Includes **objectValue** attribute on cells containing values. For more information see [Cell Reference](#cell-reference).
 **rowPermalink** | Includes **permalink** attribute that represents a direct link to the [row](#row-object) in the Smartsheet application.
-**rowWriterInfo** | Includes **createdBy** and **modifiedBy** attributes on the row, indicating the row's creator, and last modifier.
+**rowWriterInfo** | **DEPRECATED** Includes **createdBy** and **modifiedBy** attributes on the row, indicating the row's creator, and last modifier.
+**summary** | Includes [SheetSummary](#sheetsummary-object) object.
+**writerInfo** | Includes **createdBy** and **modifiedBy** attributes on the row or summary fields, indicating the row or summary field's creator, and last modifier.
 
 # Search
 
@@ -3200,10 +3202,10 @@ Search a specific sheet or search across all sheets that a user can access.
 -----|-----|-----|
 **objectId** | number | Search result object Id
 **parentObjectId** | number | Search result parent object Id
-**objectType** | string | Search result object type (attachment, discussion, folder, report, row, sheet, Sight, template, workspace)
-**parentObjectType** | string | Search result parent object type (folder, report, sheet, Sight, template, workspace)
 **contextData** | array | Additional info on search result context (row num)
+**objectType** | string | Search result object type (attachment, discussion, folder, report, row, sheet, Sight, summaryField, template, workspace)
 **parentObjectName** | string | Search result parent object name
+**parentObjectType** | string | Search result parent object type (folder, report, sheet, Sight, template, workspace)
 **text** | string | Search result text excerpt
 
 ## Search Everything
@@ -3302,7 +3304,7 @@ Searches all sheets that the user can access, for the specified text.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **query** (required): text with which to perform the search. Enclose in double-quotes for an exact search.
- | **include** (optional): when specified with a value of **favoriteFlag**, response indicates which returned items are favorites:<ul><li>**favorite** -- folders, reports, sheets, Sights, templates, and workspaces will have the property **favorite: true**</li><li>**parentObjectFavorite** -- attachments, discussions, profile fields, and rows will have the property **parentObjectFavorite: true**</li></ul>
+ | **include** (optional): when specified with a value of **favoriteFlag**, response indicates which returned items are favorites:<ul><li>**favorite** -- folders, reports, sheets, Sights, templates, and workspaces will have the property **favorite: true**</li><li>**parentObjectFavorite** -- attachments, discussions, summary fields, and rows will have the property **parentObjectFavorite: true**</li></ul>
  | **location** (optional): when specified with a value of **personalWorkspace**, limits the response to only those items in the user's workspaces.
  | <%= PARAMETER_MODIFIEDSINCE %>
  | **scopes** (optional): If search fails, try using an array for each type of this comma-separated list of search filters:<ul><li><b>attachments</b></li><li><b>cellData</b></li><li><b>comments</b></li><li><b>folderNames</b></li><li><b>profileFields</b></li><li><b>reportNames</b></li><li><b>sheetNames</b></li><li><b>sightNames</b></li><li><b>templateNames</b></li><li><b>workspaceNames</b></li></ul>
@@ -5213,6 +5215,7 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 **effectiveAttachmentOptions** | array | Array of enum strings (see [Attachment.attachmentType](#attachment-object)) indicating the allowable attachment options for the current user and sheet
 **favorite** | Boolean | Returned only if the user has marked this sheet as a favorite in their Home tab (value = **true**)
 **ganttEnabled** | Boolean | Indicates whether "Gantt View" is enabled
+**hasSummaryFields** | Boolean | Indicates whether a sheet summary is present
 **modifiedAt** | timestamp | Time that the sheet was modified
 **name** | string | Sheet name
 **owner** | string | Email address of the sheet owner
@@ -5223,7 +5226,9 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 **rows** | [Row](#row-object)[] | Array of Row objects
 **showParentRowsForFilters** | Boolean | Returned only if there are column filters on the sheet.  Value = **true** if "show parent rows" is enabled for the filters.
 **source** | [Source](#source-object) | A Source object indicating the report, sheet, Sight (aka dashboard), or template from which this sheet was created, if any
+**summary** | [SheetSummary](#sheetsummary-object) | A SheetSummary object containing a list of defined fields and values for the sheet.
 **totalRowCount** | number | The total number of rows in the sheet
+**userPermissions** | [SheetUserPermissions](#sheetuserpermissions-object) | A SheetUserPermissions object indicating what summary operations are possible for the current user
 **userSettings** | [SheetUserSettings](#sheetusersettings-object) | A SheetUserSettings object containing the current user's sheet-specific settings.
 **version** | number | A number that is incremented every time a sheet is modified
 **workspace** | [Workspace](#workspace-object) | A Workspace object containing the workspace Id and name.
@@ -5307,6 +5312,22 @@ Represents the project settings dependencies for a specific sheet.  Project sett
 **readWriteShowToolbar** | Boolean | **DEPRECATED** Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar. If **false**, hides the toolbar.
 **readWriteUrl** | string | URL for 'Edit by Anyone' view of the published sheet<br/>Only returned in a response if **readWriteEnabled = true**.
 
+### SheetSummary Object
+
+Represents the entire summary, or a list of defined fields and values, for a specific sheet.
+
+     |     |     |
+-----|-----|-----|
+**fields** | SummaryField[] | Array of summary (or metadata) fields defined on the sheet.
+
+### SheetUserPermissions Object
+
+Describes the current user's editing permissions for a specific sheet.
+
+     |     |     |
+-----|-----|-----|
+**summaryPermissions** | string | One of <ul><li>**ADMIN**: full control over fields</li><li>**READ_DELETE**: sheet is owned by an individual account that doesn't have summary capabilities. If a summary exists, the only possible operations are GET and DELETE fields.</li><li>**READ_ONLY**</li><li>**READ_WRITE**: can edit values of existing fields, but not create or delete fields, nor modify field type.</li></ul>
+
 ### SheetUserSettings Object
 
 Represents individual user settings for a specific sheet.  User settings may be updated even on sheets where the current user only has read access (for example, viewer permissions or a read-only sheet).
@@ -5335,6 +5356,31 @@ Represents individual user settings for a specific sheet.  User settings may be 
 -----|-----|-----|
 **id** | number | Id of the report, sheet, Sight (aka dashboard), or template from which the enclosing report, sheet, Sight, or template was created
 **type** | string | **report**, **sheet**, **sight**, or **template**
+
+### SummaryField Object
+
+     |     |     |
+-----|-----|-----|
+**id** | number | SummaryField Id
+**contactOptions** | [ContactOption](#contactoption-object)[] | Array of ContactOption objects to specify a pre-defined list of values for the column. Column **type** must be **CONTACT_LIST** 
+**createdAt** | timestamp | Time of creation
+**createdBy** | [User](#user-object) | User object containing name and email of the summaryField's author
+**displayValue** | string | Visual representation of cell contents, as presented to the user in the UI.  See [Cell Reference](#cell-reference).
+**format** | string | The format descriptor (see [Formatting](#formatting))<br/>Only returned if the **include** query string parameter contains **format** and this column has a non-default format applied to it.
+**formula** | string | The  formula for a cell, if set. NOTE: calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as field.value = "#CIRCULAR REFERENCE".
+**hyperlink** | [Hyperlink](#hyperlink-object) | A hyperlink to a URL, sheet, or report
+**image** | [Image](#image-object) | The image that the field contains.<br/>Only returned if the field contains an image.
+**index** | number | Field index or position. This number is zero-based. 
+**locked** | Boolean | Indicates whether the field is locked. In a response, a value of **true** indicates that the field has been locked by the sheet owner or the admin.
+**lockedForUser** | Boolean | Indicates whether the field is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.
+**modifiedAt** | timestamp | Time of last modification
+**modifiedBy** | [User](#user-object) | User object containing name and email of the summaryField's author
+**objectValue** | [ObjectValue](#objectvalue-object) | Required for date and contact fields
+**options** | string[] | When applicable for **PICKLIST** column type. Array of the options available for the field
+**symbol** | string | When applicable for **PICKLIST** column type. See [Symbol Columns](#symbol-columns).
+**title** | string | Arbitrary name, must be unique within summary
+**type** | string | One of:<ul><li>**ABSTRACT_DATETIME**</li><li>**CHECKBOX**</li><li>**CONTACT_LIST**</li><li>**DATE**</li><li>**DATETIME**</li><li>**DURATION**</li><li>**PICKLIST**</li><li>**PREDECESSOR**</li><li>**TEXT_NUMBER**</li></ul>See [Column Types](#column-types).
+**validation** | Boolean | Indicates whether summary field values are restricted to the type
 
 ## Copy Sheet
 
@@ -7315,6 +7361,550 @@ For details about sending update requests, see [Create Update Request](#create-u
 ## Share Sheet
 
 For details about sheet sharing, see [Sheet Sharing](#sheet-sharing).
+
+## Sheet Summary
+
+A sheet summary allows users to define, organize, and report on custom project and business metadata. Sheet summary is only available to customers with business or enterprise plans.
+
+### Add Image to Sheet Summary
+
+> Example request: add image to sheet summary
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields/{fieldId}/images?altText=my%20image \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: image/jpeg" \
+-H 'Content-Disposition: attachment; filename="picture.jpg"' \
+-X POST \
+--data-binary @picture.jpg
+```
+
+```javascript
+var options = {
+  sheetId: 1421228469708676,
+  fieldId: 5629723890335892,
+  path: 'C:/dog.jpg',
+  fileName: 'dog.jpg'
+};
+
+smartsheet.sheets.addSummaryFieldImage(options)
+  .then(function(summary) {
+    console.log(summary);
+  }).catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+# Sample  1: Add image 
+file = File.new('C:\picture.jpg')
+smartsheet.sheets.summaries.add_image(
+  sheet_id: 1421228469708676,
+  field_id: 5629723890335892,
+  file: file,
+  filename: 'picture.jpg',
+  file_length: file.size,
+  content_type: 'image/jpeg'
+)
+
+# Sample 2: Add image from path
+smartsheet.sheets.summaries.add_image_from_path(
+  sheet_id: 1421228469708676,
+  field_id: 5629723890335892,
+  path: 'C:\picture.jpg',
+  filename: 'picture.jpg',
+  content_type: 'image/jpeg'
+)
+```
+
+> Example response
+
+```json
+{
+  "message": "SUCCESS",
+  "resultCode": 0,
+  "result": {
+    "id": 5629723890335892,
+    "index": 1,
+    "title": "Author",
+    "type": "CONTACT_LIST",
+    "locked": false,
+    "lockedForUser": false,
+    "objectValue": "my image",
+    "formula": "=SYS_CELLIMAGE(\"my image\",\"H4F4Ksmk2sa3RuNv9l8FSZ\",325,284,\"picture.jpg\")",
+    "image": {
+      "id": "H4F4Ksmk2sa3RuNv9l8FSZ",
+      "height": 325,
+      "width": 284,
+      "altText": "my image"
+    },
+    "createdAt": "2018-07-19T22:00:43Z",
+    "modifiedAt": "2018-07-30T22:55:22Z"
+  },
+  "version": 50
+}
+```
+
+`POST /sheets/{sheetId}/summary/fields/{fieldId}/images`
+
+Adds an image to the summary field.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | See [Simple Uploads](#simple-uploads) for information about required headers.
+<%= PARAMETERS %> | **altText** (optional): url-encoded alternate text for the image<BR><%= PARAMETER_OVERRIDE_VALIDATION %>
+<%= REQUEST %> | Binary content for the file
+<%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | WRITE_SHEETS
+
+### Add Summary Fields
+
+> Example request: add summary fields
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X POST \
+-d '[{ \
+	"type": "TEXT_NUMBER", \
+	"objectValue": "Sally Smart", \
+	"index": 2, \
+	"title": "Author" \
+}]'
+```
+
+```javascript
+var options = {
+  sheetId: 1421228469708676,
+  body: [{
+    type: 'TEXT_NUMBER',
+    objectValue: 'Sally Smart',
+    index: 2,
+    title: 'Author'
+  }]
+};
+
+smartsheet.sheets.addSummaryFields(options)
+  .then(function(summary) {
+    console.log(summary);
+  }).catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+smartsheet.sheets.summaries.add_fields(
+  sheet_id: 1421228469708676,
+  body: [{
+    type: 'TEXT_NUMBER',
+    objectValue: 'Sally Smart',
+    index: 2,
+    title: 'Author'
+  }]
+)
+```
+
+> Example response
+
+```json
+{
+  "message": "SUCCESS",
+  "resultCode": 0,
+  "result": [
+    {
+      "id": 8022355336292228,
+      "index": 1,
+      "title": "Author",
+      "type": "TEXT_NUMBER",
+      "locked": false,
+      "lockedForUser": false,
+      "objectValue": "Sally Smart",
+      "displayValue": "Sally Smart",
+      "createdAt": "2018-07-30T23:21:12Z",
+      "modifiedAt": "2018-07-30T23:21:12Z"
+    }
+  ],
+  "version": 52
+}
+```
+
+`POST /sheets/{sheetId}/summary/fields`
+
+Creates one or more summary fields for the specified sheet.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= REQUEST %> | Array of [SummaryField](#summaryfield-object) objects
+<%= PARAMETERS %> | (Optional) **renameIfConflict**: Set to **true** if you want to override the requirement for unique summary field names. Repeated names will be adjusted by appending "(1)" or similar after the field name.
+<%= RETURNS %> | Array of [SheetSummary](#sheetsummary-object) objects
+<%= SCOPE %> | ADMIN_SHEETS
+
+### Delete Summary Fields
+
+> Example request: delete summary fields
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields?ids={fieldId1},{fieldId2},{fieldId3} \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-X DELETE
+```
+
+```javascript
+var options = {
+  sheetId: 1421228469708676,
+  queryParameters: {
+    ids: '207098194749316',
+    '100091196549967',
+    '450360473006272'
+  }
+};
+
+smartsheet.sheets.deleteSummaryFields(options)
+  .then(function(summary) {
+    console.log(summary);
+  }).catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+smartsheet.sheets.summaries.delete_fields(
+  sheet_id: 1421228469708676,
+  params: { ids: '207098194749316', '100091196549967', '450360473006272' }
+)
+```
+
+> Example response
+
+```json
+{
+  "message": "SUCCESS",    
+  "resultCode": 0,
+  "result": [
+    207098194749316,
+    100091196549967,
+    450360473006272
+  ],
+  "version": 51
+}
+```
+
+`DELETE /sheets/{sheetId}/summary/fields?ids={fieldId1},{fieldId2},{fieldId3}`
+
+Deletes summary fields from the specified sheet.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | (Optional) **ignoreSummaryFieldsNotFound**: If **true**, the operation will succeed even if some fieldIds are not found.
+<%= RETURNS %> | [Result object](#result-object) containing fieldIds corresponding to all summary fields that were successfully deleted.
+<%= SCOPE %> | ADMIN_SHEETS
+
+### Get Sheet Summary
+
+> Example request: get sheet summary
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary?include=writerInfo \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+```
+
+```javascript
+var options = {
+  sheetId: 1421228469708676
+};
+
+smartsheet.sheets.getSummary(options)
+  .then(function(summary) {
+    console.log(summary);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+smartsheet.sheets.summaries.get(sheet_id: 1421228469708676)
+```
+
+> Example response
+
+```json
+{
+  "fields": [
+    {
+      "id": 5629723890335892,
+      "index": 0,
+      "title": "Owner",
+      "type": "CONTACT_LIST",
+      "locked": false,
+      "lockedForUser": false,
+      "objectValue": {
+        "objectType": "CONTACT",
+        "email": "jane.roe@smartsheet.com",
+        "name": "Jane Roe",
+        "imageId": "u!1!8ljfd7w9-aY!AxDzH0wWv1Y!y9VvAgUOFdg"
+      },
+      "displayValue": "Jane Roe",
+      "createdBy": {
+        "name": "John Doe",
+        "email": "john.doe@smartsheet.com"
+      },
+      "createdAt": "2018-07-19T22:00:43Z",
+      "modifiedBy": {
+        "name": "Sebastian Overwatch",
+        "email": "sebastian.overwatch@smartsheet.com"
+      },
+      "modifiedAt": "2018-07-19T22:00:43Z"
+    }
+  ]
+}
+```
+
+`GET /sheets/{sheetId}/summary`
+
+Returns object containing array of summary fields.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><ul><li>**format**: includes format info for cells, rows, and summary fields</li><li>**writerInfo**: includes createdBy and modifiedBy attributes for rows and summary fields</li></ul>
+  | **exclude** (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li>**displayValue**: excludes displayValue info for cells, rows, and summary fields</li><li>**image**: excludes image attributes for cells and summary fields</li><li>**imageAltText**: excludes alt text for cells and summary fields</li></ul>
+<%= RETURNS %> | [SheetSummary object](#sheetsummary-object) containing an array of [SummaryField objects](#summaryfield-object)
+<%= SCOPE %> | READ_SHEETS
+
+### Get Summary Fields
+
+> Example request: get summary fields
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+```
+
+```javascript
+var options = {
+  sheetId: 1421228469708676
+};
+
+smartsheet.sheets.getSummaryFields(options)
+  .then(function(summary) {
+    console.log(summary);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+smartsheet.sheets.summaries.get_fields(sheet_id: 1421228469708676)
+```
+
+> Example response
+
+```json
+{
+  "pageNumber": 1,
+  "pageSize": 100,
+  "totalPages": 1,
+  "totalCount": 2,
+  "data": [
+    {
+      "id": 5629723890335892,
+      "index": 0,
+      "title": "Owner",
+      "type": "CONTACT_LIST",
+      "locked": false,
+      "lockedForUser": false,
+      "objectValue": {
+        "objectType": "CONTACT",
+        "email": "jane.roe@smartsheet.com",
+        "name": "Jane Roe",
+        "imageId": "u!1!8ljfd7w9-aY!AxDzH0wWv1Y!y9VvAgUOFdg"
+      },
+      "displayValue": "Jane Roe",
+      "createdAt": "2018-07-19T22:00:43Z",
+      "modifiedAt": "2018-07-19T22:00:43Z"
+    }
+  ]
+}
+```
+
+`GET /sheets/{sheetId}/summary/fields`
+
+Returns object containing array of summary fields. Allows for pagination of results.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><ul><li>**format**: includes format info for cells, rows, and summary fields</li><li>**writerInfo**: includes createdBy and modifiedBy attributes for rows and summary fields</li></ul>
+  | **exclude** (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li>**displayValue**: excludes displayValue info for cells, rows, and summary fields</li><li>**image**: excludes image attributes for cells and summary fields</li><li>**imageAltText**: excludes alt text for cells and summary fields</li></ul>
+  | <%= PAGING_PARAMETERS %>
+<%= RETURNS %> | [SheetSummary object](#sheetsummary-object) containing an array of [SummaryField objects](#summaryfield-object)
+<%= SCOPE %> | READ_SHEETS
+
+### Update Summary Fields
+
+> Example request: update summary fields
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X PUT \
+-d '[{ \
+	"id": 5629723890335892, \
+	"type": "CONTACT_LIST", \
+	"objectValue": { \
+		"objectType": "CONTACT", \
+		"email": "jane.roe@smartsheet.com", \
+		"name": "Jane Roe" \
+	}, \
+	"index": 2, \
+	"title": "Author" \
+}]'
+```
+
+```javascript
+var options = {
+  sheetId: 1421228469708676,
+  body: [{
+    id: 5629723890335892,
+    objectValue: 'Accepted'
+  }]
+};
+
+smartsheet.sheets.updateSummaryFields(options)
+  .then(function(summary) {
+    console.log(summary);
+  }).catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+// Not yet implemented
+```
+
+```java
+// Not yet implemented
+```
+
+```python
+# Not yet implemented
+```
+
+```ruby
+smartsheet.sheets.summaries.update_fields(
+  sheet_id: 1421228469708676,
+  body: [{
+    id: 5629723890335892,
+    objectValue: 'Accepted'
+  }]
+)
+```
+
+> Example response
+
+```json
+{
+  "message": "SUCCESS",
+  "resultCode": 0,
+  "result": [
+    {
+      "id": 5629723890335892,
+      "index": 1,
+      "title": "Author",
+      "type": "CONTACT_LIST",
+      "locked": false,
+      "lockedForUser": false,
+      "objectValue": {
+        "objectType": "CONTACT",
+        "email": "jane.roe@smartsheet.com",
+        "name": "Jane Roe"
+      },
+      "displayValue": "Jane Roe",
+      "createdAt": "2018-07-19T22:00:43Z",
+      "modifiedAt": "2018-07-30T22:26:13Z"
+    }
+  ],
+  "version": 49
+}
+```
+
+`PUT /sheets/{sheetId}/summary/fields`
+
+Updates the summary fields for the given sheet.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= REQUEST %> | Array of [SummaryField](#summaryfield-object) objects
+<%= PARAMETERS %> | (Optional) **renameIfConflict**: Set to **true** if you want to override the requirement for unique summary field names. Repeated names will be adjusted by appending "(1)" or similar after the field name.
+<%= RETURNS %> | Array of [SheetSummary](#sheetsummary-object) objects
+<%= SCOPE %> | ADMIN_SHEETS
 
 ## Sort Rows in Sheet
 
