@@ -1313,6 +1313,12 @@
                                 <a href="#sheetpublish-object" class="toc-h3 toc-link" data-title="SheetPublish Object">SheetPublish Object</a>
                             </li>
                             <li>
+                                <a href="#sheetsummary-object" class="toc-h3 toc-link" data-title="SheetSummary Object">SheetSummary Object</a>
+                            </li>
+                            <li>
+                                <a href="#sheetuserpermissions-object" class="toc-h3 toc-link" data-title="SheetUserPermissions Object">SheetUserPermissions Object</a>
+                            </li>
+                            <li>
                                 <a href="#sheetusersettings-object" class="toc-h3 toc-link" data-title="SheetUserSettings Object">SheetUserSettings Object</a>
                             </li>
                             <li>
@@ -1323,6 +1329,9 @@
                             </li>
                             <li>
                                 <a href="#source-object" class="toc-h3 toc-link" data-title="Source Object">Source Object</a>
+                            </li>
+                            <li>
+                                <a href="#summaryfield-object" class="toc-h3 toc-link" data-title="SummaryField Object">SummaryField Object</a>
                             </li>
                         </ul>
                   </li>
@@ -1400,6 +1409,29 @@
                   </li>
                   <li>
                     <a href="#share-sheet-2" class="toc-h2 toc-link" data-title="Share Sheet">Share Sheet</a>
+                  </li>
+                  <li>
+                    <a href="#sheet-summary" class="toc-h2 toc-link" data-title="Sheet Summary">Sheet Summary</a>
+                        <ul class="toc-list-subhead">
+                            <li>
+                                <a href="#add-image-to-sheet-summary" class="toc-h3 toc-link" data-title="Add Image to Sheet Summary">Add Image to Sheet Summary</a>
+                            </li>
+                            <li>
+                                <a href="#add-summary-fields" class="toc-h3 toc-link" data-title="Add Summary Fields">Add Summary Fields</a>
+                            </li>
+                            <li>
+                                <a href="#delete-summary-fields" class="toc-h3 toc-link" data-title="Delete Summary Fields">Delete Summary Fields</a>
+                            </li>
+                            <li>
+                                <a href="#get-sheet-summary" class="toc-h3 toc-link" data-title="Get Sheet Summary">Get Sheet Summary</a>
+                            </li>
+                            <li>
+                                <a href="#get-summary-fields" class="toc-h3 toc-link" data-title="Get Summary Fields">Get Summary Fields</a>
+                            </li>
+                            <li>
+                                <a href="#update-summary-fields" class="toc-h3 toc-link" data-title="Update Summary Fields">Update Summary Fields</a>
+                            </li>
+                        </ul>
                   </li>
                   <li>
                     <a href="#sort-rows-in-sheet" class="toc-h2 toc-link" data-title="Sort Rows in Sheet">Sort Rows in Sheet</a>
@@ -1897,8 +1929,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2019-07-26</p>
-
+<p>Updated 2019-08-14
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -1922,7 +1953,7 @@
 <span class="c1"># how to execute operations using the Smartsheet</span>
 <span class="c1"># Ruby SDK: https://github.com/smartsheet-platform/smartsheet-ruby-sdk.</span>
 </code></pre>
-<p><a href="https://www.smartsheet.com/">Smartsheet</a> API 2.0 allows you to programmatically access and manage your organization&#39;s Smartsheet data and account information. The API allows you to do the following:</p>
+<p><a href="https://www.smartsheet.com/">Smartsheet</a> API 2.0 allows you to programmatically access and manage your organization&#39;s Smartsheet data and account information. The API allows you to do the following:</p></p>
 
 <ul>
 <li>Read and update sheets</li>
@@ -1931,7 +1962,9 @@
 </ul>
 
 <p>You can view code examples in the programming language of your choice by clicking the corresponding tab in the dark-blue area in the rightmost pane. Each tab corresponds to a Software Development Kit (SDK) that Smartsheet provides to make working in that programming language easier. See <a href="#sdks-and-sample-code">SDKs and Sample Code</a>.</p>
+
 <h2 id='how-do-i-start'>How Do I Start?</h2>
+
 <p>This documentation provides two <a href="#getting-started">Getting Started</a> tutorials that walk you through making your first API call and interpreting the response to a <code>GET /sheet</code> request. You may also want to bookmark or note the following resources:</p>
 
 <ul>
@@ -1940,6 +1973,7 @@
 <li><a href="https://stackoverflow.com/questions/tagged/smartsheet-api">StackOverflow</a> using the &quot;smartsheet-api&quot; tag</li>
 <li>Contact us at <a href="mailto:api@smartsheet.com">api@smartsheet.com</a></li>
 </ul>
+
 <h2 id='http-and-rest'>HTTP and REST</h2><h3 id='restful-architecture'>RESTful Architecture</h3>
 <p>The REST URL structure follows typical resource-oriented conventions.</p>
 
@@ -2128,9 +2162,11 @@
 
 <aside class="notice">Query strings are case sensitive. If you do not see the expected response, confirm that your query is formatted correctly.</aside>
 <h2 id='authentication-and-access-tokens'>Authentication and Access Tokens</h2>
+
 <blockquote>
 <p>Example request: authentication and access tokens</p>
 </blockquote>
+
 <pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/users/me <span class="se">\</span>
 <span class="sb">`</span>-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set the access token</span>
@@ -2390,6 +2426,7 @@ Also, make sure your code does not depend on the order in which JSON objects are
 <p><br/></p>
 
 <p>This core hierarchy of Sheet &gt; Column &gt; Row &gt; Cell is essential to working with the Smartsheet API. As your user&#39;s sheets grow in complexity, the responses do too. This walkthrough has given you some navigational aid in finding the right value to plug into your API calls. Use the API Reference and the example language tabs to learn more.</p>
+
 <h1 id='sdks-and-sample-code'>SDKs and Sample Code</h1>
 
 <blockquote>
@@ -16490,7 +16527,7 @@ a comma-delimited list of flags that indicate additional attributes to be includ
 </tr>
 <tr>
 <td><strong>format</strong></td>
-<td>Includes <strong>format</strong> attribute on the row and its cells.  See <a href="#formatting">Formatting</a>.</td>
+<td>Includes <strong>format</strong> attribute on the row, its cells, or summary fields.  See <a href="#formatting">Formatting</a>.</td>
 </tr>
 <tr>
 <td><strong>objectValue</strong></td>
@@ -16502,7 +16539,15 @@ a comma-delimited list of flags that indicate additional attributes to be includ
 </tr>
 <tr>
 <td><strong>rowWriterInfo</strong></td>
-<td>Includes <strong>createdBy</strong> and <strong>modifiedBy</strong> attributes on the row, indicating the row&#39;s creator, and last modifier.</td>
+<td><strong>DEPRECATED</strong> Includes <strong>createdBy</strong> and <strong>modifiedBy</strong> attributes on the row, indicating the row&#39;s creator, and last modifier.</td>
+</tr>
+<tr>
+<td><strong>summary</strong></td>
+<td>Includes <a href="#sheetsummary-object">SheetSummary</a> object.</td>
+</tr>
+<tr>
+<td><strong>writerInfo</strong></td>
+<td>Includes <strong>createdBy</strong> and <strong>modifiedBy</strong> attributes on the row or summary fields, indicating the row or summary field&#39;s creator, and last modifier.</td>
 </tr>
 </tbody></table>
 
@@ -16568,24 +16613,24 @@ a comma-delimited list of flags that indicate additional attributes to be includ
 <td>Search result parent object Id</td>
 </tr>
 <tr>
-<td><strong>objectType</strong></td>
-<td>string</td>
-<td>Search result object type (attachment, discussion, folder, report, row, sheet, Sight, template, workspace)</td>
-</tr>
-<tr>
-<td><strong>parentObjectType</strong></td>
-<td>string</td>
-<td>Search result parent object type (folder, report, sheet, Sight, template, workspace)</td>
-</tr>
-<tr>
 <td><strong>contextData</strong></td>
 <td>array</td>
 <td>Additional info on search result context (row num)</td>
 </tr>
 <tr>
+<td><strong>objectType</strong></td>
+<td>string</td>
+<td>Search result object type (attachment, discussion, folder, report, row, sheet, Sight, summaryField, template, workspace)</td>
+</tr>
+<tr>
 <td><strong>parentObjectName</strong></td>
 <td>string</td>
 <td>Search result parent object name</td>
+</tr>
+<tr>
+<td><strong>parentObjectType</strong></td>
+<td>string</td>
+<td>Search result parent object type (folder, report, sheet, Sight, template, workspace)</td>
 </tr>
 <tr>
 <td><strong>text</strong></td>
@@ -16688,7 +16733,7 @@ a comma-delimited list of flags that indicate additional attributes to be includ
 </tr>
 <tr>
 <td></td>
-<td><strong>include</strong> (optional): when specified with a value of <strong>favoriteFlag</strong>, response indicates which returned items are favorites:<ul><li><strong>favorite</strong> -- folders, reports, sheets, Sights, templates, and workspaces will have the property <strong>favorite: true</strong></li><li><strong>parentObjectFavorite</strong> -- attachments, discussions, profile fields, and rows will have the property <strong>parentObjectFavorite: true</strong></li></ul></td>
+<td><strong>include</strong> (optional): when specified with a value of <strong>favoriteFlag</strong>, response indicates which returned items are favorites:<ul><li><strong>favorite</strong> -- folders, reports, sheets, Sights, templates, and workspaces will have the property <strong>favorite: true</strong></li><li><strong>parentObjectFavorite</strong> -- attachments, discussions, summary fields, and rows will have the property <strong>parentObjectFavorite: true</strong></li></ul></td>
 </tr>
 <tr>
 <td></td>
@@ -19769,6 +19814,11 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <td>Indicates whether &quot;Gantt View&quot; is enabled</td>
 </tr>
 <tr>
+<td><strong>hasSummaryFields</strong></td>
+<td>Boolean</td>
+<td>Indicates whether a sheet summary is present</td>
+</tr>
+<tr>
 <td><strong>modifiedAt</strong></td>
 <td>timestamp</td>
 <td>Time that the sheet was modified</td>
@@ -19819,9 +19869,19 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <td>A Source object indicating the report, sheet, Sight (aka dashboard), or template from which this sheet was created, if any</td>
 </tr>
 <tr>
+<td><strong>summary</strong></td>
+<td><a href="#sheetsummary-object">SheetSummary</a></td>
+<td>A SheetSummary object containing a list of defined fields and values for the sheet.</td>
+</tr>
+<tr>
 <td><strong>totalRowCount</strong></td>
 <td>number</td>
 <td>The total number of rows in the sheet</td>
+</tr>
+<tr>
+<td><strong>userPermissions</strong></td>
+<td><a href="#sheetuserpermissions-object">SheetUserPermissions</a></td>
+<td>A SheetUserPermissions object indicating what summary operations are possible for the current user</td>
 </tr>
 <tr>
 <td><strong>userSettings</strong></td>
@@ -20048,6 +20108,38 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <td>URL for &#39;Edit by Anyone&#39; view of the published sheet<br/>Only returned in a response if <strong>readWriteEnabled = true</strong>.</td>
 </tr>
 </tbody></table>
+<h3 id='sheetsummary-object'>SheetSummary Object</h3>
+<p>Represents the entire summary, or a list of defined fields and values, for a specific sheet.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>fields</strong></td>
+<td>SummaryField[]</td>
+<td>Array of summary (or metadata) fields defined on the sheet.</td>
+</tr>
+</tbody></table>
+<h3 id='sheetuserpermissions-object'>SheetUserPermissions Object</h3>
+<p>Describes the current user&#39;s editing permissions for a specific sheet.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>summaryPermissions</strong></td>
+<td>string</td>
+<td>One of <ul><li><strong>ADMIN</strong>: full control over fields</li><li><strong>READ_DELETE</strong>: sheet is owned by an individual account that doesn&#39;t have summary capabilities. If a summary exists, the only possible operations are GET and DELETE fields.</li><li><strong>READ_ONLY</strong></li><li><strong>READ_WRITE</strong>: can edit values of existing fields, but not create or delete fields, nor modify field type.</li></ul></td>
+</tr>
+</tbody></table>
 <h3 id='sheetusersettings-object'>SheetUserSettings Object</h3>
 <p>Represents individual user settings for a specific sheet.  User settings may be updated even on sheets where the current user only has read access (for example, viewer permissions or a read-only sheet).</p>
 
@@ -20119,6 +20211,115 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <td><strong>type</strong></td>
 <td>string</td>
 <td><strong>report</strong>, <strong>sheet</strong>, <strong>sight</strong>, or <strong>template</strong></td>
+</tr>
+</tbody></table>
+<h3 id='summaryfield-object'>SummaryField Object</h3>
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>number</td>
+<td>SummaryField Id</td>
+</tr>
+<tr>
+<td><strong>contactOptions</strong></td>
+<td><a href="#contactoption-object">ContactOption</a>[]</td>
+<td>Array of ContactOption objects to specify a pre-defined list of values for the column. Column <strong>type</strong> must be <strong>CONTACT_LIST</strong></td>
+</tr>
+<tr>
+<td><strong>createdAt</strong></td>
+<td>timestamp</td>
+<td>Time of creation</td>
+</tr>
+<tr>
+<td><strong>createdBy</strong></td>
+<td><a href="#user-object">User</a></td>
+<td>User object containing name and email of the summaryField&#39;s author</td>
+</tr>
+<tr>
+<td><strong>displayValue</strong></td>
+<td>string</td>
+<td>Visual representation of cell contents, as presented to the user in the UI.  See <a href="#cell-reference">Cell Reference</a>.</td>
+</tr>
+<tr>
+<td><strong>format</strong></td>
+<td>string</td>
+<td>The format descriptor (see <a href="#formatting">Formatting</a>)<br/>Only returned if the <strong>include</strong> query string parameter contains <strong>format</strong> and this column has a non-default format applied to it.</td>
+</tr>
+<tr>
+<td><strong>formula</strong></td>
+<td>string</td>
+<td>The  formula for a cell, if set. NOTE: calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as field.value = &quot;#CIRCULAR REFERENCE&quot;.</td>
+</tr>
+<tr>
+<td><strong>hyperlink</strong></td>
+<td><a href="#hyperlink-object">Hyperlink</a></td>
+<td>A hyperlink to a URL, sheet, or report</td>
+</tr>
+<tr>
+<td><strong>image</strong></td>
+<td><a href="#image-object">Image</a></td>
+<td>The image that the field contains.<br/>Only returned if the field contains an image.</td>
+</tr>
+<tr>
+<td><strong>index</strong></td>
+<td>number</td>
+<td>Field index or position. This number is zero-based.</td>
+</tr>
+<tr>
+<td><strong>locked</strong></td>
+<td>Boolean</td>
+<td>Indicates whether the field is locked. In a response, a value of <strong>true</strong> indicates that the field has been locked by the sheet owner or the admin.</td>
+</tr>
+<tr>
+<td><strong>lockedForUser</strong></td>
+<td>Boolean</td>
+<td>Indicates whether the field is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.</td>
+</tr>
+<tr>
+<td><strong>modifiedAt</strong></td>
+<td>timestamp</td>
+<td>Time of last modification</td>
+</tr>
+<tr>
+<td><strong>modifiedBy</strong></td>
+<td><a href="#user-object">User</a></td>
+<td>User object containing name and email of the summaryField&#39;s author</td>
+</tr>
+<tr>
+<td><strong>objectValue</strong></td>
+<td><a href="#objectvalue-object">ObjectValue</a></td>
+<td>Required for date and contact fields</td>
+</tr>
+<tr>
+<td><strong>options</strong></td>
+<td>string[]</td>
+<td>When applicable for <strong>PICKLIST</strong> column type. Array of the options available for the field</td>
+</tr>
+<tr>
+<td><strong>symbol</strong></td>
+<td>string</td>
+<td>When applicable for <strong>PICKLIST</strong> column type. See <a href="#symbol-columns">Symbol Columns</a>.</td>
+</tr>
+<tr>
+<td><strong>title</strong></td>
+<td>string</td>
+<td>Arbitrary name, must be unique within summary</td>
+</tr>
+<tr>
+<td><strong>type</strong></td>
+<td>string</td>
+<td>One of:<ul><li><strong>ABSTRACT_DATETIME</strong></li><li><strong>CHECKBOX</strong></li><li><strong>CONTACT_LIST</strong></li><li><strong>DATE</strong></li><li><strong>DATETIME</strong></li><li><strong>DURATION</strong></li><li><strong>PICKLIST</strong></li><li><strong>PREDECESSOR</strong></li><li><strong>TEXT_NUMBER</strong></li></ul>See <a href="#column-types">Column Types</a>.</td>
+</tr>
+<tr>
+<td><strong>validation</strong></td>
+<td>Boolean</td>
+<td>Indicates whether summary field values are restricted to the type</td>
 </tr>
 </tbody></table>
 <h2 id='copy-sheet'>Copy Sheet</h2>
@@ -22581,6 +22782,592 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <h2 id='share-sheet-2'>Share Sheet</h2>
 
 <p>For details about sheet sharing, see <a href="#sheet-sharing">Sheet Sharing</a>.</p>
+
+<h2 id='sheet-summary'>Sheet Summary</h2>
+
+<p>A sheet summary allows users to define, organize, and report on custom project and business metadata. Sheet summary is only available to customers with business or enterprise plans.</p>
+
+<h3 id='add-image-to-sheet-summary'>Add Image to Sheet Summary</h3>
+
+<blockquote>
+<p>Example request: add image to sheet summary</p>
+</blockquote>
+
+<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/summary/fields/<span class="o">{</span>fieldId<span class="o">}</span>/images?altText<span class="o">=</span>my%20image <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
+-H <span class="s2">"Content-Type: image/jpeg"</span> <span class="se">\</span>
+-H <span class="s1">'Content-Disposition: attachment; filename="picture.jpg"'</span> <span class="se">\</span>
+-X POST <span class="se">\</span>
+--data-binary @picture.jpg
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">sheetId</span><span class="p">:</span> <span class="mi">1421228469708676</span><span class="p">,</span>
+  <span class="na">fieldId</span><span class="p">:</span> <span class="mi">5629723890335892</span><span class="p">,</span>
+  <span class="na">path</span><span class="p">:</span> <span class="s1">'C:/dog.jpg'</span><span class="p">,</span>
+  <span class="na">fileName</span><span class="p">:</span> <span class="s1">'dog.jpg'</span>
+<span class="p">};</span>
+
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">addSummaryFieldImage</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">summary</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">summary</span><span class="p">);</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># Sample  1: Add image </span>
+<span class="n">file</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'C:\picture.jpg'</span><span class="p">)</span>
+<span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">summaries</span><span class="p">.</span><span class="nf">add_image</span><span class="p">(</span>
+  <span class="ss">sheet_id: </span><span class="mi">1421228469708676</span><span class="p">,</span>
+  <span class="ss">field_id: </span><span class="mi">5629723890335892</span><span class="p">,</span>
+  <span class="ss">file: </span><span class="n">file</span><span class="p">,</span>
+  <span class="ss">filename: </span><span class="s1">'picture.jpg'</span><span class="p">,</span>
+  <span class="ss">file_length: </span><span class="n">file</span><span class="p">.</span><span class="nf">size</span><span class="p">,</span>
+  <span class="ss">content_type: </span><span class="s1">'image/jpeg'</span>
+<span class="p">)</span>
+
+<span class="c1"># Sample 2: Add image from path</span>
+<span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">summaries</span><span class="p">.</span><span class="nf">add_image_from_path</span><span class="p">(</span>
+  <span class="ss">sheet_id: </span><span class="mi">1421228469708676</span><span class="p">,</span>
+  <span class="ss">field_id: </span><span class="mi">5629723890335892</span><span class="p">,</span>
+  <span class="ss">path: </span><span class="s1">'C:\picture.jpg'</span><span class="p">,</span>
+  <span class="ss">filename: </span><span class="s1">'picture.jpg'</span><span class="p">,</span>
+  <span class="ss">content_type: </span><span class="s1">'image/jpeg'</span>
+<span class="p">)</span>
+</code></pre>
+
+<blockquote>
+<p>Example response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"resultCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5629723890335892</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Author"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CONTACT_LIST"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lockedForUser"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my image"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"formula"</span><span class="p">:</span><span class="w"> </span><span class="s2">"=SYS_CELLIMAGE(</span><span class="se">\"</span><span class="s2">my image</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">H4F4Ksmk2sa3RuNv9l8FSZ</span><span class="se">\"</span><span class="s2">,325,284,</span><span class="se">\"</span><span class="s2">picture.jpg</span><span class="se">\"</span><span class="s2">)"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"image"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"H4F4Ksmk2sa3RuNv9l8FSZ"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">325</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">284</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"altText"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my image"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T22:00:43Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-30T22:55:22Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><code>POST /sheets/{sheetId}/summary/fields/{fieldId}/images</code></p>
+
+<p>Adds an image to the summary field.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Headers</td>
+<td>See <a href="#simple-uploads">Simple Uploads</a> for information about required headers.</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td><strong>altText</strong> (optional): url-encoded alternate text for the image<BR><strong>overrideValidation</strong> (optional): You may use the query string parameter <b>overrideValidation</b> with a value of <b>true</b> to allow a cell value outside of the validation limits. You must specify <strong>strict</strong> with a value of <b>false</b> to bypass value type checking.</td>
+</tr>
+<tr>
+<td>Request Body</td>
+<td>Binary content for the file</td>
+</tr>
+<tr>
+<td>Returns</td>
+<td><a href="#result-object">Result object</a></td>
+</tr>
+<tr>
+<td>Access Scope</td>
+<td>WRITE_SHEETS</td>
+</tr>
+</tbody></table>
+
+<h3 id='add-summary-fields'>Add Summary Fields</h3>
+
+<blockquote>
+<p>Example request: add summary fields</p>
+</blockquote>
+
+<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/summary/fields <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
+-H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+-X POST <span class="se">\</span>
+-d <span class="s1">'[{ \
+    "type": "TEXT_NUMBER", \
+    "objectValue": "Sally Smart", \
+    "index": 2, \
+    "title": "Author" \
+}]'</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">sheetId</span><span class="p">:</span> <span class="mi">1421228469708676</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="p">[{</span>
+    <span class="na">type</span><span class="p">:</span> <span class="s1">'TEXT_NUMBER'</span><span class="p">,</span>
+    <span class="na">objectValue</span><span class="p">:</span> <span class="s1">'Sally Smart'</span><span class="p">,</span>
+    <span class="na">index</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="na">title</span><span class="p">:</span> <span class="s1">'Author'</span>
+  <span class="p">}]</span>
+<span class="p">};</span>
+
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">addSummaryFields</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">summary</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">summary</span><span class="p">);</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">summaries</span><span class="p">.</span><span class="nf">add_fields</span><span class="p">(</span>
+  <span class="ss">sheet_id: </span><span class="mi">1421228469708676</span><span class="p">,</span>
+  <span class="ss">body: </span><span class="p">[{</span>
+    <span class="ss">type: </span><span class="s1">'TEXT_NUMBER'</span><span class="p">,</span>
+    <span class="ss">objectValue: </span><span class="s1">'Sally Smart'</span><span class="p">,</span>
+    <span class="ss">index: </span><span class="mi">2</span><span class="p">,</span>
+    <span class="ss">title: </span><span class="s1">'Author'</span>
+  <span class="p">}]</span>
+<span class="p">)</span>
+</code></pre>
+
+<blockquote>
+<p>Example response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"resultCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8022355336292228</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Author"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TEXT_NUMBER"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"lockedForUser"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"objectValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sally Smart"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"displayValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sally Smart"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-30T23:21:12Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-30T23:21:12Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">52</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><code>POST /sheets/{sheetId}/summary/fields</code></p>
+
+<p>Creates one or more summary fields for the specified sheet.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Headers</td>
+<td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
+</tr>
+<tr>
+<td>Request Body</td>
+<td>Array of <a href="#summaryfield-object">SummaryField</a> objects</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td>(Optional) <strong>renameIfConflict</strong>: Set to <strong>true</strong> if you want to override the requirement for unique summary field names. Repeated names will be adjusted by appending &quot;(1)&quot; or similar after the field name.</td>
+</tr>
+<tr>
+<td>Returns</td>
+<td>Array of <a href="#sheetsummary-object">SheetSummary</a> objects</td>
+</tr>
+<tr>
+<td>Access Scope</td>
+<td>ADMIN_SHEETS</td>
+</tr>
+</tbody></table>
+
+<h3 id='delete-summary-fields'>Delete Summary Fields</h3>
+
+<blockquote>
+<p>Example request: delete summary fields</p>
+</blockquote>
+
+<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/summary/fields?ids<span class="o">={</span>fieldId1<span class="o">}</span>,<span class="o">{</span>fieldId2<span class="o">}</span>,<span class="o">{</span>fieldId3<span class="o">}</span> <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
+-X DELETE
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">sheetId</span><span class="p">:</span> <span class="mi">1421228469708676</span><span class="p">,</span>
+  <span class="na">queryParameters</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">ids</span><span class="p">:</span> <span class="s1">'207098194749316'</span><span class="p">,</span>
+    <span class="s1">'100091196549967'</span><span class="p">,</span>
+    <span class="s1">'450360473006272'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">deleteSummaryFields</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">summary</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">summary</span><span class="p">);</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">summaries</span><span class="p">.</span><span class="nf">delete_fields</span><span class="p">(</span>
+  <span class="ss">sheet_id: </span><span class="mi">1421228469708676</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span> <span class="ss">ids: </span><span class="s1">'207098194749316'</span><span class="p">,</span> <span class="s1">'100091196549967'</span><span class="p">,</span> <span class="s1">'450360473006272'</span> <span class="p">}</span>
+<span class="p">)</span>
+</code></pre>
+
+<blockquote>
+<p>Example response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">    
+  </span><span class="s2">"resultCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="mi">207098194749316</span><span class="p">,</span><span class="w">
+    </span><span class="mi">100091196549967</span><span class="p">,</span><span class="w">
+    </span><span class="mi">450360473006272</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">51</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><code>DELETE /sheets/{sheetId}/summary/fields?ids={fieldId1},{fieldId2},{fieldId3}</code></p>
+
+<p>Deletes summary fields from the specified sheet.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Headers</td>
+<td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td>(Optional) <strong>ignoreSummaryFieldsNotFound</strong>: If <strong>true</strong>, the operation will succeed even if some fieldIds are not found.</td>
+</tr>
+<tr>
+<td>Returns</td>
+<td><a href="#result-object">Result object</a> containing fieldIds corresponding to all summary fields that were successfully deleted.</td>
+</tr>
+<tr>
+<td>Access Scope</td>
+<td>ADMIN_SHEETS</td>
+</tr>
+</tbody></table>
+
+<h3 id='get-sheet-summary'>Get Sheet Summary</h3>
+
+<blockquote>
+<p>Example request: get sheet summary</p>
+</blockquote>
+
+<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/summary?include<span class="o">=</span>writerInfo <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">sheetId</span><span class="p">:</span> <span class="mi">1421228469708676</span>
+<span class="p">};</span>
+
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">getSummary</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">summary</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">summary</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">summaries</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="ss">sheet_id: </span><span class="mi">1421228469708676</span><span class="p">)</span>
+</code></pre>
+
+<blockquote>
+<p>Example response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5629723890335892</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Owner"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CONTACT_LIST"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"lockedForUser"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"objectValue"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CONTACT"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jane.roe@smartsheet.com"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Roe"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"imageId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"u!1!8ljfd7w9-aY!AxDzH0wWv1Y!y9VvAgUOFdg"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"displayValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Roe"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john.doe@smartsheet.com"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T22:00:43Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sebastian Overwatch"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sebastian.overwatch@smartsheet.com"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T22:00:43Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><code>GET /sheets/{sheetId}/summary</code></p>
+
+<p>Returns object containing array of summary fields.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Headers</td>
+<td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td><strong>include</strong> (optional) -- a comma-separated list of elements to include in the response.<br/><ul><li><strong>format</strong>: includes format info for cells, rows, and summary fields</li><li><strong>writerInfo</strong>: includes createdBy and modifiedBy attributes for rows and summary fields</li></ul></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>exclude</strong> (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li><strong>displayValue</strong>: excludes displayValue info for cells, rows, and summary fields</li><li><strong>image</strong>: excludes image attributes for cells and summary fields</li><li><strong>imageAltText</strong>: excludes alt text for cells and summary fields</li></ul></td>
+</tr>
+<tr>
+<td>Returns</td>
+<td><a href="#sheetsummary-object">SheetSummary object</a> containing an array of <a href="#summaryfield-object">SummaryField objects</a></td>
+</tr>
+<tr>
+<td>Access Scope</td>
+<td>READ_SHEETS</td>
+</tr>
+</tbody></table>
+
+<h3 id='get-summary-fields'>Get Summary Fields</h3>
+
+<blockquote>
+<p>Example request: get summary fields</p>
+</blockquote>
+
+<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/summary/fields <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">sheetId</span><span class="p">:</span> <span class="mi">1421228469708676</span>
+<span class="p">};</span>
+
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">getSummaryFields</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">summary</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">summary</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">summaries</span><span class="p">.</span><span class="nf">get_fields</span><span class="p">(</span><span class="ss">sheet_id: </span><span class="mi">1421228469708676</span><span class="p">)</span>
+</code></pre>
+
+<blockquote>
+<p>Example response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"pageNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"totalPages"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"totalCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5629723890335892</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Owner"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CONTACT_LIST"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"lockedForUser"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"objectValue"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CONTACT"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jane.roe@smartsheet.com"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Roe"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"imageId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"u!1!8ljfd7w9-aY!AxDzH0wWv1Y!y9VvAgUOFdg"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"displayValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Roe"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T22:00:43Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T22:00:43Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><code>GET /sheets/{sheetId}/summary/fields</code></p>
+
+<p>Returns object containing array of summary fields. Allows for pagination of results.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Headers</td>
+<td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td><strong>include</strong> (optional) -- a comma-separated list of elements to include in the response.<br/><ul><li><strong>format</strong>: includes format info for cells, rows, and summary fields</li><li><strong>writerInfo</strong>: includes createdBy and modifiedBy attributes for rows and summary fields</li></ul></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>exclude</strong> (optional) -- a comma-separated list of elements to not include in the response.<br/><ul><li><strong>displayValue</strong>: excludes displayValue info for cells, rows, and summary fields</li><li><strong>image</strong>: excludes image attributes for cells and summary fields</li><li><strong>imageAltText</strong>: excludes alt text for cells and summary fields</li></ul></td>
+</tr>
+<tr>
+<td></td>
+<td>This operation supports query string parameters for pagination of results. For more information, see <a href="#paging-query-string-parameters">Paging Query String Parameters</a>.</td>
+</tr>
+<tr>
+<td>Returns</td>
+<td><a href="#sheetsummary-object">SheetSummary object</a> containing an array of <a href="#summaryfield-object">SummaryField objects</a></td>
+</tr>
+<tr>
+<td>Access Scope</td>
+<td>READ_SHEETS</td>
+</tr>
+</tbody></table>
+
+<h3 id='update-summary-fields'>Update Summary Fields</h3>
+
+<blockquote>
+<p>Example request: update summary fields</p>
+</blockquote>
+
+<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/summary/fields <span class="se">\</span>
+-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
+-H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+-X PUT <span class="se">\</span>
+-d <span class="s1">'[{ \
+    "id": 5629723890335892, \
+    "type": "CONTACT_LIST", \
+    "objectValue": { \
+        "objectType": "CONTACT", \
+        "email": "jane.roe@smartsheet.com", \
+        "name": "Jane Roe" \
+    }, \
+    "index": 2, \
+    "title": "Author" \
+}]'</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">sheetId</span><span class="p">:</span> <span class="mi">1421228469708676</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="p">[{</span>
+    <span class="na">id</span><span class="p">:</span> <span class="mi">5629723890335892</span><span class="p">,</span>
+    <span class="na">objectValue</span><span class="p">:</span> <span class="s1">'Accepted'</span>
+  <span class="p">}]</span>
+<span class="p">};</span>
+
+<span class="nx">smartsheet</span><span class="p">.</span><span class="nx">sheets</span><span class="p">.</span><span class="nx">updateSummaryFields</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">summary</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">summary</span><span class="p">);</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Not yet implemented</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">smartsheet</span><span class="p">.</span><span class="nf">sheets</span><span class="p">.</span><span class="nf">summaries</span><span class="p">.</span><span class="nf">update_fields</span><span class="p">(</span>
+  <span class="ss">sheet_id: </span><span class="mi">1421228469708676</span><span class="p">,</span>
+  <span class="ss">body: </span><span class="p">[{</span>
+    <span class="ss">id: </span><span class="mi">5629723890335892</span><span class="p">,</span>
+    <span class="ss">objectValue: </span><span class="s1">'Accepted'</span>
+  <span class="p">}]</span>
+<span class="p">)</span>
+</code></pre>
+
+<blockquote>
+<p>Example response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"resultCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5629723890335892</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Author"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CONTACT_LIST"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"lockedForUser"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"objectValue"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CONTACT"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jane.roe@smartsheet.com"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Roe"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"displayValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Roe"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T22:00:43Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-30T22:26:13Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">49</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><code>PUT /sheets/{sheetId}/summary/fields</code></p>
+
+<p>Updates the summary fields for the given sheet.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Headers</td>
+<td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
+</tr>
+<tr>
+<td>Request Body</td>
+<td>Array of <a href="#summaryfield-object">SummaryField</a> objects</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td>(Optional) <strong>renameIfConflict</strong>: Set to <strong>true</strong> if you want to override the requirement for unique summary field names. Repeated names will be adjusted by appending &quot;(1)&quot; or similar after the field name.</td>
+</tr>
+<tr>
+<td>Returns</td>
+<td>Array of <a href="#sheetsummary-object">SheetSummary</a> objects</td>
+</tr>
+<tr>
+<td>Access Scope</td>
+<td>ADMIN_SHEETS</td>
+</tr>
+</tbody></table>
 
 <h2 id='sort-rows-in-sheet'>Sort Rows in Sheet</h2>
 
