@@ -249,14 +249,14 @@ require 'smartsheet'
 }
 ```
 
-The Smartsheet API uses the following protocols for authentication and authorization:
+The Smartsheet API uses OAuth 2.0 for authentication and authorization. An HTTP header containing an access token is required to authenticate each request.
 
-* For raw-token requests, you can use an HTTP header containing an access token to authenticate each request.
-* For additional security and as a recommended best practice, you can build an integration using OAuth 2.0. During the [OAuth process](#adding-security-by-using-oauth), you will generate several API keys and, ultimately, each user will generate a unique user access token.
+* To familiarize yourself with the API, you can generate a raw token. See [Raw Token Requests](#raw-token-requests).
+* For additional security and as a recommended best practice, you should build an integration using OAuth 2.0. During the [OAuth process](#adding-security-by-using-oauth), you will generate several API keys and, ultimately, each user will generate a unique user access token.
 
 No matter which protocol you use, you should guard these API keys very closely. They represent your and your users unique access to the API and you should manage access to the API keys extremely carefully. In the worst case, malicious users could abuse your data or expose private information. See [Security Best Practices](#security-best-practices).
 
-### Raw-token requests
+### Raw Token Requests
 
 If you want to get started quickly, or are developing a standalone application that can run with your credentials, follow these instructions:
 
@@ -270,7 +270,7 @@ The access token must be sent with every API call in an HTTP authorization heade
 
 The header name is **Authorization** and the value of the header is **Bearer ll352u9jujauoqz4gstvsae05**. Since the access token is being transmitted in clear text, all API calls are done over HTTPS.
 
-<aside class="notice">A best practice is to use a shared account, such as admin@company.com.</aside>
+<aside class="notice">A best practice is to use a shared account, such as admin@company.com, rather than your individual work account.</aside>
 
 ### Adding Security by Using OAuth
 
