@@ -254,7 +254,7 @@ The Smartsheet API uses OAuth 2.0 for authentication and authorization. An HTTP 
 * To familiarize yourself with the API, you can generate a raw token. See [Raw Token Requests](#raw-token-requests).
 * For additional security and as a recommended best practice, you should build an integration using OAuth 2.0. During the [OAuth process](#adding-security-by-using-oauth), you will generate several API keys and, ultimately, each user will generate a unique user access token.
 
-No matter which protocol you use, you should guard these API keys very closely. They represent your and your users unique access to the API and you should manage access to the API keys extremely carefully. In the worst case, malicious users could abuse your data or expose private information. See [Security Best Practices](#security-best-practices).
+No matter which protocol you use, you should manage access to the API keys carefully. They represent your and your users unique access to the API. In the worst case, malicious users could abuse your data or expose private information. See [Security Best Practices](#security-best-practices).
 
 ### Raw Token Requests
 
@@ -274,9 +274,13 @@ The header name is **Authorization** and the value of the header is **Bearer ll3
 
 ### Adding Security by Using OAuth
 
-Rework based on below. If your application requires users to be able to login with their own account, you must implement the full OAuth flow. See the documentation for <a href="#third-party-app-development">Third-party App Development</a> and <a href="https://developers.smartsheet.com/register">Developer Registration</a>.
+If your application requires users to be able to login with their own account, you must implement the full OAuth flow. 
 
-<aside class="warning">The token generated runs with your credentials. Be sure to secure your tokens and do not share tokens with anyone.</aside>
+At a high level, this involves the following steps:
+
+1. [Register as a Developer](https://developers.smartsheet.com/register) with Smartsheet so you can get access to the Developer Tools menu.
+2. Register your app to get both a clientId and client secret, which you'll need to store securely. Some best practices suggestions for security are below.
+3. Go through the steps in the [Third-party App Development](#third-party-app-development) section once you are ready to request authorization.
 
 ### Security Best Practices
 
@@ -292,24 +296,24 @@ Be wary of committing API keys to accessible version control systems like GitHub
 
 #### API Key Management
 
-Intro text, and then add links or instructions for these bullet points
+If you've committed code to a repository before implementing these security best practices, here are some steps to resecure your API keys.
 
 For raw tokens:
 
-* Revoke token, create new one
+* [Revoke token](#revoke-access-token), create new one
 
-If using Oauth for an integration:
+If using OAuth for an integration:
 
-* Regenerate your app client secret
+* [Regenerate your app client secret](#register-your-app-using-developer-tools)
 * Revoke bearer token and generate new one
 
 #### Databases
 
-If you need to store access tokens in a database, consider the following protections:
+If you need to store API keys in a database, consider the following protections:
 
-* Restrict access so tokens are only readable by the owner of the token
+* Restrict access so API keys are only readable by the owner of the object
 * Restrict edit/write privileges to the database table
-* Encrypt access tokens prior to storage
+* Encrypt API keys prior to storage
 
 ## Dates and Times
 
