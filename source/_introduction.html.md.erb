@@ -282,6 +282,8 @@ At a high level, this involves the following steps:
 2. Register your app to get both a clientId and client secret, which you'll need to store securely. Some best practices suggestions for security are below.
 3. Go through the steps in the [Third-party App Development](#third-party-app-development) section once you are ready to request authorization.
 
+<aside class="notice">When using OAuth, be sure to review the <a href="#access-scopes">Access Scopes</a> needed for your app and only request the necessary scopes.</aside>
+
 ### Security Best Practices
 
 The following provides some best practices to consider when working with the Smartsheet API and any API keys, tokens, or other sensitive information.
@@ -290,9 +292,11 @@ The following provides some best practices to consider when working with the Sma
 
 Be wary of committing API keys to accessible version control systems like GitHub or BitBucket.
 
-* Use server environment variables. 
+* Use environment variables. 
 * Use a config file excluded from source control, such as adding that filename to the .gitignore file.
 * If making these changes to existing code, be sure to regenerate the API keys and revoke the previous ones, which can still be seen in your version control system's history.
+
+<aside class="notice">When using any Smartsheet SDK, you can use the environment variable of SMARTSHEET_ACCESS_TOKEN. If the access token is null on input to the client builder, the SDK will automatically pick up the value of that environment variable.</aside>
 
 #### API Key Management
 
