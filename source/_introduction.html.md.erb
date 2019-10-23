@@ -298,6 +298,30 @@ The JSON representation of the objects returned from the List All REST endpoints
 Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. 
 
+In some cases, such as multi-contact or multi-picklist column types, Smartsheet offers a backwards-compatibility option as well as giving you access to the new functionality. When a report, sheet, or Sight (aka dashboard) has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
+
+* As text (column type TEXT_NUMBER)
+* As an array of values (column types of MULTI_CONTACT_LIST and MULTI_PICKLIST)
+
+You can tell that a column has one of these new column types by looking at the column:version value. If *"version": 0*, then CONTACT_LIST or PICKLIST columns contain single values per cell. If *"version"* is non-zero, then the column type is something new.
+
+To see the values for MULTI_CONTACT_LIST or MULTI_PICKLIST columns and to have the column type match, you need to use the following combination of query parameters:
+
+* include=objectValue
+* level=1, level=2, or level=3
+
+The *include=objectValue* query parameter is helpful if you need to see a complex value, such as actual email addresses rather than display names.
+
+The level query parameter changes depending on what endpoint you use. This handy table should help:
+
+Endpoint Category | Multi-contact | Multi-picklist
+-----|-----|-----|
+Sights (aka dashboards) | 2 | 3
+Reports | 1 | 3
+Sheets | 1 | 2
+
+<aside class="notice">To capture both column types in the same query, use the highest possible level for each endpoint.</aside>
+
 ## Working with Smartsheet Gov Accounts
 
 Smartsheet Gov has "FedRAMP Authorized" status as part of Federal Risk and Authorization Management Program (FedRAMP). As an API developer working on a Smartsheet Gov account, you should be aware of the following differences from the standard API:
