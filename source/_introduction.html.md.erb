@@ -298,33 +298,30 @@ The JSON representation of the objects returned from the List All REST endpoints
 Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. 
 
-In some cases, such as multi-contact or multi-picklist column types, Smartsheet offers a backwards-compatibility option as well as giving you access to the new functionality. When a report, sheet, or Sight (aka dashboard) has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
+In some cases, such as when new column types or new widgets are added, Smartsheet offers a backwards-compatibility option as well as giving you access to the new functionality. For instance, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
 
 * As text (column type TEXT_NUMBER)
-* As an array of values (column types of MULTI_CONTACT_LIST and MULTI_PICKLIST)
+* As an array of values (column types of MULTI_CONTACT_LIST or MULTI_PICKLIST)
 
-You can tell that a column has one of these new column types by looking at the column:version value. If *"version": 0*, then CONTACT_LIST or PICKLIST columns contain single values per cell. If *"version"* is non-zero, then the column type is something new.
+Smartsheet lets you choose how and when to upgrade your queries and response values by using a "level" query parameter as a differentiator, for instance "?level=2". There are also incremented values in the Column object's "version" parameter. However, level and version vary by whether you are calling a report, sheet, or Sight (aka dashboard) and by what data you want to return.
 
- | Multi-contact | Multi-picklist | New widget
------|-----|-----|
-Sights (aka dashboards) | 2 | 3 | 4?
-Reports | 1 | 3 | 4?
-Sheets | 1 | 2 | 3?
+The "version" parameter for the Column object increments based on the UI feature:
 
-To see the values for MULTI_CONTACT_LIST or MULTI_PICKLIST columns and to have the column type match, you need to use the following combination of query parameters:
-
-* include=objectValue
-* level=1, level=2, level=3, level=4
-
-The *include=objectValue* query parameter is helpful if you need to see a complex value, such as actual email addresses rather than display names.
-
-The level query parameter changes depending on what endpoint you use. This handy table should help:
-
- | Multi-contact | Multi-picklist | New widget
+ | Multi-contact | Multi-picklist | Metric widget with sheet summary
 -----|-----|-----|
 Sights (aka dashboards) | 2 | 3 | 4
-Reports | 1 | 3 | 4?
-Sheets | 1 | 2 | 3?
+Reports | 1 | 2 | N/A
+Sheets | 1 | 2 | N/A
+
+The level query parameter changes depending on what endpoint you use, as seen in the following table:
+
+ | Multi-contact | Multi-picklist | Metric widget with sheet summary
+-----|-----|-----|
+Sights (aka dashboards) | 2 | 3 | 4
+Reports | 1 | 3 | N/A
+Sheets | 1 | 2 | N/A
+
+<aside class="notice">The <b>include=objectValue</b> query parameter is necessary if you need to see a complex value, such as actual email addresses rather than display names.</aside>
 
 <aside class="notice">To capture both column types in the same query, use the highest possible level for each endpoint.</aside>
 
