@@ -298,34 +298,35 @@ The JSON representation of the objects returned from the List All REST endpoints
 Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. 
 
-In some cases, such as when new column types or new widgets are added, Smartsheet offers a backwards-compatibility option as well as giving you access to the new functionality. For instance, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
+In some cases, such as when new column types or new widgets are added, Smartsheet offers a backwards-compatibile option as well as giving you access to the new functionality. For instance, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
 
-* As text (column type TEXT_NUMBER)
-* As an array of values (column types of MULTI_CONTACT_LIST or MULTI_PICKLIST)
+* As text, such as column type TEXT_NUMBER
+* As a complex object returning the data in the most convenient form for that column type, such as MULTI_CONTACT_LIST or MULTI_PICKLIST
 
-Smartsheet lets you choose how and when to upgrade your queries and response values by using a "level" query parameter as a differentiator, for instance "?level=2". There are also incremented values in the Column object's "version" parameter. However, level and version vary by whether you are calling a report, sheet, or Sight (aka dashboard) and by what data you want to return.
+Smartsheet uses two indicators to help you discover changes in the return data for your API calls:
 
-The read-only "version" parameter for the Column object increments based on the UI feature. You can see it in the response to various GET endpoints:
+* level: a query parameter that is incremented when a new feature or column type is added
+* version: a read-only parameter in the Column object that is incremented when a new column type is added
 
-Endpoint category | Multi-contact | Multi-picklist | Metric widget with sheet summary
------|-----|-----|-----|
-Sights (aka dashboards) | 2 | 3 | 4
-Reports | 1 | 2 | N/A
-Sheets | 1 | 2 | N/A
+You must use the level query parameter, for example **?level=2**, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible (in most cases, a string).
 
-You can adjust the level query parameter based on which new features you use, as seen in the following table:
+Use the highest possible level for each endpoint, as in the following table:
 
-Endpoint category | Multi-contact | Multi-picklist | Metric widget with sheet summary
------|-----|-----|-----|
-Sights (aka dashboards) | 2 | 3 | 4
-Reports | 1 | 3 | N/A
-Sheets | 1 | 2 | N/A
+Endpoint category | Level
+-----|-----|
+Sights (aka dashboards) | 4
+Reports | 3 
+Sheets | 2 
 
-When making a POST to these endpoint categories, you do not need to include a level; however, if your data is formatting to match the new data type, Smartsheet adjusts to accept the new formatting. For instance, if you pass an array of contacts for a multi-contact column, Smartsheet assumes the correct level.
+The read-only "version" parameter for the Column object increments when a new column type is added:
+
+Endpoint category | Multi-contact | Multi-picklist
+-----|-----|-----|
+Sights (aka dashboards) | 2 | 3 
+Reports | 1 | 2 
+Sheets | 1 | 2
 
 <aside class="notice">The <b>include=objectValue</b> query parameter is necessary if you need to see a complex value, such as actual email addresses rather than display names.</aside>
-
-<aside class="notice">To capture both column types in the same query, use the highest possible level for each endpoint.</aside>
 
 ## Working with Smartsheet Gov Accounts
 
