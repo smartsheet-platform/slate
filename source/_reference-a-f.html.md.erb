@@ -3076,12 +3076,15 @@ A column is a component of a sheet or report.
 ```json
 {
   "id": 7960873114331012,
-  "version": 0,
-  "index": 0,
-  "symbol": "STAR",
-  "title": "Favorite",
-  "description": "Sample description",
-  "type": "CHECKBOX",
+  "version": 2,
+  "index": 4,
+  "title": "Interesting Choices",
+	"type": "MULTI_PICKLIST",
+  "options": [
+    "1",
+    "Hello, World",
+    "100%"
+  ],
   "validation": false,
   "width": 150
 }
@@ -3106,7 +3109,7 @@ A column is a component of a sheet or report.
 **tags** | string[] | Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li>**CALENDAR_END_DATE**</li><li>**CALENDAR_START_DATE**</li><li>**CARD_DONE**</li><li>**GANTT_ALLOCATION**</li><li>**GANTT_ASSIGNED_RESOURCE**</li><li>**GANTT_DISPLAY_LABEL**</li><li>**GANTT_DURATION**</li><li>**GANTT_END_DATE**</li><li>**GANTT_PERCENT_COMPLETE**</li><li>**GANTT_PREDECESSOR**</li><li>**GANTT_START_DATE**</li></ul>
 **title** | string | Column title
 **validation** | Boolean | Indicates whether validation has been enabled for the column (value = **true**)
-**version** | number | A zero-based integer indicating whether the column allows multi-contact or multi-picklist data. If not specified, the default value is 0 for sheets and reports or 1 for Sights (aka dashboards). See [Versioning and Changes](#versioning-and-changes) for details. 
+**version** | number | A read-only integer indicating whether the column allows new functionality, such as multi-picklist data. See [Versioning and Changes](#versioning-and-changes) for details. 
 **width** | number | Display width of the column in pixels
 
 ### ContactOption Object
@@ -3474,7 +3477,7 @@ Gets the column specified in the URL.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
+<%= PARAMETERS %> | **level** (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (**level=0**, default), multi-contact data (**level=1**), or multi-picklist data (**level=2**). 
 <%= RETURNS %> | [Column object](#column-object)
 <%= SCOPE %> | READ_SHEETS
 

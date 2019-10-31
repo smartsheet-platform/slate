@@ -305,21 +305,23 @@ In some cases, such as when new column types or new widgets are added, Smartshee
 
 Smartsheet lets you choose how and when to upgrade your queries and response values by using a "level" query parameter as a differentiator, for instance "?level=2". There are also incremented values in the Column object's "version" parameter. However, level and version vary by whether you are calling a report, sheet, or Sight (aka dashboard) and by what data you want to return.
 
-The "version" parameter for the Column object increments based on the UI feature:
+The read-only "version" parameter for the Column object increments based on the UI feature. You can see it in the response to various GET endpoints:
 
- | Multi-contact | Multi-picklist | Metric widget with sheet summary
------|-----|-----|
+Endpoint category | Multi-contact | Multi-picklist | Metric widget with sheet summary
+-----|-----|-----|-----|
 Sights (aka dashboards) | 2 | 3 | 4
 Reports | 1 | 2 | N/A
 Sheets | 1 | 2 | N/A
 
-The level query parameter changes depending on what endpoint you use, as seen in the following table:
+You can adjust the level query parameter based on which new features you use, as seen in the following table:
 
- | Multi-contact | Multi-picklist | Metric widget with sheet summary
------|-----|-----|
+Endpoint category | Multi-contact | Multi-picklist | Metric widget with sheet summary
+-----|-----|-----|-----|
 Sights (aka dashboards) | 2 | 3 | 4
 Reports | 1 | 3 | N/A
 Sheets | 1 | 2 | N/A
+
+When making a POST to these endpoint categories, you do not need to include a level; however, if your data is formatting to match the new data type, Smartsheet adjusts to accept the new formatting. For instance, if you pass an array of contacts for a multi-contact column, Smartsheet assumes the correct level.
 
 <aside class="notice">The <b>include=objectValue</b> query parameter is necessary if you need to see a complex value, such as actual email addresses rather than display names.</aside>
 

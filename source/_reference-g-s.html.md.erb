@@ -1523,7 +1523,7 @@ Gets the report, including one page of rows, and optionally populated with attac
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**attachments**</li><li>**discussions**</li><li>**format** -- see [Formatting](#formatting)</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**scope** -- adds the report's [scope](#scope-object) to the response</li><li>**source** -- adds the [Source object](#source-object) indicating which report the report was created from, if any</li><li>**sourceSheets**</li></ul> 
   | **exclude** (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li></ul>
-  | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
+  | **level** (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (**level=0**, default), multi-contact data (**level=1**), or multi-picklist data (**level=2**). 
   | **pageSize** (optional): Number of rows per page.  If not specified, the default value is 100.  If you need larger sets of data from your report, this operation can return a maximum of 10,000 rows per request (report limit is 50,000 rows).
   | **page** (optional): Which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
 <%= RETURNS %> | [Report object](#report-object), populated according to the specified parameters
@@ -2700,6 +2700,7 @@ Gets the row specified in the URL.
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of elements to include in the response.<br/><br/>See [Row Include Flags](#row-include-flags).<br/>Also supports the **columns** include flag, which adds a columns array that specifies all of the columns for the sheet. This enables you to have the full context of the cells in the row.<br/><br/>The **filters** include flag returns a **filteredOut** attribute indicating if the row should be displayed or hidden according to the sheet's filters.
   | **exclude** (optional) -- a comma-separated list of elements to <i>not include</i> in the response.<br/><ul><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**nonexistentCells**: excludes cells that have never contained any data</li></ul>
+  | **level** (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (**level=0**, default), multi-contact data (**level=1**), or multi-picklist data (**level=2**). 
 <%= RETURNS %> | [Row object](#row-object) populated according to the specified parameters
 <%= SCOPE %> | READ_SHEETS
 
@@ -6629,7 +6630,7 @@ Gets the sheet specified in the URL. Returns the sheet, including rows, and opti
   | **columnIds** (optional): a comma-separated list of column Ids. The response contains only the specified columns in the "columns" array, and individual rows' "cells" array only contains cells in the specified columns.
   | **filterId** (optional): overrides the existing include={filters} parameter if both are supplied. Applies the given filter (if accessible by the calling user) and marks the affected rows as "filteredOut": true. Format is **filterId={filterId}**
   | **ifVersionAfter** (optional): If version specified is still the current sheet version, then returns an abbreviated Sheet object with only the sheet **version** property. Otherwise, if the sheet has been modified, returns the complete Sheet object. Intended to allow clients with a cached copy to make sure they have the latest version.
-  | **level** (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (**level=0**, default) or as multi-contact data (**level=1**). 
+  | **level** (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (**level=0**, default), multi-contact data (**level=1**), or multi-picklist data (**level=2**). 
   | **page** (optional): which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
   | **pageSize** (optional): number of rows per page to include with the sheet.  If neither **pageSize** nor **page** is specified, returns all rows in the sheet.  If only page is specified, defaults to a page size of 100.
   | **rowIds** (optional): a comma-separated list of row Ids on which to filter the rows included in the result
@@ -8706,7 +8707,7 @@ Gets the specified Sight.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any Sight that was created from another Sight, if any</li></ul>  
-  | **level** (optional): allows you to specify whether you want to see data as text format for backwards compatibility or you want to see multi-contact data. Use **level=0** or **level=1** (default) for text or **level=2** for multi-contact. 
+  | **level** (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (**level=0**, default), multi-contact data (**level=2**), multi-picklist data (**level=3**), or Metric widget with sheet summary (**level=4**). 
   | **objectValue** (optional) -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data.
 <%= RETURNS %> | [Sight object](#sight-object)
 <%= SCOPE %> | READ_SIGHTS
