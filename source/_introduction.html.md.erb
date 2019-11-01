@@ -306,7 +306,7 @@ In some cases, such as when new column types or new widgets are added, Smartshee
 Smartsheet uses two indicators to help you discover changes in the return data for your API calls:
 
 * level: a query parameter that is incremented when a new feature or column type is added
-* version: a read-only parameter in the Column object that is incremented when a new column type is added
+* version: a read-only attribute in the Column object that is incremented when a new column type is added
 
 You must use the level query parameter, for example **?level=2**, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible (in most cases, a string).
 
@@ -318,7 +318,7 @@ Sights (aka dashboards) | 4
 Reports | 3 
 Sheets | 2 
 
-The read-only "version" parameter for the Column object increments when a new column type is added:
+The read-only "version" attribute for the Column object increments when a new column type is added:
 
 Multi-contact | Multi-picklist
 -----|-----|
