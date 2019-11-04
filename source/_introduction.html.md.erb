@@ -298,17 +298,19 @@ The JSON representation of the objects returned from the List All REST endpoints
 Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. 
 
-In some cases, such as when new column types or new widgets are added, Smartsheet offers a backwards-compatibile option as well as giving you access to the new functionality. For instance, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
+When there is new functionality that is not compatible with existing code, say in the case of a new concept, Smartsheet uses a level "bump" to indicate the new feature can be ignored until you are ready to implement the code to work with the new level.
 
-* As text, such as column type TEXT_NUMBER
+For instance, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
+
+* As text, for example column types will display as TEXT_NUMBER
 * As a complex object returning the data in the most convenient form for that column type, such as MULTI_CONTACT_LIST or MULTI_PICKLIST
 
 Smartsheet uses two indicators to help you discover changes in the return data for your API calls:
 
 * level: a query parameter that is incremented when a new feature or column type is added
-* version: a read-only attribute in the Column object that is incremented when a new column type is added
+* version: a read-only attribute for each Column in the Columns object array
 
-You must use the level query parameter, for example **?level=2**, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible (in most cases, a string).
+You must use the level query parameter, for example **?level=2**, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible, that is a string.
 
 Use the highest possible level for each endpoint, as in the following table:
 
@@ -318,13 +320,13 @@ Sights (aka dashboards) | 4
 Reports | 3 
 Sheets | 2 
 
-The read-only "version" attribute for the Column object increments when a new column type is added:
+The read-only "version" attribute for each Column in the Column objects array indicates whether that column supports the new functionality:
 
 Multi-contact | Multi-picklist
 -----|-----|
 1 | 2 
 
-<aside class="notice">The <b>include=objectValue</b> query parameter is necessary if you need to see a complex value, such as actual email addresses rather than display names.</aside>
+<aside class="notice">The <b>include=objectValue</b> query parameter is necessary to see the return as a complex value, such as actual email addresses rather than display names.</aside>
 
 ## Working with Smartsheet Gov Accounts
 

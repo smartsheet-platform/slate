@@ -3109,7 +3109,7 @@ A column is a component of a sheet or report.
 **tags** | string[] | Set of tags to indicate special columns. Each element in the array is set to one of the following values:<ul><li>**CALENDAR_END_DATE**</li><li>**CALENDAR_START_DATE**</li><li>**CARD_DONE**</li><li>**GANTT_ALLOCATION**</li><li>**GANTT_ASSIGNED_RESOURCE**</li><li>**GANTT_DISPLAY_LABEL**</li><li>**GANTT_DURATION**</li><li>**GANTT_END_DATE**</li><li>**GANTT_PERCENT_COMPLETE**</li><li>**GANTT_PREDECESSOR**</li><li>**GANTT_START_DATE**</li></ul>
 **title** | string | Column title
 **validation** | Boolean | Indicates whether validation has been enabled for the column (value = **true**)
-**version** | number | A read-only integer incremented for new column types, such as MULTI_PICKLIST. See [Versioning and Changes](#versioning-and-changes) for details. 
+**version** | number | Read only. Indicates whether a column supports new column types. Each element in the array is set to one of the following values:<ul><li>**0**: TEXT_NUMBER, CONTACT_LIST, or PICKLIST</li><li>**1**: MULTI_CONTACT_LIST</li><li>**2**: MULTI_PICKLIST</li></ul>See [Versioning and Changes](#versioning-and-changes).
 **width** | number | Display width of the column in pixels
 
 ### ContactOption Object
