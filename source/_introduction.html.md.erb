@@ -308,7 +308,11 @@ For instance, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIS
 Smartsheet uses two indicators to help you discover changes in the return data for your API calls:
 
 * level: a query parameter that is incremented when a new feature or column type is added
-* version: a read-only attribute for each Column in the Columns object array
+* version: each element in the Columns array is set to one of the following values:
+
+Text | Multi-contact | Multi-picklist
+-----|-----|-----|
+0 | 1 | 2 
 
 You must use the level query parameter, for example **?level=2**, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible, that is a string.
 
@@ -319,12 +323,6 @@ Endpoint category | Level
 Sights (aka dashboards) | 4
 Reports | 3 
 Sheets | 2 
-
-The read-only "version" attribute for each Column in the Column objects array indicates whether that column supports the new functionality:
-
-Multi-contact | Multi-picklist
------|-----|
-1 | 2 
 
 <aside class="notice">The <b>include=objectValue</b> query parameter is necessary to see the return as a complex value, such as actual email addresses rather than display names.</aside>
 
