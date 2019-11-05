@@ -298,7 +298,7 @@ The JSON representation of the objects returned from the List All REST endpoints
 Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. 
 
-When there is new functionality that is not compatible with existing code, say in the case of a new concept, Smartsheet uses a level "bump" to indicate the new feature can be ignored until you are ready to implement the code to work with the new level.
+When there is new functionality that is not compatible with existing code, say in the case of a new concept, Smartsheet increments the level to indicate the new feature can be ignored until you are ready to implement the code to work with the new level.
 
 In the example of new column types, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
 
