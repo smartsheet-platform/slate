@@ -249,7 +249,14 @@ require 'smartsheet'
 }
 ```
 
-The Smartsheet API uses OAuth 2.0 for authentication and authorization. An HTTP header containing an access token is required to authenticate each request. 
+The Smartsheet API uses OAuth 2.0 for authentication and authorization. An HTTP header containing an access token is required to authenticate each request.
+
+* To familiarize yourself with the API, you can generate a raw token. See [Raw Token Requests](#raw-token-requests).
+* For additional security and as a recommended best practice, you should build an integration using OAuth 2.0. During the [OAuth process](#adding-security-by-using-oauth), you will generate several API keys and, ultimately, each user will generate a unique access token.
+
+<aside class="warning">If an unauthorized user gets a copy of this token, they will be able to access all Smartsheet data that you have access to, both to read and modify on your behalf. You should keep your tokens secure and do not share them with anyone. See <a href="#security-best-practices">Security Best Practices</a>.</aside>
+
+### Raw Token Requests
 
 If you want to get started quickly, or are developing a standalone application that can run with your credentials, follow these instructions:
 
@@ -263,9 +270,54 @@ The access token must be sent with every API call in an HTTP authorization heade
 
 The header name is **Authorization** and the value of the header is **Bearer ll352u9jujauoqz4gstvsae05**. Since the access token is being transmitted in clear text, all API calls are done over HTTPS.
 
-<aside class="warning">The token generated runs with your credentials. Be sure to secure your tokens and do not share tokens with anyone.</aside>
+<aside class="notice">A best practice is to use a shared account, such as ticket-processor@example.com, rather than your individual work account.</aside>
 
-<aside class="notice">If your application requires users to be able to login with their own account, you must implement the full OAuth flow. See the documentation for <a href="#third-party-app-development">Third-party App Development</a> and <a href="https://developers.smartsheet.com/register">Developer Registration</a>.</aside>
+### Adding Security by Using OAuth
+
+If your application requires users to be able to login with their own account, you must implement the full OAuth flow. 
+
+At a high level, this involves the following steps:
+
+1. [Register as a Developer](https://developers.smartsheet.com/register) with Smartsheet so you can get access to the Developer Tools menu.
+2. Register your app to get both a clientId and client secret, which you'll need to store securely. Some best practices suggestions for security are below.
+3. Go through the steps in the [Third-party App Development](#third-party-app-development) section once you are ready to request authorization.
+
+<aside class="notice">When using OAuth, be sure to review the <a href="#access-scopes">Access Scopes</a> needed for your app and only request the necessary scopes.</aside>
+
+### Security Best Practices
+
+The following provides some best practices to consider when working with the Smartsheet API and any API keys, tokens, or other sensitive information.
+
+#### Source Code and Version control
+
+Never commit API keys to accessible version control systems like GitHub or BitBucket. Instead, you should:
+
+* Use an app configuration tool suitable for deploying secrets to your app, or
+* Use a config file outside of source control, or
+* Use environment variables set outside of source control.
+
+If you have mistakenly deployed API keys to a publicly accessible location such as GitHub, then you should immediately revoke those API keys, revise your application to use a preferred method of key deployment, and then generate new keys.
+
+If you need to store API keys in a database, consider the following protections:
+
+* Restrict access so API keys are only readable by the owner of the object
+* Restrict read privileges to the database table
+* Make sure your database or the disk the database is on is set to encrypt data at rest
+
+<aside class="notice">When using any Smartsheet SDK, you can use the environment variable of SMARTSHEET_ACCESS_TOKEN. If the access token is null on input to the client builder, the SDK will automatically pick up the value of that environment variable.</aside>
+
+#### API Key Management
+
+If you've committed code to a repository before implementing these security best practices, here are some steps to resecure your API keys.
+
+For raw tokens:
+
+1. [Revoke token](#revoke-access-token)
+2. Create a [new token](#raw-token-requests)
+
+If using OAuth for an integration:
+
+* Work through the steps for [Third-party App Development](#third-party-app-development) to regenerate client secrets, auth codes, and tokens. 
 
 ## Dates and Times
 
@@ -319,6 +371,8 @@ Smartsheet Gov has "FedRAMP Ready" status as part of Federal Risk and Authorizat
 Before you write any code, try executing API requests using a tool like [cURL](https://curl.haxx.se/) or [Postman](https://www.getpostman.com/). By taking your code out of the equation, you can isolate troubleshooting to the raw request and response.
 
 You must use an access token. See instructions at [Authentication and Access Tokens](#authentication-and-access-tokens). In the examples below, replace this sample token, "ll352u9jujauoqz4gstvsae05", with your actual token value.
+
+<aside class="warning">If an unauthorized user gets a copy of this token, they will be able to access all Smartsheet data that you have access to, both to read and modify on your behalf. You should keep your tokens secure and do not share them with anyone. See <a href="#security-best-practices">Security Best Practices</a>.</aside>
 
 To get a list of all your sheets, try the following command:
 
