@@ -355,7 +355,7 @@ When there is new functionality that is not compatible with existing code, say i
 In the example of new column types, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
 
 * If you do nothing to your code, column types will display as TEXT_NUMBER
-* If you use the level query parameter as detailed below, column types will display as MULTI_CONTACT_LIST or MULTI_PICKLIST and return a complex object
+* If you use the level query parameter as detailed below, column types will display as MULTI_CONTACT_LIST or MULTI_PICKLIST and return a complex object (aka a non-primitive type)
 
 Smartsheet uses two indicators to help you discover changes in the return data for your API calls:
 

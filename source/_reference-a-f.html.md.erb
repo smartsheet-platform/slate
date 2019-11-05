@@ -2421,7 +2421,7 @@ CONTACT_LIST | string: an email address representing a contact, or a free-form t
 DATE | string: a date in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format, or a free-form text value.<br/>number: see [Dates and Times](#dates-and-times) for how to request dates to be returned as numbers. | No.
 DURATION | string: a duration value such as "4d 6h 30m" in the user's locale, or a free-form text value.<br/>See the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>) for more information on durations. | Yes: same as **value**
 MULTI_CONTACT_LIST | string: only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying, otherwise the column type is TEXT_NUMBER. | Yes: same as **value**; to see actual email addresses, see below.
-MULTI_PICKLIST | string: only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying, otherwise the column type is TEXT_NUMBER. | Yes: same as **value**; to see actual picklist options, see below.
+MULTI_PICKLIST | string: only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying, otherwise the column type is TEXT_NUMBER. | Yes: same as **value**; to see objectValue, see below.
 PICKLIST | string: one of the picklist's column options, or a free-form text value.<br/>number: numeric values | Yes: same as **value** for strings; for number values, the number with formatting applied.
 PREDECESSOR	| string: a comma-delimited predecessor list such as "12FS +3d 4h, 14SS", or a free-form text value.<br/>See the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>) for more information on predecessors. | Yes: same as **value**
 TEXT_NUMBER	| string: free-form text values<br/>number: numeric values | Yes: same as **value** for strings; for number values, the number with formatting applied.
@@ -3760,7 +3760,7 @@ Text/Number		| **TEXT_NUMBER**	|
 
 #### Symbol Columns
 
-In addition to the basic column types above, the Smartsheet app also supports columns that display symbols. These are simply specialized columns of type **CHECKBOX** or **PICKLIST**,
+In addition to the basic column types above, the Smartsheet app also supports columns that display symbols. These are specialized columns of type **CHECKBOX** or **PICKLIST**,
 whose **symbol** attribute is set to one of the values below:
 
 **Symbols for CHECKBOX columns:**
