@@ -300,10 +300,10 @@ Also, make sure your code does not depend on the order in which JSON objects are
 
 When there is new functionality that is not compatible with existing code, say in the case of a new concept, Smartsheet uses a level "bump" to indicate the new feature can be ignored until you are ready to implement the code to work with the new level.
 
-For instance, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
+In the example of new column types, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
 
-* As text, for example column types will display as TEXT_NUMBER
-* As a complex object returning the data in the most convenient form for that column type, such as MULTI_CONTACT_LIST or MULTI_PICKLIST
+* If you do nothing to your code, column types will display as TEXT_NUMBER
+* If you use the level query parameter as detailed below, column types will display as MULTI_CONTACT_LIST or MULTI_PICKLIST and return a complex object
 
 Smartsheet uses two indicators to help you discover changes in the return data for your API calls:
 
