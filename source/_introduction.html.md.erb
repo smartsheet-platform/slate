@@ -252,7 +252,7 @@ require 'smartsheet'
 The Smartsheet API uses OAuth 2.0 for authentication and authorization. An HTTP header containing an access token is required to authenticate each request.
 
 * To familiarize yourself with the API, you can generate a raw token. See [Raw Token Requests](#raw-token-requests).
-* For additional security and as a recommended best practice, you should build an integration using OAuth 2.0. During the [OAuth process](#adding-security-by-using-oauth), you will generate several API keys and, ultimately, each user will generate a unique user access token.
+* For additional security and as a recommended best practice, you should build an integration using OAuth 2.0. During the [OAuth process](#adding-security-by-using-oauth), you will generate several API keys and, ultimately, each user will generate a unique access token.
 
 <aside class="warning">If an unauthorized user gets a copy of this token, they will be able to access all Smartsheet data that you have access to, both to read and modify on your behalf. You should keep your tokens secure and do not share them with anyone. See <a href="#security-best-practices">Security Best Practices</a>.</aside>
 
@@ -270,7 +270,7 @@ The access token must be sent with every API call in an HTTP authorization heade
 
 The header name is **Authorization** and the value of the header is **Bearer ll352u9jujauoqz4gstvsae05**. Since the access token is being transmitted in clear text, all API calls are done over HTTPS.
 
-<aside class="notice">A best practice is to use a shared account, such as admin@company.com, rather than your individual work account.</aside>
+<aside class="notice">A best practice is to use a shared account, such as ticket-processor@example.com, rather than your individual work account.</aside>
 
 ### Adding Security by Using OAuth
 
@@ -290,11 +290,19 @@ The following provides some best practices to consider when working with the Sma
 
 #### Source Code and Version control
 
-Be wary of committing API keys to accessible version control systems like GitHub or BitBucket.
+Never commit API keys to accessible version control systems like GitHub or BitBucket. Instead, you should:
 
-* Use environment variables. 
-* Use a config file excluded from source control, such as adding that filename to the .gitignore file.
-* If making these changes to existing code, be sure to regenerate the API keys and revoke the previous ones, which can still be seen in your version control system's history.
+* Use an app configuration tool suitable for deploying secrets to your app, or
+* Use a config file outside of source control, or
+* Use environment variables set outside of source control.
+
+If you have mistakenly deployed API keys to a publicly accessible location such as GitHub, then you should immediately revoke those API keys, revise your application to use a preferred method of key deployment, and then generate new keys.
+
+If you need to store API keys in a database, consider the following protections:
+
+* Restrict access so API keys are only readable by the owner of the object
+* Restrict read privileges to the database table
+* Make sure your database or the disk the database is on is set to encrypt data at rest
 
 <aside class="notice">When using any Smartsheet SDK, you can use the environment variable of SMARTSHEET_ACCESS_TOKEN. If the access token is null on input to the client builder, the SDK will automatically pick up the value of that environment variable.</aside>
 
@@ -310,14 +318,6 @@ For raw tokens:
 If using OAuth for an integration:
 
 * Work through the steps for [Third-party App Development](#third-party-app-development) to regenerate client secrets, auth codes, and tokens. 
-
-#### Databases
-
-If you need to store API keys in a database, consider the following protections:
-
-* Restrict access so API keys are only readable by the owner of the object
-* Restrict edit/write privileges to the database table
-* Encrypt API keys prior to storage
 
 ## Dates and Times
 
