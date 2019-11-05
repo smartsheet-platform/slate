@@ -5380,7 +5380,7 @@ Represents individual user settings for a specific sheet.  User settings may be 
 **options** | string[] | When applicable for **PICKLIST** column type. Array of the options available for the field
 **symbol** | string | When applicable for **PICKLIST** column type. See [Symbol Columns](#symbol-columns).
 **title** | string | Arbitrary name, must be unique within summary
-**type** | string | One of:<ul><li>**ABSTRACT_DATETIME**</li><li>**CHECKBOX**</li><li>**CONTACT_LIST**</li><li>**DATE**</li><li>**DATETIME**</li><li>**DURATION**</li><li>**PICKLIST**</li><li>**PREDECESSOR**</li><li>**TEXT_NUMBER**</li></ul>See [Column Types](#column-types).
+**type** | string | One of:<ul><li>**ABSTRACT_DATETIME**</li><li>**CHECKBOX**</li><li>**CONTACT_LIST**</li><li>**DATE**</li><li>**DATETIME**</li><li>**DURATION**</li><li>**MULTI_CONTACT_LIST**</li><li>**MULTI_PICKLIST**</li><li>**PICKLIST**</li><li>**PREDECESSOR**</li><li>**TEXT_NUMBER**</li></ul>See [Column Types](#column-types).
 **validation** | Boolean | Indicates whether summary field values are restricted to the type
 
 ## Copy Sheet
@@ -8321,7 +8321,7 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 **label** | string | Label for the data point. This is either the column name or a user-provided string
 **labelFormat** | string | [formatDescriptor](#formatting)
 **order** | integer | The display order for the CellDataItem
-**profileField** | [ProfileField](#profileField-object) | ProfileField object
+**profileField** | [SummaryField](#summaryfield-object) | SummaryField object
 **valueFormat** | string | [formatDescriptor](#formatting)
 
 ### ChartWidgetContent Object
@@ -8347,17 +8347,6 @@ Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetconten
 **height** | integer | Original height of the image in pixels
 **hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
 **width** | integer | Original width of the image in pixels
-
-### ProfileField Object
-
-     |     |     |
------|-----|-----|
-**id** | number | Column Id
-**index** | number | Column index or position. This number is zero-based. 
-**title** | string | Column title
-**type** | string | One of:<ul><li>**ABSTRACT_DATETIME**</li><li>**CHECKBOX**</li><li>**CONTACT_LIST**</li><li>**DATE**</li><li>**DATETIME**</li><li>**DURATION**</li><li>**MULTI_CONTACT_LIST**</li><li>**MULTI_PICKLIST**</li><li>**PICKLIST**</li><li>**PREDECESSOR**</li><li>**TEXT_NUMBER**</li></ul>See [Column Types](#column-types).
-**locked** | Boolean | Indicates whether the column is locked. In a response, a value of **true** indicates that the column has been locked by the sheet owner or the admin.
-**lockedForUser** | Boolean | Indicates whether the column is locked for the requesting user. This attribute may be present in a response, but cannot be specified in a request.
 
 ### ReportWidgetContent Object
 
