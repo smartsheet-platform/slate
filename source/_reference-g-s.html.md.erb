@@ -5279,7 +5279,7 @@ Smartsheet users can define and save personal column filters on sheets they can 
 **excludeSelected** | Boolean | If **true**, rows containing cells matching the **values** or **criteria** items are excluded instead of included.
 **filterType** | string | One of the following values: **PERSONAL** or **SHARED**
 **includeParent** | Boolean | If **true**, indicates that "show parent rows" is enabled for the filters.
-**operator** | string | One of the following values:<ul><li>**BETWEEN**</li><li>**CONTAINS**</li><li>**EQUAL** or **NOT_EQUAL**</li><li>**FUTURE**</li><li>**GREATER_THAN** or **LESS_THAN**</li><li>**IS_BLANK** or **IS_NOT_BLANK**</li><li>**IS_CHECKED** or **IS_NOT_CHECKED**</li><li>**IS_DATE** or **IS_NOT_DATE**</li><li>**IS_NUMBER** or **IS_NOT_NUMBER**</li><li>**LAST_N_DAYS** or **NEXT_N_DAYS**</li><li>**PAST**</li><li>**TODAY**</li></ul>
+**operator** | string | One of the following values:<ul><li>**BETWEEN**</li><li>**CONTAINS**</li><li>**EQUAL** or **NOT_EQUAL**</li><li>**FUTURE**</li><li>**GREATER_THAN** or **LESS_THAN**</li><li>**HAS_ANY_OF** or **HAS_NONE_OF** or **HAS_ALL_OF**</li><li>**IS_BLANK** or **IS_NOT_BLANK**</li><li>**IS_CHECKED** or **IS_NOT_CHECKED**</li><li>**IS_DATE** or **IS_NOT_DATE**</li><li>**IS_NUMBER** or **IS_NOT_NUMBER**</li><li>**LAST_N_DAYS** or **NEXT_N_DAYS**</li><li>**MULTI_IS_EQUAL** or **MULTI_IS_NOT_EQUAL**</li><li>**NOT_ALL_OF**</li><li>**PAST**</li><li>**TODAY**</li></ul>
 **query** | object | Contains operator and Criteria object.
 **values** | array | Present if a custom filter criteria's operator has one or more arguments.
 

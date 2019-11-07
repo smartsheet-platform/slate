@@ -2163,7 +2163,7 @@ This object itself is not used directly.
 
      |     |     |
 -----|-----|-----|
-**objectType** | string | One of **ABSTRACT_DATETIME**, **CONTACT**, **DATE**, **DATETIME**, **DURATION**, **MULTI_CONTACT**, or **PREDECESSOR_LIST**
+**objectType** | string | One of **ABSTRACT_DATETIME**, **CONTACT**, **DATE**, **DATETIME**, **DURATION**, **MULTI_CONTACT**, **MULTI_PICKLIST**, or **PREDECESSOR_LIST**
 
 ### Predecessor Object
 
@@ -3137,7 +3137,8 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: application/json" \
 -X POST \
--d '[{"title": "New Picklist Column 1", "type": "PICKLIST", "options": ["First", "Second", "Third"], "index": 4} , {"title":"New Date Column", "type":"DATE", "validation":"true", "index":4},]'
+-d '[{"title": "New Multi-Picklist Column 1", "type": "MULTI_PICKLIST", "options": ["First", "Second", "Third"], "index": 4} , {"title":"New Date Column", "type":"DATE", "validation":"true", "index":4},]'
+-d '[{"index": 6, "title": "Dropdown Multi Select", "type": "MULTI_PICKLIST", "options": ["Template", "Blog",	"Newsletter",	"Email", "Press Release", "Advertisement"],	"validation": false, "width": 150}]'
 ```
 
 ```javascript
@@ -3601,7 +3602,7 @@ Gets a list of all columns belonging to the sheet specified in the URL.
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns/{columnId} \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -X PUT \
--d '{"title":"First Column","index":0, "type" : "PICKLIST", "options" :["One","Two"]}'
+-d '{"title": "New multi-select dropdown column", "index": 0, "type": "MULTI_PICKLIST", "options": ["One", "Two"]}'
 ```
 
 ```javascript
@@ -3739,6 +3740,122 @@ Updates properties of the column, moves the column, and/or renames the column.
 ## <%= RELATED %>
 
 ### Column Types
+
+> Example column types
+
+```shell
+{
+	"columns": [{
+    "id": 9999137079650180,
+    "version": 0,
+    "index": 0,
+    "title": "Text/Number",
+    "type": "TEXT_NUMBER",
+    "primary": true,
+    "validation": false,
+    "width": 150
+  },
+  {
+    "id": 9999736707020676,
+    "version": 0,
+    "index": 1,
+    "title": "Contact Column",
+    "type": "CONTACT_LIST",
+    "contactOptions": [{
+      "name": "ziggy@example.com",
+      "email": "ziggy@example.com"
+    }],
+    "validation": false,
+    "width": 150
+  },
+  {
+    "id": 999962382411652,
+    "version": 1,
+    "index": 2,
+    "title": "Multi Contact Column",
+    "type": "MULTI_CONTACT_LIST",
+    "contactOptions": [{
+      "name": "Ziggy Star",
+      "email": "ziggy@example.com"
+      },
+      {
+      "name": "Jane Roe",
+      "email": "jane.roe@example.com"
+      }
+    ],
+    "validation": false,
+    "width": 185
+  },
+  {
+    "id": 9999562009782148,
+    "version": 0,
+    "index": 3,
+    "title": "Date Column",
+    "type": "DATE",
+    "validation": false,
+    "width": 150
+  },
+  {
+    "id": 9999762196096900,
+    "version": 0,
+    "index": 4,
+    "title": "Dropdown Single Select",
+    "type": "PICKLIST",
+    "options": [
+      "Project",
+      "Story",
+      "Task",
+      "Spike",
+      "Bug"
+    ],
+    "validation": false,
+    "width": 150
+  },
+  {
+    "id": 9999361823467396,
+    "version": 2,
+    "index": 5,
+    "title": "Dropdown Multi Select",
+    "type": "MULTI_PICKLIST",
+    "options": [
+      "Template",
+      "Blog",
+      "Newsletter",
+      "Email",
+      "Press Release",
+      "Advertisement"
+    ],
+    "validation": false,
+    "width": 150
+  },
+  {
+    "id": 9999104171726724,
+    "version": 0,
+    "index": 6,
+    "title": "Checkbox",
+    "type": "CHECKBOX",
+    "validation": false,
+    "width": 150
+  },
+  {
+    "id": 9999504544356228,
+    "version": 0,
+    "index": 7,
+    "title": "Symbols",
+    "type": "PICKLIST",
+    "symbol": "PAIN",
+    "options": [
+      "No Pain",
+      "Mild",
+      "Moderate",
+      "Severe",
+      "Very Severe",
+      "Extreme"
+    ],
+    "validation": false,
+    "width": 150
+}]}
+```
 
 Smartsheet supports the following standard column types, which are represented in a [Column object](#column-object) with a **type** attribute set to one of the following:
 
