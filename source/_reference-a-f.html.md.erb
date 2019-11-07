@@ -2158,6 +2158,21 @@ Represents a hyperlink to a URL, a sheet, a report, or a Sight.
 
 ### ObjectValue Object
 
+> Example: ObjectValue object
+
+```json
+{
+	"cells": [{
+		"columnId": 285878125913988,
+		"objectValue": {
+			"objectType": "MULTI_PICKLIST",
+			"values": ["hello", "world"]
+		}
+
+	}]
+}
+```
+
 The base object for values found in the **Cell.objectValue** attribute. Its **objectType** attribute indicates the type of the object.
 This object itself is not used directly.
 
