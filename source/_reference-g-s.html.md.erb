@@ -1381,7 +1381,7 @@ Extends the [Row object](#row-object), adding the following:
 > Example request: get report
 
 ```shell
-curl https://api.smartsheet.com/2.0/reports/{reportId} \
+curl https://api.smartsheet.com/2.0/reports/{reportId}?level=3&include=objectValue \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
 ```
 
@@ -1482,6 +1482,15 @@ report = smartsheet.reports.get(
       "title": "Status",
       "type": "TEXT_NUMBER",
       "validation": false
+    },
+    {
+      "virtualId": 999245123327876,
+      "version": 2,
+      "index": 4,
+      "title": "Dropdown Multi Select",
+      "type": "MULTI_PICKLIST",
+      "validation": false,
+      "width": 150
     }
   ],
   "rows": [
@@ -1523,7 +1532,7 @@ Gets the report, including one page of rows, and optionally populated with attac
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**attachments**</li><li>**discussions**</li><li>**format** -- see [Formatting](#formatting)</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**scope** -- adds the report's [scope](#scope-object) to the response</li><li>**source** -- adds the [Source object](#source-object) indicating which report the report was created from, if any</li><li>**sourceSheets**</li></ul> 
   | **exclude** (optional) --  a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li></ul>
-  | **level** (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (**level=0**, default), multi-contact data (**level=1**), or multi-picklist data (**level=2**). 
+  | **level** (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (**level=0**, default), multi-contact data (**level=1**), or multi-picklist data (**level=3**). 
   | **pageSize** (optional): Number of rows per page.  If not specified, the default value is 100.  If you need larger sets of data from your report, this operation can return a maximum of 10,000 rows per request (report limit is 50,000 rows).
   | **page** (optional): Which page number (1-based) to return.  If not specified, the default value is 1.  If a page number is specified that is greater than the number of total pages, the last page is returned.
 <%= RETURNS %> | [Report object](#report-object), populated according to the specified parameters
@@ -6484,7 +6493,7 @@ The following actions increment sheet version:
 > Example request: get sheet
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId} \
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}?level=2&include=objectValue \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
 ```
 
@@ -6601,17 +6610,21 @@ sheet = smartsheet.sheets.get(
       "validation": false
     },
     {
-      "id": 2331373580117892,
-      "version": 0,
-      "index": 1,
+      "id": 603843458295684,
+      "version": 2,
+      "index": 5,
+      "title": "New Dropdown Multi Select",
+      "type": "MULTI_PICKLIST",
       "options": [
-        "new",
-        "in progress",
-        "completed"
+        "Template",
+        "Blog",
+        "Newsletter",
+        "Email",
+        "Press Release",
+        "Advertisement"
       ],
-      "title": "status",
-      "type": "PICKLIST",
-      "validation": true
+      "validation": false,
+      "width": 150
     }
   ],
   "rows": []
@@ -8605,7 +8618,7 @@ Deletes the Sight specified in the URL.
 > Example request: get Sight
 
 ```shell
-curl https://api.smartsheet.com/2.0/sights/{sightId} \
+curl https://api.smartsheet.com/2.0/sights/{sightId}?level=4 \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
 ```
 
@@ -8672,28 +8685,43 @@ sight = smartsheet.sights.get(
       "version": 1
     },
     {
-      "id": 48092647672583496,
-      "type": "SHORTCUT",
+      "id": 9996257304487812,
+      "type": "METRIC",
       "contents": {
-        "shortcutData": [
+        "type": "METRIC",
+        "cellData": [
           {
-            "label": "Sight Data",
-            "labelFormat": ",2,,,,,1,,1,,,,,,,",
-            "hyperlink": {
-              "url": "https://app.smartsheet.com/b/home?lx=m1O5qo7tpM1h23KFxYavIw",
-              "sheetId": 692061146243972
+            "label": "test summary here",
+            "labelFormat": ",2,,,,,,,1,,,,,,,1,",
+            "valueFormat": ",2,1,,,,1,,1,3,,,,,,1,",
+            "order": 0,
+            "profileField": {
+              "id": 9992738687018884,
+              "index": 0,
+              "title": "test summary here",
+              "type": "TEXT_NUMBER",
+              "locked": false,
+              "lockedForUser": false,
+              "objectValue": "summary content",
+              "displayValue": "summary content",
+              "createdAt": "2019-10-31T22:01:19Z",
+              "modifiedAt": "2019-10-31T22:01:19Z"
             },
-            "attachmentType": "SMARTSHEET",
-            "order": 0
+            "dataSource": "SUMMARY_FIELD",
+            "objectValue": "summary content"
           }
-        ]
+        ],
+        "sheetId": 663216503187332,
+        "viewMode": 2
       },
-      "xPosition": 1,
+      "xPosition": 0,
       "yPosition": 0,
-      "width": 1,
-      "height": 1,
-      "showTitleIcon": false,
-      "titleFormat": ",,1,,,,,,,3,,,,,,",
+      "width": 15,
+      "height": 7,
+      "title": "test sheet for charts",
+      "showTitleIcon": true,
+      "showTitle": true,
+      "titleFormat": ",,1,,,,,,,3,,,,,,1,",
       "version": 1
     }
   ]
