@@ -350,9 +350,37 @@ The JSON representation of the objects returned from the List All REST endpoints
 Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. 
 
+When there is new functionality that is not compatible with existing code, say in the case of a new concept, Smartsheet increments the level to indicate the new feature can be ignored until you are ready to implement the code to work with the new level.
+
+In the example of new column types, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
+
+* If you do nothing to your code, column types will display as TEXT_NUMBER
+* If you use the level query parameter as detailed below, column types will display as MULTI_CONTACT_LIST or MULTI_PICKLIST and return a complex object (aka a non-primitive type)
+
+Smartsheet uses two indicators to help you discover changes in the return data for your API calls:
+
+* level: a query parameter that is incremented when a new feature or column type is added
+* version: each element in the Columns array is set to one of the following values:
+
+Text | Multi-contact | Multi-picklist
+-----|-----|-----|
+0 | 1 | 2 
+
+You must use the level query parameter, for example **?level=2**, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible, that is a string.
+
+Use the highest possible level for each endpoint, as in the following table:
+
+Endpoint category | Level
+-----|-----|
+Sights (aka dashboards) | 4
+Reports | 3 
+Sheets | 2 
+
+<aside class="notice">The <b>include=objectValue</b> query parameter is necessary to see the return as a complex value, such as actual email addresses rather than display names.</aside>
+
 ## Working with Smartsheet Gov Accounts
 
-Smartsheet Gov has "FedRAMP Ready" status as part of Federal Risk and Authorization Management Program (FedRAMP). As an API developer working on a Smartsheet Gov account, you should be aware of the following differences from the standard API:
+Smartsheet Gov has "FedRAMP Authorized" status as part of Federal Risk and Authorization Management Program (FedRAMP). As an API developer working on a Smartsheet Gov account, you should be aware of the following differences from the standard API:
 
 * The base URL for each API call is smartsheetgov.com instead of smartsheet.com. This documentation uses smartsheet.com in *all* examples.
 * Smartsheetgov.com has a restriction on attachment types. Only the following attachment types are allowed: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.
