@@ -277,6 +277,17 @@
                   </li>
                   <li>
                     <a href="#authentication-and-access-tokens" class="toc-h2 toc-link" data-title="Authentication and Access Tokens">Authentication and Access Tokens</a>
+                        <ul class="toc-list-subhead">
+                            <li>
+                                <a href="#raw-token-requests" class="toc-h3 toc-link" data-title="Raw Token Requests">Raw Token Requests</a>
+                            </li>
+                            <li>
+                                <a href="#adding-security-by-using-oauth" class="toc-h3 toc-link" data-title="Adding Security by Using OAuth">Adding Security by Using OAuth</a>
+                            </li>
+                            <li>
+                                <a href="#security-best-practices" class="toc-h3 toc-link" data-title="Security Best Practices">Security Best Practices</a>
+                            </li>
+                        </ul>
                   </li>
                   <li>
                     <a href="#dates-and-times" class="toc-h2 toc-link" data-title="Dates and Times">Dates and Times</a>
@@ -1929,7 +1940,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2019-08-14
+<p>Updated 2019-11-08
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -2216,8 +2227,15 @@
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">48569348493401200</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>The Smartsheet API uses OAuth 2.0 for authentication and authorization. An HTTP header containing an access token is required to authenticate each request. </p>
+<p>The Smartsheet API uses OAuth 2.0 for authentication and authorization. An HTTP header containing an access token is required to authenticate each request.</p>
 
+<ul>
+<li>To familiarize yourself with the API, you can generate a raw token. See <a href="#raw-token-requests">Raw Token Requests</a>.</li>
+<li>For additional security and as a recommended best practice, you should build an integration using OAuth 2.0. During the <a href="#adding-security-by-using-oauth">OAuth process</a>, you will generate several API keys and, ultimately, each user will generate a unique access token.</li>
+</ul>
+
+<aside class="warning">If an unauthorized user gets a copy of this token, they will be able to access all Smartsheet data that you have access to, both to read and modify on your behalf. You should keep your tokens secure and do not share them with anyone. See <a href="#security-best-practices">Security Best Practices</a>.</aside>
+<h3 id='raw-token-requests'>Raw Token Requests</h3>
 <p>If you want to get started quickly, or are developing a standalone application that can run with your credentials, follow these instructions:</p>
 
 <ol>
@@ -2232,9 +2250,56 @@
 
 <p>The header name is <strong>Authorization</strong> and the value of the header is <strong>Bearer ll352u9jujauoqz4gstvsae05</strong>. Since the access token is being transmitted in clear text, all API calls are done over HTTPS.</p>
 
-<aside class="warning">The token generated runs with your credentials. Be sure to secure your tokens and do not share tokens with anyone.</aside>
+<aside class="notice">A best practice is to use a shared account, such as ticket-processor@example.com, rather than your individual work account.</aside>
+<h3 id='adding-security-by-using-oauth'>Adding Security by Using OAuth</h3>
+<p>If your application requires users to be able to login with their own account, you must implement the full OAuth flow. </p>
 
-<aside class="notice">If your application requires users to be able to login with their own account, you must implement the full OAuth flow. See the documentation for <a href="#third-party-app-development">Third-party App Development</a> and <a href="https://developers.smartsheet.com/register">Developer Registration</a>.</aside>
+<p>At a high level, this involves the following steps:</p>
+
+<ol>
+<li><a href="https://developers.smartsheet.com/register">Register as a Developer</a> with Smartsheet so you can get access to the Developer Tools menu.</li>
+<li>Register your app to get both a clientId and client secret, which you&#39;ll need to store securely. Some best practices suggestions for security are below.</li>
+<li>Go through the steps in the <a href="#third-party-app-development">Third-party App Development</a> section once you are ready to request authorization.</li>
+</ol>
+
+<aside class="notice">When using OAuth, be sure to review the <a href="#access-scopes">Access Scopes</a> needed for your app and only request the necessary scopes.</aside>
+<h3 id='security-best-practices'>Security Best Practices</h3>
+<p>The following provides some best practices to consider when working with the Smartsheet API and any API keys, tokens, or other sensitive information.</p>
+<h4 id='source-code-and-version-control'>Source Code and Version control</h4>
+<p>Never commit API keys to accessible version control systems like GitHub or BitBucket. Instead, you should:</p>
+
+<ul>
+<li>Use an app configuration tool suitable for deploying secrets to your app, or</li>
+<li>Use a config file outside of source control, or</li>
+<li>Use environment variables set outside of source control.</li>
+</ul>
+
+<p>If you have mistakenly deployed API keys to a publicly accessible location such as GitHub, then you should immediately revoke those API keys, revise your application to use a preferred method of key deployment, and then generate new keys.</p>
+
+<p>If you need to store API keys in a database, consider the following protections:</p>
+
+<ul>
+<li>Restrict access so API keys are only readable by the owner of the object</li>
+<li>Restrict read privileges to the database table</li>
+<li>Make sure your database or the disk the database is on is set to encrypt data at rest</li>
+</ul>
+
+<aside class="notice">When using any Smartsheet SDK, you can use the environment variable of SMARTSHEET_ACCESS_TOKEN. If the access token is null on input to the client builder, the SDK will automatically pick up the value of that environment variable.</aside>
+<h4 id='api-key-management'>API Key Management</h4>
+<p>If you&#39;ve committed code to a repository before implementing these security best practices, here are some steps to resecure your API keys.</p>
+
+<p>For raw tokens:</p>
+
+<ol>
+<li><a href="#revoke-access-token">Revoke token</a></li>
+<li>Create a <a href="#raw-token-requests">new token</a></li>
+</ol>
+
+<p>If using OAuth for an integration:</p>
+
+<ul>
+<li>Work through the steps for <a href="#third-party-app-development">Third-party App Development</a> to regenerate client secrets, auth codes, and tokens. </li>
+</ul>
 <h2 id='dates-and-times'>Dates and Times</h2>
 <p>The Smartsheet API returns all dates and times in the <a href="https://en.wikipedia.org/wiki/Coordinated_Universal_Time">UTC</a> time zone in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601</a> format, that is, YYYY-MM-DDTHH:MM:SSZ.  If a date/time needs to be
 displayed to an end-user in their local time zone, you must do the conversion using the user&#39;s time zone, which you can obtain by <a href="#get-current-user">getting the current user</a>.</p>
@@ -2280,8 +2345,64 @@ displayed to an end-user in their local time zone, you must do the conversion us
 <h2 id='versioning-and-changes'>Versioning and Changes</h2>
 <p>Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. </p>
+
+<p>When there is new functionality that is not compatible with existing code, say in the case of a new concept, Smartsheet increments the level to indicate the new feature can be ignored until you are ready to implement the code to work with the new level.</p>
+
+<p>In the example of new column types, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:</p>
+
+<ul>
+<li>If you do nothing to your code, column types will display as TEXT_NUMBER</li>
+<li>If you use the level query parameter as detailed below, column types will display as MULTI_CONTACT_LIST or MULTI_PICKLIST and return a complex object (aka a non-primitive type)</li>
+</ul>
+
+<p>Smartsheet uses two indicators to help you discover changes in the return data for your API calls:</p>
+
+<ul>
+<li>level: a query parameter that is incremented when a new feature or column type is added</li>
+<li>version: each element in the Columns array is set to one of the following values:</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Text</th>
+<th>Multi-contact</th>
+<th>Multi-picklist</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody></table>
+
+<p>You must use the level query parameter, for example <strong>?level=2</strong>, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible, that is a string.</p>
+
+<p>Use the highest possible level for each endpoint, as in the following table:</p>
+
+<table><thead>
+<tr>
+<th>Endpoint category</th>
+<th>Level</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Sights (aka dashboards)</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Reports</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Sheets</td>
+<td>2</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">The <b>include=objectValue</b> query parameter is necessary to see the return as a complex value, such as actual email addresses rather than display names.</aside>
 <h2 id='working-with-smartsheet-gov-accounts'>Working with Smartsheet Gov Accounts</h2>
-<p>Smartsheet Gov has &quot;FedRAMP Ready&quot; status as part of Federal Risk and Authorization Management Program (FedRAMP). As an API developer working on a Smartsheet Gov account, you should be aware of the following differences from the standard API:</p>
+<p>Smartsheet Gov has &quot;FedRAMP Authorized&quot; status as part of Federal Risk and Authorization Management Program (FedRAMP). As an API developer working on a Smartsheet Gov account, you should be aware of the following differences from the standard API:</p>
 
 <ul>
 <li>The base URL for each API call is smartsheetgov.com instead of smartsheet.com. This documentation uses smartsheet.com in <em>all</em> examples.</li>
@@ -2300,6 +2421,8 @@ Also, make sure your code does not depend on the order in which JSON objects are
 <p>Before you write any code, try executing API requests using a tool like <a href="https://curl.haxx.se/">cURL</a> or <a href="https://www.getpostman.com/">Postman</a>. By taking your code out of the equation, you can isolate troubleshooting to the raw request and response.</p>
 
 <p>You must use an access token. See instructions at <a href="#authentication-and-access-tokens">Authentication and Access Tokens</a>. In the examples below, replace this sample token, &quot;ll352u9jujauoqz4gstvsae05&quot;, with your actual token value.</p>
+
+<aside class="warning">If an unauthorized user gets a copy of this token, they will be able to access all Smartsheet data that you have access to, both to read and modify on your behalf. You should keep your tokens secure and do not share them with anyone. See <a href="#security-best-practices">Security Best Practices</a>.</aside>
 
 <p>To get a list of all your sheets, try the following command:</p>
 
@@ -5981,6 +6104,20 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 
 <aside class="notice">If the sheet, report, or Sight that is linked to was deleted, this object may be empty (that is, all values null).</aside>
 <h3 id='objectvalue-object'>ObjectValue Object</h3>
+<blockquote>
+<p>Example: ObjectValue object</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"cells"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="s2">"columnId"</span><span class="p">:</span><span class="w"> </span><span class="mi">285878125913988</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"objectValue"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MULTI_PICKLIST"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"hello"</span><span class="p">,</span><span class="w"> </span><span class="s2">"world"</span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p>The base object for values found in the <strong>Cell.objectValue</strong> attribute. Its <strong>objectType</strong> attribute indicates the type of the object.
 This object itself is not used directly.</p>
 
@@ -5994,7 +6131,7 @@ This object itself is not used directly.</p>
 <tr>
 <td><strong>objectType</strong></td>
 <td>string</td>
-<td>One of <strong>ABSTRACT_DATETIME</strong>, <strong>CONTACT</strong>, <strong>DATE</strong>, <strong>DATETIME</strong>, <strong>DURATION</strong>, <strong>MULTI_CONTACT</strong>, or <strong>PREDECESSOR_LIST</strong></td>
+<td>One of <strong>ABSTRACT_DATETIME</strong>, <strong>CONTACT</strong>, <strong>DATE</strong>, <strong>DATETIME</strong>, <strong>DURATION</strong>, <strong>MULTI_CONTACT</strong>, <strong>MULTI_PICKLIST</strong>, or <strong>PREDECESSOR_LIST</strong></td>
 </tr>
 </tbody></table>
 <h3 id='predecessor-object'>Predecessor Object</h3>
@@ -6275,7 +6412,7 @@ Additionally, a <a href="#celllink-object">CellLink object</a> can only be added
 <p>A cell may not contain both a hyperlink and a cell link, so <strong>hyperlink</strong> and <strong>linkInFromCell</strong> may never both be non-null at the same time.</p>
 <h3 id='cell-reference'>Cell Reference</h3><h4 id='cell-value-representation'>Cell Value Representation</h4>
 <p><a href="#cell-object">Cell objects</a> retrieved through the Smartsheet APIs have two main attributes representing cell values: <strong>Cell.value</strong>, and
-<strong>Cell.displayValue</strong>. A third attribute, <strong>Cell.objectValue</strong> is currently used only for adding and updating predecessors, or for multi-contact details, such as email addresses. An empty cell returns no value.</p>
+<strong>Cell.displayValue</strong>. A third attribute, <strong>Cell.objectValue</strong> is currently used only for adding and updating predecessors, or for multi-contact or multi-picklist details, such as email addresses or values in a multi-picklist. An empty cell returns no value.</p>
 
 <p><strong>Cell.displayValue</strong> is always a string and is only returned for certain column types (see below).  It represents the formatted value as it should
 be displayed to an end-user.  For example, if a TEXT_NUMBER column is formatted as a US Dollar currency, its <strong>value</strong> may be a number
@@ -6322,6 +6459,11 @@ depending on the column type.  An empty cell returns no value. Complex types are
 <td>Yes: same as <strong>value</strong>; to see actual email addresses, see below.</td>
 </tr>
 <tr>
+<td>MULTI_PICKLIST</td>
+<td>string: only visible when using a query parameter of <strong>level</strong> and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying, otherwise the column type is TEXT_NUMBER.</td>
+<td>Yes: same as <strong>value</strong>; to see objectValue, see below.</td>
+</tr>
+<tr>
 <td>PICKLIST</td>
 <td>string: one of the picklist&#39;s column options, or a free-form text value.<br/>number: numeric values</td>
 <td>Yes: same as <strong>value</strong> for strings; for number values, the number with formatting applied.</td>
@@ -6343,7 +6485,7 @@ depending on the column type.  An empty cell returns no value. Complex types are
 <ul>
 <li>For predecessors, it provides a more &quot;programmer friendly&quot; format for assembling predecessors. To update a cell&#39;s predecessors, set <strong>objectValue</strong> to a
 <a href="#predecessorlist-object">PredecessorList object</a> containing <a href="#predecessor-object">Predecessor objects</a>.</li>
-<li>For multi-contact details, use both a level query parameter <em>and</em> an <strong>include=objectValue</strong> query to see email addresses rather than display names.</li>
+<li>For multi-contact or multi-picklist details, use both a level query parameter <em>and</em> an <strong>include=objectValue</strong> query to see email addresses rather than display names or to see multi-picklist values.</li>
 </ul>
 <h4 id='cell-value-parsing'>Cell Value Parsing</h4>
 <p>The flexibility in cell value data types is a powerful feature in the Smartsheet application; however, it poses a challenge
@@ -6458,6 +6600,20 @@ sense of it. To enable lenient parsing simply include <strong>&quot;strict&quot;
 <aside class="notice">You may use the query string parameter <b>projectParseLocale</b> with a <a href="#server-information">supported locale string</a> to force parsing in the specified locale (for example, using <b>en_US</b> lets you send in English values regardless of the user's locale).</aside>
 
 <p><strong>MULTI_CONTACT_LIST</strong></p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>N/A</td>
+<td>Set using the <strong>objectValue</strong> attribute for the Cell object, which is inherently strict. See <a href="#cell-reference">Cell Reference</a>.</td>
+</tr>
+</tbody></table>
+
+<p><strong>MULTI_PICKLIST</strong></p>
 
 <table><thead>
 <tr>
@@ -7126,12 +7282,15 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7960873114331012</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"STAR"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Favorite"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample description"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CHECKBOX"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Interesting Choices"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MULTI_PICKLIST"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Hello, World"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"100%"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
   </span><span class="s2">"validation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -7156,7 +7315,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <tr>
 <td><strong>type</strong></td>
 <td>string</td>
-<td>One of:<ul><li><strong>ABSTRACT_DATETIME</strong></li><li><strong>CHECKBOX</strong></li><li><strong>CONTACT_LIST</strong></li><li><strong>DATE</strong></li><li><strong>DATETIME</strong></li><li><strong>DURATION</strong></li><li><strong>MULTI_CONTACT_LIST</strong></li><li><strong>PICKLIST</strong></li><li><strong>PREDECESSOR</strong></li><li><strong>TEXT_NUMBER</strong></li></ul>See <a href="#column-types">Column Types</a>.</td>
+<td>One of:<ul><li><strong>ABSTRACT_DATETIME</strong></li><li><strong>CHECKBOX</strong></li><li><strong>CONTACT_LIST</strong></li><li><strong>DATE</strong></li><li><strong>DATETIME</strong></li><li><strong>DURATION</strong></li><li><strong>MULTI_CONTACT_LIST</strong></li><li><strong>MULTI_PICKLIST</strong></li><li><strong>PICKLIST</strong></li><li><strong>PREDECESSOR</strong></li><li><strong>TEXT_NUMBER</strong></li></ul>See <a href="#column-types">Column Types</a>.</td>
 </tr>
 <tr>
 <td><strong>autoNumberFormat</strong></td>
@@ -7231,7 +7390,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <tr>
 <td><strong>version</strong></td>
 <td>number</td>
-<td>A zero-based integer indicating whether the column allows multi-contact data. A value of <strong>0</strong> indicates the data will be stored as text and the column type will be TEXT_NUMBER, a value of <strong>1</strong> for sheets and reports or a value of <strong>2</strong> for Sights (aka dashboards) indicates the data will be stored as contacts and the column type will be MULTI_CONTACT_LIST. If not specified, the default value is 0 for sheets and reports or 1 for Sights (aka dashboards).</td>
+<td>Read only. The level of the column type. Each element in the array is set to one of the following values:<ul><li><strong>0</strong>: TEXT_NUMBER, CONTACT_LIST, or PICKLIST</li><li><strong>1</strong>: MULTI_CONTACT_LIST</li><li><strong>2</strong>: MULTI_PICKLIST</li></ul>See <a href="#versioning-and-changes">Versioning and Changes</a>.</td>
 </tr>
 <tr>
 <td><strong>width</strong></td>
@@ -7270,7 +7429,8 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
 -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
 -X POST <span class="se">\</span>
--d <span class="s1">'[{"title": "New Picklist Column 1", "type": "PICKLIST", "options": ["First", "Second", "Third"], "index": 4} , {"title":"New Date Column", "type":"DATE", "validation":"true", "index":4},]'</span>
+-d <span class="s1">'[{"title": "New Multi-Picklist Column 1", "type": "MULTI_PICKLIST", "options": ["First", "Second", "Third"], "index": 4} , {"title":"New Date Column", "type":"DATE", "validation":"true", "index":4},]'</span>
+-d <span class="s1">'[{"index": 6, "title": "Dropdown Multi Select", "type": "MULTI_PICKLIST", "options": ["Template", "Blog",   "Newsletter",   "Email", "Press Release", "Advertisement"], "validation": false, "width": 150}]'</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Specify new columns</span>
 <span class="kd">var</span> <span class="nx">column</span> <span class="o">=</span> <span class="p">[</span>
   <span class="p">{</span>
@@ -7617,7 +7777,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>level</strong> (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default) or as multi-contact data (<strong>level=1</strong>).</td>
+<td><strong>level</strong> (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default), multi-contact data (<strong>level=1</strong>), or multi-picklist data (<strong>level=2</strong>).</td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -7750,7 +7910,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>/columns/<span class="o">{</span>columnId<span class="o">}</span> <span class="se">\</span>
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
 -X PUT <span class="se">\</span>
--d <span class="s1">'{"title":"First Column","index":0, "type" : "PICKLIST", "options" :["One","Two"]}'</span>
+-d <span class="s1">'{"title": "New multi-select dropdown column", "index": 0, "type": "MULTI_PICKLIST", "options": ["One", "Two"]}'</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Specify column properties</span>
 <span class="kd">var</span> <span class="nx">column</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s2">"index"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
@@ -7891,6 +8051,121 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 </ul>
 
 <h2 id='related-items-3'>Related Items</h2><h3 id='column-types'>Column Types</h3>
+<blockquote>
+<p>Example column types</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="o">{</span>
+    <span class="s2">"columns"</span>: <span class="o">[{</span>
+    <span class="s2">"id"</span>: 9999137079650180,
+    <span class="s2">"version"</span>: 0,
+    <span class="s2">"index"</span>: 0,
+    <span class="s2">"title"</span>: <span class="s2">"Text/Number"</span>,
+    <span class="s2">"type"</span>: <span class="s2">"TEXT_NUMBER"</span>,
+    <span class="s2">"primary"</span>: <span class="nb">true</span>,
+    <span class="s2">"validation"</span>: <span class="nb">false</span>,
+    <span class="s2">"width"</span>: 150
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">"id"</span>: 9999736707020676,
+    <span class="s2">"version"</span>: 0,
+    <span class="s2">"index"</span>: 1,
+    <span class="s2">"title"</span>: <span class="s2">"Contact Column"</span>,
+    <span class="s2">"type"</span>: <span class="s2">"CONTACT_LIST"</span>,
+    <span class="s2">"contactOptions"</span>: <span class="o">[{</span>
+      <span class="s2">"name"</span>: <span class="s2">"ziggy@example.com"</span>,
+      <span class="s2">"email"</span>: <span class="s2">"ziggy@example.com"</span>
+    <span class="o">}]</span>,
+    <span class="s2">"validation"</span>: <span class="nb">false</span>,
+    <span class="s2">"width"</span>: 150
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">"id"</span>: 999962382411652,
+    <span class="s2">"version"</span>: 1,
+    <span class="s2">"index"</span>: 2,
+    <span class="s2">"title"</span>: <span class="s2">"Multi Contact Column"</span>,
+    <span class="s2">"type"</span>: <span class="s2">"MULTI_CONTACT_LIST"</span>,
+    <span class="s2">"contactOptions"</span>: <span class="o">[{</span>
+      <span class="s2">"name"</span>: <span class="s2">"Ziggy Star"</span>,
+      <span class="s2">"email"</span>: <span class="s2">"ziggy@example.com"</span>
+      <span class="o">}</span>,
+      <span class="o">{</span>
+      <span class="s2">"name"</span>: <span class="s2">"Jane Roe"</span>,
+      <span class="s2">"email"</span>: <span class="s2">"jane.roe@example.com"</span>
+      <span class="o">}</span>
+    <span class="o">]</span>,
+    <span class="s2">"validation"</span>: <span class="nb">false</span>,
+    <span class="s2">"width"</span>: 185
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">"id"</span>: 9999562009782148,
+    <span class="s2">"version"</span>: 0,
+    <span class="s2">"index"</span>: 3,
+    <span class="s2">"title"</span>: <span class="s2">"Date Column"</span>,
+    <span class="s2">"type"</span>: <span class="s2">"DATE"</span>,
+    <span class="s2">"validation"</span>: <span class="nb">false</span>,
+    <span class="s2">"width"</span>: 150
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">"id"</span>: 9999762196096900,
+    <span class="s2">"version"</span>: 0,
+    <span class="s2">"index"</span>: 4,
+    <span class="s2">"title"</span>: <span class="s2">"Dropdown Single Select"</span>,
+    <span class="s2">"type"</span>: <span class="s2">"PICKLIST"</span>,
+    <span class="s2">"options"</span>: <span class="o">[</span>
+      <span class="s2">"Project"</span>,
+      <span class="s2">"Story"</span>,
+      <span class="s2">"Task"</span>,
+      <span class="s2">"Spike"</span>,
+      <span class="s2">"Bug"</span>
+    <span class="o">]</span>,
+    <span class="s2">"validation"</span>: <span class="nb">false</span>,
+    <span class="s2">"width"</span>: 150
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">"id"</span>: 9999361823467396,
+    <span class="s2">"version"</span>: 2,
+    <span class="s2">"index"</span>: 5,
+    <span class="s2">"title"</span>: <span class="s2">"Dropdown Multi Select"</span>,
+    <span class="s2">"type"</span>: <span class="s2">"MULTI_PICKLIST"</span>,
+    <span class="s2">"options"</span>: <span class="o">[</span>
+      <span class="s2">"Template"</span>,
+      <span class="s2">"Blog"</span>,
+      <span class="s2">"Newsletter"</span>,
+      <span class="s2">"Email"</span>,
+      <span class="s2">"Press Release"</span>,
+      <span class="s2">"Advertisement"</span>
+    <span class="o">]</span>,
+    <span class="s2">"validation"</span>: <span class="nb">false</span>,
+    <span class="s2">"width"</span>: 150
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">"id"</span>: 9999104171726724,
+    <span class="s2">"version"</span>: 0,
+    <span class="s2">"index"</span>: 6,
+    <span class="s2">"title"</span>: <span class="s2">"Checkbox"</span>,
+    <span class="s2">"type"</span>: <span class="s2">"CHECKBOX"</span>,
+    <span class="s2">"validation"</span>: <span class="nb">false</span>,
+    <span class="s2">"width"</span>: 150
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">"id"</span>: 9999504544356228,
+    <span class="s2">"version"</span>: 0,
+    <span class="s2">"index"</span>: 7,
+    <span class="s2">"title"</span>: <span class="s2">"Symbols"</span>,
+    <span class="s2">"type"</span>: <span class="s2">"PICKLIST"</span>,
+    <span class="s2">"symbol"</span>: <span class="s2">"PAIN"</span>,
+    <span class="s2">"options"</span>: <span class="o">[</span>
+      <span class="s2">"No Pain"</span>,
+      <span class="s2">"Mild"</span>,
+      <span class="s2">"Moderate"</span>,
+      <span class="s2">"Severe"</span>,
+      <span class="s2">"Very Severe"</span>,
+      <span class="s2">"Extreme"</span>
+    <span class="o">]</span>,
+    <span class="s2">"validation"</span>: <span class="nb">false</span>,
+    <span class="s2">"width"</span>: 150
+<span class="o">}]}</span>
+</code></pre>
 <p>Smartsheet supports the following standard column types, which are represented in a <a href="#column-object">Column object</a> with a <strong>type</strong> attribute set to one of the following:</p>
 
 <table><thead>
@@ -7936,6 +8211,11 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <td>Custom, RYG, Harvey ball, priority types, etc.</td>
 </tr>
 <tr>
+<td>Dropdown List</td>
+<td><strong>MULTI_PICKLIST</strong></td>
+<td>List where single cells can contain more than one dropdown item. Only visible when using a query parameter of <strong>level</strong> and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying. To see multi-picklist values behind the display names, combine an <strong>include=objectValue</strong> query parameter with a <strong>level</strong> query parameter.</td>
+</tr>
+<tr>
 <td>Duration</td>
 <td><strong>DURATION</strong></td>
 <td><strong>Only for dependency-enabled project sheets</strong><br/>The API does not support setting a column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.)</td>
@@ -7954,7 +8234,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 
 <aside class="notice">See the <a href="#cell-reference">Cell Reference</a> section for information on getting and setting cell values for the different column types.</aside>
 <h4 id='symbol-columns'>Symbol Columns</h4>
-<p>In addition to the basic column types above, the Smartsheet app also supports columns that display symbols. These are simply specialized columns of type <strong>CHECKBOX</strong> or <strong>PICKLIST</strong>,
+<p>In addition to the basic column types above, the Smartsheet app also supports columns that display symbols. These are specialized columns of type <strong>CHECKBOX</strong> or <strong>PICKLIST</strong>,
 whose <strong>symbol</strong> attribute is set to one of the values below:</p>
 
 <p><strong>Symbols for CHECKBOX columns:</strong></p>
@@ -14126,7 +14406,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 <p>Example request: get report</p>
 </blockquote>
 
-<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/reports/<span class="o">{</span>reportId<span class="o">}</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/reports/<span class="o">{</span>reportId<span class="o">}</span>?level<span class="o">=</span>3&amp;include<span class="o">=</span>objectValue <span class="se">\</span>
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set options</span>
 <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
@@ -14213,6 +14493,15 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Status"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TEXT_NUMBER"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"validation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"virtualId"</span><span class="p">:</span><span class="w"> </span><span class="mi">999245123327876</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dropdown Multi Select"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MULTI_PICKLIST"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"validation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"rows"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -14269,7 +14558,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 <tr>
 <td></td>
-<td><strong>level</strong> (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default) or as multi-contact data (<strong>level=1</strong>).</td>
+<td><strong>level</strong> (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default), multi-contact data (<strong>level=1</strong>), or multi-picklist data (<strong>level=3</strong>).</td>
 </tr>
 <tr>
 <td></td>
@@ -15787,6 +16076,10 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 <tr>
 <td></td>
 <td><strong>exclude</strong> (optional) -- a comma-separated list of elements to <i>not include</i> in the response.<br/><ul><li><strong>include=format&amp;exclude=nonexistentCells</strong>: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li><strong>linkInFromCellDetails</strong>: excludes the following attributes from the <strong>cell.linkInFromCell</strong> object:<ul><li><strong>columnId</strong></li><li><strong>rowId</strong></li><li><strong>status</strong></li></ul></li><li><strong>linksOutToCellsDetails</strong>: excludes the following attributes from the <strong>cell.linksOutToCells</strong> array elements:<ul><li><strong>columnId</strong></li><li><strong>rowId</strong></li><li><strong>status</strong></li></ul></li><li><strong>nonexistentCells</strong>: excludes cells that have never contained any data</li></ul></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>level</strong> (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default), multi-contact data (<strong>level=1</strong>), or multi-picklist data (<strong>level=2</strong>).</td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -19985,7 +20278,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <tr>
 <td><strong>operator</strong></td>
 <td>string</td>
-<td>One of the following values:<ul><li><strong>BETWEEN</strong></li><li><strong>CONTAINS</strong></li><li><strong>EQUAL</strong> or <strong>NOT_EQUAL</strong></li><li><strong>FUTURE</strong></li><li><strong>GREATER_THAN</strong> or <strong>LESS_THAN</strong></li><li><strong>IS_BLANK</strong> or <strong>IS_NOT_BLANK</strong></li><li><strong>IS_CHECKED</strong> or <strong>IS_NOT_CHECKED</strong></li><li><strong>IS_DATE</strong> or <strong>IS_NOT_DATE</strong></li><li><strong>IS_NUMBER</strong> or <strong>IS_NOT_NUMBER</strong></li><li><strong>LAST_N_DAYS</strong> or <strong>NEXT_N_DAYS</strong></li><li><strong>PAST</strong></li><li><strong>TODAY</strong></li></ul></td>
+<td>One of the following values:<ul><li><strong>BETWEEN</strong></li><li><strong>CONTAINS</strong></li><li><strong>EQUAL</strong> or <strong>NOT_EQUAL</strong></li><li><strong>FUTURE</strong></li><li><strong>GREATER_THAN</strong> or <strong>LESS_THAN</strong></li><li><strong>HAS_ANY_OF</strong> or <strong>HAS_NONE_OF</strong> or <strong>HAS_ALL_OF</strong></li><li><strong>IS_BLANK</strong> or <strong>IS_NOT_BLANK</strong></li><li><strong>IS_CHECKED</strong> or <strong>IS_NOT_CHECKED</strong></li><li><strong>IS_DATE</strong> or <strong>IS_NOT_DATE</strong></li><li><strong>IS_NUMBER</strong> or <strong>IS_NOT_NUMBER</strong></li><li><strong>LAST_N_DAYS</strong> or <strong>NEXT_N_DAYS</strong></li><li><strong>MULTI_IS_EQUAL</strong> or <strong>MULTI_IS_NOT_EQUAL</strong></li><li><strong>NOT_ALL_OF</strong></li><li><strong>PAST</strong></li><li><strong>TODAY</strong></li></ul></td>
 </tr>
 <tr>
 <td><strong>query</strong></td>
@@ -20314,7 +20607,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <tr>
 <td><strong>type</strong></td>
 <td>string</td>
-<td>One of:<ul><li><strong>ABSTRACT_DATETIME</strong></li><li><strong>CHECKBOX</strong></li><li><strong>CONTACT_LIST</strong></li><li><strong>DATE</strong></li><li><strong>DATETIME</strong></li><li><strong>DURATION</strong></li><li><strong>PICKLIST</strong></li><li><strong>PREDECESSOR</strong></li><li><strong>TEXT_NUMBER</strong></li></ul>See <a href="#column-types">Column Types</a>.</td>
+<td>One of:<ul><li><strong>ABSTRACT_DATETIME</strong></li><li><strong>CHECKBOX</strong></li><li><strong>CONTACT_LIST</strong></li><li><strong>DATE</strong></li><li><strong>DATETIME</strong></li><li><strong>DURATION</strong></li><li><strong>MULTI_CONTACT_LIST</strong></li><li><strong>MULTI_PICKLIST</strong></li><li><strong>PICKLIST</strong></li><li><strong>PREDECESSOR</strong></li><li><strong>TEXT_NUMBER</strong></li></ul>See <a href="#column-types">Column Types</a>.</td>
 </tr>
 <tr>
 <td><strong>validation</strong></td>
@@ -21585,7 +21878,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <p>Example request: get sheet</p>
 </blockquote>
 
-<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets/<span class="o">{</span>sheetId<span class="o">}</span>?level<span class="o">=</span>2&amp;include<span class="o">=</span>objectValue <span class="se">\</span>
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set options</span>
 <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
@@ -21688,17 +21981,21 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
       </span><span class="s2">"validation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2331373580117892</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">603843458295684</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Dropdown Multi Select"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MULTI_PICKLIST"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"new"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"in progress"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"completed"</span><span class="w">
+        </span><span class="s2">"Template"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Blog"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Newsletter"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Email"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Press Release"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Advertisement"</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"status"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PICKLIST"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"validation"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+      </span><span class="s2">"validation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"rows"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
@@ -21741,7 +22038,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td></td>
-<td><strong>level</strong> (optional): specifies whether multi-contact data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default) or as multi-contact data (<strong>level=1</strong>).</td>
+<td><strong>level</strong> (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default), multi-contact data (<strong>level=1</strong>), or multi-picklist data (<strong>level=2</strong>).</td>
 </tr>
 <tr>
 <td></td>
@@ -23912,7 +24209,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Metric</td>
-<td><strong>METRIC</strong></td>
+<td><strong>SHEETSUMMARY</strong> or <strong>METRIC</strong></td>
 <td><a href="#celllinkwidgetcontent-object">CellLinkWidgetContent</a></td>
 </tr>
 <tr>
@@ -23927,7 +24224,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Shortcut</td>
-<td><strong>SHORTCUT</strong></td>
+<td><strong>SHORTCUTICON</strong>, <strong>SHORTCUTLIST</strong>, or <strong>SHORTCUT</strong></td>
 <td><a href="#shortcutwidgetcontent-object">ShortcutWidgetContent</a></td>
 </tr>
 <tr>
@@ -24022,6 +24319,11 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td><strong>order</strong></td>
 <td>integer</td>
 <td>The display order for the CellDataItem</td>
+</tr>
+<tr>
+<td><strong>profileField</strong></td>
+<td><a href="#summaryfield-object">SummaryField</a></td>
+<td>SummaryField object</td>
 </tr>
 <tr>
 <td><strong>valueFormat</strong></td>
@@ -24512,7 +24814,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <p>Example request: get Sight</p>
 </blockquote>
 
-<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sights/<span class="o">{</span>sightId<span class="o">}</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sights/<span class="o">{</span>sightId<span class="o">}</span>?level<span class="o">=</span>4 <span class="se">\</span>
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set options</span>
 <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
@@ -24565,28 +24867,43 @@ only has read-only access to the sheet (for example, the user has viewer permiss
       </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">48092647672583496</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SHORTCUT"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9996257304487812</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"METRIC"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"contents"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"shortcutData"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"METRIC"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"cellData"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
           </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sight Data"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"labelFormat"</span><span class="p">:</span><span class="w"> </span><span class="s2">",2,,,,,1,,1,,,,,,,"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"hyperlink"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.smartsheet.com/b/home?lx=m1O5qo7tpM1h23KFxYavIw"</span><span class="p">,</span><span class="w">
-              </span><span class="s2">"sheetId"</span><span class="p">:</span><span class="w"> </span><span class="mi">692061146243972</span><span class="w">
+            </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test summary here"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"labelFormat"</span><span class="p">:</span><span class="w"> </span><span class="s2">",2,,,,,,,1,,,,,,,1,"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"valueFormat"</span><span class="p">:</span><span class="w"> </span><span class="s2">",2,1,,,,1,,1,3,,,,,,1,"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"profileField"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9992738687018884</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test summary here"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TEXT_NUMBER"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"lockedForUser"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"objectValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"summary content"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"displayValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"summary content"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-10-31T22:01:19Z"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-10-31T22:01:19Z"</span><span class="w">
             </span><span class="p">},</span><span class="w">
-            </span><span class="s2">"attachmentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SMARTSHEET"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+            </span><span class="s2">"dataSource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUMMARY_FIELD"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"objectValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"summary content"</span><span class="w">
           </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"sheetId"</span><span class="p">:</span><span class="w"> </span><span class="mi">663216503187332</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"viewMode"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
       </span><span class="p">},</span><span class="w">
-      </span><span class="s2">"xPosition"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"xPosition"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"yPosition"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"showTitleIcon"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"titleFormat"</span><span class="p">:</span><span class="w"> </span><span class="s2">",,1,,,,,,,3,,,,,,"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test sheet for charts"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"showTitleIcon"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"showTitle"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"titleFormat"</span><span class="p">:</span><span class="w"> </span><span class="s2">",,1,,,,,,,3,,,,,,1,"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
@@ -24613,7 +24930,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td></td>
-<td><strong>level</strong> (optional): allows you to specify whether you want to see data as text format for backwards compatibility or you want to see multi-contact data. Use <strong>level=0</strong> or <strong>level=1</strong> (default) for text or <strong>level=2</strong> for multi-contact.</td>
+<td><strong>level</strong> (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (<strong>level=0</strong>, default), multi-contact data (<strong>level=2</strong>), multi-picklist data (<strong>level=3</strong>), or Metric widget with sheet summary (<strong>level=4</strong>).</td>
 </tr>
 <tr>
 <td></td>
@@ -30058,6 +30375,11 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td>400</td>
 <td>1167</td>
 <td>The resource you are attempting to access has expired.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1170</td>
+<td>The sheet referenced by this widget is unavailable or deleted.</td>
 </tr>
 <tr>
 <td>403</td>
