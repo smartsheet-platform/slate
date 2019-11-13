@@ -1616,7 +1616,11 @@ curl 'https://api.smartsheet.com/2.0/users/{userId}/profileimage' \
 ```
 
 ```csharp
-// Not yet implemented
+User myUser = smartsheet.UserResources.AddProfileImage(
+  3173821341106052,                // long userId
+  "../path/to/mrgoodlookin.jpg",   // string file
+  "image/jpeg"                     // string fileType
+);
 ```
 
 ```java
