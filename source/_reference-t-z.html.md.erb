@@ -716,7 +716,12 @@ smartsheet.users.addAlternateEmail(options)
 ```
 
 ```csharp
-// [todo]
+AlternateEmail altEmail1 = new AlternateEmail.AlternateEmailBuilder("jack@email.com").Build();
+AlternateEmail altEmail2 = new AlternateEmail.AlternateEmailBuilder("jack@anotherEmail.com").Build();
+List<AlternateEmail> alternateEmails = smartsheet.UserResources.AddAlternateEmail(
+  4495214342629252,                              // long userId
+  new AlternateEmail[] { altEmail1, altEmail2 }  // Array of AlternateEmail
+);
 ```
 
 ```java
