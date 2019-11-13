@@ -4394,7 +4394,10 @@ smartsheet.sights.deleteShare(options)
 ```
 
 ```csharp
-// [todo]
+smartsheet.SightResources.ShareResources.DeleteShare(
+  6327127650920324,     // long sightId
+  "AAABbMomFOeE"        // string shareId
+);
 ```
 
 ```java
@@ -4524,7 +4527,11 @@ smartsheet.sights.listShares(options)
 ```
 
 ```csharp
-// [todo]
+PaginatedResult<Share> shares = smartsheet.SightResources.ShareResources.ListShares(
+  6327127650920324,       // long sightId
+  null,                   // Pagination parameters
+  ShareScope.Item         // ShareScope shareScope
+);
 ```
 
 ```java
@@ -4609,7 +4616,15 @@ smartsheet.sights.share(options)
 ```
 
 ```csharp
-// [todo]
+Share share = new Share.CreateShareBuilder(
+  "jane.doe@smartsheet.com",
+  AccessLevel.EDITOR
+).Build();
+List<Share> sightShares = smartsheet.SightResources.ShareResources.ShareTo(
+  6327127650920324,             // long sightId
+  new Share[] { share },        // IEnumerable<Share> shares
+  true                          // bool sendEmail
+);
 ```
 
 ```java
@@ -4706,7 +4721,13 @@ smartsheet.sights.updateShare(options)
 ```
 
 ```csharp
-// [todo]
+Share updatedShare = smartsheet.SightResources.ShareResources.UpdateShare(
+  6327127650920324,              // long sightId
+  new Share.UpdateShareBuilder(  // Share share
+    "AAALRqomFOeE",              // string shareId
+    AccessLevel.VIEWER           // AccessLevel accessLevel
+  ).Build()
+);
 ```
 
 ```java
@@ -8975,7 +8996,9 @@ smartsheet.sights.getSightPublishStatus(options)
 ```
 
 ```csharp
-// [todo]
+SightPublish publish = smartsheet.SightResources.GetPublishStatus(
+  970160971507588             // long sightId
+);
 ```
 
 ```java
@@ -9148,7 +9171,12 @@ smartsheet.sights.updateSight(options)
 ```
 
 ```csharp
-// [todo]
+Sight sight = smartsheet.SightResources.UpdateSight(
+  new Sight {
+    Id = 5363568917931908,                       
+    Name = "New Sight Name"
+  }
+);
 ```
 
 ```java
