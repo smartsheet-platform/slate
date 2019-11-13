@@ -1670,7 +1670,10 @@ smartsheet.sheets.deleteAutomationRule(options)
 ```
 	
 ```csharp
-// Not yet implemented
+AutomationRule automationRule = smartsheet.SheetResources.AutomationRuleResources.DeleteAutomationRule(
+  9283173393803140,               // long sheetId
+  789004550205316                // long automationRuleId
+);
 ```
 
 ```java
@@ -1734,7 +1737,10 @@ smartsheet.sheets.getAutomationRule(options)
 ```
 	
 ```csharp
-// Not yet implemented
+AutomationRule automationRule = smartsheet.SheetResources.GetAutomationRule(
+  9283173393803140,              // long sheetId
+  789994550205316                // long automationRuleId
+);
 ```
 
 ```java
@@ -1820,7 +1826,11 @@ smartsheet.sheets.listAutomationRules(options)
 ```
 	
 ```csharp
-// Not yet implemented
+// List automation rules
+PaginatedResult<AutomationRule> AutomationRules = smartsheet.SheetResources.AutomationRuleResources.ListAutomationRules(
+  9283173393803140,      // long sheetId
+  null                  // PaginationParameters
+);
 ```
 
 ```java
@@ -1975,7 +1985,29 @@ smartsheet.sheets.updateAutomationRule(options)
 ```
 	
 ```csharp
-// Not yet implemented
+// Set recipient
+Recipient recipient = new Recipient
+{
+  Email = "jane.roe@smartsheet.com"
+};
+
+// Specify the changes
+AutomationRule autoRule = new AutomationRule
+{
+  Id = 789994550205316,
+  Action = new AutomationAction
+  {
+    Recipients = new[] { recipient },
+    Type = AutomationActionType.NOTIFICATION_ACTION,
+    Frequency = AutomationActionFrequency.WEEKLY
+  }
+};
+
+// Update the automation rule
+AutomationRule automationRule = smartsheet.SheetResources.UpdateAutomationRule(
+  4583173393803140,  // long sheetId
+  autoRule
+);
 ```
 
 ```java
