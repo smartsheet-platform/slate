@@ -7978,7 +7978,17 @@ smartsheet.sheets.sortRowsInSheet({sheetId: 9283173393803140, body: body})
 ```
 
 ```csharp
-// Not yet implemented
+Sheet sheet; // The sheet to sort.
+SortCriterion criterion = new SortCriterion
+{
+  ColumnId = sheet.Columns[1].Id.Value,
+  Direction = SortDirection.DESCENDING
+};
+SortSpecifier specifier = new SortSpecifier
+{
+  SortCriteria = new SortCriterion[] {criterion}
+};
+sheet = smartsheet.SheetResources.SortSheet(sheet.Id.Value, specifier);
 ```
 
 ```java
