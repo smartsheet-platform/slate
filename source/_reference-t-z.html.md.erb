@@ -2242,7 +2242,7 @@ smartsheet.workspaces.updateWorkspace(options)
 // Specify updated workspace name
 Workspace workspaceSpecification = new Workspace
 {
-  Id = 7960873114331012,
+  Id = 7960873114331012,      // workspaceId
   Name = "Updated Workspace"
 };
 
@@ -2256,7 +2256,7 @@ Workspace updatedWorkspace = smartsheet.WorkspaceResources.UpdateWorkspace(
 // Specify updated workspace properties
 Workspace workspaceSpecification = new Workspace();
 workspaceSpecification.setName("Updated workspace")
-  .setId(7960873114331012L);
+  .setId(7960873114331012L);    // long workspaceId
 
 // Update workspace
 Workspace updatedWorkspace = smartsheet.workspaceResources().updateWorkspace(workspaceSpecification);
