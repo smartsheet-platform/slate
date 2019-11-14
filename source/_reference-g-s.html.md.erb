@@ -8601,7 +8601,7 @@ smartsheet.sights.deleteSight(options)
 
 ```csharp
 smartsheet.SightResources.DeleteSight(
-  5077532685952900            // sheetId
+  5077532685952900            // sightId
 );
 ```
 
@@ -9002,7 +9002,7 @@ smartsheet.sights.getSightPublishStatus(options)
 
 ```csharp
 SightPublish publish = smartsheet.SightResources.GetPublishStatus(
-  970160971507588             // long sightId
+  970160971507588             // sightId
 );
 ```
 
@@ -9079,7 +9079,9 @@ smartsheet.sights.setSightPublishStatus(options)
 ```
 
 ```csharp
-// [todo]
+SightPublish publish = smartsheet.SightResources.SetPublishStatus(
+  970160971507588             // sightId
+);
 ```
 
 ```java
