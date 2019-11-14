@@ -1670,7 +1670,10 @@ smartsheet.sheets.deleteAutomationRule(options)
 ```
 	
 ```csharp
-// Not yet implemented
+AutomationRule automationRule = smartsheet.SheetResources.AutomationRuleResources.DeleteAutomationRule(
+  9283173393803140,               // long sheetId
+  789004550205316                // long automationRuleId
+);
 ```
 
 ```java
@@ -1734,7 +1737,10 @@ smartsheet.sheets.getAutomationRule(options)
 ```
 	
 ```csharp
-// Not yet implemented
+AutomationRule automationRule = smartsheet.SheetResources.GetAutomationRule(
+  9283173393803140,              // long sheetId
+  789994550205316                // long automationRuleId
+);
 ```
 
 ```java
@@ -1820,7 +1826,10 @@ smartsheet.sheets.listAutomationRules(options)
 ```
 	
 ```csharp
-// Not yet implemented
+PaginatedResult<AutomationRule> AutomationRules = smartsheet.SheetResources.AutomationRuleResources.ListAutomationRules(
+  9283173393803140,  // long sheetId
+  null               // PaginationParameters
+);
 ```
 
 ```java
@@ -1975,7 +1984,29 @@ smartsheet.sheets.updateAutomationRule(options)
 ```
 	
 ```csharp
-// Not yet implemented
+// Set recipient
+Recipient recipient = new Recipient
+{
+  Email = "jane.roe@smartsheet.com"
+};
+
+// Specify the changes
+AutomationRule autoRule = new AutomationRule
+{
+  Id = 789994550205316,
+  Action = new AutomationAction
+  {
+    Recipients = new[] { recipient },
+    Type = AutomationActionType.NOTIFICATION_ACTION,
+    Frequency = AutomationActionFrequency.WEEKLY
+  }
+};
+
+// Update the automation rule
+AutomationRule automationRule = smartsheet.SheetResources.UpdateAutomationRule(
+  4583173393803140,  // long sheetId
+  autoRule
+);
 ```
 
 ```java
@@ -3217,10 +3248,10 @@ smartsheet.sheets.addColumn(options)
 // Create a column
 Column columnA = new Column
 {
-  Title = "New Picklist Column 1",
-  Index = 4,
-  Type = ColumnType.PICKLIST,
-  Options = new string[] { "First", "Second", "Third" }
+  Title = "This is a new multi-picklist column",
+  Index = 0,
+  Type = ColumnType.MULTI_PICKLIST,
+  Options = new string[] { "Cat", "Rat", "Bat" }
 };
 
 // Create another column
@@ -3232,8 +3263,8 @@ Column columnB = new Column
 };
 
 // Add columns to the sheet
-IList<Column> newColumns = smartsheet.SheetResources.ColumnResources.AddColumns(
-  2252168947361668, // long sheetId
+IList<Column> addedColumns = smartsheet.SheetResources.ColumnResources.AddColumns(
+  2252168947361668,   // sheet Id
   new Column[] { columnA, columnB }
 );
 ```
@@ -3554,7 +3585,8 @@ smartsheet.sheets.getColumns(options)
 PaginatedResult<Column> columns = smartsheet.SheetResources.ColumnResources.ListColumns(
   9283173393803140,               // long sheetId
   null,                           // IEnumerable<ColumnInclusion> include
-  null                            // PaginationParameters
+  null,                           // PaginationParameters
+  2                               // int compatibilityLevel
 );
 ```
 
@@ -3778,7 +3810,7 @@ Updates properties of the column, moves the column, and/or renames the column.
 
 > Example column types
 
-```shell
+```json
 {
 	"columns": [{
     "id": 9999137079650180,
@@ -6158,7 +6190,10 @@ smartsheet.favorites.removeSightFromFavorites(options)
 ```
 
 ```csharp
-// [todo]
+smartsheet.FavoriteResources.RemoveFavorites(
+  ObjectType.SIGHT,
+  new long[] { 6327127650920324 }   // long sightId
+);
 ```
 
 ```java
@@ -6549,7 +6584,10 @@ smartsheet.favorites.removeSightsFromFavorites(options)
 ```
 
 ```csharp
-// [todo]
+smartsheet.FavoriteResources.RemoveFavorites(
+  ObjectType.SIGHT,
+  new long[] { 970160371507588, 6327427650920324 }    // sightIds
+);
 ```
 
 ```java

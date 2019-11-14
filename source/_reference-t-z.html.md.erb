@@ -209,7 +209,9 @@ smartsheet.tokens.getAccessToken(options)
 ```
 
 ```csharp
-// [todo]
+Token token = oauth.ObtainNewToken(
+  authResult      // AuthorizationResult authResult
+);
 ```
 
 ```java
@@ -297,7 +299,9 @@ smartsheet.tokens.refreshAccessToken(options)
 ```
 
 ```csharp
-// [todo]
+Token tokenRefreshed = oauth.RefreshToken(
+  token           // Token token
+);
 ```
 
 ```java
@@ -716,7 +720,13 @@ smartsheet.users.addAlternateEmail(options)
 ```
 
 ```csharp
-// [todo]
+List<AlternateEmail> alternateEmails = smartsheet.UserResources.AddAlternateEmail(
+  4495214342629252,                       // long userId
+  new AlternateEmail[] {                  // Array of AlternateEmail
+    new AlternateEmail { Email = "John.Doe@smartsheet.com" },
+    new AlternateEmail { Email = "John.Doe.Test@smartsheet.com" } 
+  } 
+);
 ```
 
 ```java
@@ -1616,7 +1626,11 @@ curl 'https://api.smartsheet.com/2.0/users/{userId}/profileimage' \
 ```
 
 ```csharp
-// Not yet implemented
+User myUser = smartsheet.UserResources.AddProfileImage(
+  3173821341106052,                // long userId
+  "../path/to/mrgoodlookin.jpg",   // string file
+  "image/jpeg"                     // string fileType
+);
 ```
 
 ```java

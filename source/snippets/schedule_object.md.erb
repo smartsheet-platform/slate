@@ -2,6 +2,19 @@
 
 ### Schedule Object
 
+> Example: Schedule object
+
+```json
+{
+  "type": "MONTHLY",
+  "startAt": "2016-04-01T19:00:00Z",
+  "endAt": "2016-12-31T07:00:00Z",
+  "dayOfMonth": 1,
+  "repeatEvery": 1,
+  "nextSendAt": "2016-05-01T19:00:00Z"
+}
+```
+
      |     |     |
 -----|-----|-----|
 **type** | string | Schedule type. It must be one of the following values: **ONCE**, **DAILY**, **WEEKLY**, **MONTHLY**, or **YEARLY**
