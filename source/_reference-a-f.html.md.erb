@@ -164,8 +164,8 @@ smartsheet.sheets.addCommentFileAttachment(options)
 
 ```csharp
 Attachment attachment = smartsheet.SheetResources.CommentResources.AttachmentResources.AttachFile(
-  9283173393803140,           // long sheetId
-  1234567890234568,           // long commentId
+  9283173393803140,           // sheetId
+  1234567890234568,           // commentId
   filePath,
   "application/msword"
 );
@@ -269,8 +269,8 @@ smartsheet.sheets.addRowFileAttachment(options)
 	
 ```csharp
 Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-  9283173393803140,           // long sheetId
-  0123456789012345,           // long rowId
+  9283173393803140,           // sheetId
+  0123456789012345,           // rowId
   filePath,
   "application/msword"
 );
@@ -373,7 +373,7 @@ smartsheet.sheets.addFileAttachment(options)
 
 ```csharp
 Attachment attachment = smartsheet.SheetResources.AttachmentResources.AttachFile(
-  9283173393803140,           // long sheetId
+  9283173393803140,           // sheetId
   filePath,
   "application/msword"
 );
@@ -482,8 +482,8 @@ Attachment attachmentSpecification = new Attachment
 
 // Attach URL to comment
 Attachment updatedAttachment = smartsheet.SheetResources.CommentResources.AttachmentResources.AttachUrl(
-  9283173393803140,           // long sheetId
-  0123456789012345,           // long commentId
+  9283173393803140,           // sheetId
+  0123456789012345,           // commentId
   attachmentSpecification
 );
 ```
@@ -594,8 +594,8 @@ Attachment attachmentSpecification = new Attachment
 
 // Attach URL to row
 Attachment updatedAttachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachUrl(
-  9283173393803140,           // long sheetId
-  0123456789012345,           // long rowId
+  9283173393803140,           // sheetId
+  0123456789012345,           // rowId
   attachmentSpecification
 );
 ```
@@ -709,7 +709,7 @@ Attachment attachmentSpecification = new Attachment
 
 // Attach URL to sheet
 Attachment updatedAttachment = smartsheet.SheetResources.AttachmentResources.AttachUrl(
-  9283173393803140,           // long sheetId
+  9283173393803140,           // sheetId
   attachmentSpecification
 );
 ```
@@ -800,8 +800,8 @@ smartsheet.sheets.deleteAttachment(options)
 
 ```csharp
 smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
-  9283173393803140,           // long sheetId
-  7169782752536452            // long attachmentId
+  9283173393803140,           // sheetId
+  7169782752536452            // attachmentId
 );
 ```
 
@@ -874,8 +874,8 @@ smartsheet.sheets.getAttachment(options)
 
 ```csharp
 Attachment attachment = smartsheet.SheetResources.AttachmentResources.GetAttachment(
-  9283173393803140,               // long sheetId
-  4583173393803140                // long attachmentId
+  9283173393803140,               // sheetId
+  4583173393803140                // attachmentId
 );
 ```
 
@@ -950,7 +950,7 @@ smartsheet.sheets.listAttachments(options)
 ```csharp
 // Omit pagination parameters
 PaginatedResult<Attachment> attachments = smartsheet.SheetResources.AttachmentResources.ListAttachments(
-  9283173393803140,           // long sheetId
+  9283173393803140,           // sheetId
   null                        // PaginationParameters
 );
 ```
@@ -1055,8 +1055,8 @@ smartsheet.sheets.listDiscussionAttachments(options)
 ```csharp
 // Omit pagination parameters
 PaginatedResult<Attachment> attachments = smartsheet.SheetResources.DiscussionResources.AttachmentResources.ListAttachments(
-  9283173393803140,               // long sheetId
-  1234567890123456,               // long discussionId
+  9283173393803140,               // sheetId
+  1234567890123456,               // discussionId
   null                            // PaginationParameters
 );
 ```
@@ -1165,8 +1165,8 @@ smartsheet.sheets.getRowAttachments(options)
 ```csharp
 // Omit pagination parameters
 PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(
-  2252168947361668,               // long sheetId
-  4293147074291588,               // long rowId
+  2252168947361668,               // sheetId
+  4293147074291588,               // rowId
   null                            // PaginationParameters
 );
 ```
@@ -1287,8 +1287,8 @@ smartsheet.sheets.attachNewVersion(options)
 
 ```csharp
 Attachment attachment = smartsheet.SheetResources.AttachmentResources.VersioningResources.AttachNewVersion(
-  9283173393803140,               // long sheetId
-  0123456789123456,               // long attachmentId
+  9283173393803140,               // sheetId
+  0123456789123456,               // attachmentId
   filePath,
   "application/msword"
 );
@@ -1397,8 +1397,8 @@ smartsheet.sheets.deleteAllAttachmentVersions(options)
 
 ```csharp
 smartsheet.SheetResources.AttachmentResources.VersioningResources.DeleteAllVersions(
-  9283173393803140,               // long sheetId
-  0123456789123456                // long attachmentId
+  9283173393803140,               // sheetId
+  0123456789123456                // attachmentId
 );
 ```
 
@@ -1471,8 +1471,8 @@ smartsheet.sheets.listAttachmentVersions(options)
 ```csharp
 // Omit pagination parameters
 PaginatedResult<Attachment> attachments = smartsheet.SheetResources.AttachmentResources.VersioningResources.ListVersions(
-  2252168947361668,               // long sheetId
-  5510069950408580,               // long attachmentId
+  2252168947361668,               // sheetId
+  5510069950408580,               // attachmentId
   null                            // PaginationParameters
 );
 ```
@@ -1671,8 +1671,8 @@ smartsheet.sheets.deleteAutomationRule(options)
 	
 ```csharp
 AutomationRule automationRule = smartsheet.SheetResources.AutomationRuleResources.DeleteAutomationRule(
-  9283173393803140,               // long sheetId
-  789004550205316                // long automationRuleId
+  9283173393803140,               // sheetId
+  789004550205316                 // automationRuleId
 );
 ```
 
@@ -1738,8 +1738,8 @@ smartsheet.sheets.getAutomationRule(options)
 	
 ```csharp
 AutomationRule automationRule = smartsheet.SheetResources.GetAutomationRule(
-  9283173393803140,              // long sheetId
-  789994550205316                // long automationRuleId
+  9283173393803140,              // sheetId
+  789994550205316                // automationRuleId
 );
 ```
 
@@ -1827,7 +1827,7 @@ smartsheet.sheets.listAutomationRules(options)
 	
 ```csharp
 PaginatedResult<AutomationRule> AutomationRules = smartsheet.SheetResources.AutomationRuleResources.ListAutomationRules(
-  9283173393803140,  // long sheetId
+  9283173393803140,  // sheetId
   null               // PaginationParameters
 );
 ```
@@ -2004,7 +2004,7 @@ AutomationRule autoRule = new AutomationRule
 
 // Update the automation rule
 AutomationRule automationRule = smartsheet.SheetResources.UpdateAutomationRule(
-  4583173393803140,  // long sheetId
+  4583173393803140,  // sheetId
   autoRule
 );
 ```
@@ -2326,18 +2326,18 @@ smartsheet.sheets.getCellHistory(options)
 ```csharp
 // Sample 1: Omit 'include' parameter and pagination parameters
 PaginatedResult<CellHistory> results = smartsheet.SheetResources.RowResources.CellResources.GetCellHistory(
-  9283173393803140,               // long sheetId
-  0123456789012345,               // long rowId
-  4567890123456789,               // long columnId
+  9283173393803140,               // sheetId
+  0123456789012345,               // rowId
+  4567890123456789,               // columnId
   null,                           // IEnumerable<CellInclusion> includes
   null                            // PaginationParameters
 );
 
 // Sample 2: Specify 'include' parameter with value of "COLUMN_TYPE" and 'includeAll' parameter with value of 'true'
 PaginatedResult<CellHistory> results = smartsheet.SheetResources.RowResources.CellResources.GetCellHistory(
-  9283173393803140,               // long sheetId
-  0123456789012345,               // long rowId
-  4567890123456789,               // long columnId
+  9283173393803140,               // sheetId
+  0123456789012345,               // rowId
+  4567890123456789,               // columnId
   new CellInclusion[] { CellInclusion.COLUMN_TYPE },
   new PaginationParameters(
     true,                       // Boolean includeAll
@@ -2879,9 +2879,9 @@ smartsheet.images.listImageUrls({
 ```
 
 ```csharp
-long sheetId = 1639534409607044;
-long rowId = 3344087179913092;
-long columnId = 1735559124150148;
+sheetId = 1639534409607044;
+rowId = 3344087179913092;
+columnId = 1735559124150148;
 
 //  Step 1: Identify the cell that contains an image
 Row row = smartsheet.SheetResources.RowResources.GetRow(
@@ -3416,8 +3416,8 @@ smartsheet.sheets.deleteColumn(options)
 
 ```csharp
 smartsheet.SheetResources.ColumnResources.DeleteColumn(
-  9283173393803140,               // long sheetId
-  0123456789012345                // long columnId
+  9283173393803140,               // sheetId
+  0123456789012345                // columnId
 );
 ```
 
@@ -3489,15 +3489,15 @@ smartsheet.sheets.getColumns(options)
 ```csharp
 // Sample 1: Omit 'include' parameter
 Column column = smartsheet.SheetResources.ColumnResources.GetColumn(
-  9283173393803140,               // long sheetId
-  7960873114331012,               // long columnId
+  9283173393803140,               // sheetId
+  7960873114331012,               // columnId
   null                            // IEnumerable<ColumnInclusion> includes
 );
 
 // Sample 2: Specify 'include' parameter with value of "FILTERS"
 Column column = smartsheet.SheetResources.ColumnResources.GetColumn(
-  9283173393803140,               // long sheetId
-  7960873114331012,               // long columnId
+  9283173393803140,               // sheetId
+  7960873114331012,               // columnId
   new ColumnInclusion[] { ColumnInclusion.FILTERS }
 );
 ```
@@ -3583,7 +3583,7 @@ smartsheet.sheets.getColumns(options)
 ```csharp
 // Omit 'include' parameter and pagination parameters
 PaginatedResult<Column> columns = smartsheet.SheetResources.ColumnResources.ListColumns(
-  9283173393803140,               // long sheetId
+  9283173393803140,               // sheetId
   null,                           // IEnumerable<ColumnInclusion> include
   null,                           // PaginationParameters
   2                               // int compatibilityLevel
@@ -4076,8 +4076,8 @@ Comment commentSpecification = new Comment
 
 // Add comment to discussion
 Comment newComment = smartsheet.SheetResources.DiscussionResources.CommentResources.AddComment(
-  2252168947361668,               // long sheetId
-  3962273862576004,               // long discussionId
+  2252168947361668,               // sheetId
+  3962273862576004,               // discussionId
   commentSpecification
 );
 ```
@@ -4142,8 +4142,8 @@ Comment commentSpecification = new Comment
 
 // Add comment (with attachment) to discussion
 Comment newComment = smartsheet.SheetResources.DiscussionResources.CommentResources.AddCommentWithAttachment(
-  2252168947361668,                   // long sheetId
-  3962273862576004,                   // long discussionId
+  2252168947361668,                   // sheetId
+  3962273862576004,                   // discussionId
   commentSpecification,
   filePath,
   "application/octet-stream"
@@ -4269,7 +4269,7 @@ Comment commentSpecification = new Comment
 
 // Edit comment
 Comment updatedComment = smartsheet.SheetResources.DiscussionResources.CommentResources.UpdateComment(
-  3285357287499652,          // long sheetId
+  3285357287499652,          // sheetId
   commentSpecification
 );
 ```
@@ -4362,8 +4362,8 @@ smartsheet.sheets.deleteComment(options)
 
 ```csharp
 smartsheet.SheetResources.CommentResources.DeleteComment(
-  2252168947361668,           // long sheetId
-  4952999001909124            // long commentId
+  2252168947361668,           // sheetId
+  4952999001909124            // commentId
 );
 ```
 
@@ -4435,8 +4435,8 @@ smartsheet.sheets.getComment(options)
 
 ```csharp
 Comment comment = smartsheet.SheetResources.CommentResources.GetComment(
-  2252168947361668,               // long sheetId
-  48569348493401200               // long commentId
+  2252168947361668,               // sheetId
+  48569348493401200               // commentId
 );
 ```
 
@@ -5059,8 +5059,8 @@ Discussion discussionSpecification = new Discussion
 
 // Add discussion to row
 Discussion newDiscussion = smartsheet.SheetResources.RowResources.DiscussionResources.CreateDiscussion(
-  9283173393803140,               // long sheetId
-  0123456789012345,               // long rowId
+  9283173393803140,               // sheetId
+  0123456789012345,               // rowId
   discussionSpecification
 );
 ```
@@ -5077,8 +5077,8 @@ Discussion discussionSpecification = new Discussion()
 
 // Add discussion to row
 Discussion newDiscussion = smartsheet.sheetResources().rowResources().discussionResources().createDiscussion(
-  9283173393803140L,       // long sheetId
-  0123456789012345L,       // long rowId
+  9283173393803140L,       // sheetId
+  0123456789012345L,       // rowId
   discussionSpecification
 );
 ```
@@ -5140,8 +5140,8 @@ Discussion discussionSpecification = new Discussion
 
 // Add discussion to row
 Discussion newDiscussion = smartsheet.SheetResources.RowResources.DiscussionResources.CreateDiscussionWithAttachment(
-  9283173393803140,                   // long sheetId
-  0123456789012345,                   // long rowId
+  9283173393803140,                   // sheetId
+  0123456789012345,                   // rowId
   discussionSpecification,
   filePath,
   "application/octet-stream"
@@ -5255,7 +5255,7 @@ Discussion discussionSpecification = new Discussion
 
 // Add discussion to sheet
 Discussion newDiscussion = smartsheet.SheetResources.DiscussionResources.CreateDiscussion(
-  9283173393803140,                   // long sheetId
+  9283173393803140,                   // sheetId
   discussionSpecification
 );
 ```
@@ -5332,7 +5332,7 @@ Discussion discussionSpecification = new Discussion
 
 // Add discussion (including comment with attachment) to sheet
 Discussion newDiscussion = smartsheet.SheetResources.DiscussionResources.CreateDiscussionWithAttachment(
-  9283173393803140,                   // long sheetId
+  9283173393803140,                   // sheetId
   discussionSpecification,
   filePath,
   "application/octet-stream"
@@ -5423,8 +5423,8 @@ smartsheet.sheets.deleteDiscussion(options)
 
 ```csharp
 smartsheet.SheetResources.DiscussionResources.DeleteDiscussion(
-  9283173393803140,               // long sheetId
-  0123456789012345                // long discussionId
+  9283173393803140,               // sheetId
+  0123456789012345                // discussionId
 );
 ```
 
@@ -5495,14 +5495,14 @@ smartsheet.sheets.getDiscussions(options)
 ```csharp
 // Sample 1: Omit 'include' parameter and pagination parameters
 PaginatedResult<Discussion> results = smartsheet.SheetResources.DiscussionResources.ListDiscussions(
-  9283173393803140,               // long sheetId
+  9283173393803140,               // sheetId
   null,                           // IEnumerable<DiscussionInclusion> include
   null                            // PaginationParameters
 );
 
 // Sample 2: Specify 'include' parameter with values of 'COMMENTS' and 'ATTACHMENTS', and 'includeAll' parameter with value of 'true'
 PaginatedResult<Discussion> results = smartsheet.SheetResources.DiscussionResources.ListDiscussions(
-  9283173393803140,               // long sheetId
+  9283173393803140,               // sheetId
   new DiscussionInclusion[] { DiscussionInclusion.COMMENTS, DiscussionInclusion.ATTACHMENTS },
   new PaginationParameters(
     true,                       // includeAll
@@ -5592,8 +5592,8 @@ smartsheet.sheets.getDiscussions(options)
 
 ```csharp
 Discussion discussion = smartsheet.SheetResources.DiscussionResources.GetDiscussion(
-  9283173393803140,               // long sheetId
-  0123456789012345                // long discussionId
+  9283173393803140,               // sheetId
+  0123456789012345                // discussionId
 );
 ```
 
@@ -5678,16 +5678,16 @@ smartsheet.sheets.getRowDiscussions(options)
 ```csharp
 // Sample 1: Omit 'include' parameter and pagination parameters
 PaginatedResult<Discussion> results = smartsheet.SheetResources.RowResources.DiscussionResources.ListDiscussions(
-  2252168947361668,                   // long sheetId
-  4293147074291588,                   // long rowId
+  2252168947361668,                   // sheetId
+  4293147074291588,                   // rowId
   null,                               // IEnumerable<DiscussionInclusion> include
   null                                // PaginationParameters
 );
 
 // Sample 2: Specify 'include' parameter with values of 'COMMENTS' and 'ATTACHMENTS', and 'includeAll' parameter with value of 'true'
 PaginatedResult<Discussion> results = smartsheet.SheetResources.RowResources.DiscussionResources.ListDiscussions(
-  2252168947361668,                   // long sheetId
-  4293147074291588,                   // long rowId
+  2252168947361668,                   // sheetId
+  4293147074291588,                   // rowId
   new DiscussionInclusion[] { DiscussionInclusion.COMMENTS, DiscussionInclusion.ATTACHMENTS },
   new PaginationParameters(
     true,                           // includeAll
@@ -6129,7 +6129,7 @@ smartsheet.favorites.removeSheetFromFavorites(options)
 ```csharp
 smartsheet.FavoriteResources.RemoveFavorites(
   ObjectType.SHEET,
-  new long[] { 2252168947361668 }   // long sheetId
+  new long[] { 2252168947361668 }   // sheetId
 );
 ```
 
