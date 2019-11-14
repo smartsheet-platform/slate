@@ -2178,24 +2178,18 @@ smartsheet.sheets.addRows(options)
 
 ```csharp
 // Specify cell values for first row
-Cell[] cellsA = new Cell[] {
+Cell[] cellsToInsert = new Cell[]
+{
   new Cell
   {
-    ColumnId = 7960873114331012,
-    Value = true
-  },
-  new Cell
-  {
-    ColumnId = 642523719853956,
-    Value = "New status"
+    ColumnId = addedColumns[0].Id,
+    ObjectValue = new MultiPicklistObjectValue(new string[] {"Bat", "Cat"})
   }
 };
-
-// Specify contents of first row
 Row rowA = new Row
 {
   ToTop = true,
-  Cells = cellsA
+  Cells = cellsToInsert
 };
 
 // Specify cell values of second row
@@ -3185,7 +3179,6 @@ Include Flag | Description |
 **objectValue** | Includes **objectValue** attribute on cells containing values. For more information see [Cell Reference](#cell-reference).
 **rowPermalink** | Includes **permalink** attribute that represents a direct link to the [row](#row-object) in the Smartsheet application.
 **rowWriterInfo** | **DEPRECATED** Includes **createdBy** and **modifiedBy** attributes on the row, indicating the row's creator, and last modifier.
-**summary** | Includes [SheetSummary](#sheetsummary-object) object.
 **writerInfo** | Includes **createdBy** and **modifiedBy** attributes on the row or summary fields, indicating the row or summary field's creator, and last modifier.
 
 # Search
@@ -4409,7 +4402,10 @@ smartsheet.sights.deleteShare(options)
 ```
 
 ```csharp
-// [todo]
+smartsheet.SightResources.ShareResources.DeleteShare(
+  6327127650920324,     // long sightId
+  "AAABbMomFOeE"        // string shareId
+);
 ```
 
 ```java
@@ -4539,7 +4535,11 @@ smartsheet.sights.listShares(options)
 ```
 
 ```csharp
-// [todo]
+PaginatedResult<Share> shares = smartsheet.SightResources.ShareResources.ListShares(
+  6327127650920324,       // long sightId
+  null,                   // Pagination parameters
+  ShareScope.Item         // ShareScope shareScope
+);
 ```
 
 ```java
@@ -4641,7 +4641,16 @@ smartsheet.sights.share(options)
 ```
 
 ```csharp
-// [todo]
+Share share = new Share {
+  Type = ShareType.USER,
+  AccessLevel = AccessLevel.EDITOR,
+  Email = "jane.doe@smartsheet.com"
+}
+List<Share> sightShares = smartsheet.SightResources.ShareResources.ShareTo(
+  6327127650920324,             // long sightId
+  new Share[] { share },        // IEnumerable<Share> shares
+  true                          // bool sendEmail
+);
 ```
 
 ```java
@@ -4738,7 +4747,13 @@ smartsheet.sights.updateShare(options)
 ```
 
 ```csharp
-// [todo]
+Share updatedShare = smartsheet.SightResources.ShareResources.UpdateShare(
+  6327127650920324,          // long sightId
+  new Share {                // Share share
+    Id = "AAALRqomFOeE",     // string shareId
+    AccessLevel = AccessLevel.VIEWER  // AccessLevel accessLevel
+  }
+);
 ```
 
 ```java
@@ -7989,7 +8004,17 @@ smartsheet.sheets.sortRowsInSheet({sheetId: 9283173393803140, body: body})
 ```
 
 ```csharp
-// Not yet implemented
+Sheet sheet; // The sheet to sort.
+SortCriterion criterion = new SortCriterion
+{
+  ColumnId = sheet.Columns[1].Id.Value,
+  Direction = SortDirection.DESCENDING
+};
+SortSpecifier specifier = new SortSpecifier
+{
+  SortCriteria = new SortCriterion[] {criterion}
+};
+sheet = smartsheet.SheetResources.SortSheet(sheet.Id.Value, specifier);
 ```
 
 ```java
@@ -9007,7 +9032,9 @@ smartsheet.sights.getSightPublishStatus(options)
 ```
 
 ```csharp
-// [todo]
+SightPublish publish = smartsheet.SightResources.GetPublishStatus(
+  970160971507588             // long sightId
+);
 ```
 
 ```java
@@ -9180,7 +9207,12 @@ smartsheet.sights.updateSight(options)
 ```
 
 ```csharp
-// [todo]
+Sight sight = smartsheet.SightResources.UpdateSight(
+  new Sight {
+    Id = 5363568917931908,                       
+    Name = "New Sight Name"
+  }
+);
 ```
 
 ```java
