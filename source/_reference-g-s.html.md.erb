@@ -4543,7 +4543,24 @@ smartsheet.sights.listShares(options)
 ```
 
 ```java
-// [todo]
+//Sample 1: List all
+smartsheet.sightResources().shareResources().listShares(
+  6327127650920324L,    // long sightId
+  null,    // PaginationParameters
+  true    // includeWorkspaceShares
+);
+
+//Sample 2: Paginate the list
+PaginationParameters paginationParameters = new PaginationParameters(
+  false,  // includeAll
+  100,    // pageSize
+  1   // page
+);
+smartsheet.sightResources().shareResources().listShares(
+  6327127650920324L,    // long sightId
+  paginationParameters,
+  true    // includeWorkspaceShares
+);
 ```
 
 ```python
