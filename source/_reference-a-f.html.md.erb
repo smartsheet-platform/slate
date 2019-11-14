@@ -6030,7 +6030,7 @@ smartsheet.favorites.removeFolderFromFavorites(options)
 ```csharp
 smartsheet.FavoriteResources.RemoveFavorites(
   ObjectType.FOLDER,
-  new long[] { 2252168947361668 }   // long folderId
+  new long[] { 2252168947361668 }   // folderId
 );
 ```
 
@@ -6093,7 +6093,7 @@ smartsheet.favorites.removeReportFromFavorites(options)
 ```csharp
 smartsheet.FavoriteResources.RemoveFavorites(
   ObjectType.REPORT,
-  new long[] { 2252168947361668 }       // long reportId
+  new long[] { 2252168947361668 }       // reportId
 );
 ```
 
@@ -6156,7 +6156,7 @@ smartsheet.favorites.removeSheetFromFavorites(options)
 ```csharp
 smartsheet.FavoriteResources.RemoveFavorites(
   ObjectType.SHEET,
-  new long[] { 2252168947361668 }   // long sheetId
+  new long[] { 2252168947361668 }   // sheetId
 );
 ```
 
@@ -6217,11 +6217,17 @@ smartsheet.favorites.removeSightFromFavorites(options)
 ```
 
 ```csharp
-// [todo]
+smartsheet.FavoriteResources.RemoveFavorites(
+  ObjectType.SIGHT,
+  new long[] { 2252168947361668 } // sightId
+);
 ```
 
 ```java
-// [todo]
+smartsheet.favoriteResources().removeFavorites(
+  FavoriteType.SIGHT,
+  new HashSet(Arrays.asList(2252168947361668L)) // long sightId
+);
 ```
 
 ```python
@@ -6285,7 +6291,7 @@ smartsheet.favorites.removeTemplateFromFavorites(options)
 ```csharp
 smartsheet.FavoriteResources.RemoveFavorites(
   ObjectType.TEMPLATE,
-  new long[] { 2252168947361668 }     // long templateId
+  new long[] { 2252168947361668 }     // templateId
 );
 ```
 
@@ -6348,7 +6354,7 @@ smartsheet.favorites.removeWorkspaceFromFavorites(options)
 ```csharp
 smartsheet.FavoriteResources.RemoveFavorites(
   ObjectType.WORKSPACE,
-  new long[] { 2252168947361668 }   // long workspaceId
+  new long[] { 2252168947361668 }   // workspaceId
 );
 ```
 
@@ -6608,11 +6614,17 @@ smartsheet.favorites.removeSightsFromFavorites(options)
 ```
 
 ```csharp
-// [todo]
+smartsheet.FavoriteResources.RemoveFavorites(
+  ObjectType.SIGHT,
+  new long[] { 2252168947361668, 3404239197235076 } // sightIds
+);
 ```
 
 ```java
-// [todo]
+smartsheet.favoriteResources().removeFavorites(
+  FavoriteType.SIGHT,
+  new HashSet(Arrays.asList(2252168947361668L, 3404239197235076L)) // long sightIds
+);
 ```
 
 ```python
