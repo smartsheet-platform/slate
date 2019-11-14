@@ -208,7 +208,74 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/updaterequests \
 ```
 
 ```csharp
-// Not yet implemented
+// Example schedules
+Schedule the28thOfEachMonth = new Schedule
+{
+  Type = ScheduleType.MONTHLY,
+  DayOfMonth = 28,
+  StartAt = new DateTime(2020, 1, 1, 11, 59, 00),
+  EndAt = new DateTime(2025, 1, 31, 11, 59, 00),
+};
+
+Schedule everyThreeDaysStartingToday = new Schedule
+{
+  Type = ScheduleType.DAILY,
+  RepeatEvery = 3,
+  StartAt = DateTime.Today
+};
+
+Schedule tuesdaysAndThursdaysWeekly = new Schedule()
+{
+  Type = ScheduleType.DAILY,
+  DayDescriptors = new List<DayDescriptor>() {
+    DayDescriptor.TUESDAY, DayDescriptor.THURSDAY
+  },
+  StartAt = DateTime.Today
+};
+
+Schedule independenceDay = new Schedule()
+{
+  Type = ScheduleType.YEARLY,
+  RepeatEvery = 1,
+  StartAt = new DateTime(2020, 7, 4, 12, 30, 00)
+};
+
+// Specify recipients
+Recipient[] recipientSpecification = new Recipient[] {
+  new Recipient { Email = "recipient1@smartsheet.com"}
+};
+
+// Create update schedule
+Schedule secondMondayOfEachMonth = new Schedule
+{
+  Type = ScheduleType.MONTHLY,
+  DayDescriptors = new List<DayDescriptor>() {
+    DayDescriptor.MONDAY
+  },
+  DayOrdinal = DayOrdinal.SECOND,
+  StartAt = new DateTime(2020, 1, 1, 11, 59, 00),
+  EndAt = new DateTime(2025, 1, 31, 11, 59, 00),
+};
+
+// Configure update request
+UpdateRequest updateRequestSpecification = new UpdateRequest
+{
+  SendTo = recipientSpecification,
+  Subject = "Sample Monthly Update Request",
+  Message = "Please update my online sheet.",
+  CcMe = true,
+  RowIds = new long[] { 1123834706323332, 5627434333693828 },
+  ColumnIds = new long[] { 4549065498224516, 2297265684539268 },
+  IncludeAttachments = true,
+  IncludeDiscussions = true,
+  Schedule = secondMondayOfEachMonth
+};
+
+// Send update request via email
+UpdateRequest newUpdateRequest = smartsheet.SheetResources.UpdateRequestResources.CreateUpdateRequest(
+  3285357287499652,       // long sheetId
+  updateRequestSpecification
+);
 ```
 
 ```java

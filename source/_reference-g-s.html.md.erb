@@ -2164,24 +2164,18 @@ smartsheet.sheets.addRows(options)
 
 ```csharp
 // Specify cell values for first row
-Cell[] cellsA = new Cell[] {
+Cell[] cellsToInsert = new Cell[]
+{
   new Cell
   {
-    ColumnId = 7960873114331012,
-    Value = true
-  },
-  new Cell
-  {
-    ColumnId = 642523719853956,
-    Value = "New status"
+    ColumnId = addedColumns[0].Id,
+    ObjectValue = new MultiPicklistObjectValue(new string[] {"Bat", "Cat"})
   }
 };
-
-// Specify contents of first row
 Row rowA = new Row
 {
   ToTop = true,
-  Cells = cellsA
+  Cells = cellsToInsert
 };
 
 // Specify cell values of second row
@@ -4616,10 +4610,11 @@ smartsheet.sights.share(options)
 ```
 
 ```csharp
-Share share = new Share.CreateShareBuilder(
-  "jane.doe@smartsheet.com",
-  AccessLevel.EDITOR
-).Build();
+Share share = new Share {
+  Type = ShareType.USER,
+  AccessLevel = AccessLevel.EDITOR,
+  Email = "jane.doe@smartsheet.com"
+}
 List<Share> sightShares = smartsheet.SightResources.ShareResources.ShareTo(
   6327127650920324,             // long sightId
   new Share[] { share },        // IEnumerable<Share> shares
@@ -4722,11 +4717,11 @@ smartsheet.sights.updateShare(options)
 
 ```csharp
 Share updatedShare = smartsheet.SightResources.ShareResources.UpdateShare(
-  6327127650920324,              // long sightId
-  new Share.UpdateShareBuilder(  // Share share
-    "AAALRqomFOeE",              // string shareId
-    AccessLevel.VIEWER           // AccessLevel accessLevel
-  ).Build()
+  6327127650920324,          // long sightId
+  new Share {                // Share share
+    Id = "AAALRqomFOeE",     // string shareId
+    AccessLevel = AccessLevel.VIEWER  // AccessLevel accessLevel
+  }
 );
 ```
 

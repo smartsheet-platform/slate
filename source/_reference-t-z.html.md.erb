@@ -209,7 +209,9 @@ smartsheet.tokens.getAccessToken(options)
 ```
 
 ```csharp
-// [todo]
+Token token = oauth.ObtainNewToken(
+  authResult      // AuthorizationResult authResult
+);
 ```
 
 ```java
@@ -297,7 +299,9 @@ smartsheet.tokens.refreshAccessToken(options)
 ```
 
 ```csharp
-// [todo]
+Token tokenRefreshed = oauth.RefreshToken(
+  token           // Token token
+);
 ```
 
 ```java
@@ -716,11 +720,12 @@ smartsheet.users.addAlternateEmail(options)
 ```
 
 ```csharp
-AlternateEmail altEmail1 = new AlternateEmail.AlternateEmailBuilder("jack@email.com").Build();
-AlternateEmail altEmail2 = new AlternateEmail.AlternateEmailBuilder("jack@anotherEmail.com").Build();
 List<AlternateEmail> alternateEmails = smartsheet.UserResources.AddAlternateEmail(
-  4495214342629252,                              // long userId
-  new AlternateEmail[] { altEmail1, altEmail2 }  // Array of AlternateEmail
+  4495214342629252,                       // long userId
+  new AlternateEmail[] {                  // Array of AlternateEmail
+    new AlternateEmail { Email = "John.Doe@smartsheet.com" },
+    new AlternateEmail { Email = "John.Doe.Test@smartsheet.com" } 
+  } 
 );
 ```
 
