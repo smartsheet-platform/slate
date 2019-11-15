@@ -9160,7 +9160,7 @@ curl https://api.smartsheet.com/2.0/sights/{sightId}/publish \
 ```javascript
 // Set options
 var options = {
-  sightId: 970160971507588
+  sightId: 5363568917931908
 };
 
 // Get Sight publish status
@@ -9175,12 +9175,14 @@ smartsheet.sights.getSightPublishStatus(options)
 
 ```csharp
 SightPublish publish = smartsheet.SightResources.GetPublishStatus(
-  970160971507588             // long sightId
-);
+    5363568917931908    // sightId
+  );
 ```
 
 ```java
-// [todo]
+SightPublish publish = smartsheet.sightResources().getPublishStatus(
+      5363568917931908L    // long sightId
+  );
 ```
 
 ```python
@@ -9190,7 +9192,7 @@ status = smartsheet_client.Sights.get_publish_status(
 
 ```ruby
 status = smartsheet.sights.get_publish_status(
-  sight_id: 970160971507588
+  sight_id: 5363568917931908
 )
 ```
 
@@ -9252,11 +9254,21 @@ smartsheet.sights.setSightPublishStatus(options)
 ```
 
 ```csharp
-// [todo]
+SightPublish publish = new SightPublish();
+publish.ReadOnlyFullEnabled = true;
+smartsheet.SightResources.SetPublishStatus(
+  5363568917931908,    // sightId
+  publish
+);
 ```
 
 ```java
-// [todo]
+SightPublish publish = new SightPublish();
+publish.setReadOnlyFullEnabled(true);
+smartsheet.sightResources().setPublishStatus(
+  5363568917931908L,    // long sightId
+  publish
+);
 ```
 
 ```python
@@ -9351,14 +9363,17 @@ smartsheet.sights.updateSight(options)
 ```csharp
 Sight sight = smartsheet.SightResources.UpdateSight(
   new Sight {
-    Id = 5363568917931908,                       
+    Id = 5363568917931908,    // sightId
     Name = "New Sight Name"
   }
 );
 ```
 
 ```java
-// [todo]
+Sight sight = new Sight();
+sight.setId(5363568917931908L);    // long sightId
+sight.setName("New Sight Name");
+Sight updatedSight = smartsheet.sightResources().updateSight(sight);
 ```
 
 ```python
