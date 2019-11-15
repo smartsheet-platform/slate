@@ -7,7 +7,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sentupdaterequests \
 
 ```csharp
  PaginatedResult<SentUpdateRequest> results = smartsheet.SheetResources.UpdateRequestResources.ListSentUpdateRequests(
-  1639534409607044L,      // long sheetId
+  1639534409607044,       // sheetId
   null                    // PaginationParameters
 );
 ```

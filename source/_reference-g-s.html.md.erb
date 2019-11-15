@@ -2215,7 +2215,7 @@ Row rowB = new Row
 
 // Add rows to sheet
 IList<Row> newRows = smartsheet.SheetResources.RowResources.AddRows(
-  2331373580117892,               // long sheetId
+  2331373580117892,               // sheetId
   new Row[] { rowA, rowB }        // IEnumerable<Row> rowsToAdd
 );
 ```
@@ -2422,7 +2422,7 @@ CopyOrMoveRowDirective directive = new CopyOrMoveRowDirective { RowIds = new lon
 
 // Sample 1: Omit 'include' and 'ignoreRowsNotFound' parameters
 CopyOrMoveRowResult results = smartsheet.SheetResources.RowResources.CopyRowsToAnotherSheet(
-  4583173393803140,           // long sheetId
+  4583173393803140,           // sheetId
   directive,
   null,                       // IEnumerable<CopyRowInclusion> include
   null                        // Nullable<bool> ignoreRowsNotFound
@@ -2430,7 +2430,7 @@ CopyOrMoveRowResult results = smartsheet.SheetResources.RowResources.CopyRowsToA
 
 // Sample 2: Specify 'include' parameter with value of "CHILDREN", and 'ignoreRowsNotFound' parameter with value of 'true'
 CopyOrMoveRowResult results = smartsheet.SheetResources.RowResources.CopyRowsToAnotherSheet(
-  4583173393803140,           // long sheetId
+  4583173393803140,           // sheetId
   directive,
   new CopyRowInclusion[] {
     CopyRowInclusion.CHILDREN },
@@ -2542,7 +2542,7 @@ smartsheet.sheets.deleteRow(options)
 ```csharp
 // Specify 'ignoreRowsNotFound' parameter with value of 'true'
 smartsheet.SheetResources.RowResources.DeleteRows(
-  2252168947361668,                                    // long sheetId
+  2252168947361668,                                    // sheetId
   new long[] { 207098194749316, 207098194749317 },     // rowIds
   true                                                 // Boolean ignoreRowsNotFound
 );
@@ -2629,16 +2629,16 @@ smartsheet.sheets.getRow(options)
 ```csharp
 // Omit 'include' parameter and pagination parameters
 Row row = smartsheet.SheetResources.RowResources.GetRow(
-  4583173393803140,               // long sheetId
-  2361756178769796,               // long rowId
+  4583173393803140,               // sheetId
+  2361756178769796,               // rowId
   null,                           // IEnumerable<RowInclusion> include
   null                            // IEnumerable<RowExclusion> exclude
 );
 
 // Specify 'include' parameter with values of "COLUMNS" and "COLUMN_TYPE", and 'exclude' parameter with value of "NONEXISTENT_CELLS"
 Row row = smartsheet.SheetResources.RowResources.GetRow(
-  4583173393803140,               // long sheetId
-  2361756178769796,               // long rowId
+  4583173393803140,               // sheetId
+  2361756178769796,               // rowId
   new RowInclusion[] {
     RowInclusion.COLUMNS,
     RowInclusion.COLUMN_TYPE },
@@ -2773,7 +2773,7 @@ CopyOrMoveRowDirective directive = new CopyOrMoveRowDirective { RowIds = new lon
 
 // Sample 1: Omit 'include' and 'ignoreRowsNotFound' parameters
 CopyOrMoveRowResult results = smartsheet.SheetResources.RowResources.MoveRowsToAnotherSheet(
-  4583173393803140,               // long sheetId
+  4583173393803140,               // sheetId
   directive,
   null,                           // IEnumerable<MoveRowInclusion> include
   null                            // Nullable<bool> ignoreRowsNotFound
@@ -2781,7 +2781,7 @@ CopyOrMoveRowResult results = smartsheet.SheetResources.RowResources.MoveRowsToA
 
 // Sample 2: Specify 'include' parameter with value of "ATTACHMENTS" and "DISCUSSIONS", and 'ignoreRowsNotFound' parameter with value of 'true'
 CopyOrMoveRowResult results = smartsheet.SheetResources.RowResources.MoveRowsToAnotherSheet(
-  4583173393803140,               // long sheetId
+  4583173393803140,               // sheetId
   directive,
   new MoveRowInclusion[] {
     MoveRowInclusion.ATTACHMENTS,
@@ -3997,7 +3997,7 @@ smartsheet.sheets.deleteShare(options)
 
 ```csharp
 smartsheet.SheetResources.ShareResources.DeleteShare(
-  4583614634583940,               // long sheetId
+  4583614634583940,               // sheetId
   "AAAASuWWFOeE"                  // string shareId
 );
 ```
@@ -4060,7 +4060,7 @@ smartsheet.sheets.getShare(options)
 
 ```csharp
 Share share = smartsheet.SheetResources.ShareResources.GetShare(
-  4583614634583940,           // long sheetId
+  4583614634583940,           // sheetId
   "AQAISF82FOeE"              // string shareId
 );
 ```
@@ -4123,7 +4123,7 @@ smartsheet.sheets.listShares(options)
 ```csharp
 // Omit pagination parameters
 PaginatedResult<Share> shares = smartsheet.SheetResources.ShareResources.ListShares(
-  4583614634583940,               // long sheetId
+  4583614634583940,               // sheetId
   null                            // PaginationParameters
 );
 ```
@@ -4220,7 +4220,7 @@ Share[] shareSpecification = new Share[] { new Share
 
 // Share sheet
 IList<Share> addressList = smartsheet.SheetResources.ShareResources.ShareTo(
-  4583614634583940,               // long sheetId
+  4583614634583940,               // sheetId
   shareSpecification,
   true                            // Nullable<bool> sendEmail
 );
@@ -4322,7 +4322,7 @@ Share shareSpecification = new Share
 
 // Update sheet share
 Share updatedShare = smartsheet.SheetResources.ShareResources.UpdateShare(
-  4583614634583940,               // long sheetId
+  4583614634583940,               // sheetId
   shareSpecification
 );
 ```
@@ -5496,14 +5496,14 @@ ContainerDestination destination = new ContainerDestination {
 
 // Sample 1: Omit 'include' parameter
 Sheet sheet = smartsheet.SheetResources.CopySheet(
-  9283173393803140,                               // long sheetId
+  9283173393803140,                               // sheetId
   destination,
   null                                            // IEnumerable<SheetCopyInclusion> include
 );
 
 // Sample 2: Specify 'include' parameter with value of "data"
 Sheet sheet = smartsheet.SheetResources.CopySheet(
-  9283173393803140,                               // long sheetId
+  9283173393803140,                               // sheetId
   destination,
   new SheetCopyInclusion[] { SheetCopyInclusion.DATA }
 );
@@ -6422,7 +6422,7 @@ smartsheet.sheets.deleteSheet(options)
 
 ```csharp
 smartsheet.SheetResources.DeleteSheet(
-  1531988831168388            // long sheetId
+  1531988831168388            // sheetId
 );
 ```
 
@@ -6487,7 +6487,7 @@ smartsheet.sheets.getSheetVersion(options)
 
 ```csharp
 Integer version = smartsheet.SheetResources.GetSheetVersion(
-  1531988831168388            // long sheetId
+  1531988831168388            // sheetId
 );
 ```
 
@@ -6564,7 +6564,7 @@ smartsheet.sheets.getSheet(options)
 ```csharp
 // Omit all parameters
 Sheet sheet = smartsheet.SheetResources.GetSheet(
-  4583173393803140,           // long sheetId
+  4583173393803140,           // sheetId
   null,                       // IEnumerable<SheetLevelInclusion> includes
   null,                       // IEnumerable<SheetLevelExclusion> excludes
   null,                       // IEnumerable<long> rowIds
@@ -6734,7 +6734,7 @@ smartsheet.sheets.getSheetAsExcel(options)
 
 ```csharp
 smartsheet.SheetResources.GetSheetAsExcel(
-  4583173393803140,           // long sheetId
+  4583173393803140,           // sheetId
   outputStream
 );
 ```
@@ -6819,7 +6819,7 @@ smartsheet.sheets.getSheetAsPDF(options)
 
 ```csharp
 smartsheet.SheetResources.GetSheetAsPDF(
-  4583173393803140,               // long sheetId
+  4583173393803140,               // sheetId
   outputStream,
   PaperSize.A1
 );
@@ -6907,7 +6907,7 @@ smartsheet.sheets.getSheetAsCSV(options)
 
 ```csharp
 smartsheet.SheetResources.GetSheetAsCSV(
-  4583173393803140,               // long sheetId
+  4583173393803140,               // sheetId
   outputStream
 );
 ```
@@ -7132,13 +7132,13 @@ smartsheet.sheets.moveSheet(options)
 ```csharp
 // Specify destination
 ContainerDestination destination = new ContainerDestination {
-  DestinationId = 7960873114331012,           // long destinationFolderId
+  DestinationId = 7960873114331012,           // destinationFolderId
   DestinationType = DestinationType.FOLDER,
 };
 
 // Move sheet
 Sheet sheet = smartsheet.SheetResources.MoveSheet(
-  4583173393803140,                           // long sheetId
+  4583173393803140,                           // sheetId
   destination
 );
 ```
@@ -7235,7 +7235,7 @@ smartsheet.sheets.getPublishStatus(options)
 
 ```csharp
 SheetPublish status = smartsheet.SheetResources.GetPublishStatus(
-  4583173393803140            // long sheetId
+  4583173393803140            // sheetId
 );
 ```
 
@@ -7330,7 +7330,7 @@ SheetPublish publishSpecification = new SheetPublish
 
 // Set sheet publish status
 SheetPublish updatedStatus = smartsheet.SheetResources.UpdatePublishStatus(
-  4583614634583940,       // long sheetId
+  4583614634583940,       // sheetId
   publishSpecification
 );
 ```
@@ -8774,7 +8774,7 @@ smartsheet.sights.deleteSight(options)
 
 ```csharp
 smartsheet.SightResources.DeleteSight(
-  5077532685952900            // long sheetId
+  5077532685952900            // sightId
 );
 ```
 
