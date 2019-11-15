@@ -279,7 +279,37 @@ UpdateRequest newUpdateRequest = smartsheet.SheetResources.UpdateRequestResource
 ```
 
 ```java
-// Not yet implemented
+RecipientEmail recipientA = new RecipientEmail()
+  .setEmail("recipient1@smartsheet.com");
+
+RecipientEmail recipientB = new RecipientEmail()
+  .setEmail("recipient2@smartsheet.com");
+
+List<Recipient> recipients = Arrays.asList(recipientA, recipientB);
+
+Schedule everySecondMondayOftheMonth = new Schedule()
+  .setType(ScheduleType.MONTHLY)
+  .setDayDescriptors(Arrays.asList(DayDescriptor.MONDAY))
+  .setDayOrdinal(DayOrdinal.SECOND)
+  .setStartAt(new Date(1605278593000L))
+  .setEndAt(new Date(1636814593000L));
+
+// Specify parameters for update request
+UpdateRequest updateRequest = new UpdateRequest();
+updateRequest.setRowIds((Arrays.asList(3349987179913092L, 7847699807283588L));
+updateRequest.setSendTo(recipients)
+  .setSubject("Sample Monthly Update Request")
+  .setMessage("Please update my online sheet.")
+  .setColumnIds(Arrays.asList(1735559994150148L, 1735559924150148L))
+  .setIncludeAttachments(false)
+  .setIncludeDiscussions(false)
+  .setSchedule(everySecondMondayOftheMonth);
+
+// Create update request
+smartsheet.sheetResources().updateRequestResources().createUpdateRequest(
+  1639539909607044L,      // long sheetId
+  updateRequest
+);
 ```
 
 ```python

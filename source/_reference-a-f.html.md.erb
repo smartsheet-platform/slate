@@ -3272,8 +3272,8 @@ IList<Column> addedColumns = smartsheet.SheetResources.ColumnResources.AddColumn
 ```java
 // Create columns
 Column column1 = new Column()
-  .setTitle("New Picklist Column 1")
-  .setType(ColumnType.PICKLIST)
+  .setTitle("New Multi-Picklist Column 1")
+  .setType(ColumnType.MULTI_PICKLIST)
   .setIndex(4)
   .setOptions(Arrays.asList("First", "Second", "Third"));
 
