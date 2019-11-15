@@ -101,17 +101,17 @@ smartsheet.reportResources().sendReport(
 ```
 
 ```python
-response = ss_client.Reports.send_report(
+response = smartsheet_client.Reports.send_report(
   8130994621441924,       # report_id
-  ss_client.models.SheetEmail({
-    'send_to': ss_client.models.Recipient({
+  smartsheet.models.SheetEmail({
+    'send_to': smartsheet.models.Recipient({
       'email': 'john.doe@smartsheet.com'
     }),
     'subject': 'Check this report out!',
     'message': 'Here is the report I mentioned in our meeting.',
     'cc_me': False,
     'format': 'PDF',
-    'format_details': ss_client.models.FormatDetails({
+    'format_details': smartsheet.models.FormatDetails({
       'paper_size': 'A4'
     })
   })

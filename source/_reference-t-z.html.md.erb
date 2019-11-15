@@ -1640,16 +1640,28 @@ curl 'https://api.smartsheet.com/2.0/users/{userId}/profileimage' \
 User myUser = smartsheet.UserResources.AddProfileImage(
   3173821341106052,                // long userId
   "../path/to/mrgoodlookin.jpg",   // string file
-  "image/jpeg"                     // string fileType
+  "image/jpeg"                     // string fileType (MIME)
 );
 ```
 
 ```java
-// Not yet implemented
+try {
+  User myUser = smartsheet.userResources().addProfileImage(
+    3173821341106052L,               // long userId
+    "../path/to/mrgoodlookin.jpg",   // String file
+    "image/jpeg"                     // String fileType (MIME)
+  );
+} catch (FileNotFoundException e) {
+  e.printStackTrace();
+}
 ```
 
 ```python
-# Not yet implemented
+action = smartsheet_client.Users.add_profile_image(
+  3173821341106052,               # user_id (int)
+  '../path/to/mrgoodlookin.jpg',  # file (string)
+  'image/jpeg'                    # file_type (string)
+)
 ```
 
 ```ruby
