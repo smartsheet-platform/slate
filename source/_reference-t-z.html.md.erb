@@ -721,7 +721,7 @@ smartsheet.users.addAlternateEmail(options)
 
 ```csharp
 List<AlternateEmail> alternateEmails = smartsheet.UserResources.AddAlternateEmail(
-  4495214342629252,                       // long userId
+  4495214342629252,                       // userId
   new AlternateEmail[] {                  // Array of AlternateEmail
     new AlternateEmail { Email = "John.Doe@smartsheet.com" },
     new AlternateEmail { Email = "John.Doe.Test@smartsheet.com" } 
@@ -730,7 +730,15 @@ List<AlternateEmail> alternateEmails = smartsheet.UserResources.AddAlternateEmai
 ```
 
 ```java
-// [todo]
+AlternateEmail alias1 = new AlternateEmail();
+alias1.setEmail("John.Doe@smartsheet.com");
+AlternateEmail alias2 = new AlternateEmail();
+alias2.setEmail("John.Doe.Test@smartsheet.com");
+
+smartsheet.userResources().addAlternateEmail(
+  4495214342629252L,    // long userId
+  Arrays.asList(alias1, alias2)
+);
 ```
 
 ```python
@@ -819,13 +827,16 @@ smartsheet.users.makeAlternateEmailPrimary(options)
 
 ```csharp
 AlternateEmail primaryEmail = smartsheet.UserResources.PromoteAlternateEmail(
-  401090454808452,        // long userId
-  123456789012345         // long altEmailId
+  401090454808452,        // userId
+  123456789012345         // altEmailId
 );
 ```
 
 ```java
-// [todo]
+AlternateEmail primaryEmail = smartsheet.userResources().promoteAlternateEmail(
+  401090454808452L,    // long userId
+  123456789012345L    // long altEmailId
+);
 ```
 
 ```python

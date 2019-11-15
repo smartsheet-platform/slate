@@ -4745,11 +4745,32 @@ smartsheet.sheets.createCrossSheetReference({sheetId: 456745674567, body: body})
 ```
 
 ```csharp
-// Not yet implemented
+CrossSheetReference xref = new CrossSheetReference();
+xref.Name = "Sample Time Log Sheet Range 1";
+xref.SourceSheetId = 154378742065028;
+xref.StartRowId = 4089096300717956;
+xref.EndRowId = 2681721417164676;
+xref.StartColumnId = 824812248557444;
+xref.EndRowId = 824812248557444;
+CrossSheetReference newXRef = smartsheet.SheetResources.CrossSheetReferenceResources.CreateCrossSheetReference(
+    1755440242550660,   //sheetId
+    xref
+  );
 ```
 
 ```java
-// Not yet implemented
+CrossSheetReference xref = new CrossSheetReference();
+xref.setName("Sample Time Log Sheet Range 1");
+xref.setSourceSheetId(154378742065028L);
+xref.setStartRowId(4089096300717956L);
+xref.setEndRowId(2681721417164676L);
+xref.setStartColumnId(824812248557444L);
+xref.setEndRowId(824812248557444L);
+
+CrossSheetReference newXRef = smartsheet.sheetResources().crossSheetReferenceResources().createCrossSheetReference(
+    1755440242550660,   //sheetId
+    xref
+  );
 ```
 
 ```python
@@ -4829,16 +4850,24 @@ smartsheet.sheets.getCrossSheetReference({sheetId: 9283173393803140, crossSheetR
 ```
 
 ```csharp
-// Not yet implemented
+CrossSheetReference xref = smartsheet.SheetResources.CrossSheetReferenceResources.GetCrossSheetReference(
+    9283173393803140, // sheetId
+    8157685695702916  // crossSheetReferenceId
+  );
 ```
 
 ```java
-// Not yet implemented
+CrossSheetReference xref = smartsheet.sheetResources().crossSheetReferenceResources().getCrossSheetReference(
+    9283173393803140L, // sheetId
+    8157685695702916L  // crossSheetReferenceId
+  );
 ```
 
 ```python
 result = smartsheet_client.Sheets.get_cross_sheet_reference(
-  9283173393803140, 8157685695702916)
+    9283173393803140, # sheet_id
+    8157685695702916  # cross_sheet_reference_id
+  )
 ```
 
 ```ruby
@@ -4895,11 +4924,41 @@ smartsheet.sheets.listCrossSheetReferences({sheetId: 9283173393803140})
 ```
 
 ```csharp
-// Not yet implemented
+//Sample 1: List all
+smartsheet.SheetResources.CrossSheetReferenceResources.ListCrossSheetReferences(
+    9283173393803140, // sheetId
+    null              // PaginationParameters
+  );
+
+//Sample 2: Paginate the list
+PaginationParameters paginationParameters = new PaginationParameters(
+    false,  // includeAll
+    100,    // pageSize
+    1       // page
+  );
+smartsheet.SheetResources.CrossSheetReferenceResources.ListCrossSheetReferences(
+    9283173393803140,   // sheetId
+    paginationParameters
+  );
 ```
 
 ```java
-// Not yet implemented
+//Sample 1: List all
+smartsheet.sheetResources().crossSheetReferenceResources().listCrossSheetReferences(
+  9283173393803140L,  // sheetId
+  null    // PaginationParameters
+);
+
+//Sample 2: Paginate the list
+PaginationParameters paginationParameters = new PaginationParameters(
+  false,  // includeAll
+  100,    // pageSize
+  1       // page
+);
+smartsheet.sheetResources().crossSheetReferenceResources().listCrossSheetReferences(
+  9283173393803140L,  // sheetId
+  paginationParameters
+);
 ```
 
 ```python
@@ -6003,7 +6062,7 @@ smartsheet.favorites.removeFolderFromFavorites(options)
 ```csharp
 smartsheet.FavoriteResources.RemoveFavorites(
   ObjectType.FOLDER,
-  new long[] { 2252168947361668 }   // long folderId
+  new long[] { 2252168947361668 }   // folderId
 );
 ```
 
@@ -6066,7 +6125,7 @@ smartsheet.favorites.removeReportFromFavorites(options)
 ```csharp
 smartsheet.FavoriteResources.RemoveFavorites(
   ObjectType.REPORT,
-  new long[] { 2252168947361668 }       // long reportId
+  new long[] { 2252168947361668 }       // reportId
 );
 ```
 
@@ -6192,12 +6251,15 @@ smartsheet.favorites.removeSightFromFavorites(options)
 ```csharp
 smartsheet.FavoriteResources.RemoveFavorites(
   ObjectType.SIGHT,
-  new long[] { 6327127650920324 }   // long sightId
+  new long[] { 2252168947361668 } // sightId
 );
 ```
 
 ```java
-// [todo]
+smartsheet.favoriteResources().removeFavorites(
+  FavoriteType.SIGHT,
+  new HashSet(Arrays.asList(2252168947361668L)) // long sightId
+);
 ```
 
 ```python
@@ -6261,7 +6323,7 @@ smartsheet.favorites.removeTemplateFromFavorites(options)
 ```csharp
 smartsheet.FavoriteResources.RemoveFavorites(
   ObjectType.TEMPLATE,
-  new long[] { 2252168947361668 }     // long templateId
+  new long[] { 2252168947361668 }     // templateId
 );
 ```
 
@@ -6324,7 +6386,7 @@ smartsheet.favorites.removeWorkspaceFromFavorites(options)
 ```csharp
 smartsheet.FavoriteResources.RemoveFavorites(
   ObjectType.WORKSPACE,
-  new long[] { 2252168947361668 }   // long workspaceId
+  new long[] { 2252168947361668 }   // workspaceId
 );
 ```
 
@@ -6586,12 +6648,15 @@ smartsheet.favorites.removeSightsFromFavorites(options)
 ```csharp
 smartsheet.FavoriteResources.RemoveFavorites(
   ObjectType.SIGHT,
-  new long[] { 970160371507588, 6327427650920324 }    // sightIds
+  new long[] { 2252168947361668, 3404239197235076 } // sightIds
 );
 ```
 
 ```java
-// [todo]
+smartsheet.favoriteResources().removeFavorites(
+  FavoriteType.SIGHT,
+  new HashSet(Arrays.asList(2252168947361668L, 3404239197235076L)) // long sightIds
+);
 ```
 
 ```python
