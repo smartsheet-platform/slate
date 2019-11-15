@@ -983,7 +983,7 @@ Webhook updatedWebhook = smartsheet.webhookResources().updateWebhook(
 ```python
 Webhook = smartsheet_client.Webhooks.update_webhook(
   8444254503626628,       # webhook_id
-  ss_client.models.Webhook({
+  smartsheet_client.models.Webhook({
     'enabled': True}))
 ```
 

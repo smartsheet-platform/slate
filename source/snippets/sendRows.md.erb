@@ -110,15 +110,15 @@ smartsheet.sheetResources().rowResources().sendRows(4293147074291588L, multiRowE
 
 ```python
 # Configure email
-email = ss_client.models.MultiRowEmail()
-email.send_to = ss_client.models.Recipient({
+email = smartsheet.models.MultiRowEmail()
+email.send_to = smartsheet.models.Recipient({
   'email': 'john.doe@smartsheet.com'
 })
 email.row_ids = [6327127650920324, 3404239197235076]
 email.column_ids = [5190835902932868, 3791509922310020]
 
 # Send rows via email
-response = ss_client.Sheets.send_rows(
+response = smartsheet_client.Sheets.send_rows(
   4293147074291588,       # sheet_id
   email)
 ```

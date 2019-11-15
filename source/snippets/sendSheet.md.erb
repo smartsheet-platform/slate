@@ -99,18 +99,18 @@ smartsheet.sheetResources().sendSheet(4293147074291588L, email);        // sheet
 ```
 
 ```python
-response = ss_client.Sheets.send_sheet(
+response = smartsheet_client.Sheets.send_sheet(
   4293147074291588,           # sheet_id
-  ss_client.models.SheetEmail({
+  smartsheet.models.SheetEmail({
     'send_to': [
-      ss_client.models.Recipient({'email': 'john.doe@smartsheet.com'}),
-      ss_client.models.Recipient({'group_id': 2258118617917316})
+      smartsheet.models.Recipient({'email': 'john.doe@smartsheet.com'}),
+      smartsheet.models.Recipient({'group_id': 2258118617917316})
     ],
     'subject': 'Check these rows out!',
     'message': 'Here are the rows I mentioned in our meeting.',
     'cc_me': False,
     'format': 'PDF',
-    'format_details': ss_client.models.FormatDetails({
+    'format_details': smartsheet.models.FormatDetails({
       'paper_size': 'A4'
     })
   })
