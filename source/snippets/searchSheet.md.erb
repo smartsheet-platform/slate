@@ -30,7 +30,7 @@ string query = "stuff";
 
 // Search sheet
 SearchResult results = smartsheet.SearchResources.SearchSheet(
-  9283173393803140,       // long sheetId
+  9283173393803140,       // sheetId
   query                   // string
 );
 ```
@@ -51,10 +51,10 @@ SearchResult results = smartsheet.searchResources().searchSheet(
 query = 'stuff'
 
 # Search sheet
-response = ss_client.Search.search_sheet(
+response = smartsheet_client.Search.search_sheet(
   9283173393803140,       # sheet_id
   query)
-# response is a ss_client.models.SearchResult object
+# response is a smartsheet.models.SearchResult object
 ```
 
 ```ruby

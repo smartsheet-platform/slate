@@ -1849,11 +1849,15 @@ smartsheet.reports.getReportPublishStatus(options)
 ```
 
 ```csharp
-// [todo]
+smartsheet.ReportResources.GetPublishStatus(
+  3901932860401540    // reportId
+);
 ```
 
 ```java
-// [todo]
+smartsheet.reportResources().getPublishStatus(
+  3901932860401540L    // reportId
+);
 ```
 
 ```python
@@ -1920,11 +1924,23 @@ smartsheet.reports.setReportPublishStatus(options)
 ```
 
 ```csharp
-// [todo]
+ReportPublish reportPublish = new ReportPublish();
+reportPublish.ReadOnlyFullEnabled = true;
+reportPublish.ReadOnlyFullAccessibleBy = "ALL";
+smartsheet.ReportResources.UpdatePublishStatus(
+  1653087851556740,    // reportId
+  reportPublish
+);
 ```
 
 ```java
-// [todo]
+ReportPublish reportPublish = new ReportPublish();
+reportPublish.setReadOnlyFullEnabled(true);
+reportPublish.setReadOnlyFullAccessibleBy("ALL");
+smartsheet.reportResources().updatePublishStatus(
+  1653087851556740L,    // reportId
+  reportPublish
+);
 ```
 
 ```python
@@ -2162,24 +2178,18 @@ smartsheet.sheets.addRows(options)
 
 ```csharp
 // Specify cell values for first row
-Cell[] cellsA = new Cell[] {
+Cell[] cellsToInsert = new Cell[]
+{
   new Cell
   {
-    ColumnId = 7960873114331012,
-    Value = true
-  },
-  new Cell
-  {
-    ColumnId = 642523719853956,
-    Value = "New status"
+    ColumnId = addedColumns[0].Id,
+    ObjectValue = new MultiPicklistObjectValue(new string[] {"Bat", "Cat"})
   }
 };
-
-// Specify contents of first row
 Row rowA = new Row
 {
   ToTop = true,
-  Cells = cellsA
+  Cells = cellsToInsert
 };
 
 // Specify cell values of second row
@@ -2205,7 +2215,7 @@ Row rowB = new Row
 
 // Add rows to sheet
 IList<Row> newRows = smartsheet.SheetResources.RowResources.AddRows(
-  2331373580117892,               // long sheetId
+  2331373580117892,               // sheetId
   new Row[] { rowA, rowB }        // IEnumerable<Row> rowsToAdd
 );
 ```
@@ -2412,7 +2422,7 @@ CopyOrMoveRowDirective directive = new CopyOrMoveRowDirective { RowIds = new lon
 
 // Sample 1: Omit 'include' and 'ignoreRowsNotFound' parameters
 CopyOrMoveRowResult results = smartsheet.SheetResources.RowResources.CopyRowsToAnotherSheet(
-  4583173393803140,           // long sheetId
+  4583173393803140,           // sheetId
   directive,
   null,                       // IEnumerable<CopyRowInclusion> include
   null                        // Nullable<bool> ignoreRowsNotFound
@@ -2420,7 +2430,7 @@ CopyOrMoveRowResult results = smartsheet.SheetResources.RowResources.CopyRowsToA
 
 // Sample 2: Specify 'include' parameter with value of "CHILDREN", and 'ignoreRowsNotFound' parameter with value of 'true'
 CopyOrMoveRowResult results = smartsheet.SheetResources.RowResources.CopyRowsToAnotherSheet(
-  4583173393803140,           // long sheetId
+  4583173393803140,           // sheetId
   directive,
   new CopyRowInclusion[] {
     CopyRowInclusion.CHILDREN },
@@ -2532,7 +2542,7 @@ smartsheet.sheets.deleteRow(options)
 ```csharp
 // Specify 'ignoreRowsNotFound' parameter with value of 'true'
 smartsheet.SheetResources.RowResources.DeleteRows(
-  2252168947361668,                                    // long sheetId
+  2252168947361668,                                    // sheetId
   new long[] { 207098194749316, 207098194749317 },     // rowIds
   true                                                 // Boolean ignoreRowsNotFound
 );
@@ -2619,16 +2629,16 @@ smartsheet.sheets.getRow(options)
 ```csharp
 // Omit 'include' parameter and pagination parameters
 Row row = smartsheet.SheetResources.RowResources.GetRow(
-  4583173393803140,               // long sheetId
-  2361756178769796,               // long rowId
+  4583173393803140,               // sheetId
+  2361756178769796,               // rowId
   null,                           // IEnumerable<RowInclusion> include
   null                            // IEnumerable<RowExclusion> exclude
 );
 
 // Specify 'include' parameter with values of "COLUMNS" and "COLUMN_TYPE", and 'exclude' parameter with value of "NONEXISTENT_CELLS"
 Row row = smartsheet.SheetResources.RowResources.GetRow(
-  4583173393803140,               // long sheetId
-  2361756178769796,               // long rowId
+  4583173393803140,               // sheetId
+  2361756178769796,               // rowId
   new RowInclusion[] {
     RowInclusion.COLUMNS,
     RowInclusion.COLUMN_TYPE },
@@ -2763,7 +2773,7 @@ CopyOrMoveRowDirective directive = new CopyOrMoveRowDirective { RowIds = new lon
 
 // Sample 1: Omit 'include' and 'ignoreRowsNotFound' parameters
 CopyOrMoveRowResult results = smartsheet.SheetResources.RowResources.MoveRowsToAnotherSheet(
-  4583173393803140,               // long sheetId
+  4583173393803140,               // sheetId
   directive,
   null,                           // IEnumerable<MoveRowInclusion> include
   null                            // Nullable<bool> ignoreRowsNotFound
@@ -2771,7 +2781,7 @@ CopyOrMoveRowResult results = smartsheet.SheetResources.RowResources.MoveRowsToA
 
 // Sample 2: Specify 'include' parameter with value of "ATTACHMENTS" and "DISCUSSIONS", and 'ignoreRowsNotFound' parameter with value of 'true'
 CopyOrMoveRowResult results = smartsheet.SheetResources.RowResources.MoveRowsToAnotherSheet(
-  4583173393803140,               // long sheetId
+  4583173393803140,               // sheetId
   directive,
   new MoveRowInclusion[] {
     MoveRowInclusion.ATTACHMENTS,
@@ -3169,7 +3179,6 @@ Include Flag | Description |
 **objectValue** | Includes **objectValue** attribute on cells containing values. For more information see [Cell Reference](#cell-reference).
 **rowPermalink** | Includes **permalink** attribute that represents a direct link to the [row](#row-object) in the Smartsheet application.
 **rowWriterInfo** | **DEPRECATED** Includes **createdBy** and **modifiedBy** attributes on the row, indicating the row's creator, and last modifier.
-**summary** | Includes [SheetSummary](#sheetsummary-object) object.
 **writerInfo** | Includes **createdBy** and **modifiedBy** attributes on the row or summary fields, indicating the row or summary field's creator, and last modifier.
 
 # Search
@@ -3988,7 +3997,7 @@ smartsheet.sheets.deleteShare(options)
 
 ```csharp
 smartsheet.SheetResources.ShareResources.DeleteShare(
-  4583614634583940,               // long sheetId
+  4583614634583940,               // sheetId
   "AAAASuWWFOeE"                  // string shareId
 );
 ```
@@ -4051,7 +4060,7 @@ smartsheet.sheets.getShare(options)
 
 ```csharp
 Share share = smartsheet.SheetResources.ShareResources.GetShare(
-  4583614634583940,           // long sheetId
+  4583614634583940,           // sheetId
   "AQAISF82FOeE"              // string shareId
 );
 ```
@@ -4114,7 +4123,7 @@ smartsheet.sheets.listShares(options)
 ```csharp
 // Omit pagination parameters
 PaginatedResult<Share> shares = smartsheet.SheetResources.ShareResources.ListShares(
-  4583614634583940,               // long sheetId
+  4583614634583940,               // sheetId
   null                            // PaginationParameters
 );
 ```
@@ -4211,7 +4220,7 @@ Share[] shareSpecification = new Share[] { new Share
 
 // Share sheet
 IList<Share> addressList = smartsheet.SheetResources.ShareResources.ShareTo(
-  4583614634583940,               // long sheetId
+  4583614634583940,               // sheetId
   shareSpecification,
   true                            // Nullable<bool> sendEmail
 );
@@ -4313,7 +4322,7 @@ Share shareSpecification = new Share
 
 // Update sheet share
 Share updatedShare = smartsheet.SheetResources.ShareResources.UpdateShare(
-  4583614634583940,               // long sheetId
+  4583614634583940,               // sheetId
   shareSpecification
 );
 ```
@@ -4393,7 +4402,10 @@ smartsheet.sights.deleteShare(options)
 ```
 
 ```csharp
-// [todo]
+smartsheet.SightResources.ShareResources.DeleteShare(
+  6327127650920324,     // sightId
+  "AAABbMomFOeE"        // string shareId
+);
 ```
 
 ```java
@@ -4523,11 +4535,32 @@ smartsheet.sights.listShares(options)
 ```
 
 ```csharp
-// [todo]
+PaginatedResult<Share> shares = smartsheet.SightResources.ShareResources.ListShares(
+  6327127650920324,       // sightId
+  null,                   // Pagination parameters
+  ShareScope.Item         // ShareScope shareScope
+);
 ```
 
 ```java
-// [todo]
+//Sample 1: List all
+smartsheet.sightResources().shareResources().listShares(
+  6327127650920324L,    // long sightId
+  null,    // PaginationParameters
+  true    // includeWorkspaceShares
+);
+
+//Sample 2: Paginate the list
+PaginationParameters paginationParameters = new PaginationParameters(
+  false,  // includeAll
+  100,    // pageSize
+  1   // page
+);
+smartsheet.sightResources().shareResources().listShares(
+  6327127650920324L,    // long sightId
+  paginationParameters,
+  true    // includeWorkspaceShares
+);
 ```
 
 ```python
@@ -4608,7 +4641,16 @@ smartsheet.sights.share(options)
 ```
 
 ```csharp
-// [todo]
+Share share = new Share {
+  Type = ShareType.USER,
+  AccessLevel = AccessLevel.EDITOR,
+  Email = "jane.doe@smartsheet.com"
+}
+List<Share> sightShares = smartsheet.SightResources.ShareResources.ShareTo(
+  6327127650920324,             // sightId
+  new Share[] { share },        // IEnumerable<Share> shares
+  true                          // bool sendEmail
+);
 ```
 
 ```java
@@ -4705,7 +4747,13 @@ smartsheet.sights.updateShare(options)
 ```
 
 ```csharp
-// [todo]
+Share updatedShare = smartsheet.SightResources.ShareResources.UpdateShare(
+  6327127650920324,          // sightId
+  new Share {                // Share share
+    Id = "AAALRqomFOeE",     // string shareId
+    AccessLevel = AccessLevel.VIEWER  // AccessLevel accessLevel
+  }
+);
 ```
 
 ```java
@@ -5448,14 +5496,14 @@ ContainerDestination destination = new ContainerDestination {
 
 // Sample 1: Omit 'include' parameter
 Sheet sheet = smartsheet.SheetResources.CopySheet(
-  9283173393803140,                               // long sheetId
+  9283173393803140,                               // sheetId
   destination,
   null                                            // IEnumerable<SheetCopyInclusion> include
 );
 
 // Sample 2: Specify 'include' parameter with value of "data"
 Sheet sheet = smartsheet.SheetResources.CopySheet(
-  9283173393803140,                               // long sheetId
+  9283173393803140,                               // sheetId
   destination,
   new SheetCopyInclusion[] { SheetCopyInclusion.DATA }
 );
@@ -6374,7 +6422,7 @@ smartsheet.sheets.deleteSheet(options)
 
 ```csharp
 smartsheet.SheetResources.DeleteSheet(
-  1531988831168388            // long sheetId
+  1531988831168388            // sheetId
 );
 ```
 
@@ -6439,7 +6487,7 @@ smartsheet.sheets.getSheetVersion(options)
 
 ```csharp
 Integer version = smartsheet.SheetResources.GetSheetVersion(
-  1531988831168388            // long sheetId
+  1531988831168388            // sheetId
 );
 ```
 
@@ -6516,7 +6564,7 @@ smartsheet.sheets.getSheet(options)
 ```csharp
 // Omit all parameters
 Sheet sheet = smartsheet.SheetResources.GetSheet(
-  4583173393803140,           // long sheetId
+  4583173393803140,           // sheetId
   null,                       // IEnumerable<SheetLevelInclusion> includes
   null,                       // IEnumerable<SheetLevelExclusion> excludes
   null,                       // IEnumerable<long> rowIds
@@ -6686,7 +6734,7 @@ smartsheet.sheets.getSheetAsExcel(options)
 
 ```csharp
 smartsheet.SheetResources.GetSheetAsExcel(
-  4583173393803140,           // long sheetId
+  4583173393803140,           // sheetId
   outputStream
 );
 ```
@@ -6771,7 +6819,7 @@ smartsheet.sheets.getSheetAsPDF(options)
 
 ```csharp
 smartsheet.SheetResources.GetSheetAsPDF(
-  4583173393803140,               // long sheetId
+  4583173393803140,               // sheetId
   outputStream,
   PaperSize.A1
 );
@@ -6859,7 +6907,7 @@ smartsheet.sheets.getSheetAsCSV(options)
 
 ```csharp
 smartsheet.SheetResources.GetSheetAsCSV(
-  4583173393803140,               // long sheetId
+  4583173393803140,               // sheetId
   outputStream
 );
 ```
@@ -7084,13 +7132,13 @@ smartsheet.sheets.moveSheet(options)
 ```csharp
 // Specify destination
 ContainerDestination destination = new ContainerDestination {
-  DestinationId = 7960873114331012,           // long destinationFolderId
+  DestinationId = 7960873114331012,           // destinationFolderId
   DestinationType = DestinationType.FOLDER,
 };
 
 // Move sheet
 Sheet sheet = smartsheet.SheetResources.MoveSheet(
-  4583173393803140,                           // long sheetId
+  4583173393803140,                           // sheetId
   destination
 );
 ```
@@ -7187,7 +7235,7 @@ smartsheet.sheets.getPublishStatus(options)
 
 ```csharp
 SheetPublish status = smartsheet.SheetResources.GetPublishStatus(
-  4583173393803140            // long sheetId
+  4583173393803140            // sheetId
 );
 ```
 
@@ -7282,7 +7330,7 @@ SheetPublish publishSpecification = new SheetPublish
 
 // Set sheet publish status
 SheetPublish updatedStatus = smartsheet.SheetResources.UpdatePublishStatus(
-  4583614634583940,       // long sheetId
+  4583614634583940,       // sheetId
   publishSpecification
 );
 ```
@@ -7397,8 +7445,8 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields/{fieldId}/im
 var options = {
   sheetId: 1421228469708676,
   fieldId: 5629723890335892,
-  path: 'C:/dog.jpg',
-  fileName: 'dog.jpg'
+  path: 'C:/picture.jpg',
+  fileName: 'picture.jpg'
 };
 
 smartsheet.sheets.addSummaryFieldImage(options)
@@ -7410,15 +7458,33 @@ smartsheet.sheets.addSummaryFieldImage(options)
 ```
 
 ```csharp
-// Not yet implemented
+smartsheet.SheetResources.SummaryResources.AddSheetSummaryFieldImage(
+  1421228469708676,    // sheetId
+  5629723890335892,    // fieldId
+  "picture.jpg",    // file
+  "image/jpeg",    // contentType
+  "my image"    // altText
+);
 ```
 
 ```java
-// Not yet implemented
+smartsheet.sheetResources().summaryResources().addSheetSummaryFieldImage(
+  1421228469708676L,    // long sheetId
+  5629723890335892L,    // long fieldId
+  "picture.jpg",    // file
+  "image/jpeg",    // contentType
+  "my image"    // altText
+);
 ```
 
 ```python
-# Not yet implemented
+smartsheet_client.Sheets.add_sheet_summary_field_image(
+    1421228469708676,    # sheet_id
+    5629723890335892,    # field_id
+    "picture.jpg",    # file
+    "image/jpeg",    # file_type
+    "my image"    # alt_text
+)
 ```
 
 ```ruby
@@ -7520,15 +7586,45 @@ smartsheet.sheets.addSummaryFields(options)
 ```
 
 ```csharp
-// Not yet implemented
+SummaryField summaryField = new SummaryField();
+summaryField.Type = ColumnType.TEXT_NUMBER;
+summaryField.ObjectValue = new StringObjectValue("Sally Smart");
+summaryField.Index = 2;
+summaryField.Title = "Author";
+
+smartsheet.SheetResources.SummaryResources.AddSheetSummaryFields(
+  1421228469708676,    // sheetId
+  new SummaryField[] { summaryField },
+  false    // renameIfConflict
+);
 ```
 
 ```java
-// Not yet implemented
+SummaryField summaryField = new SummaryField();
+summaryField.setType(ColumnType.TEXT_NUMBER);
+summaryField.setObjectValue(new StringObjectValue("Sally Smart"));
+summaryField.setIndex(2);
+summaryField.setTitle("Author");
+
+smartsheet.sheetResources().summaryResources().addSheetSummaryFields(
+  1421228469708676L,    // long sheetId
+  Arrays.asList(summaryField),
+  false    // renameIfConflict
+);
 ```
 
 ```python
-# Not yet implemented
+summary_field1 = smartsheet.models.SummaryField()
+summary_field1.type = ColumnType.TEXT_NUMBER
+summary_field1.object_value = smartsheet.models.StringObjectValue('Sally Smart')
+summary_field1.index = 2
+summary_field1.title = 'Author'
+
+smartsheet_client.Sheets.add_sheet_summary_fields(
+    1421228469708676,    # sheet_id
+    [summary_field1],
+    False    # rename_if_conflict
+)
 ```
 
 ```ruby
@@ -7608,15 +7704,27 @@ smartsheet.sheets.deleteSummaryFields(options)
 ```
 
 ```csharp
-// Not yet implemented
+smartsheet.SheetResources.SummaryResources.DeleteSheetSummaryFields(
+  1421228469708676,    // sheetId
+  new long[] { 1421228469708676, 1421228469708676, 1421228469708676 },    // summaryFieldIds
+  true    // ignoreSummaryFieldsNotFound
+);
 ```
 
 ```java
-// Not yet implemented
+smartsheet.sheetResources().summaryResources().deleteSheetSummaryFields(
+  1421228469708676L,    // long sheetId
+  new HashSet(Arrays.asList(1421228469708676L, 1421228469708676L, 1421228469708676L)),    // long summaryFieldIds
+  true    // ignoreSummaryFieldsNotFound
+);
 ```
 
 ```python
-# Not yet implemented
+smartsheet_client.Sheets.delete_sheet_summary_fields(
+    1421228469708676,    # sheet_id
+    [1421228469708676, 1421228469708676, 1421228469708676],    # summary_field_ids
+    True    # ignore_summary_fields_not_found
+)
 ```
 
 ```ruby
@@ -7676,15 +7784,27 @@ smartsheet.sheets.getSummary(options)
 ```
 
 ```csharp
-// Not yet implemented
+smartsheet.SheetResources.SummaryResources.GetSheetSummary(
+  1421228469708676,    // sheetId
+  new List<SummaryFieldInclusion> { SummaryFieldInclusion.FORMAT, SummaryFieldInclusion.WRITER_INFO },
+  new List<SummaryFieldExclusion> { SummaryFieldExclusion.DISPLAY_VALUE }
+);
 ```
 
 ```java
-// Not yet implemented
+smartsheet.sheetResources().summaryResources().getSheetSummary(
+  1421228469708676L,    // long sheetId
+  EnumSet.of(SummaryFieldInclusion.FORMAT, SummaryFieldInclusion.WRITERINFO),
+  EnumSet.of(SummaryFieldExclusion.DISPLAYVALUE)
+);
 ```
 
 ```python
-# Not yet implemented
+smartsheet_client.Sheets.get_sheet_summary(
+    1421228469708676,    # sheet_id
+    include='format,writerInfo',
+    exclude='displayValue'
+)
 ```
 
 ```ruby
@@ -7761,15 +7881,42 @@ smartsheet.sheets.getSummaryFields(options)
 ```
 
 ```csharp
-// Not yet implemented
+PaginationParameters paginationParameters = new PaginationParameters(
+  false,    // includeAll
+  100,    // pageSize
+  1    // page
+);
+smartsheet.SheetResources.SummaryResources.GetSheetSummaryFields(
+  1421228469708676,    // sheetId
+  new List<SummaryFieldInclusion> { SummaryFieldInclusion.FORMAT, SummaryFieldInclusion.WRITER_INFO },
+  new List<SummaryFieldExclusion> { SummaryFieldExclusion.DISPLAY_VALUE },
+  paginationParameters
+);
 ```
 
 ```java
-// Not yet implemented
+PaginationParameters paginationParameters = new PaginationParameters(
+  false,    // includeAll
+  100,    // pageSize
+  1    // page
+);
+smartsheet.sheetResources().summaryResources().getSheetSummaryFields(
+  1421228469708676L,    // long sheetId
+  EnumSet.of(SummaryFieldInclusion.FORMAT, SummaryFieldInclusion.WRITERINFO),
+  EnumSet.of(SummaryFieldExclusion.DISPLAYVALUE),
+  paginationParameters
+);
 ```
 
 ```python
-# Not yet implemented
+smartsheet_client.Sheets.get_sheet_summary_fields(
+    1421228469708676,    # sheet_id
+    include='format,writerInfo',
+    exclude='displayValue',
+    100,    # page_size
+    1,    # page
+    False    # include_all
+)
 ```
 
 ```ruby
@@ -7859,15 +8006,45 @@ smartsheet.sheets.updateSummaryFields(options)
 ```
 
 ```csharp
-// Not yet implemented
+SummaryField summaryField = new SummaryField();
+summaryField.Type = ColumnType.TEXT_NUMBER;
+summaryField.ObjectValue = new StringObjectValue("Sally Smart");
+summaryField.Index = 2;
+summaryField.Title = "Author";
+
+smartsheet.SheetResources.SummaryResources.UpdateSheetSummaryFields(
+  1421228469708676,    // sheetId
+  new SummaryField[] { summaryField },
+  false    // renameIfConflict
+);
 ```
 
 ```java
-// Not yet implemented
+SummaryField summaryField = new SummaryField();
+summaryField.setType(ColumnType.TEXT_NUMBER);
+summaryField.setObjectValue(new StringObjectValue("Sally Smart"));
+summaryField.setIndex(2);
+summaryField.setTitle("Author");
+
+smartsheet.sheetResources().summaryResources().updateSheetSummaryFields(
+  1421228469708676L,    // long sheetId
+  Arrays.asList(summaryField),
+  false    // renameIfConflict
+);
 ```
 
 ```python
-# Not yet implemented
+summary_field1 = smartsheet.models.SummaryField()
+summary_field1.type = ColumnType.TEXT_NUMBER
+summary_field1.object_value = smartsheet.models.StringObjectValue('Sally Smart')
+summary_field1.index = 2
+summary_field1.title = 'Author'
+
+smartsheet_client.Sheets.update_sheet_summary_fields(
+    1421228469708676,    # sheet_id
+    [summary_field1],
+    False    # rename_if_conflict
+)
 ```
 
 ```ruby
@@ -7956,11 +8133,33 @@ smartsheet.sheets.sortRowsInSheet({sheetId: 9283173393803140, body: body})
 ```
 
 ```csharp
-// Not yet implemented
+SortCriterion criterion = new SortCriterion
+{
+  ColumnId = 4583173393803140,    // columnId
+  Direction = SortDirection.DESCENDING
+};
+SortSpecifier specifier = new SortSpecifier
+{
+  SortCriteria = new SortCriterion[] { criterion }
+};
+
+Sheet sheet = smartsheet.SheetResources.SortSheet(
+    4583173393803140,    // sheetId
+    specifier
+  );
 ```
 
 ```java
-// Not yet implemented
+SortCriterion criterion = new SortCriterion();
+criterion.setColumnId(4583173393803140L);    // long columnId
+criterion.setDirection(SortDirection.DESCENDING);
+SortSpecifier specifier = new SortSpecifier();
+specifier.setSortCriteria(Arrays.asList(criterion));
+
+Sheet sheet = smartsheet.sheetResources().sortSheet(
+    4583173393803140L,    // long sheetId
+    specifier
+  );
 ```
 
 ```python
@@ -8574,7 +8773,7 @@ smartsheet.sights.deleteSight(options)
 
 ```csharp
 smartsheet.SightResources.DeleteSight(
-  5077532685952900            // long sheetId
+  5077532685952900            // sightId
 );
 ```
 
@@ -8960,7 +9159,7 @@ curl https://api.smartsheet.com/2.0/sights/{sightId}/publish \
 ```javascript
 // Set options
 var options = {
-  sightId: 970160971507588
+  sightId: 5363568917931908
 };
 
 // Get Sight publish status
@@ -8974,11 +9173,15 @@ smartsheet.sights.getSightPublishStatus(options)
 ```
 
 ```csharp
-// [todo]
+SightPublish publish = smartsheet.SightResources.GetPublishStatus(
+    5363568917931908    // sightId
+  );
 ```
 
 ```java
-// [todo]
+SightPublish publish = smartsheet.sightResources().getPublishStatus(
+      5363568917931908L    // long sightId
+  );
 ```
 
 ```python
@@ -8988,7 +9191,7 @@ status = smartsheet_client.Sights.get_publish_status(
 
 ```ruby
 status = smartsheet.sights.get_publish_status(
-  sight_id: 970160971507588
+  sight_id: 5363568917931908
 )
 ```
 
@@ -9050,11 +9253,21 @@ smartsheet.sights.setSightPublishStatus(options)
 ```
 
 ```csharp
-// [todo]
+SightPublish publish = new SightPublish();
+publish.ReadOnlyFullEnabled = true;
+smartsheet.SightResources.SetPublishStatus(
+  5363568917931908,    // sightId
+  publish
+);
 ```
 
 ```java
-// [todo]
+SightPublish publish = new SightPublish();
+publish.setReadOnlyFullEnabled(true);
+smartsheet.sightResources().setPublishStatus(
+  5363568917931908L,    // long sightId
+  publish
+);
 ```
 
 ```python
@@ -9147,11 +9360,19 @@ smartsheet.sights.updateSight(options)
 ```
 
 ```csharp
-// [todo]
+Sight sight = smartsheet.SightResources.UpdateSight(
+  new Sight {
+    Id = 5363568917931908,    // sightId
+    Name = "New Sight Name"
+  }
+);
 ```
 
 ```java
-// [todo]
+Sight sight = new Sight();
+sight.setId(5363568917931908L);    // long sightId
+sight.setName("New Sight Name");
+Sight updatedSight = smartsheet.sightResources().updateSight(sight);
 ```
 
 ```python

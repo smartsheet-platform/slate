@@ -8,8 +8,8 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/updaterequests/{updateReque
 
 ```csharp
 smartsheet.SheetResources.UpdateRequestResources.DeleteUpdateRequest(
-  3285357287499652,      // long sheetId
-  2409350321989508       // long updateRequestId
+  3285357287499652,      // sheetId
+  2409350321989508       // updateRequestId
 );
 ```
 
@@ -38,7 +38,7 @@ smartsheet.sheetResources().updateRequestResources().deleteUpdateRequest(
 ```
 
 ```python
-ss_client.Sheets.delete_update_request(
+smartsheet_client.Sheets.delete_update_request(
   5190835902932868,        # sheet_id
   7444581001258884         # update_request_id
 )

@@ -209,7 +209,9 @@ smartsheet.tokens.getAccessToken(options)
 ```
 
 ```csharp
-// [todo]
+Token token = oauth.ObtainNewToken(
+  authResult      // AuthorizationResult authResult
+);
 ```
 
 ```java
@@ -297,7 +299,9 @@ smartsheet.tokens.refreshAccessToken(options)
 ```
 
 ```csharp
-// [todo]
+Token tokenRefreshed = oauth.RefreshToken(
+  token           // Token token
+);
 ```
 
 ```java
@@ -716,11 +720,25 @@ smartsheet.users.addAlternateEmail(options)
 ```
 
 ```csharp
-// [todo]
+List<AlternateEmail> alternateEmails = smartsheet.UserResources.AddAlternateEmail(
+  4495214342629252,                       // userId
+  new AlternateEmail[] {                  // Array of AlternateEmail
+    new AlternateEmail { Email = "John.Doe@smartsheet.com" },
+    new AlternateEmail { Email = "John.Doe.Test@smartsheet.com" } 
+  } 
+);
 ```
 
 ```java
-// [todo]
+AlternateEmail alias1 = new AlternateEmail();
+alias1.setEmail("John.Doe@smartsheet.com");
+AlternateEmail alias2 = new AlternateEmail();
+alias2.setEmail("John.Doe.Test@smartsheet.com");
+
+smartsheet.userResources().addAlternateEmail(
+  4495214342629252L,    // long userId
+  Arrays.asList(alias1, alias2)
+);
 ```
 
 ```python
@@ -809,13 +827,16 @@ smartsheet.users.makeAlternateEmailPrimary(options)
 
 ```csharp
 AlternateEmail primaryEmail = smartsheet.UserResources.PromoteAlternateEmail(
-  401090454808452,        // long userId
-  123456789012345         // long altEmailId
+  401090454808452,        // userId
+  123456789012345         // altEmailId
 );
 ```
 
 ```java
-// [todo]
+AlternateEmail primaryEmail = smartsheet.userResources().promoteAlternateEmail(
+  401090454808452L,    // long userId
+  123456789012345L    // long altEmailId
+);
 ```
 
 ```python
@@ -1524,7 +1545,7 @@ smartsheet.users.updateUser(options)
 // Specify updated user properties
 User userSpecification = new User
 {
-  Id = 82349925918590,
+  Id = 82349925918590,    // userId
   Admin = true,
   LicensedSheetCreator = true
 };
@@ -1616,15 +1637,31 @@ curl 'https://api.smartsheet.com/2.0/users/{userId}/profileimage' \
 ```
 
 ```csharp
-// Not yet implemented
+User myUser = smartsheet.UserResources.AddProfileImage(
+  3173821341106052,                // userId
+  "../path/to/mrgoodlookin.jpg",   // string file
+  "image/jpeg"                     // string fileType (MIME)
+);
 ```
 
 ```java
-// Not yet implemented
+try {
+  User myUser = smartsheet.userResources().addProfileImage(
+    3173821341106052L,               // long userId
+    "../path/to/mrgoodlookin.jpg",   // String file
+    "image/jpeg"                     // String fileType (MIME)
+  );
+} catch (FileNotFoundException e) {
+  e.printStackTrace();
+}
 ```
 
 ```python
-# Not yet implemented
+action = smartsheet_client.Users.add_profile_image(
+  3173821341106052,               # user_id (int)
+  '../path/to/mrgoodlookin.jpg',  # file (string)
+  'image/jpeg'                    # file_type (string)
+)
 ```
 
 ```ruby
@@ -1641,7 +1678,7 @@ curl 'https://api.smartsheet.com/2.0/users/{userId}/profileimage' \
     "email": "jane.roe@smartsheet.com",
     "name": "Jane Roe",
     "firstName": "Jane",
-    "lastName": "Row",
+    "lastName": "Roe",
     "profileImage": {
       "imageId": "u!1!nAtdn5RJB_o!k6_e_3h2R3w!wmYXPek-yVD",
       "height": 1050,
@@ -2228,7 +2265,7 @@ smartsheet.workspaces.updateWorkspace(options)
 // Specify updated workspace name
 Workspace workspaceSpecification = new Workspace
 {
-  Id = 7960873114331012,
+  Id = 7960873114331012,      // workspaceId
   Name = "Updated Workspace"
 };
 
@@ -2242,7 +2279,7 @@ Workspace updatedWorkspace = smartsheet.WorkspaceResources.UpdateWorkspace(
 // Specify updated workspace properties
 Workspace workspaceSpecification = new Workspace();
 workspaceSpecification.setName("Updated workspace")
-  .setId(7960873114331012L);
+  .setId(7960873114331012L);    // long workspaceId
 
 // Update workspace
 Workspace updatedWorkspace = smartsheet.workspaceResources().updateWorkspace(workspaceSpecification);

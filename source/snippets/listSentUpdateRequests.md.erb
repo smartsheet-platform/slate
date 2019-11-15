@@ -7,7 +7,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sentupdaterequests \
 
 ```csharp
  PaginatedResult<SentUpdateRequest> results = smartsheet.SheetResources.UpdateRequestResources.ListSentUpdateRequests(
-  1639534409607044L,      // long sheetId
+  1639534409607044,       // sheetId
   null                    // PaginationParameters
 );
 ```
@@ -36,7 +36,7 @@ PagedResult<SentUpdateRequest> results = smartsheet.sheetResources().updateReque
 ```
 
 ```python
-response = ss_client.Sheets.list_sent_update_requests(
+response = smartsheet_client.Sheets.list_sent_update_requests(
   5190835902932868)      # sheet_id
 update_requests = response.data
 ```

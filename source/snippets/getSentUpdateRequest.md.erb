@@ -7,8 +7,8 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/sentupdaterequests/{sentUpd
 
 ```csharp
 SentUpdateRequest results = smartsheet.SheetResources.UpdateRequestResources.GetSentUpdateRequest(
-  3285357287499652,      // long sheetId
-  2303451729291140       // long sentUpdateRequestId
+  3285357287499652,      // sheetId
+  2303451729291140       // sentUpdateRequestId
 );
 ```
 
@@ -37,7 +37,7 @@ SentUpdateRequest results = smartsheet.sheetResources().updateRequestResources()
 ```
 
 ```python
-response = ss_client.Sheets.get_sent_update_request(
+response = smartsheet_client.Sheets.get_sent_update_request(
   5190835902932868,       # sheet_id
   7510551698925444        # update_request_id
 )

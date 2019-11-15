@@ -23,7 +23,7 @@ UpdateRequest updateRequestSpecification = new UpdateRequest
 
 // Change update request
 UpdateRequest updatedUpdateRequest = smartsheet.SheetResources.UpdateRequestResources.UpdateUpdateRequest(
-  3285357287499652,          // long sheetId
+  3285357287499652,          // sheetId
   updateRequestSpecification
 );
 ```
@@ -52,11 +52,30 @@ smartsheet.sheets.changeUpdateRequest(options)
 ```
 
 ```java
-// [todo]
+UpdateRequest updateRequest = new UpdateRequest();
+updateRequest.setId(3294745817573252L);
+updateRequest.setColumnIds(Arrays.asList(1735559124150148L, 1735559124150148L));
+updateRequest.setIncludeAttachments(true);
+smartsheet.sheetResources().updateRequestResources().updateUpdateRequest(
+ 3294745817573252L,  // long sheetId
+ updateRequest
+);
+
 ```
 
 ```python
-# [todo]
+# Update required request fields
+request = smartsheet.models.UpdateRequest()
+request.subject = 'Sample Monthly Update Request'
+request.column_ids = [7036894123976580]
+request.include_attachments = True
+
+# Change update request
+action = smartsheet_client.Sheets.update_update_request(
+  3294745817573252,       # sheet_id
+  7820135625975684,       # update_request_id
+  request
+)
 ```
 
 ```ruby
