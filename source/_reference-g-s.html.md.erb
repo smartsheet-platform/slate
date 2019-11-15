@@ -7445,8 +7445,8 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/summary/fields/{fieldId}/im
 var options = {
   sheetId: 1421228469708676,
   fieldId: 5629723890335892,
-  path: 'C:/dog.jpg',
-  fileName: 'dog.jpg'
+  path: 'C:/picture.jpg',
+  fileName: 'picture.jpg'
 };
 
 smartsheet.sheets.addSummaryFieldImage(options)
@@ -7458,15 +7458,34 @@ smartsheet.sheets.addSummaryFieldImage(options)
 ```
 
 ```csharp
-// Not yet implemented
+smartsheet.SheetResources.SummaryResources.AddSheetSummaryFieldImage(
+  1421228469708676,    // sheetId
+  5629723890335892,    // fieldId
+  "picture.jpg",    // file
+  "image/jpeg",    // contentType
+  "my image"    // altText
+);
 ```
 
 ```java
-// Not yet implemented
+smartsheet.sheetResources().summaryResources().addSheetSummaryFieldImage(
+  1421228469708676L,    // long sheetId
+  5629723890335892L,    // long fieldId
+  "picture.jpg",    // file
+  "image/jpeg",    // contentType
+  "my image"    // altText
+);
 ```
 
 ```python
-# Not yet implemented
+ss_client = smart_setup['smart']
+ss_client.Sheets.add_sheet_summary_field_image(
+    1421228469708676,    # sheet_id
+    5629723890335892,    # field_id
+    "picture.jpg",    # file
+    "image/jpeg",    # file_type
+    "my image"    # alt_text
+)
 ```
 
 ```ruby
@@ -7568,15 +7587,45 @@ smartsheet.sheets.addSummaryFields(options)
 ```
 
 ```csharp
-// Not yet implemented
+SummaryField summaryField = new SummaryField();
+summaryField.Type = ColumnType.TEXT_NUMBER;
+summaryField.ObjectValue = new StringObjectValue("Sally Smart");
+summaryField.Index = 2;
+summaryField.Title = "Author";
+
+smartsheet.SheetResources.SummaryResources.AddSheetSummaryFields(
+  1421228469708676,    // sheetId
+  new SummaryField[] { summaryField },
+  false    // renameIfConflict
+);
 ```
 
 ```java
-// Not yet implemented
+SummaryField summaryField = new SummaryField();
+summaryField.setType(ColumnType.TEXT_NUMBER);
+summaryField.setObjectValue(new StringObjectValue("Sally Smart"));
+summaryField.setIndex(2);
+summaryField.setTitle("Author");
+
+smartsheet.sheetResources().summaryResources().addSheetSummaryFields(
+  1421228469708676L,    // long sheetId
+  Arrays.asList(summaryField),
+  false    // renameIfConflict
+);
 ```
 
 ```python
-# Not yet implemented
+summary_field1 = smartsheet.models.SummaryField()
+summary_field1.type = ColumnType.TEXT_NUMBER
+summary_field1.object_value = smartsheet.models.StringObjectValue('Sally Smart')
+summary_field1.index = 2
+summary_field1.title = 'Author'
+
+ss_client.Sheets.add_sheet_summary_fields(
+    1421228469708676,    # sheet_id
+    [summary_field1],
+    False    # rename_if_conflict
+)
 ```
 
 ```ruby
@@ -7656,15 +7705,27 @@ smartsheet.sheets.deleteSummaryFields(options)
 ```
 
 ```csharp
-// Not yet implemented
+smartsheet.SheetResources.SummaryResources.DeleteSheetSummaryFields(
+  1421228469708676,    // sheetId
+  new long[] { 1421228469708676, 1421228469708676, 1421228469708676 },    // summaryFieldIds
+  true    // ignoreSummaryFieldsNotFound
+);
 ```
 
 ```java
-// Not yet implemented
+smartsheet.sheetResources().summaryResources().deleteSheetSummaryFields(
+  1421228469708676L,    // long sheetId
+  new HashSet(Arrays.asList(1421228469708676L, 1421228469708676L, 1421228469708676L)),    // long summaryFieldIds
+  true    // ignoreSummaryFieldsNotFound
+);
 ```
 
 ```python
-# Not yet implemented
+ss_client.Sheets.delete_sheet_summary_fields(
+    1421228469708676,    # sheet_id
+    [1421228469708676, 1421228469708676, 1421228469708676],    # summary_field_ids
+    True    # ignore_summary_fields_not_found
+)
 ```
 
 ```ruby
@@ -7724,15 +7785,27 @@ smartsheet.sheets.getSummary(options)
 ```
 
 ```csharp
-// Not yet implemented
+smartsheet.SheetResources.SummaryResources.GetSheetSummary(
+  1421228469708676,    // sheetId
+  new List<SummaryFieldInclusion> { SummaryFieldInclusion.FORMAT, SummaryFieldInclusion.WRITER_INFO },
+  new List<SummaryFieldExclusion> { SummaryFieldExclusion.DISPLAY_VALUE }
+);
 ```
 
 ```java
-// Not yet implemented
+smartsheet.sheetResources().summaryResources().getSheetSummary(
+  1421228469708676L,    // long sheetId
+  EnumSet.of(SummaryFieldInclusion.FORMAT, SummaryFieldInclusion.WRITERINFO),
+  EnumSet.of(SummaryFieldExclusion.DISPLAYVALUE)
+);
 ```
 
 ```python
-# Not yet implemented
+ss_client.Sheets.get_sheet_summary(
+    1421228469708676,    # sheet_id
+    include='format,writerInfo',
+    exclude='displayValue'
+)
 ```
 
 ```ruby
@@ -7809,15 +7882,42 @@ smartsheet.sheets.getSummaryFields(options)
 ```
 
 ```csharp
-// Not yet implemented
+PaginationParameters paginationParameters = new PaginationParameters(
+  false,    // includeAll
+  100,    // pageSize
+  1    // page
+);
+smartsheet.SheetResources.SummaryResources.GetSheetSummaryFields(
+  1421228469708676,    // sheetId
+  new List<SummaryFieldInclusion> { SummaryFieldInclusion.FORMAT, SummaryFieldInclusion.WRITER_INFO },
+  new List<SummaryFieldExclusion> { SummaryFieldExclusion.DISPLAY_VALUE },
+  paginationParameters
+);
 ```
 
 ```java
-// Not yet implemented
+PaginationParameters paginationParameters = new PaginationParameters(
+  false,    // includeAll
+  100,    // pageSize
+  1    // page
+);
+smartsheet.sheetResources().summaryResources().getSheetSummaryFields(
+  1421228469708676L,    // long sheetId
+  EnumSet.of(SummaryFieldInclusion.FORMAT, SummaryFieldInclusion.WRITERINFO),
+  EnumSet.of(SummaryFieldExclusion.DISPLAYVALUE),
+  paginationParameters
+);
 ```
 
 ```python
-# Not yet implemented
+ss_client.Sheets.get_sheet_summary_fields(
+    1421228469708676,    # sheet_id
+    include='format,writerInfo',
+    exclude='displayValue',
+    100,    # page_size
+    1,    # page
+    False    # include_all
+)
 ```
 
 ```ruby
@@ -7907,15 +8007,45 @@ smartsheet.sheets.updateSummaryFields(options)
 ```
 
 ```csharp
-// Not yet implemented
+SummaryField summaryField = new SummaryField();
+summaryField.Type = ColumnType.TEXT_NUMBER;
+summaryField.ObjectValue = new StringObjectValue("Sally Smart");
+summaryField.Index = 2;
+summaryField.Title = "Author";
+
+smartsheet.SheetResources.SummaryResources.UpdateSheetSummaryFields(
+  1421228469708676,    // sheetId
+  new SummaryField[] { summaryField },
+  false    // renameIfConflict
+);
 ```
 
 ```java
-// Not yet implemented
+SummaryField summaryField = new SummaryField();
+summaryField.setType(ColumnType.TEXT_NUMBER);
+summaryField.setObjectValue(new StringObjectValue("Sally Smart"));
+summaryField.setIndex(2);
+summaryField.setTitle("Author");
+
+smartsheet.sheetResources().summaryResources().updateSheetSummaryFields(
+  1421228469708676L,    // long sheetId
+  Arrays.asList(summaryField),
+  false    // renameIfConflict
+);
 ```
 
 ```python
-# Not yet implemented
+summary_field1 = smartsheet.models.SummaryField()
+summary_field1.type = ColumnType.TEXT_NUMBER
+summary_field1.object_value = smartsheet.models.StringObjectValue('Sally Smart')
+summary_field1.index = 2
+summary_field1.title = 'Author'
+
+ss_client.Sheets.update_sheet_summary_fields(
+    1421228469708676,    # sheet_id
+    [summary_field1],
+    False    # rename_if_conflict
+)
 ```
 
 ```ruby
