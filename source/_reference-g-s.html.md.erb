@@ -8134,21 +8134,33 @@ smartsheet.sheets.sortRowsInSheet({sheetId: 9283173393803140, body: body})
 ```
 
 ```csharp
-Sheet sheet; // The sheet to sort.
 SortCriterion criterion = new SortCriterion
 {
-  ColumnId = sheet.Columns[1].Id.Value,
+  ColumnId = 4583173393803140,    // columnId
   Direction = SortDirection.DESCENDING
 };
 SortSpecifier specifier = new SortSpecifier
 {
-  SortCriteria = new SortCriterion[] {criterion}
+  SortCriteria = new SortCriterion[] { criterion }
 };
-sheet = smartsheet.SheetResources.SortSheet(sheet.Id.Value, specifier);
+
+Sheet sheet = smartsheet.SheetResources.SortSheet(
+    4583173393803140,    // sheetId
+    specifier
+  );
 ```
 
 ```java
-// Not yet implemented
+SortCriterion criterion = new SortCriterion();
+criterion.setColumnId(4583173393803140L);    // long columnId
+criterion.setDirection(SortDirection.DESCENDING);
+SortSpecifier specifier = new SortSpecifier();
+specifier.setSortCriteria(Arrays.asList(criterion));
+
+Sheet sheet = smartsheet.sheetResources().sortSheet(
+    4583173393803140L,    // long sheetId
+    specifier
+  );
 ```
 
 ```python
