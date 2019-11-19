@@ -1633,7 +1633,18 @@ curl 'https://api.smartsheet.com/2.0/users/{userId}/profileimage' \
 ```
 
 ```javascript
-// Not yet implemented
+var options = {
+  userId: 3173821341106052,
+  path: '../path/to/mrgoodlookin.jpg',
+  fileName: 'mrgoodlookin.jpg'
+};
+
+smartsheet.users.addProfileImage(options)
+  .then(function(result) {
+    console.log(result);
+  }).catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
