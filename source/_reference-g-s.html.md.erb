@@ -4403,7 +4403,7 @@ smartsheet.sights.deleteShare(options)
 
 ```csharp
 smartsheet.SightResources.ShareResources.DeleteShare(
-  6327127650920324,     // long sightId
+  6327127650920324,     // sightId
   "AAABbMomFOeE"        // string shareId
 );
 ```
@@ -4536,7 +4536,7 @@ smartsheet.sights.listShares(options)
 
 ```csharp
 PaginatedResult<Share> shares = smartsheet.SightResources.ShareResources.ListShares(
-  6327127650920324,       // long sightId
+  6327127650920324,       // sightId
   null,                   // Pagination parameters
   ShareScope.Item         // ShareScope shareScope
 );
@@ -4647,7 +4647,7 @@ Share share = new Share {
   Email = "jane.doe@smartsheet.com"
 }
 List<Share> sightShares = smartsheet.SightResources.ShareResources.ShareTo(
-  6327127650920324,             // long sightId
+  6327127650920324,             // sightId
   new Share[] { share },        // IEnumerable<Share> shares
   true                          // bool sendEmail
 );
@@ -4748,7 +4748,7 @@ smartsheet.sights.updateShare(options)
 
 ```csharp
 Share updatedShare = smartsheet.SightResources.ShareResources.UpdateShare(
-  6327127650920324,          // long sightId
+  6327127650920324,          // sightId
   new Share {                // Share share
     Id = "AAALRqomFOeE",     // string shareId
     AccessLevel = AccessLevel.VIEWER  // AccessLevel accessLevel
