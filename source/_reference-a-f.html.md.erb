@@ -7704,7 +7704,7 @@ Folder folder = smartsheet.folderResources().moveFolder(
 ```python
 folder = smartsheet_client.Folders.move_folder(
   4509918431602564,                           # folder_id to be moved
-  smartsheet.models.Destination({
+  smartsheet.models.ContainerDestination({
     'destination_id': 7960873114331012,     # destination folder_id
     'destination_type': 'folder'
   })
