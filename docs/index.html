@@ -1940,7 +1940,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2019-11-15
+<p>Updated 2019-12-04
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -12779,7 +12779,7 @@ These API operations allow you to access the user&#39;s favorite API-supported o
 <span class="o">);</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">folder</span> <span class="o">=</span> <span class="n">smartsheet_client</span><span class="o">.</span><span class="n">Folders</span><span class="o">.</span><span class="n">move_folder</span><span class="p">(</span>
   <span class="mi">4509918431602564</span><span class="p">,</span>                           <span class="c"># folder_id to be moved</span>
-  <span class="n">smartsheet</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Destination</span><span class="p">({</span>
+  <span class="n">smartsheet</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">ContainerDestination</span><span class="p">({</span>
     <span class="s">'destination_id'</span><span class="p">:</span> <span class="mi">7960873114331012</span><span class="p">,</span>     <span class="c"># destination folder_id</span>
     <span class="s">'destination_type'</span><span class="p">:</span> <span class="s">'folder'</span>
   <span class="p">})</span>
@@ -30301,7 +30301,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <tr>
 <td>400</td>
 <td>1035</td>
-<td>Attachments and discussions cannot be POSTed with a row.</td>
+<td>Deprecated.</td>
 </tr>
 <tr>
 <td>400</td>
@@ -30590,6 +30590,16 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>400</td>
+<td>1093</td>
+<td>Apple verification not available.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1094</td>
+<td>Can&#39;t set password without licensed account.</td>
+</tr>
+<tr>
+<td>400</td>
 <td>1095</td>
 <td>The Excel file is invalid/corrupt. This may be due to an invalid file extension, an outdated Excel format, or an invalid Content-Length.</td>
 </tr>
@@ -30855,6 +30865,36 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>400</td>
+<td>1149</td>
+<td>Not configured for Gantt.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1150</td>
+<td>Invalide operation for shared.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>1151</td>
+<td>Scope object not found.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1152</td>
+<td>URL must have HTTPS.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>1153</td>
+<td>Webhook app revoked.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>1154</td>
+<td>Webhook disabled by Smartsheet.</td>
+</tr>
+<tr>
+<td>400</td>
 <td>1155</td>
 <td>You cannot set the &#39;{0}&#39; attribute for a cell in a &#39;Project Settings&#39; column of a dependency-enabled sheet.</td>
 </tr>
@@ -30912,11 +30952,6 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td>400</td>
 <td>1167</td>
 <td>The resource you are attempting to access has expired.</td>
-</tr>
-<tr>
-<td>400</td>
-<td>1170</td>
-<td>The sheet referenced by this widget is unavailable or deleted.</td>
 </tr>
 <tr>
 <td>403</td>
@@ -31010,6 +31045,101 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>400</td>
+<td>1191</td>
+<td>Profile field attribute is the wrong type.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>1192</td>
+<td>Can&#39;t edit locked profile field.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1193</td>
+<td>Duplicate profile field title.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1194</td>
+<td>Invalid profile field type for options.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1195</td>
+<td>Duplicate profile field index.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1196</td>
+<td>Profile field type required for change.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1197</td>
+<td>Profile field options not allowed for symbols.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1198</td>
+<td>Unsupported symbol for profile field type.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1199</td>
+<td>Maximum number profile fields exceeded.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1200</td>
+<td>Duplicate profile field Id.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1201</td>
+<td>Profile field image only.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1202</td>
+<td>Profile field hyperlink value must be string.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1203</td>
+<td>Can&#39;t link profile field to same sheet.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>1204</td>
+<td>Invalid sheet report sight Id.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1205</td>
+<td>Can&#39;t set profile field alt text.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1206</td>
+<td>Unsupported profile field format type.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1207</td>
+<td>Attribute value is empty.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1208</td>
+<td>Duplicate profile field title in request.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1209</td>
+<td>Can&#39;t set attribute on column type.</td>
+</tr>
+<tr>
+<td>400</td>
 <td>1210</td>
 <td>Column validation is not supported for column type &#39;{0}&#39;.</td>
 </tr>
@@ -31032,6 +31162,21 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td>400</td>
 <td>1214</td>
 <td>Dropdown and Contact List columns with data validation must have at least one option value.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1215</td>
+<td>Notification not supported by level.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1216</td>
+<td>Notification rule not found.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1217</td>
+<td>Exceeds allowed max date.</td>
 </tr>
 <tr>
 <td>400</td>
@@ -31060,6 +31205,31 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>400</td>
+<td>1222</td>
+<td>Invalid attribute for operation.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1223</td>
+<td>Sort sheet with locked row.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1224</td>
+<td>Invalid parameter value.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1225</td>
+<td>Problem processing row header.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1226</td>
+<td>Personal workspace not found.</td>
+</tr>
+<tr>
+<td>400</td>
 <td>1227</td>
 <td>The query parameters &#39;{0}&#39; and &#39;{1}&#39; are mutually exclusive. Only one may be set.</td>
 </tr>
@@ -31075,8 +31245,183 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>400</td>
+<td>1230</td>
+<td>Duplicate bot type.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1231</td>
+<td>Invalid bot type.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>1232</td>
+<td>Bot not enabled.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1233</td>
+<td>Required form field missing.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1234</td>
+<td>Form data empty.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1235</td>
+<td>Value not supported on column.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1236</td>
+<td>OAuth missing client auth.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1237</td>
+<td>OAuth redundant client auth.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1238</td>
+<td>OAuth invalid secret.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1239</td>
+<td>Client column version mismatch.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1240</td>
+<td>Multi-contact list limit.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1241</td>
+<td>Invalid mulcit-contact name.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1242</td>
+<td>Too many display column Ids.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1243</td>
+<td>Invalid view by Id.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1244</td>
+<td>Uncardable view by Id.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1245</td>
+<td>Invalid display column Id.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1246</td>
+<td>Displaying primary column in card view.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1247</td>
+<td>Card view level below minimum.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1248</td>
+<td>Invalid subtask column Id.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1249</td>
+<td>Uncheckable subtask column Id.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1250</td>
+<td>Card view not configured.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1251</td>
+<td>Duplicate display column Id.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1252</td>
+<td>Inconsistent lane values.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1253</td>
+<td>Move card adjacent to self.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1254</td>
+<td>Invalid view by Id for card operation.</td>
+</tr>
+<tr>
+<td>400</td>
 <td>1255</td>
 <td>Attachment type &#39;{0}&#39; is not supported.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1256</td>
+<td>Individual accounts disabled.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1257</td>
+<td>Form hyperlink is not URL.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1258</td>
+<td>Cannot move folder under descendant.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1259</td>
+<td>Uncardable view by Id for card operation.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1260</td>
+<td>Cannot delete last visible column.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1261</td>
+<td>Uncardable column for editing lanes.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1262</td>
+<td>Invalid card lane name.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1263</td>
+<td>Duplicate card lane name.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1264</td>
+<td>Column fields not allowed for editing lanes.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1265</td>
+<td>Card view was never configured for lanes.</td>
 </tr>
 <tr>
 <td>400</td>
@@ -31084,9 +31429,119 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <td>This rule is not accessible through the API. Only single-action notifications, approval requests, or update requests qualify.</td>
 </tr>
 <tr>
+<td>400</td>
+<td>1267</td>
+<td>Web content widget disabled.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1268</td>
+<td>Dashboard web content widget custom domain URL disabled.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>1269</td>
+<td>Removing group admin who owns groups.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>1270</td>
+<td>Forbidden impersonate object owner.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>1271</td>
+<td>Forbidden impersonate user.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1272</td>
+<td>Invalid impersonate header value.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1273</td>
+<td>Both impersonate and assume user provided.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1274</td>
+<td>Impersonate object owner not supported.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>1275</td>
+<td>Impersonate feature not enabled.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1276</td>
+<td>Column type not supported.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1277</td>
+<td>Multi-picklist invalid size.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1279</td>
+<td>Proofing setting error.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1280</td>
+<td>Proofing duplicate record.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1281</td>
+<td>Proofing invalid file extension.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1282</td>
+<td>Invalid JSON.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1283</td>
+<td>Unrecognized JSON property.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1284</td>
+<td>Dashboard level below minimum.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1286</td>
+<td>Proofing service row move invalid.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>1287</td>
+<td>Publish disabled by sheet sys admin.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>1288</td>
+<td>Sheet disabled by admin.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1289</td>
+<td>Proofing cannot disable with proofs.</td>
+</tr>
+<tr>
 <td>429</td>
 <td>4003</td>
 <td>Rate limit exceeded.</td>
+</tr>
+<tr>
+<td>410</td>
+<td>4005</td>
+<td>API version retired.</td>
 </tr>
 <tr>
 <td>400</td>
@@ -31106,26 +31561,6 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <th>Smartsheet message</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>500</td>
-<td>1006</td>
-<td>Not found.</td>
-</tr>
-<tr>
-<td>500</td>
-<td>1012</td>
-<td>Required object attribute(s) are missing from your request: action.includedColumnIds.</td>
-</tr>
-<tr>
-<td>500</td>
-<td>1031</td>
-<td>The value &#39;[]&#39; is not valid for the attribute action.includedColumnIds.</td>
-</tr>
-<tr>
-<td>500</td>
-<td>1032</td>
-<td>The attribute(s) automationRule.userCanModify are not allowed for this operation.</td>
-</tr>
 <tr>
 <td>500</td>
 <td>1119</td>
@@ -31148,8 +31583,13 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>500</td>
-<td>1222</td>
-<td>The value &#39;{0}&#39; was not valid for the operation. {1}</td>
+<td>1278</td>
+<td>Proofing service error.</td>
+</tr>
+<tr>
+<td>500</td>
+<td>1285</td>
+<td>Dashboard source profile field missing.</td>
 </tr>
 <tr>
 <td>500</td>
