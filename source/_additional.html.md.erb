@@ -171,7 +171,7 @@ HTTP status code | Smartsheet errorCode | Smartsheet message
 400 | 1032 | The attribute(s) {0} are not allowed for this operation. 
 404 | 1033 | The template was not found. 
 400 | 1034 | Invalid Row Id.
-400 | 1035 | Attachments and discussions cannot be POSTed with a row. 
+400 | 1035 | Deprecated. 
 400 | 1036 | The columnId {0} is invalid. 
 400 | 1037 | The columnId {0} is included more than once in a single row. 
 400 | 1038 | Invalid Cell value. Must be numeric or a string. 
@@ -229,6 +229,8 @@ HTTP status code | Smartsheet errorCode | Smartsheet message
 400 | 1090 | Column.type is required when changing symbol, systemColumnType or options.
 400 | 1091 | Invalid Content-Type: {0}.
 403 | 1092 | You cannot delete this row. Either it or one or more of its children are locked.
+400 | 1093 | Apple verification not available.
+400 | 1094 | Can't set password without licensed account.
 400 | 1095 | The Excel file is invalid/corrupt. This may be due to an invalid file extension, an outdated Excel format, or an invalid Content-Length.
 403 | 1096 | This Apple payment receipt has already been applied to a user's payment profile.
 403 | 1097 | A user must be a licensed sheet creator to be a resource viewer.
@@ -282,6 +284,12 @@ HTTP status code | Smartsheet errorCode | Smartsheet message
 400 | 1146 | Unsupported operation: {0}.
 400 | 1147 | Multipart request contained an invalid part name: '{0}'
 400 | 1148 | Numeric cell values must be between {0} and {1}.
+400 | 1149 | Not configured for Gantt.
+400 | 1150 | Invalide operation for shared.
+404 | 1151 | Scope object not found.
+400 | 1152 | URL must have HTTPS.
+403 | 1153 | Webhook app revoked.
+403 | 1154 | Webhook disabled by Smartsheet.
 400 | 1155 | You cannot set the '{0}' attribute for a cell in a 'Project Settings' column of a dependency-enabled sheet.
 400 | 1156 | Invalid email.
 400 | 1157 | This address is already associated with another Smartsheet account, so it cannot be added as an alternate address for this account.
@@ -294,7 +302,6 @@ HTTP status code | Smartsheet errorCode | Smartsheet message
 400 | 1165 | Cannot add image to cell with alt text larger than 100 characters.
 400 | 1166 | You cannot share Sights as an Editor.
 400 | 1167 | The resource you are attempting to access has expired.
-400 | 1170 | The sheet referenced by this widget is unavailable or deleted.
 403 | 1173 | You must be in a Team/Enterprise account to specify a {0} value of '{1}'.
 403 | 1174 | The value for {0} is invalid because this publish option is configured to be restricted to users in this account.
 403 | 1175 | One or more publish options which you attempted to enable are disabled for this account.
@@ -313,22 +320,106 @@ HTTP status code | Smartsheet errorCode | Smartsheet message
 403 | 1188 | The account status of the user specified is not active.
 400 | 1189 | Only Enterprise or Team accounts with security controls are able to change primary emails.
 400 | 1190 | Only Enterprise or Team accounts with special permission granted are able to change primary emails.
+400 | 1191 | Profile field attribute is the wrong type.
+403 | 1192 | Can't edit locked profile field.
+400 | 1193 | Duplicate profile field title.
+400 | 1194 | Invalid profile field type for options.
+400 | 1195 | Duplicate profile field index.
+400 | 1196 | Profile field type required for change.
+400 | 1197 | Profile field options not allowed for symbols.
+400 | 1198 | Unsupported symbol for profile field type.
+400 | 1199 | Maximum number profile fields exceeded.
+400 | 1200 | Duplicate profile field Id.
+400 | 1201 | Profile field image only.
+400 | 1202 | Profile field hyperlink value must be string.
+400 | 1203 | Can't link profile field to same sheet.
+404 | 1204 | Invalid sheet report sight Id.
+400 | 1205 | Can't set profile field alt text.
+400 | 1206 | Unsupported profile field format type.
+400 | 1207 | Attribute value is empty.
+400 | 1208 | Duplicate profile field title in request.
+400 | 1209 | Can't set attribute on column type.
 400 | 1210 | Column validation is not supported for column type '{0}'.
 400 | 1211 | Not authorized.
 403 | 1212 | You must be a sheet admin to override validation.
 400 | 1213 | A(n) {0} could not be saved to column "{1}" since column validation is enabled as type "{2}".
 400 | 1214 | Dropdown and Contact List columns with data validation must have at least one option value.
+400 | 1215 | Notification not supported by level.
+400 | 1216 | Notification rule not found.
+400 | 1217 | Exceeds allowed max date.
 400 | 1218 | The attributes recipientColumnIds, recipients and notifyAllSharedUsers are mutually exclusive. Only one may be set, not all.
 400 | 1218 | The attributes includeAllColumnIds and includedColumnIds are mutually exclusive. Only one may be set not all.
 400 | 1219 | Some recipients cannot be notified. They are not shared to the sheet, or your settings prohibit notification of non-shared users.
 400 | 1220 | Automation action type cannot be changed.
 400 | 1221 | The value {0} is not valid for the attribute action.recipientColumnIds. Only Contact List columns may be used.
+400 | 1222 | Invalid attribute for operation.
+400 | 1223 | Sort sheet with locked row.
+400 | 1224 | Invalid parameter value.
+400 | 1225 | Problem processing row header.
+400 | 1226 | Personal workspace not found.
 400 | 1227 | The query parameters '{0}' and '{1}' are mutually exclusive. Only one may be set.
 400 | 1228 | You must specify one of the following query parameters: '{0}' or '{1}'.
 400 | 1229 | The value '{0}' was not valid for the parameter '{1}'. The value must be between '{2}' and '{3}'.
+400 | 1230 | Duplicate bot type.
+400 | 1231 | Invalid bot type.
+403 | 1232 | Bot not enabled.
+400 | 1233 | Required form field missing.
+400 | 1234 | Form data empty.
+400 | 1235 | Value not supported on column.
+400 | 1236 | OAuth missing client auth.
+400 | 1237 | OAuth redundant client auth.
+400 | 1238 | OAuth invalid secret.
+400 | 1239 | Client column version mismatch.
+400 | 1240 | Multi-contact list limit.
+400 | 1241 | Invalid mulcit-contact name.
+400 | 1242 | Too many display column Ids.
+400 | 1243 | Invalid view by Id.
+400 | 1244 | Uncardable view by Id.
+400 | 1245 | Invalid display column Id.
+400 | 1246 | Displaying primary column in card view.
+400 | 1247 | Card view level below minimum.
+400 | 1248 | Invalid subtask column Id.
+400 | 1249 | Uncheckable subtask column Id.
+400 | 1250 | Card view not configured.
+400 | 1251 | Duplicate display column Id.
+400 | 1252 | Inconsistent lane values.
+400 | 1253 | Move card adjacent to self.
+400 | 1254 | Invalid view by Id for card operation.
 400 | 1255 | Attachment type '{0}' is not supported.
+400 | 1256 | Individual accounts disabled.
+400 | 1257 | Form hyperlink is not URL.
+400 | 1258 | Cannot move folder under descendant.
+400 | 1259 | Uncardable view by Id for card operation.
+400 | 1260 | Cannot delete last visible column.
+400 | 1261 | Uncardable column for editing lanes.
+400 | 1262 | Invalid card lane name.
+400 | 1263 | Duplicate card lane name.
+400 | 1264 | Column fields not allowed for editing lanes.
+400 | 1265 | Card view was never configured for lanes.
 400 | 1266 | This rule is not accessible through the API. Only single-action notifications, approval requests, or update requests qualify.
+400 | 1267 | Web content widget disabled. 
+400 | 1268 | Dashboard web content widget custom domain URL disabled.
+403 | 1269 | Removing group admin who owns groups. 
+403 | 1270 | Forbidden impersonate object owner.
+403 | 1271 | Forbidden impersonate user.
+400 | 1272 | Invalid impersonate header value.
+400 | 1273 | Both impersonate and assume user provided.
+400 | 1274 | Impersonate object owner not supported.
+403 | 1275 | Impersonate feature not enabled.
+400 | 1276 | Column type not supported.
+400 | 1277 | Multi-picklist invalid size. 
+400 | 1279 | Proofing setting error.
+400 | 1280 | Proofing duplicate record.
+400 | 1281 | Proofing invalid file extension.
+400 | 1282 | Invalid JSON.
+400 | 1283 | Unrecognized JSON property.
+400 | 1284 | Dashboard level below minimum.
+400 | 1286 | Proofing service row move invalid.
+403 | 1287 | Publish disabled by sheet sys admin.
+403 | 1288 | Sheet disabled by admin. 
+400 | 1289 | Proofing cannot disable with proofs.
 429 | 4003 | Rate limit exceeded.
+410 | 4005 | API version retired.
 400 | 5xxx | Errors in the 5xxx range represent conditions that a developer cannot reasonably prevent or handle, most typically related to account status. These error messages are localized and can be displayed to the end-user to inform them of the condition that caused the error to occur.
 
 ## 500-Level Error Codes
@@ -337,15 +428,12 @@ HTTP status code | Smartsheet errorCode | Smartsheet message
 
 HTTP status code | Smartsheet errorCode | Smartsheet message
 -----|-----|-----|
-500 | 1006 | Not found.
-500 | 1012 | Required object attribute(s) are missing from your request: action.includedColumnIds.
-500 | 1031 | The value '[]' is not valid for the attribute action.includedColumnIds.
-500 | 1032 | The attribute(s) automationRule.userCanModify are not allowed for this operation.
 500 | 1119 | Failed to complete copy.<br/>**NOTE**: may include a "detail" object containing "topContainerType" and "topContainerId" which represent the top-level folder or workspace that were partially copied.
 500 | 1170 | The sheet referenced by this widget is unavailable or deleted.
 500 | 1171 | The report referenced by this widget is unavailable or deleted.
 500 | 1172 | The referenced cell is unavailable or deleted.
-500 | 1222 | The value '{0}' was not valid for the operation. {1}
+500 | 1278 | Proofing service error.
+500 | 1285 | Dashboard source profile field missing.
 500 | 4000 | An unexpected error has occurred. Please contact api@smartsheet.com for assistance.
 503 | 4001 | Smartsheet.com is currently offline for system maintenance. Please check back again shortly.
 500 | 4002 | Server timeout exceeded. Request has failed.
