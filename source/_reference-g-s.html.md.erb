@@ -6696,6 +6696,7 @@ Gets the sheet specified in the URL. Returns the sheet, including rows, and opti
   | **pageSize** (optional): number of rows per page to include with the sheet.  If neither **pageSize** nor **page** is specified, returns all rows in the sheet.  If only page is specified, defaults to a page size of 100.
   | **rowIds** (optional): a comma-separated list of row Ids on which to filter the rows included in the result
   | **rowNumbers** (optional): a comma-separated list of row numbers on which to filter the rows included in the result.  Non-existent row numbers are ignored.
+  | **rowsModifiedSince** (optional): filter to return only rows that have been modified since the date/time provided. Date should be in ISO-8601 format, for example, **rowsModifiedSince=2019-10-12T13:25:32-07:00**.
 <%= RETURNS %> | [Sheet object](#sheet-object), populated according to the specified parameters
 <%= SCOPE %> | READ_SHEETS
 
