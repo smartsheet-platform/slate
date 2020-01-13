@@ -971,8 +971,14 @@ For other error conditions, see the list of [OAuth Error Types](#oauth-error-typ
 > Request an access token:
 
 ```shell
+// Sample 1: Use a hash
 curl https://api.smartsheet.com/2.0/token \
 -d 'grant_type=authorization_code&code={your_code}&client_id={your_client_id}&hash={SHA_256(app_secret|code)}' \
+-X POST
+
+// Sample 2: Use plain text
+curl https://api.smartsheet.com/2.0/token \
+-d 'grant_type=authorization_code&code={your_code}&client_id={your_client_id}&client_secret={app_secret}' \
 -X POST
 ```
 
@@ -1082,8 +1088,14 @@ For possible error conditions, see the list of [OAuth Error Types](#oauth-error-
 > Refresh an access token:
 
 ```shell
+Sample 1: Use a hash
 curl https://api.smartsheet.com/2.0/token \
 -d 'grant_type=refresh_token&refresh_token={your_refresh_token}&client_id={your_client_id}&hash={SHA_256(app_secret|refresh_token)}' \
+-X POST
+
+Sample 2: Use plain text
+curl https://api.smartsheet.com/2.0/token \
+-d 'grant_type=refresh_token&refresh_token={your_refresh_token}&client_id={your_client_id}&client_secret={app_secret}' \
 -X POST
 ```
 
@@ -1116,7 +1128,9 @@ smartsheet.tokens.refreshAccessToken(options)
 ```
 
 ```csharp
-// [todo]
+Token tokenRefreshed = oauth.RefreshToken(
+  token           // Token token
+);
 ```
 
 ```java
@@ -1158,8 +1172,10 @@ Once you obtain the new tokens, you must use them in place of the old ones, whic
 Value | Description |
 -----|-----|
 **client_id** | Required. Client Id for your app.
+**app_secret** | Required. Either sent as part of the **hash** or as the value for **client_secret**. This is the **app_secret** you obtained when you [registered your app](#register-your-app-using-developer-tools). 
+**client_secret** | Optional. Must use either this value or **hash**. Plain text method for sending the **app_secret**. For example, <code>client_secret={app_secret}</code>. Encryption occurs at the HTTPS level.
 **grant_type** | Required. Must be set to **refresh_token**.
-**hash** | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token value. To obtain an **app_secret**, see [Register Your App Using Developer Tools](#register-your-app-using-developer-tools).
+**hash** | Optional. Must use either this value or **client_secret**. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token.  For example, <code>hash={SHA_256(app_secret&#124;refresh_token)}</code>.
 **refresh_token** | Required. **refresh_token** value that came with the access token.
 **redirect_uri** | Deprecated. If supplied, must match the redirect URI you [registered](#register-your-app-using-developer-tools) for your app.
 
