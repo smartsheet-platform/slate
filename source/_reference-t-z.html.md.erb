@@ -187,6 +187,7 @@ curl https://api.smartsheet.com/2.0/token \
 ```
 
 ```javascript
+// Sample 1: Use a hash
 // Create hash
 var hash =
   crypto.createHash('sha256')
@@ -212,12 +213,19 @@ smartsheet.tokens.getAccessToken(options)
 .catch(function(error) {
     console.log(error);
   });
+
+// Sample 2: Use plain text
+// In progress  
 ```
 
 ```csharp
+// Sample 1: Use a hash
 Token token = oauth.ObtainNewToken(
   authResult      // AuthorizationResult authResult
 );
+
+// Sample 2: Use plain text
+// In progress
 ```
 
 ```java
@@ -229,6 +237,7 @@ Token token = oauth.ObtainNewToken(
 ```
 
 ```ruby
+# Sample 1: Use a hash
 hash = Digest::SHA256.hexdigest '9samp7le3for71you|sample6p9qisx6a'
                                 # your_app_secret|your_code
 smartsheet.token.get(
@@ -236,6 +245,9 @@ smartsheet.token.get(
   code: 'sample6p9qisx6a',
   hash: hash
 )
+
+# Sample 2: Use plain text
+# In progress
 ```
 
 > Example response

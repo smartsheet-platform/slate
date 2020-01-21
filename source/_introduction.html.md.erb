@@ -983,6 +983,7 @@ curl https://api.smartsheet.com/2.0/token \
 ```
 
 ```javascript
+// Sample 1: Use a hash
 // Create hash
 var hash =
   crypto.createHash('sha256')
@@ -1008,9 +1009,13 @@ smartsheet.tokens.getAccessToken(options)
 .catch(function(error) {
     console.log(error);
   });
+
+// Sample 2: Use plain text
+// In progress
 ```
 
 ```csharp
+// Sample 1: Use a hash
 // Get the token from the authorization result (see "Request an authorization code")
 Token token = oauth.ObtainNewToken(
   authResult      // AuthorizationResult authResult
@@ -1018,6 +1023,9 @@ Token token = oauth.ObtainNewToken(
 
 // Refresh an access token
 Token tokenRefreshed = oauth.RefreshToken(token);
+
+// Sample 2: Use plain text
+// In progress
 ```
 
 ```java
@@ -1029,6 +1037,7 @@ Token tokenRefreshed = oauth.RefreshToken(token);
 ```
 
 ```ruby
+# Sample 1: Use a hash
 hash = Digest::SHA256.hexdigest '9samp7le3for71you|sample6p9qisx6a'
                               # your_app_secret|your_code
 smartsheet.token.get(
@@ -1036,6 +1045,9 @@ smartsheet.token.get(
   code: 'sample6p9qisx6a',
   hash: hash
 )
+
+# Sample 2: Use plain text
+# In progress
 ```
 
 
@@ -1098,6 +1110,7 @@ curl https://api.smartsheet.com/2.0/token \
 ```
 
 ```javascript
+// Sample 1: Use a hash
 // Create hash
 var hash =
   crypto.createHash('sha256')
@@ -1123,10 +1136,17 @@ smartsheet.tokens.refreshAccessToken(options)
   .catch(function(error) {
       console.log(error);
   });
+
+// Sample 2: Use plain text
+// In progress
 ```
 
 ```csharp
+// Sample 1: Use a hash
 Token tokenRefreshed = oauth.RefreshToken(token);
+
+// Sample 2: Use plain text
+// In progress
 ```
 
 ```java
@@ -1138,6 +1158,7 @@ Token tokenRefreshed = oauth.RefreshToken(token);
 ```
 
 ```ruby
+# Sample 1: Use a hash
 hash = Digest::SHA256.hexdigest '9samp7le3for71you|e9x352a9mp4151le2505'
                                 # your_app_secret|refresh_token
 smartsheet.token.refresh(
@@ -1145,6 +1166,9 @@ smartsheet.token.refresh(
   refresh_token: 'e9x352a9mp4151le2505',
   hash: hash
 )
+
+# Sample 2: Use plain text
+# In progress
 ```
 
 > Successful Response:
