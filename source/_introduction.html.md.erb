@@ -354,7 +354,13 @@ Also, make sure your code does not depend on the order in which JSON objects are
 
 When there is new functionality that is not compatible with existing code, say in the case of a new concept, Smartsheet increments the level to indicate the new feature can be ignored until you are ready to implement the code to work with the new level.
 
-In the example of new column types, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
+See also: [Working with Complex Objects: Multi-contact or Multi-picklist](#working-with-complex-objects-multi-contact-or-multi-picklist)
+
+## Working with Complex Objects: Multi-contact or Multi-picklist
+
+New column types, such as MULTI_CONTACT_LIST and MULTI_PICKLIST, offer more complex ways to work with columns. Smartsheet has provided a backwards compatible way for these payloads to work with your existing integrations while also giving you a way to query for their content.
+
+With either column type, there are two ways of receiving the response:
 
 * If you do nothing to your code, column types will display as TEXT_NUMBER
 * If you use the level query parameter as detailed below, column types will display as MULTI_CONTACT_LIST or MULTI_PICKLIST and return a complex object (aka a non-primitive type)
@@ -368,7 +374,7 @@ Text | Multi-contact | Multi-picklist
 -----|-----|-----|
 0 | 1 | 2 
 
-You must use the level query parameter, for example **?level=2**, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible, that is a string.
+You must use the level query parameter, for example **level=2**, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible, that is a string.
 
 Use the highest possible level for each endpoint, as in the following table:
 
