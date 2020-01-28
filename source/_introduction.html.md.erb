@@ -330,7 +330,21 @@ You can optionally choose to receive and send dates/times in numeric format, as 
 
 <aside class="notice">Some SDK methods use language-specific Date objects, which require different date formats.</aside>
 
-## Sheets/Columns/Rows/Cells
+## Filtering
+
+You cannot create or update filters using the API; however, you can query which rows have been filtered out and you can get filter definitions.
+
+For details, see [Filters object](#filters-object).
+
+## Functions
+
+## Object Details vs List Summaries
+
+Many of the List All commands, for example, `GET /sheets`, return only an abbreviated object for each object returned. For full details, read a single item, such as `GET /sheets/{sheetId}`. In many cases, you can refine the exact object properties to be returned by using **include** and **exclude** query parameters.
+
+The JSON representation of the objects returned from the List All REST endpoints will only include a subset of the properties documented here. However, the objects returned from the Java and C# SDKs will represent the omitted properties with NULLs.
+
+## Object Model: Sheets/Columns/Rows/Cells
 
 Sheets are composed of rows, columns, and cells. A cell is identified by the Id of its row and column. The following table defines these terms and points you to places in this documentation where you can find more information:
 
@@ -340,12 +354,6 @@ sheet | A sheet can exist in a user's [Home](#home) folder, in a [folder](#folde
 column | A Column object *defines* the type of the column, but does not actually contain cells. The Column Id identifies the cells in a row. | [Column object](#column-object), [Column types](#column-types)
 row | A row is a component of a sheet or report. Each row is composed of a collection of cells, and may optionally contain attachments or discussions. | [Row object](#row-object)
 cell | A cell is a location within a sheet that may contain a value. A collection of cells comprises each row in a sheet. | [Cell object](#cell-object), [Cell reference](#cell-reference)
-
-## Object Details vs List Summaries
-
-Many of the List All commands, for example, `GET /sheets`, return only an abbreviated object for each object returned. For full details, read a single item, such as `GET /sheets/{sheetId}`. In many cases, you can refine the exact object properties to be returned by using **include** and **exclude** query parameters.
-
-The JSON representation of the objects returned from the List All REST endpoints will only include a subset of the properties documented here. However, the objects returned from the Java and C# SDKs will represent the omitted properties with NULLs.
 
 ## Versioning and Changes
 
