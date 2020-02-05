@@ -293,13 +293,22 @@
                     <a href="#dates-and-times" class="toc-h2 toc-link" data-title="Dates and Times">Dates and Times</a>
                   </li>
                   <li>
-                    <a href="#sheets-columns-rows-cells" class="toc-h2 toc-link" data-title="Sheets/Columns/Rows/Cells">Sheets/Columns/Rows/Cells</a>
+                    <a href="#filtering" class="toc-h2 toc-link" data-title="Filtering">Filtering</a>
+                  </li>
+                  <li>
+                    <a href="#formulas" class="toc-h2 toc-link" data-title="Formulas">Formulas</a>
                   </li>
                   <li>
                     <a href="#object-details-vs-list-summaries" class="toc-h2 toc-link" data-title="Object Details vs List Summaries">Object Details vs List Summaries</a>
                   </li>
                   <li>
+                    <a href="#sheets-columns-rows-cells" class="toc-h2 toc-link" data-title="Sheets/Columns/Rows/Cells">Sheets/Columns/Rows/Cells</a>
+                  </li>
+                  <li>
                     <a href="#versioning-and-changes" class="toc-h2 toc-link" data-title="Versioning and Changes">Versioning and Changes</a>
+                  </li>
+                  <li>
+                    <a href="#working-with-complex-objects-multi-contact-or-multi-picklist" class="toc-h2 toc-link" data-title="Working with Complex Objects: Multi-contact or Multi-picklist">Working with Complex Objects: Multi-contact or Multi-picklist</a>
                   </li>
                   <li>
                     <a href="#working-with-smartsheet-gov-accounts" class="toc-h2 toc-link" data-title="Working with Smartsheet Gov Accounts">Working with Smartsheet Gov Accounts</a>
@@ -1940,7 +1949,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2019-12-04
+<p>Updated 2020-02-05
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -1983,6 +1992,9 @@
 <li>Developer Newsletter (subscribe while at the Developer Portal using the &quot;Get Developer Updates&quot; form)</li>
 <li><a href="https://stackoverflow.com/questions/tagged/smartsheet-api">StackOverflow</a> using the &quot;smartsheet-api&quot; tag</li>
 <li>Contact us at <a href="mailto:api@smartsheet.com">api@smartsheet.com</a></li>
+<li><a href="https://www.10000ft.com/integrations/technical-details/api-documentation">10000ft API documentation</a></li>
+<li><a href="https://get.converse.ai/">Bridge by Smartsheet documentation</a></li>
+<li>Review the <a href="https://www.smartsheet.com/legal/developer-program-agreement">Developer Program Agreement</a></li>
 </ul>
 
 <h2 id='http-and-rest'>HTTP and REST</h2><h3 id='restful-architecture'>RESTful Architecture</h3>
@@ -2307,6 +2319,20 @@ displayed to an end-user in their local time zone, you must do the conversion us
 <p>You can optionally choose to receive and send dates/times in numeric format, as milliseconds since the UNIX epoch (midnight on January 1, 1970 in UTC time), using the query string parameter <strong>numericDates</strong> with a value of <strong>true</strong>. This query parameter works for any API request. </p>
 
 <aside class="notice">Some SDK methods use language-specific Date objects, which require different date formats.</aside>
+<h2 id='filtering'>Filtering</h2>
+<p>You cannot create or update filters using the API; however, you can query which rows have been filtered out and you can get filter definitions.</p>
+
+<p>For details, see <a href="#filters-object">Filters object</a>.</p>
+<h2 id='formulas'>Formulas</h2>
+<p>Formulas are processed per cell in the UI. Use the <a href="#cell-object">Cell object</a> to manipulate formulas via the API.</p>
+
+<p>For requests, use <a href="#update-rows">Update Rows</a> to add or update the formula in a cell.</p>
+
+<p>For response payloads, formulas (when present) are returned whenever the Cell object is returned, so for example, GET /sheets/(id) returns the Cell object for each cell and that object contains a <strong>formula</strong> value when the cell contains a formula. </p>
+<h2 id='object-details-vs-list-summaries'>Object Details vs List Summaries</h2>
+<p>Many of the List All commands, for example, <code>GET /sheets</code>, return only an abbreviated object for each object returned. For full details, read a single item, such as <code>GET /sheets/{sheetId}</code>. In many cases, you can refine the exact object properties to be returned by using <strong>include</strong> and <strong>exclude</strong> query parameters.</p>
+
+<p>The JSON representation of the objects returned from the List All REST endpoints will only include a subset of the properties documented here. However, the objects returned from the Java and C# SDKs will represent the omitted properties with NULLs.</p>
 <h2 id='sheets-columns-rows-cells'>Sheets/Columns/Rows/Cells</h2>
 <p>Sheets are composed of rows, columns, and cells. A cell is identified by the Id of its row and column. The following table defines these terms and points you to places in this documentation where you can find more information:</p>
 
@@ -2338,17 +2364,17 @@ displayed to an end-user in their local time zone, you must do the conversion us
 <td><a href="#cell-object">Cell object</a>, <a href="#cell-reference">Cell reference</a></td>
 </tr>
 </tbody></table>
-<h2 id='object-details-vs-list-summaries'>Object Details vs List Summaries</h2>
-<p>Many of the List All commands, for example, <code>GET /sheets</code>, return only an abbreviated object for each object returned. For full details, read a single item, such as <code>GET /sheets/{sheetId}</code>. In many cases, you can refine the exact object properties to be returned by using <strong>include</strong> and <strong>exclude</strong> query parameters.</p>
-
-<p>The JSON representation of the objects returned from the List All REST endpoints will only include a subset of the properties documented here. However, the objects returned from the Java and C# SDKs will represent the omitted properties with NULLs.</p>
 <h2 id='versioning-and-changes'>Versioning and Changes</h2>
 <p>Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
 Also, make sure your code does not depend on the order in which JSON objects are returned, unless it is explicitly stated in this documentation. </p>
 
 <p>When there is new functionality that is not compatible with existing code, say in the case of a new concept, Smartsheet increments the level to indicate the new feature can be ignored until you are ready to implement the code to work with the new level.</p>
 
-<p>In the example of new column types, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:</p>
+<p>See also: <a href="#working-with-complex-objects-multi-contact-or-multi-picklist">Working with Complex Objects: Multi-contact or Multi-picklist</a></p>
+<h2 id='working-with-complex-objects-multi-contact-or-multi-picklist'>Working with Complex Objects: Multi-contact or Multi-picklist</h2>
+<p>New column types, such as MULTI_CONTACT_LIST and MULTI_PICKLIST, offer more complex ways to work with columns. Smartsheet has provided a backwards compatible way for these payloads to work with your existing integrations while also giving you a way to query for their content.</p>
+
+<p>With either column type, there are two ways of receiving the response:</p>
 
 <ul>
 <li>If you do nothing to your code, column types will display as TEXT_NUMBER</li>
@@ -2376,7 +2402,7 @@ Also, make sure your code does not depend on the order in which JSON objects are
 </tr>
 </tbody></table>
 
-<p>You must use the level query parameter, for example <strong>?level=2</strong>, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible, that is a string.</p>
+<p>You must use the level query parameter, for example <strong>level=2</strong>, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible, that is a string.</p>
 
 <p>Use the highest possible level for each endpoint, as in the following table:</p>
 
@@ -2737,6 +2763,8 @@ The <strong>accessLevel</strong> attribute has one of the following values:</p>
 </code></pre>
 <p>Allows an admin to act on behalf of, or impersonate, the user to make API calls. You might do this to troubleshoot a user problem or cover for vacations and sick time. As with cURL, the email address used to identify the user must be URI-encoded.</p>
 
+<p>An admin cannot impersonate another admin. </p>
+
 <aside class="notice">You must manually generate a token to assume user.</aside>
 <h1 id='third-party-app-development'>Third-party App Development</h1>
 <p>Apps connect to Smartsheet using <a href="https://oauth.net/2/">OAuth 2.0</a> to authenticate and authorize users. If you are building an app, this documentation will walk you through the steps you need to authenticate your users. The Smartsheet <a href="#sdks-and-sample-code">SDKs</a> contain APIs for OAuth 2.0.</p>
@@ -2744,13 +2772,15 @@ The <strong>accessLevel</strong> attribute has one of the following values:</p>
 <p>Before you can start using OAuth 2.0 with your app, Smartsheet needs the following information:</p>
 
 <ol>
-<li>You must <a href="https://developers.smartsheet.com/register">register</a> with Smartsheet to get a developer account. The developer account gives you access to &quot;Developer Tools&quot;, which is where you manage your app.</li>
+<li>You must <a href="https://developers.smartsheet.com/register">register</a> with Smartsheet to get a developer account*. The developer account gives you access to &quot;Developer Tools&quot;, which is where you manage your app.</li>
 <li>In &quot;Developer Tools&quot;, complete your developer profile. This profile is public and anyone can access it to learn about you and your apps.</li>
 <li>In &quot;Developer Tools&quot;, register your app so Smartsheet can assign a client Id and a client secret to the app.</li>
 <li>Review the list of access scopes. You&#39;ll need to choose which ones your app needs to get to a user&#39;s Smartsheet data, and then ask the user to consent to that access.</li>
 </ol>
 
 <p>After you&#39;ve worked through these steps, you&#39;ll be ready to implement the <a href="#oauth-flow">OAuth Flow</a>.</p>
+
+<p>*Review the <a href="https://www.smartsheet.com/legal/developer-program-agreement">Developer Program Agreement</a>.</p>
 <h3 id='open-developer-tools'>Open Developer Tools</h3>
 <ol>
 <li>Log in to Smartsheet with your developer account.</li>
@@ -2862,7 +2892,7 @@ For example, having the access scope of <strong>WRITE_SHEETS</strong> does not a
 <p>Your app must implement a 3-legged OAuth flow to retrieve an access token it can use to access Smartsheet data on behalf of an end user. 
 The following diagram has an overview of the OAuth flow:</p>
 
-<p><img src="images/OAuth_flow.png" alt="Simplified graphic showing what data is passed back and forth during OAuth flow"></p>
+<p><img src="images/OAuth_flow2.png" alt="Simplified graphic showing what data is passed back and forth during OAuth flow"></p>
 
 <aside class="notice">App registration and OAuth flow require HTTPS.</aside>
 <h3 id='request-an-authorization-code'>Request an Authorization Code</h3>
@@ -3035,10 +3065,17 @@ Smartsheet will redirect this URL to display your app&#39;s consent page with an
 <blockquote>
 <p>Request an access token:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>// Sample 1: Use a <span class="nb">hash
+</span>curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
 -d <span class="s1">'grant_type=authorization_code&amp;code={your_code}&amp;client_id={your_client_id}&amp;hash={SHA_256(app_secret|code)}'</span> <span class="se">\</span>
 -X POST
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Create hash</span>
+
+// Sample 2: Use plain text
+curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
+-d <span class="s1">'grant_type=authorization_code&amp;code={your_code}&amp;client_id={your_client_id}&amp;client_secret={app_secret}'</span> <span class="se">\</span>
+-X POST
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Sample 1: Use a hash</span>
+<span class="c1">// Create hash</span>
 <span class="kd">var</span> <span class="nx">hash</span> <span class="o">=</span>
   <span class="nx">crypto</span><span class="p">.</span><span class="nx">createHash</span><span class="p">(</span><span class="s1">'sha256'</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'9samp7le3for71you'</span> <span class="o">+</span> <span class="s1">'|'</span> <span class="o">+</span> <span class="s1">'sample6p9qisx6a'</span><span class="p">)</span>
@@ -3063,24 +3100,33 @@ Smartsheet will redirect this URL to display your app&#39;s consent page with an
 <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
   <span class="p">});</span>
-</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Get the token from the authorization result (see "Request an authorization code")</span>
+
+<span class="c1">// Sample 2: Use plain text</span>
+<span class="c1">// In progress</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Sample 1: Use a hash</span>
+<span class="c1">// Get the token from the authorization result (see "Request an authorization code")</span>
 <span class="n">Token</span> <span class="n">token</span> <span class="p">=</span> <span class="n">oauth</span><span class="p">.</span><span class="nf">ObtainNewToken</span><span class="p">(</span>
   <span class="n">authResult</span>      <span class="c1">// AuthorizationResult authResult</span>
 <span class="p">);</span>
 
 <span class="c1">// Refresh an access token</span>
-<span class="n">Token</span> <span class="n">tokenRefreshed</span> <span class="p">=</span> <span class="n">oauth</span><span class="p">.</span><span class="nf">RefreshToken</span><span class="p">(</span>
-  <span class="n">token</span>           <span class="c1">// Token token</span>
-<span class="p">);</span>
+<span class="n">Token</span> <span class="n">tokenRefreshed</span> <span class="p">=</span> <span class="n">oauth</span><span class="p">.</span><span class="nf">RefreshToken</span><span class="p">(</span><span class="n">token</span><span class="p">);</span>
+
+<span class="c1">// Sample 2: Use plain text</span>
+<span class="c1">// In progress</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// [todo]</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># [todo]</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">hash</span> <span class="o">=</span> <span class="no">Digest</span><span class="o">::</span><span class="no">SHA256</span><span class="p">.</span><span class="nf">hexdigest</span> <span class="s1">'9samp7le3for71you|sample6p9qisx6a'</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># Sample 1: Use a hash</span>
+<span class="nb">hash</span> <span class="o">=</span> <span class="no">Digest</span><span class="o">::</span><span class="no">SHA256</span><span class="p">.</span><span class="nf">hexdigest</span> <span class="s1">'9samp7le3for71you|sample6p9qisx6a'</span>
                               <span class="c1"># your_app_secret|your_code</span>
 <span class="n">smartsheet</span><span class="p">.</span><span class="nf">token</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span>
   <span class="ss">client_id: </span><span class="s1">'1samp48lel5for68you'</span><span class="p">,</span>
   <span class="ss">code: </span><span class="s1">'sample6p9qisx6a'</span><span class="p">,</span>
   <span class="ss">hash: </span><span class="nb">hash</span>
 <span class="p">)</span>
+
+<span class="c1"># Sample 2: Use plain text</span>
+<span class="c1"># In progress</span>
 </code></pre>
 <blockquote>
 <p>Successful Response:</p>
@@ -3118,6 +3164,10 @@ Smartsheet will redirect this URL to display your app&#39;s consent page with an
 <td>Required. The client Id you obtained when you registered your app.</td>
 </tr>
 <tr>
+<td><strong>client_secret</strong></td>
+<td>Optional. Must use either this value or <strong>hash</strong>. Plain text method for sending this value. For example, <code>client_secret={app_secret}</code>. Encryption occurs at the HTTPS level.</td>
+</tr>
+<tr>
 <td><strong>code</strong></td>
 <td>Required. Authorization code returned in the <a href="#request-an-authorization-code">previous step</a>.</td>
 </tr>
@@ -3127,7 +3177,7 @@ Smartsheet will redirect this URL to display your app&#39;s consent page with an
 </tr>
 <tr>
 <td><strong>hash</strong></td>
-<td>Required. <a href="https://en.wikipedia.org/wiki/SHA-2">SHA-256</a> hash of your app secret concatenated with a pipe and the authorization code.  The app_secret is never sent with the request. This is the <strong>app_secret</strong> you obtained when you <a href="#register-your-app-using-developer-tools">registered your app</a>.</td>
+<td>Optional. Must use either this value or <strong>client_secret</strong>. <a href="https://en.wikipedia.org/wiki/SHA-2">SHA-256</a> hash of your app secret concatenated with a pipe and the authorization code.  For example, <code>hash={SHA_256(app_secret&#124;code)}</code>.</td>
 </tr>
 </tbody></table>
 
@@ -3140,10 +3190,17 @@ Smartsheet will redirect this URL to display your app&#39;s consent page with an
 <blockquote>
 <p>Refresh an access token:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>Sample 1: Use a <span class="nb">hash
+</span>curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
 -d <span class="s1">'grant_type=refresh_token&amp;refresh_token={your_refresh_token}&amp;client_id={your_client_id}&amp;hash={SHA_256(app_secret|refresh_token)}'</span> <span class="se">\</span>
 -X POST
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Create hash</span>
+
+Sample 2: Use plain text
+curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
+-d <span class="s1">'grant_type=refresh_token&amp;refresh_token={your_refresh_token}&amp;client_id={your_client_id}&amp;client_secret={app_secret}'</span> <span class="se">\</span>
+-X POST
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Sample 1: Use a hash</span>
+<span class="c1">// Create hash</span>
 <span class="kd">var</span> <span class="nx">hash</span> <span class="o">=</span>
   <span class="nx">crypto</span><span class="p">.</span><span class="nx">createHash</span><span class="p">(</span><span class="s1">'sha256'</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'9samp7le3for71you'</span> <span class="o">+</span> <span class="s1">'|'</span> <span class="o">+</span> <span class="s1">'sample6p9qisx6a'</span><span class="p">)</span>
@@ -3168,16 +3225,27 @@ Smartsheet will redirect this URL to display your app&#39;s consent page with an
   <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
   <span class="p">});</span>
-</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// [todo]</span>
+
+<span class="c1">// Sample 2: Use plain text</span>
+<span class="c1">// In progress</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Sample 1: Use a hash</span>
+<span class="n">Token</span> <span class="n">tokenRefreshed</span> <span class="p">=</span> <span class="n">oauth</span><span class="p">.</span><span class="nf">RefreshToken</span><span class="p">(</span><span class="n">token</span><span class="p">);</span>
+
+<span class="c1">// Sample 2: Use plain text</span>
+<span class="c1">// In progress</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// [todo]</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># [todo]</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">hash</span> <span class="o">=</span> <span class="no">Digest</span><span class="o">::</span><span class="no">SHA256</span><span class="p">.</span><span class="nf">hexdigest</span> <span class="s1">'9samp7le3for71you|e9x352a9mp4151le2505'</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># Sample 1: Use a hash</span>
+<span class="nb">hash</span> <span class="o">=</span> <span class="no">Digest</span><span class="o">::</span><span class="no">SHA256</span><span class="p">.</span><span class="nf">hexdigest</span> <span class="s1">'9samp7le3for71you|e9x352a9mp4151le2505'</span>
                                 <span class="c1"># your_app_secret|refresh_token</span>
 <span class="n">smartsheet</span><span class="p">.</span><span class="nf">token</span><span class="p">.</span><span class="nf">refresh</span><span class="p">(</span>
   <span class="ss">client_id: </span><span class="s1">'1samp48lel5for68you'</span><span class="p">,</span>
   <span class="ss">refresh_token: </span><span class="s1">'e9x352a9mp4151le2505'</span><span class="p">,</span>
   <span class="ss">hash: </span><span class="nb">hash</span>
 <span class="p">)</span>
+
+<span class="c1"># Sample 2: Use plain text</span>
+<span class="c1"># In progress</span>
 </code></pre>
 <blockquote>
 <p>Successful Response:</p>
@@ -3207,12 +3275,16 @@ Once you obtain the new tokens, you must use them in place of the old ones, whic
 <td>Required. Client Id for your app.</td>
 </tr>
 <tr>
+<td><strong>client_secret</strong></td>
+<td>Optional. Must use either this value or <strong>hash</strong>. Plain text method for sending this value. For example, <code>client_secret={app_secret}</code>. Encryption occurs at the HTTPS level.</td>
+</tr>
+<tr>
 <td><strong>grant_type</strong></td>
 <td>Required. Must be set to <strong>refresh_token</strong>.</td>
 </tr>
 <tr>
 <td><strong>hash</strong></td>
-<td>Required. <a href="https://en.wikipedia.org/wiki/SHA-2">SHA-256</a> hash of your app secret concatenated with a pipe and the refresh token value. To obtain an <strong>app_secret</strong>, see <a href="#register-your-app-using-developer-tools">Register Your App Using Developer Tools</a>.</td>
+<td>Optional. Must use either this value or <strong>client_secret</strong>. <a href="https://en.wikipedia.org/wiki/SHA-2">SHA-256</a> hash of your app secret concatenated with a pipe and the refresh token.  For example, <code>hash={SHA_256(app_secret&#124;refresh_token)}</code>.</td>
 </tr>
 <tr>
 <td><strong>refresh_token</strong></td>
@@ -5980,7 +6052,7 @@ File parts must have the part name &quot;file&quot;, and documentation for opera
 <tr>
 <td><strong>formula</strong></td>
 <td>string</td>
-<td>The  formula for a cell, if set. NOTE: calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = &quot;#CIRCULAR REFERENCE&quot;.</td>
+<td>The  formula for a cell, if set, for instance <strong>=COUNTM([Assigned To]3)</strong>. NOTE: calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = &quot;#CIRCULAR REFERENCE&quot;.</td>
 </tr>
 <tr>
 <td><strong>hyperlink</strong></td>
@@ -9105,6 +9177,10 @@ filled in by Smartsheet and whose values cannot be changed by the user. These co
 <tr>
 <td>Headers</td>
 <td>Authorization: Bearer ll352u9jujauoqz4gstvsae05</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td><strong>include</strong> (optional) -- comma-separated list of elements to copy:<ul><li><strong>profileImage</strong> -- includes an <a href="#image-object">Image object</a></li></ul></td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -15837,7 +15913,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 <tr>
 <td>Request Body</td>
-<td><a href="#row-object">Row object</a> or an array of Row objects, with the following attributes:<ul><p><li>One or more <a href="#specify-row-location">location-specifier attributes</a> (optional)</li><li><strong>expanded</strong> (optional)</li><li><strong>format</strong> (optional)</li><li><strong>cells</strong> (optional) -- if specified, must be an array of <a href="#cell-object">Cell objects</a>, where each object is limited to the following attributes:</li><ul><li><strong>columnId</strong> (required)</li><li>One of the following (required):</li><ul><li><strong>formula</strong>: for cross-sheet formulas, you must first define a <a href="#cross-sheet-references">cross-sheet reference</a></li><li><strong>value</strong></li></ul><li>When <strong>value</strong> is specified</li><ul><li><a href="#hyperlink-object"><strong>hyperlink</strong></a> (optional) with exactly one of the following attributes set:</li><ul><li><strong>reportId</strong></li><li><strong>sheetId</strong></li><li><strong>url</strong></li></ul><li><a href="#celllink-object"><strong>linkInFromCell</strong></a> (optional) with all of the following attributes set:</li><ul><li><strong>columnId</strong></li><li><strong>rowId</strong></li><li><strong>sheetId</strong></li></ul><li><strong>strict</strong> (optional)</li></ul><li><strong>format</strong> (optional)</li><li><strong>image</strong> (optional) -- if specified, use to update alternate text where <strong>altText</strong> = string.</li><li><strong>overrideValidation</strong> (optional)</li></ul><li><strong>locked</strong> (optional) - <strong>true</strong> to lock the row or <strong>false</strong> to unlock the row.</li></ul>See <a href="#column-types">Column Types</a> for more information.<BR/><BR/><strong>NOTE:</strong><ul><li>Column Ids must be valid for the sheet to which the row belongs, and must only be used once for each row in the operation.</li><li>Cells of a project sheet in the &quot;Finish Date&quot; column cannot be updated via API.</li><li>Cells of a project sheet in the  &quot;Start Date&quot; column cannot be updated via API for rows that contain a value in the &quot;Predecessor&quot; column.</li><li>Max length for a cell value is 4000 characters after which truncation occurs without warning. Empty string values are converted to null.</li><li>Calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = &quot;#CIRCULAR REFERENCE&quot;.</li> </p></td>
+<td><a href="#row-object">Row object</a> or an array of Row objects, with the following attributes:<ul><p><li>One or more <a href="#specify-row-location">location-specifier attributes</a> (optional)</li><li><strong>expanded</strong> (optional)</li><li><strong>format</strong> (optional)</li><li><strong>cells</strong> (optional) -- if specified, must be an array of <a href="#cell-object">Cell objects</a>, where each object is limited to the following attributes:</li><ul><li><strong>columnId</strong> (required)</li><li>One of the following (required):</li><ul><li><strong>formula</strong>: the formula for the cell. For cross-sheet formulas, you must first define a <a href="#cross-sheet-references">cross-sheet reference</a></li><li><strong>value</strong></li></ul><li>When <strong>value</strong> is specified</li><ul><li><a href="#hyperlink-object"><strong>hyperlink</strong></a> (optional) with exactly one of the following attributes set:</li><ul><li><strong>reportId</strong></li><li><strong>sheetId</strong></li><li><strong>url</strong></li></ul><li><a href="#celllink-object"><strong>linkInFromCell</strong></a> (optional) with all of the following attributes set:</li><ul><li><strong>columnId</strong></li><li><strong>rowId</strong></li><li><strong>sheetId</strong></li></ul><li><strong>strict</strong> (optional)</li></ul><li><strong>format</strong> (optional)</li><li><strong>image</strong> (optional) -- if specified, use to update alternate text where <strong>altText</strong> = string.</li><li><strong>overrideValidation</strong> (optional)</li></ul><li><strong>locked</strong> (optional) - <strong>true</strong> to lock the row or <strong>false</strong> to unlock the row.</li></ul>See <a href="#column-types">Column Types</a> for more information.<BR/><BR/><strong>NOTE:</strong><ul><li>Column Ids must be valid for the sheet to which the row belongs, and must only be used once for each row in the operation.</li><li>Cells of a project sheet in the &quot;Finish Date&quot; column cannot be updated via API.</li><li>Cells of a project sheet in the  &quot;Start Date&quot; column cannot be updated via API for rows that contain a value in the &quot;Predecessor&quot; column.</li><li>Max length for a cell value is 4000 characters after which truncation occurs without warning. Empty string values are converted to null.</li><li>Calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = &quot;#CIRCULAR REFERENCE&quot;.</li> </p></td>
 </tr>
 <tr>
 <td></ul></td>
@@ -16902,7 +16978,7 @@ of <a href="#groupmember-object">GroupMember objects</a>, any users specified in
 </tr>
 <tr>
 <td>Request Body</td>
-<td><a href="#row-object">Row object</a> or an array of Row objects, with the following attributes:<ul><li><strong>id</strong> (required)</li><p><li>One or more <a href="#specify-row-location">location-specifier attributes</a> (optional)</li><li><strong>expanded</strong> (optional)</li><li><strong>format</strong> (optional)</li><li><strong>cells</strong> (optional) -- if specified, must be an array of <a href="#cell-object">Cell objects</a>, where each object is limited to the following attributes:</li><ul><li><strong>columnId</strong> (required)</li><li>One of the following (required):</li><ul><li><strong>formula</strong>: for cross-sheet formulas, you must first define a <a href="#cross-sheet-references">cross-sheet reference</a></li><li><strong>value</strong></li></ul><li>When <strong>value</strong> is specified</li><ul><li><a href="#hyperlink-object"><strong>hyperlink</strong></a> (optional) with exactly one of the following attributes set:</li><ul><li><strong>reportId</strong></li><li><strong>sheetId</strong></li><li><strong>url</strong></li></ul><li><a href="#celllink-object"><strong>linkInFromCell</strong></a> (optional) with all of the following attributes set:</li><ul><li><strong>columnId</strong></li><li><strong>rowId</strong></li><li><strong>sheetId</strong></li></ul><li><strong>strict</strong> (optional)</li></ul><li><strong>format</strong> (optional)</li><li><strong>image</strong> (optional) -- if specified, use to update alternate text where <strong>altText</strong> = string.</li><li><strong>overrideValidation</strong> (optional)</li></ul><li><strong>locked</strong> (optional) - <strong>true</strong> to lock the row or <strong>false</strong> to unlock the row.</li></ul>See <a href="#column-types">Column Types</a> for more information.<BR/><BR/><strong>NOTE:</strong><ul><li>Column Ids must be valid for the sheet to which the row belongs, and must only be used once for each row in the operation.</li><li>Cells of a project sheet in the &quot;Finish Date&quot; column cannot be updated via API.</li><li>Cells of a project sheet in the  &quot;Start Date&quot; column cannot be updated via API for rows that contain a value in the &quot;Predecessor&quot; column.</li><li>Max length for a cell value is 4000 characters after which truncation occurs without warning. Empty string values are converted to null.</li><li>Calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = &quot;#CIRCULAR REFERENCE&quot;.</li> </p></td>
+<td><a href="#row-object">Row object</a> or an array of Row objects, with the following attributes:<ul><li><strong>id</strong> (required)</li><p><li>One or more <a href="#specify-row-location">location-specifier attributes</a> (optional)</li><li><strong>expanded</strong> (optional)</li><li><strong>format</strong> (optional)</li><li><strong>cells</strong> (optional) -- if specified, must be an array of <a href="#cell-object">Cell objects</a>, where each object is limited to the following attributes:</li><ul><li><strong>columnId</strong> (required)</li><li>One of the following (required):</li><ul><li><strong>formula</strong>: the formula for the cell. For cross-sheet formulas, you must first define a <a href="#cross-sheet-references">cross-sheet reference</a></li><li><strong>value</strong></li></ul><li>When <strong>value</strong> is specified</li><ul><li><a href="#hyperlink-object"><strong>hyperlink</strong></a> (optional) with exactly one of the following attributes set:</li><ul><li><strong>reportId</strong></li><li><strong>sheetId</strong></li><li><strong>url</strong></li></ul><li><a href="#celllink-object"><strong>linkInFromCell</strong></a> (optional) with all of the following attributes set:</li><ul><li><strong>columnId</strong></li><li><strong>rowId</strong></li><li><strong>sheetId</strong></li></ul><li><strong>strict</strong> (optional)</li></ul><li><strong>format</strong> (optional)</li><li><strong>image</strong> (optional) -- if specified, use to update alternate text where <strong>altText</strong> = string.</li><li><strong>overrideValidation</strong> (optional)</li></ul><li><strong>locked</strong> (optional) - <strong>true</strong> to lock the row or <strong>false</strong> to unlock the row.</li></ul>See <a href="#column-types">Column Types</a> for more information.<BR/><BR/><strong>NOTE:</strong><ul><li>Column Ids must be valid for the sheet to which the row belongs, and must only be used once for each row in the operation.</li><li>Cells of a project sheet in the &quot;Finish Date&quot; column cannot be updated via API.</li><li>Cells of a project sheet in the  &quot;Start Date&quot; column cannot be updated via API for rows that contain a value in the &quot;Predecessor&quot; column.</li><li>Max length for a cell value is 4000 characters after which truncation occurs without warning. Empty string values are converted to null.</li><li>Calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = &quot;#CIRCULAR REFERENCE&quot;.</li> </p></td>
 </tr>
 <tr>
 <td></ul></td>
@@ -22249,6 +22325,10 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 <td><strong>rowNumbers</strong> (optional): a comma-separated list of row numbers on which to filter the rows included in the result.  Non-existent row numbers are ignored.</td>
 </tr>
 <tr>
+<td></td>
+<td><strong>rowsModifiedSince</strong> (optional): filter to return only rows that have been modified since the date/time provided. Date should be in ISO-8601 format, for example, <strong>rowsModifiedSince=2020-01-30T13:25:32-07:00</strong>. TIP: test with a small date change first.</td>
+</tr>
+<tr>
 <td>Returns</td>
 <td><a href="#sheet-object">Sheet object</a>, populated according to the specified parameters</td>
 </tr>
@@ -26083,10 +26163,17 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <p>Example request: get access token</p>
 </blockquote>
 
-<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>// Sample 1: Use a <span class="nb">hash
+</span>curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
 -d <span class="s1">'grant_type=authorization_code&amp;code={your_code}&amp;client_id={your_client_id}&amp;hash={SHA_256(app_secret|code)}'</span> <span class="se">\</span>
 -X POST
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Create hash</span>
+
+// Sample 2: Use plain text
+curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
+-d <span class="s1">'grant_type=authorization_code&amp;code={your_code}&amp;client_id={your_client_id}&amp;client_secret={app_secret}'</span> <span class="se">\</span>
+-X POST
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Sample 1: Use a hash</span>
+<span class="c1">// Create hash</span>
 <span class="kd">var</span> <span class="nx">hash</span> <span class="o">=</span>
   <span class="nx">crypto</span><span class="p">.</span><span class="nx">createHash</span><span class="p">(</span><span class="s1">'sha256'</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'9samp7le3for71you'</span> <span class="o">+</span> <span class="s1">'|'</span> <span class="o">+</span> <span class="s1">'sample6p9qisx6a'</span><span class="p">)</span>
@@ -26111,18 +26198,29 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
   <span class="p">});</span>
-</code></pre><pre class="highlight csharp tab-csharp"><code><span class="n">Token</span> <span class="n">token</span> <span class="p">=</span> <span class="n">oauth</span><span class="p">.</span><span class="nf">ObtainNewToken</span><span class="p">(</span>
+
+<span class="c1">// Sample 2: Use plain text</span>
+<span class="c1">// In progress  </span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Sample 1: Use a hash</span>
+<span class="n">Token</span> <span class="n">token</span> <span class="p">=</span> <span class="n">oauth</span><span class="p">.</span><span class="nf">ObtainNewToken</span><span class="p">(</span>
   <span class="n">authResult</span>      <span class="c1">// AuthorizationResult authResult</span>
 <span class="p">);</span>
+
+<span class="c1">// Sample 2: Use plain text</span>
+<span class="c1">// In progress</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// [todo]</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># [todo]</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">hash</span> <span class="o">=</span> <span class="no">Digest</span><span class="o">::</span><span class="no">SHA256</span><span class="p">.</span><span class="nf">hexdigest</span> <span class="s1">'9samp7le3for71you|sample6p9qisx6a'</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="c1"># Sample 1: Use a hash</span>
+<span class="nb">hash</span> <span class="o">=</span> <span class="no">Digest</span><span class="o">::</span><span class="no">SHA256</span><span class="p">.</span><span class="nf">hexdigest</span> <span class="s1">'9samp7le3for71you|sample6p9qisx6a'</span>
                                 <span class="c1"># your_app_secret|your_code</span>
 <span class="n">smartsheet</span><span class="p">.</span><span class="nf">token</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span>
   <span class="ss">client_id: </span><span class="s1">'1samp48lel5for68you'</span><span class="p">,</span>
   <span class="ss">code: </span><span class="s1">'sample6p9qisx6a'</span><span class="p">,</span>
   <span class="ss">hash: </span><span class="nb">hash</span>
 <span class="p">)</span>
+
+<span class="c1"># Sample 2: Use plain text</span>
+<span class="c1"># In progress</span>
 </code></pre>
 
 <blockquote>
@@ -26155,19 +26253,23 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>client_id</strong> (required) -- client id for your app</td>
+<td><strong>client_id</strong></td>
 </tr>
 <tr>
 <td></td>
-<td><strong>code</strong> (required) -- authorization code returned during the OAuth flow.</td>
+<td><strong>client_secret</strong></td>
 </tr>
 <tr>
 <td></td>
-<td><strong>grant_type</strong> (required) -- must be set to &quot;authorization_code&quot;</td>
+<td><strong>code</strong></td>
 </tr>
 <tr>
 <td></td>
-<td><strong>hash</strong> (required) -- <a href="https://en.wikipedia.org/wiki/SHA-2">SHA-256</a> hash of your app secret concatenated with a pipe and the authorization code.  The <strong>app_secret</strong> is never sent with the request.</td>
+<td><strong>grant_type</strong></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>hash</strong></td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -26181,10 +26283,14 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <p>Example request: refresh access token</p>
 </blockquote>
 
-<pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
--d <span class="s1">'grant_type=refresh_token&amp;refresh_token={your_refresh_token}
-&amp;client_id={your_client_id}
-&amp;hash={SHA_256(app_secret|refresh_token)}'</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>Sample 1: Use a <span class="nb">hash
+</span>curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
+-d <span class="s1">'grant_type=refresh_token&amp;refresh_token={your_refresh_token}&amp;client_id={your_client_id}&amp;hash={SHA_256(app_secret|refresh_token)}'</span> <span class="se">\</span>
+-X POST
+
+Sample 2: Use plain text
+curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
+-d <span class="s1">'grant_type=refresh_token&amp;refresh_token={your_refresh_token}&amp;client_id={your_client_id}&amp;client_secret={app_secret}'</span> <span class="se">\</span>
 -X POST
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Create hash</span>
 <span class="kd">var</span> <span class="nx">hash</span> <span class="o">=</span>
@@ -26211,9 +26317,7 @@ only has read-only access to the sheet (for example, the user has viewer permiss
   <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
   <span class="p">});</span>
-</code></pre><pre class="highlight csharp tab-csharp"><code><span class="n">Token</span> <span class="n">tokenRefreshed</span> <span class="p">=</span> <span class="n">oauth</span><span class="p">.</span><span class="nf">RefreshToken</span><span class="p">(</span>
-  <span class="n">token</span>           <span class="c1">// Token token</span>
-<span class="p">);</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="n">Token</span> <span class="n">tokenRefreshed</span> <span class="p">=</span> <span class="n">oauth</span><span class="p">.</span><span class="nf">RefreshToken</span><span class="p">(</span><span class="n">token</span><span class="p">);</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// [todo]</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># [todo]</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">hash</span> <span class="o">=</span> <span class="no">Digest</span><span class="o">::</span><span class="no">SHA256</span><span class="p">.</span><span class="nf">hexdigest</span> <span class="s1">'9samp7le3for71you|e9x352a9mp4151le2505'</span>
@@ -26255,19 +26359,27 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>client_id</strong> (required) -- client id for your app</td>
+<td><strong>client_id</strong></td>
 </tr>
 <tr>
 <td></td>
-<td><strong>grant_type</strong> (required) -- must be set to &quot;refresh_token&quot;</td>
+<td><strong>client_secret</strong></td>
 </tr>
 <tr>
 <td></td>
-<td><strong>hash</strong> (required) -- <a href="https://en.wikipedia.org/wiki/SHA-2">SHA-256</a> hash of your app secret concatenated with a pipe and the refresh token value</td>
+<td><strong>grant_type</strong></td>
 </tr>
 <tr>
 <td></td>
-<td><strong>refresh_token</strong> (required) -- <strong>refresh_token</strong> value that came with the access token</td>
+<td><strong>hash</strong></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>refresh_token</strong></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>redirect_uri</strong></td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -31951,6 +32063,50 @@ only has read-only access to the sheet (for example, the user has viewer permiss
 <p>The following section describes the specific event types and payloads returned from the Smartsheet Events API.</p>
 
 <p>With Event Reporting, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are create, update, load, and delete of sheets, reports, dashboards, attachments, and users. Note: while the current list of events covers most of Smartsheet functionality, new events will be added to the list as Smartsheet introduces new functionality.</p>
+
+<p>Some actions in Smartsheet are performed by system components. Therefore, the userId property in some response payloads refers to a system user and not to a regular user. For example, the Smartsheet Events API shows 5629504736520068 as the userId when an anonymous user accesses a sheet that is published for anyone. </p>
+
+<p>The list of system users is displayed below. New system userIds may be incorporated to this list as new features and subsystems are incorporated to Smartsheet:</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1688855062570884</td>
+<td>Data accessed/modified by Skype action (only possible if Smartsheet account is connected to Skype)</td>
+</tr>
+<tr>
+<td>2814754969413508</td>
+<td>Data accessed/modified by Trello import action (only possible if Smartsheet account is connected to Trello)</td>
+</tr>
+<tr>
+<td>3377704922834820</td>
+<td>Data accessed/modified due to Smartsheet cell-link</td>
+</tr>
+<tr>
+<td>3940654876256132</td>
+<td>Data accessed/modified by the Smartsheet Automation system</td>
+</tr>
+<tr>
+<td>5066554783098756</td>
+<td>Access to object published to any user in the Smartsheet organization account</td>
+</tr>
+<tr>
+<td>5629504736520068</td>
+<td>Access to Smartsheet object published to anyone</td>
+</tr>
+<tr>
+<td>6192454689941380</td>
+<td>Data accessed/modified by the Smartsheet Notification system</td>
+</tr>
+<tr>
+<td>7881304550205316</td>
+<td>Data accessed/modified by Smartsheet Form submission</td>
+</tr>
+</tbody></table>
 
 <p>See <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.</p>
 
