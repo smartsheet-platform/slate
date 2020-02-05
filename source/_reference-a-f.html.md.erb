@@ -2123,7 +2123,7 @@ A collection of cells comprises each row in a sheet.
 **conditionalFormat** | string | The format descriptor describing this cell's conditional format (see [Formatting](#formatting)).<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this cell has a conditional format applied.
 **displayValue** | string | Visual representation of cell contents, as presented to the user in the UI.  See [Cell Reference](#cell-reference).
 **format** | string | The format descriptor (see [Formatting](#formatting))<br/>Only returned if the [**include**](#row-include-flags) query string parameter contains **format** and this cell has a non-default format applied.
-**formula** | string | The  formula for a cell, if set. NOTE: calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = "#CIRCULAR REFERENCE".
+**formula** | string | The  formula for a cell, if set, for instance **=COUNTM([Assigned To]3)**. NOTE: calculation errors or problems with a formula do not cause the API call to return an error code. Instead, the response contains the same value as in the UI, such as cell.value = "#CIRCULAR REFERENCE".
 **hyperlink** | [Hyperlink](#hyperlink-object) | A hyperlink to a URL, sheet, or report
 **image** | [Image](#image-object) | The image that the cell contains.<br/>Only returned if the cell contains an image.
 **linkInFromCell** | [CellLink](#celllink-object) | An inbound link from a cell in another sheet.  This cell's value mirrors the linked cell's value.
@@ -4578,6 +4578,7 @@ Gets the specified contact.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>**profileImage** -- includes an [Image object](#image-object)</li></ul>
 <%= RETURNS %> | [Contact object](#contact-object)
 <%= SCOPE %> | READ_CONTACTS
 

@@ -4,6 +4,21 @@ The following section describes the specific event types and payloads returned f
 
 With Event Reporting, you can programmatically retrieve events that are occurring in your Smartsheet organization account. Examples of events are create, update, load, and delete of sheets, reports, dashboards, attachments, and users. Note: while the current list of events covers most of Smartsheet functionality, new events will be added to the list as Smartsheet introduces new functionality.
 
+Some actions in Smartsheet are performed by system components. Therefore, the userId property in some response payloads refers to a system user and not to a regular user. For example, the Smartsheet Events API shows 5629504736520068 as the userId when an anonymous user accesses a sheet that is published for anyone. 
+
+The list of system users is displayed below. New system userIds may be incorporated to this list as new features and subsystems are incorporated to Smartsheet:
+
+     |     |
+-----|-----|
+1688855062570884 | Data accessed/modified by Skype action (only possible if Smartsheet account is connected to Skype) |
+2814754969413508 | Data accessed/modified by Trello import action (only possible if Smartsheet account is connected to Trello) |
+3377704922834820 | Data accessed/modified due to Smartsheet cell-link |
+3940654876256132 | Data accessed/modified by the Smartsheet Automation system |
+5066554783098756 | Access to object published to any user in the Smartsheet organization account |
+5629504736520068 | Access to Smartsheet object published to anyone |
+6192454689941380 | Data accessed/modified by the Smartsheet Notification system |
+7881304550205316 | Data accessed/modified by Smartsheet Form submission |
+
 See <a href="https://smartsheet-platform.github.io/event-reporting-docs/" target="_blank">Event Reporting reference documentation</a> for details on each event type.
 
 See [Authentication and Access Tokens](#authentication-and-access-tokens) for more information.

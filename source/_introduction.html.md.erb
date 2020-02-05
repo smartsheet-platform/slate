@@ -56,6 +56,9 @@ This documentation provides two [Getting Started](#getting-started) tutorials th
 * Developer Newsletter (subscribe while at the Developer Portal using the "Get Developer Updates" form)
 * [StackOverflow](https://stackoverflow.com/questions/tagged/smartsheet-api) using the "smartsheet-api" tag
 * Contact us at [api@smartsheet.com](mailto:api@smartsheet.com)
+* [10000ft API documentation](https://www.10000ft.com/integrations/technical-details/api-documentation)
+* [Bridge by Smartsheet documentation](https://get.converse.ai/)
+* Review the [Developer Program Agreement](https://www.smartsheet.com/legal/developer-program-agreement)
 
 ## HTTP and REST
 
@@ -328,6 +331,26 @@ You can optionally choose to receive and send dates/times in numeric format, as 
 
 <aside class="notice">Some SDK methods use language-specific Date objects, which require different date formats.</aside>
 
+## Filtering
+
+You cannot create or update filters using the API; however, you can query which rows have been filtered out and you can get filter definitions.
+
+For details, see [Filters object](#filters-object).
+
+## Formulas
+
+Formulas are processed per cell in the UI. Use the [Cell object](#cell-object) to manipulate formulas via the API.
+
+For requests, use [Update Rows](#update-rows) to add or update the formula in a cell.
+
+For response payloads, formulas (when present) are returned whenever the Cell object is returned, so for example, GET /sheets/(id) returns the Cell object for each cell and that object contains a **formula** value when the cell contains a formula. 
+
+## Object Details vs List Summaries
+
+Many of the List All commands, for example, `GET /sheets`, return only an abbreviated object for each object returned. For full details, read a single item, such as `GET /sheets/{sheetId}`. In many cases, you can refine the exact object properties to be returned by using **include** and **exclude** query parameters.
+
+The JSON representation of the objects returned from the List All REST endpoints will only include a subset of the properties documented here. However, the objects returned from the Java and C# SDKs will represent the omitted properties with NULLs.
+
 ## Sheets/Columns/Rows/Cells
 
 Sheets are composed of rows, columns, and cells. A cell is identified by the Id of its row and column. The following table defines these terms and points you to places in this documentation where you can find more information:
@@ -339,12 +362,6 @@ column | A Column object *defines* the type of the column, but does not actually
 row | A row is a component of a sheet or report. Each row is composed of a collection of cells, and may optionally contain attachments or discussions. | [Row object](#row-object)
 cell | A cell is a location within a sheet that may contain a value. A collection of cells comprises each row in a sheet. | [Cell object](#cell-object), [Cell reference](#cell-reference)
 
-## Object Details vs List Summaries
-
-Many of the List All commands, for example, `GET /sheets`, return only an abbreviated object for each object returned. For full details, read a single item, such as `GET /sheets/{sheetId}`. In many cases, you can refine the exact object properties to be returned by using **include** and **exclude** query parameters.
-
-The JSON representation of the objects returned from the List All REST endpoints will only include a subset of the properties documented here. However, the objects returned from the Java and C# SDKs will represent the omitted properties with NULLs.
-
 ## Versioning and Changes
 
 Smartsheet will add new functionality and bug fixes to the API over time. Make sure that your code can handle new JSON properties gracefully. 
@@ -352,7 +369,13 @@ Also, make sure your code does not depend on the order in which JSON objects are
 
 When there is new functionality that is not compatible with existing code, say in the case of a new concept, Smartsheet increments the level to indicate the new feature can be ignored until you are ready to implement the code to work with the new level.
 
-In the example of new column types, if a sheet has column types of MULTI_CONTACT_LIST or MULTI_PICKLIST, there are two ways of receiving the response:
+See also: [Working with Complex Objects: Multi-contact or Multi-picklist](#working-with-complex-objects-multi-contact-or-multi-picklist)
+
+## Working with Complex Objects: Multi-contact or Multi-picklist
+
+New column types, such as MULTI_CONTACT_LIST and MULTI_PICKLIST, offer more complex ways to work with columns. Smartsheet has provided a backwards compatible way for these payloads to work with your existing integrations while also giving you a way to query for their content.
+
+With either column type, there are two ways of receiving the response:
 
 * If you do nothing to your code, column types will display as TEXT_NUMBER
 * If you use the level query parameter as detailed below, column types will display as MULTI_CONTACT_LIST or MULTI_PICKLIST and return a complex object (aka a non-primitive type)
@@ -366,7 +389,7 @@ Text | Multi-contact | Multi-picklist
 -----|-----|-----|
 0 | 1 | 2 
 
-You must use the level query parameter, for example **?level=2**, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible, that is a string.
+You must use the level query parameter, for example **level=2**, to return a complex object with the new column type. Without the query parameter, the response will be backwards-compatible, that is a string.
 
 Use the highest possible level for each endpoint, as in the following table:
 
@@ -723,6 +746,8 @@ smartsheet.sheets.list(
 
 Allows an admin to act on behalf of, or impersonate, the user to make API calls. You might do this to troubleshoot a user problem or cover for vacations and sick time. As with cURL, the email address used to identify the user must be URI-encoded.
 
+An admin cannot impersonate another admin. 
+
 <aside class="notice">You must manually generate a token to assume user.</aside>
 
 # Third-party App Development
@@ -733,12 +758,14 @@ Apps connect to Smartsheet using [OAuth 2.0](https://oauth.net/2/) to authentica
 
 Before you can start using OAuth 2.0 with your app, Smartsheet needs the following information:
 
-1. You must [register](https://developers.smartsheet.com/register) with Smartsheet to get a developer account. The developer account gives you access to "Developer Tools", which is where you manage your app.
+1. You must [register](https://developers.smartsheet.com/register) with Smartsheet to get a developer account*. The developer account gives you access to "Developer Tools", which is where you manage your app.
 2. In "Developer Tools", complete your developer profile. This profile is public and anyone can access it to learn about you and your apps.
 3. In "Developer Tools", register your app so Smartsheet can assign a client Id and a client secret to the app.
 4. Review the list of access scopes. You'll need to choose which ones your app needs to get to a user's Smartsheet data, and then ask the user to consent to that access.
 
 After you've worked through these steps, you'll be ready to implement the [OAuth Flow](#oauth-flow).
+
+*Review the [Developer Program Agreement](https://www.smartsheet.com/legal/developer-program-agreement).
 
 ### Open Developer Tools
 
@@ -795,7 +822,7 @@ Access Scope | Description |
 Your app must implement a 3-legged OAuth flow to retrieve an access token it can use to access Smartsheet data on behalf of an end user. 
 The following diagram has an overview of the OAuth flow:
 
-<img src="images/OAuth_flow.png" alt="Simplified graphic showing what data is passed back and forth during OAuth flow">
+<img src="images/OAuth_flow2.png" alt="Simplified graphic showing what data is passed back and forth during OAuth flow">
 
 <aside class="notice">App registration and OAuth flow require HTTPS.</aside>
 
@@ -967,12 +994,19 @@ For other error conditions, see the list of [OAuth Error Types](#oauth-error-typ
 > Request an access token:
 
 ```shell
+// Sample 1: Use a hash
 curl https://api.smartsheet.com/2.0/token \
 -d 'grant_type=authorization_code&code={your_code}&client_id={your_client_id}&hash={SHA_256(app_secret|code)}' \
+-X POST
+
+// Sample 2: Use plain text
+curl https://api.smartsheet.com/2.0/token \
+-d 'grant_type=authorization_code&code={your_code}&client_id={your_client_id}&client_secret={app_secret}' \
 -X POST
 ```
 
 ```javascript
+// Sample 1: Use a hash
 // Create hash
 var hash =
   crypto.createHash('sha256')
@@ -998,18 +1032,23 @@ smartsheet.tokens.getAccessToken(options)
 .catch(function(error) {
     console.log(error);
   });
+
+// Sample 2: Use plain text
+// In progress
 ```
 
 ```csharp
+// Sample 1: Use a hash
 // Get the token from the authorization result (see "Request an authorization code")
 Token token = oauth.ObtainNewToken(
   authResult      // AuthorizationResult authResult
 );
 
 // Refresh an access token
-Token tokenRefreshed = oauth.RefreshToken(
-  token           // Token token
-);
+Token tokenRefreshed = oauth.RefreshToken(token);
+
+// Sample 2: Use plain text
+// In progress
 ```
 
 ```java
@@ -1021,6 +1060,7 @@ Token tokenRefreshed = oauth.RefreshToken(
 ```
 
 ```ruby
+# Sample 1: Use a hash
 hash = Digest::SHA256.hexdigest '9samp7le3for71you|sample6p9qisx6a'
                               # your_app_secret|your_code
 smartsheet.token.get(
@@ -1028,6 +1068,9 @@ smartsheet.token.get(
   code: 'sample6p9qisx6a',
   hash: hash
 )
+
+# Sample 2: Use plain text
+# In progress
 ```
 
 
@@ -1061,9 +1104,10 @@ Once you’ve successfully obtained an authorization code, the next step is to e
 Value | Description |
 -----|-----|
 **client_id** | Required. The client Id you obtained when you registered your app.
+**client_secret** | Optional. Must use either this value or **hash**. Plain text method for sending this value. For example, <code>client_secret={app_secret}</code>. Encryption occurs at the HTTPS level.
 **code** | Required. Authorization code returned in the [previous step](#request-an-authorization-code).
 **grant_type** | Required. Must be set to "authorization_code".
-**hash** | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  The app_secret is never sent with the request. This is the **app_secret** you obtained when you [registered your app](#register-your-app-using-developer-tools).
+**hash** | Optional. Must use either this value or **client_secret**. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  For example, <code>hash={SHA_256(app_secret&#124;code)}</code>.
 
 <aside class="notice">The "Get Access Token" request must have the <b>Content-Type</b> header set to <b>application/x-www-form-urlencoded</b>.</aside>
 
@@ -1076,12 +1120,19 @@ For possible error conditions, see the list of [OAuth Error Types](#oauth-error-
 > Refresh an access token:
 
 ```shell
+Sample 1: Use a hash
 curl https://api.smartsheet.com/2.0/token \
 -d 'grant_type=refresh_token&refresh_token={your_refresh_token}&client_id={your_client_id}&hash={SHA_256(app_secret|refresh_token)}' \
+-X POST
+
+Sample 2: Use plain text
+curl https://api.smartsheet.com/2.0/token \
+-d 'grant_type=refresh_token&refresh_token={your_refresh_token}&client_id={your_client_id}&client_secret={app_secret}' \
 -X POST
 ```
 
 ```javascript
+// Sample 1: Use a hash
 // Create hash
 var hash =
   crypto.createHash('sha256')
@@ -1107,10 +1158,17 @@ smartsheet.tokens.refreshAccessToken(options)
   .catch(function(error) {
       console.log(error);
   });
+
+// Sample 2: Use plain text
+// In progress
 ```
 
 ```csharp
-// [todo]
+// Sample 1: Use a hash
+Token tokenRefreshed = oauth.RefreshToken(token);
+
+// Sample 2: Use plain text
+// In progress
 ```
 
 ```java
@@ -1122,6 +1180,7 @@ smartsheet.tokens.refreshAccessToken(options)
 ```
 
 ```ruby
+# Sample 1: Use a hash
 hash = Digest::SHA256.hexdigest '9samp7le3for71you|e9x352a9mp4151le2505'
                                 # your_app_secret|refresh_token
 smartsheet.token.refresh(
@@ -1129,6 +1188,9 @@ smartsheet.token.refresh(
   refresh_token: 'e9x352a9mp4151le2505',
   hash: hash
 )
+
+# Sample 2: Use plain text
+# In progress
 ```
 
 > Successful Response:
@@ -1152,8 +1214,9 @@ Once you obtain the new tokens, you must use them in place of the old ones, whic
 Value | Description |
 -----|-----|
 **client_id** | Required. Client Id for your app.
+**client_secret** | Optional. Must use either this value or **hash**. Plain text method for sending this value. For example, <code>client_secret={app_secret}</code>. Encryption occurs at the HTTPS level.
 **grant_type** | Required. Must be set to **refresh_token**.
-**hash** | Required. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token value. To obtain an **app_secret**, see [Register Your App Using Developer Tools](#register-your-app-using-developer-tools).
+**hash** | Optional. Must use either this value or **client_secret**. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token.  For example, <code>hash={SHA_256(app_secret&#124;refresh_token)}</code>.
 **refresh_token** | Required. **refresh_token** value that came with the access token.
 **redirect_uri** | Deprecated. If supplied, must match the redirect URI you [registered](#register-your-app-using-developer-tools) for your app.
 

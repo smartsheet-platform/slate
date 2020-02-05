@@ -175,12 +175,19 @@ The Smartsheet API utilizes OAuth 2.0 for authentication and authorization. An *
 > Example request: get access token
 
 ```shell
+// Sample 1: Use a hash
 curl https://api.smartsheet.com/2.0/token \
 -d 'grant_type=authorization_code&code={your_code}&client_id={your_client_id}&hash={SHA_256(app_secret|code)}' \
+-X POST
+
+// Sample 2: Use plain text
+curl https://api.smartsheet.com/2.0/token \
+-d 'grant_type=authorization_code&code={your_code}&client_id={your_client_id}&client_secret={app_secret}' \
 -X POST
 ```
 
 ```javascript
+// Sample 1: Use a hash
 // Create hash
 var hash =
   crypto.createHash('sha256')
@@ -206,12 +213,19 @@ smartsheet.tokens.getAccessToken(options)
 .catch(function(error) {
     console.log(error);
   });
+
+// Sample 2: Use plain text
+// In progress  
 ```
 
 ```csharp
+// Sample 1: Use a hash
 Token token = oauth.ObtainNewToken(
   authResult      // AuthorizationResult authResult
 );
+
+// Sample 2: Use plain text
+// In progress
 ```
 
 ```java
@@ -223,6 +237,7 @@ Token token = oauth.ObtainNewToken(
 ```
 
 ```ruby
+# Sample 1: Use a hash
 hash = Digest::SHA256.hexdigest '9samp7le3for71you|sample6p9qisx6a'
                                 # your_app_secret|your_code
 smartsheet.token.get(
@@ -230,6 +245,9 @@ smartsheet.token.get(
   code: 'sample6p9qisx6a',
   hash: hash
 )
+
+# Sample 2: Use plain text
+# In progress
 ```
 
 > Example response
@@ -252,10 +270,11 @@ Gets an access token, as part of the OAuth process. For more information, see [O
      |     |
 -----|-----|
 <%= HEADERS %> | **Content-Type**: application/x-www-form-urlencoded
-<%= PARAMETERS %> | **client_id** (required) -- client id for your app
- | **code** (required) -- authorization code returned during the OAuth flow.
- | **grant_type** (required) -- must be set to "authorization_code"
- | **hash** (required) -- [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  The **app_secret** is never sent with the request.
+<%= PARAMETERS %> | **client_id** | Required. The client Id you obtained when you registered your app.
+ | **client_secret** | Optional. Must use either this value or **hash**. Plain text method for sending this value. For example, <code>client_secret={app_secret}</code>. Encryption occurs at the HTTPS level.
+ | **code** | Required. Authorization code returned in the [previous step](#request-an-authorization-code).
+ | **grant_type** | Required. Must be set to "authorization_code".
+ | **hash** | Optional. Must use either this value or **client_secret**. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the authorization code.  For example, <code>hash={SHA_256(app_secret&#124;code)}</code>.
  <%= RETURNS %> | [Token object](#token-object) containing an access token and a refresh token.
 
 ## Refresh Access Token
@@ -263,10 +282,14 @@ Gets an access token, as part of the OAuth process. For more information, see [O
 > Example request: refresh access token
 
 ```shell
+Sample 1: Use a hash
 curl https://api.smartsheet.com/2.0/token \
--d 'grant_type=refresh_token&refresh_token={your_refresh_token}
-&client_id={your_client_id}
-&hash={SHA_256(app_secret|refresh_token)}' \
+-d 'grant_type=refresh_token&refresh_token={your_refresh_token}&client_id={your_client_id}&hash={SHA_256(app_secret|refresh_token)}' \
+-X POST
+
+Sample 2: Use plain text
+curl https://api.smartsheet.com/2.0/token \
+-d 'grant_type=refresh_token&refresh_token={your_refresh_token}&client_id={your_client_id}&client_secret={app_secret}' \
 -X POST
 ```
 
@@ -299,9 +322,7 @@ smartsheet.tokens.refreshAccessToken(options)
 ```
 
 ```csharp
-Token tokenRefreshed = oauth.RefreshToken(
-  token           // Token token
-);
+Token tokenRefreshed = oauth.RefreshToken(token);
 ```
 
 ```java
@@ -342,11 +363,13 @@ Refreshes an access token, as part of the OAuth process. For more information, s
      |     |
 -----|-----|
 <%= HEADERS %> | **Content-Type**: application/x-www-form-urlencoded
-<%= PARAMETERS %> | **client_id** (required) -- client id for your app
- | **grant_type** (required) -- must be set to "refresh_token"
- | **hash** (required) -- [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token value
- | **refresh_token** (required) -- **refresh_token** value that came with the access token
- <%= RETURNS %> | [Token object](#token-object) containing an access token and a refresh token.
+<%= PARAMETERS %> | **client_id** | Required. Client Id for your app.
+ | **client_secret** | Optional. Must use either this value or **hash**. Plain text method for sending this value. For example, <code>client_secret={app_secret}</code>. Encryption occurs at the HTTPS level.
+ | **grant_type** | Required. Must be set to **refresh_token**.
+ | **hash** | Optional. Must use either this value or **client_secret**. [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of your app secret concatenated with a pipe and the refresh token.  For example, <code>hash={SHA_256(app_secret&#124;refresh_token)}</code>.
+ | **refresh_token** | Required. **refresh_token** value that came with the access token.
+ | **redirect_uri** | Deprecated. If supplied, must match the redirect URI you [registered](#register-your-app-using-developer-tools) for your app.
+<%= RETURNS %> | [Token object](#token-object) containing an access token and a refresh token.
 
 ## Revoke Access Token
 
