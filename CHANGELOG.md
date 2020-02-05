@@ -4,7 +4,7 @@ Documentation update for January 2020.
 
 ## Search Improvements
 
-The information in these topics isn’t new. The change is that you can now find this information using the Search window where it was “difficult" to discover before: 
+The information in these topics isn’t new. The change is that you can now find this information using the Search window where it was difficult to discover before: 
 
 * [Filtering](https://smartsheet-platform.github.io/api-docs/#filtering) 
 * [Formulas](https://smartsheet-platform.github.io/api-docs/#formulas) 
