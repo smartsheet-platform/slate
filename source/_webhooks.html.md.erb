@@ -502,7 +502,7 @@ curl https://api.smartsheet.com/2.0/webhooks \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: application/json" \
 -X POST \
--d '{ "name": "Webhook #4", "callbackUrl": "https://www.myApp.com/webhooks", "scope": "sheet", "scopeObjectId": 2258256056870788, "version": 1, "events": [ "*.*" ]}'
+-d '{	"name": "Webhook #4", "callbackUrl": "https://www.myApp.com/webhooks", "scope": "sheet", "scopeObjectId": 3285357287499652, "events": ["*.*"], "version": 1, "subscope": {"columnIds": [7318427511613316, 7318427511613123]}}'
 ```
 
 ```javascript
@@ -612,6 +612,9 @@ new_webhook = response[:result]
     "enabled": false,
     "status": "NEW_NOT_VERIFIED",
     "version": 1,
+    "subscope": {
+      "columnIds": [7318427511613316, 7318427511613123]
+    },
     "createdAt": "2015-11-03T22:25:51Z",
     "modifiedAt": "2015-11-03T22:25:51Z"
   }
@@ -625,7 +628,7 @@ Creates a new webhook.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Webhook object](#webhook-object), limited to the following attributes:<ul><li>**callbackUrl** (required)</li><li>**events** (required)</li><li>**name** (required)</li><li>**scope** (required)</li><li>**scopeObjectId** (required)</li><li>**version** (required)</li></ul>
+<%= REQUEST %> | [Webhook object](#webhook-object), limited to the following attributes:<ul><li>**callbackUrl** (required)</li><li>**events** (required)</li><li>**name** (required)</li><li>**scope** (required)</li><li>**scopeObjectId** (required)</li><li>**subscope** (optional): limits the subscription to the specified columns</li><li>**version** (required)</li></ul>
 <%= RETURNS %> | [Result object](#result-object), containing a [Webhook object](#webhook-object) for the newly created webhook
 <%= SCOPE %> | ADMIN_WEBHOOKS
 
