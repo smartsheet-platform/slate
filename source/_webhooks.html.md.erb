@@ -615,8 +615,8 @@ new_webhook = response[:result]
     "subscope": {
       "columnIds": [7318427511613316, 7318427511613123]
     },
-    "createdAt": "2015-11-03T22:25:51Z",
-    "modifiedAt": "2015-11-03T22:25:51Z"
+    "createdAt": "2020-01-03T22:25:51Z",
+    "modifiedAt": "2020-01-03T22:25:51Z"
   }
 }
 ```
@@ -765,9 +765,12 @@ Webhook = smartsheet.webhooks.get(
 	"sharedSecret": "216ejjzdnq17mq1q8xs7d4hu8b",
 	"enabled": false,
 	"status": "NEW_NOT_VERIFIED",
-	"version": 1,
-	"createdAt": "2015-11-03T22:25:51Z",
-	"modifiedAt": "2015-11-04T20:12:42Z" 
+  "version": 1,
+  "subscope": {
+      "columnIds": [7318427511613316, 7318427511613123]
+    },
+	"createdAt": "2020-01-03T22:25:51Z",
+	"modifiedAt": "2020-01-04T20:12:42Z" 
 }
 ```
 
@@ -851,8 +854,11 @@ webhooks = response[:data]
       "enabled": true,
       "status": "ENABLED",
       "version": 1,
-      "createdAt": "2015-11-03T14:52:21Z",
-      "modifiedAt": "2015-11-04T19:05:40Z"
+      "subscope": {
+        "columnIds": [7318427511613316, 7318427511613123]
+      },
+      "createdAt": "2020-01-03T14:52:21Z",
+      "modifiedAt": "2020-01-04T19:05:40Z"
     }]
 }
 ```
