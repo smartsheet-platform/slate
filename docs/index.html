@@ -1949,7 +1949,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2020-02-05
+<p>Updated 2020-02-27
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -2444,7 +2444,7 @@ Also, make sure your code does not depend on the order in which JSON objects are
 </ul></li>
 </ul>
 <h1 id='getting-started'>Getting Started</h1><h2 id='make-your-first-api-call'>Make Your First API Call</h2>
-<p>Before you write any code, try executing API requests using a tool like <a href="https://curl.haxx.se/">cURL</a> or <a href="https://www.getpostman.com/">Postman</a>. By taking your code out of the equation, you can isolate troubleshooting to the raw request and response.</p>
+<p>Before you write any code, try executing API requests using a tool like <a href="https://curl.haxx.se/">cURL</a> or <a href="https://www.postman.com/">Postman</a>. By taking your code out of the equation, you can isolate troubleshooting to the raw request and response.</p>
 
 <p>You must use an access token. See instructions at <a href="#authentication-and-access-tokens">Authentication and Access Tokens</a>. In the examples below, replace this sample token, &quot;ll352u9jujauoqz4gstvsae05&quot;, with your actual token value.</p>
 
@@ -28487,7 +28487,7 @@ curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
 
 <p>Makes the specified alternate email address to become the primary email address for the specified user.</p>
 
-<aside class="notice">This operation is only available to system administrators of an Enterprise account. <a href="https://www.smartsheet.com/product/enterprise-deployment">Learn more</a> about the Enterprise platform.</aside>
+<aside class="notice">This operation is only available to system administrators of an Enterprise account. <a href="https://www.smartsheet.com/platform">Learn more</a> about the Enterprise platform.</aside>
 
 <table><thead>
 <tr>
@@ -32567,7 +32567,7 @@ curl https://api.smartsheet.com/2.0/events?streamPosition<span class="o">=</span
 
 <h2 id='webhook-management'>Webhook Management</h2>
 
-<p>Webhooks are created and managed by using the Smartsheet API. See <a href="#webhooks">Webhooks API Reference</a> for details about the related API operations. </p>
+<p>Use the Smartsheet API to create and manage webhooks. See <a href="#webhooks">Webhooks API Reference</a> for details about the related API operations. </p>
 
 <h2 id='webhook-ownership-amp-access'>Webhook Ownership &amp; Access</h2>
 
@@ -32596,7 +32596,7 @@ curl https://api.smartsheet.com/2.0/events?streamPosition<span class="o">=</span
 <p>A <a href="#webhook-object">Webhook object&#39;s</a> <strong>scope</strong> attribute indicates the scope of the subscription. It is specified when <a href="#create-webhook">creating a webhook</a>, and cannot subsequently be changed. </p>
 
 <ul>
-<li>Currently, <strong>sheet</strong> is the only supported value for the <strong>scope</strong> attribute. </li>
+<li>Currently, <strong>sheet</strong> is the only supported value for the <strong>scope</strong> attribute. However, you can set an array of columns as a <strong>subscope</strong> if you want to limit the webhook to specific columns. </li>
 </ul>
 
 <p>A <a href="#webhook-object">Webhook object&#39;s</a> <strong>event</strong> attribute indicates the set of events that a webhook is subscribed to (that is, which events trigger a callback).</p>
@@ -32605,6 +32605,8 @@ curl https://api.smartsheet.com/2.0/events?streamPosition<span class="o">=</span
 <li>Events are represented as a dot-separated string in the format &quot;<em>object</em>.<em>event</em>&quot;, where an asterisk (&#42;) can be used to represent &quot;all objects&quot; or &quot;all events&quot;.</li>
 <li>Currently, <b>&#42;.&#42;</b> is the only supported value for the <strong>events</strong> attribute. This indicates a subscription to all objects in the scope, and all events for those objects.</li>
 </ul>
+
+<aside class="notice">When a row is deleted on a sheet, even if you are using a <b>subscope</b> to monitor columns only and the cell in that column for that row is empty, you will receive a "row.deleted" event.</aside>
 
 <h4 id='example'>Example</h4>
 
@@ -33142,6 +33144,22 @@ Use this information to implement error handling logic according to the followin
 </tr>
 </tbody></table>
 <h2 id='webhook-object'>Webhook Object</h2>
+<blockquote>
+<p>Example: Webhook object</p>
+</blockquote>
+<pre class="highlight plaintext"><code>{
+  "id": 8444254503626628, 
+  "name": "Webhook #4",
+  "callbackUrl": "https://www.myApp.com/webhooks",
+  "scope": "sheet",
+  "scopeObjectId": 3285357287499652,
+  "events": ["*.*"],
+  "version": 1,
+  "subscope": {
+    "columnIds": [7318427511613316, 7318427511613123],
+  }
+}
+</code></pre>
 <table><thead>
 <tr>
 <th></th>
@@ -33225,6 +33243,11 @@ Use this information to implement error handling logic according to the followin
 <td>Webhook status. Read-only. See <a href="#webhook-status">Webhook Status</a> for list of possible values.</td>
 </tr>
 <tr>
+<td><strong>subscope</strong></td>
+<td>number[]</td>
+<td>Array of columnIds if you want to limit the subscription to a subscope. Specified when a webhook is created and cannot be changed.</td>
+</tr>
+<tr>
 <td><strong>version</strong></td>
 <td>number</td>
 <td>Webhook version. Currently, the only supported value is 1. This attribute is intended to ensure backward compatibility as new webhook functionality is released. For example, a webhook with a version of 1 is guaranteed to always be sent callback objects that are compatible with the version 1 release of webhooks.</td>
@@ -33264,7 +33287,7 @@ Use this information to implement error handling logic according to the followin
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
 -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
 -X POST <span class="se">\</span>
--d <span class="s1">'{ "name": "Webhook #4", "callbackUrl": "https://www.myApp.com/webhooks", "scope": "sheet", "scopeObjectId": 2258256056870788, "version": 1, "events": [ "*.*" ]}'</span>
+-d <span class="s1">'{   "name": "Webhook #4", "callbackUrl": "https://www.myApp.com/webhooks", "scope": "sheet", "scopeObjectId": 3285357287499652, "events": ["*.*"], "version": 1, "subscope": {"columnIds": [7318427511613316, 7318427511613123]}}'</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Specify webhook details</span>
 <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">name</span><span class="p">:</span> <span class="s2">"Webhook #4"</span><span class="p">,</span>
@@ -33360,8 +33383,11 @@ Use this information to implement error handling logic according to the followin
     </span><span class="s2">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW_NOT_VERIFIED"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-03T22:25:51Z"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-03T22:25:51Z"</span><span class="w">
+    </span><span class="s2">"subscope"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"columnIds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">7318427511613316</span><span class="p">,</span><span class="w"> </span><span class="mi">7318427511613123</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-01-03T22:25:51Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-01-03T22:25:51Z"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -33382,7 +33408,7 @@ Use this information to implement error handling logic according to the followin
 </tr>
 <tr>
 <td>Request Body</td>
-<td><a href="#webhook-object">Webhook object</a>, limited to the following attributes:<ul><li><strong>callbackUrl</strong> (required)</li><li><strong>events</strong> (required)</li><li><strong>name</strong> (required)</li><li><strong>scope</strong> (required)</li><li><strong>scopeObjectId</strong> (required)</li><li><strong>version</strong> (required)</li></ul></td>
+<td><a href="#webhook-object">Webhook object</a>, limited to the following attributes:<ul><li><strong>callbackUrl</strong> (required)</li><li><strong>events</strong> (required)</li><li><strong>name</strong> (required)</li><li><strong>scope</strong> (required)</li><li><strong>scopeObjectId</strong> (required)</li><li><strong>subscope</strong> (optional): limits the subscription to the specified columns</li><li><strong>version</strong> (required)</li></ul></td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -33395,6 +33421,8 @@ Use this information to implement error handling logic according to the followin
 </tbody></table>
 
 <aside class="notice">A webhook is not enabled by default when it is created. Once you've created a webhook, you can enable it by using the <a href="#update-webhook">Update Webhook</a> operation to set <b>enabled</b> to <b>true</b>.</aside>
+
+<aside class="notice">When a row is deleted on a sheet, even if you are using a <b>subscope</b> to monitor columns only and the cell in that column for that row is empty, you will receive a "row.deleted" event.</aside>
 
 <h1 id='delete-webhook'>Delete Webhook</h1>
 
@@ -33515,9 +33543,12 @@ Use this information to implement error handling logic according to the followin
     </span><span class="s2">"sharedSecret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"216ejjzdnq17mq1q8xs7d4hu8b"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW_NOT_VERIFIED"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-03T22:25:51Z"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-04T20:12:42Z"</span><span class="w"> 
+  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"subscope"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"columnIds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">7318427511613316</span><span class="p">,</span><span class="w"> </span><span class="mi">7318427511613123</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-01-03T22:25:51Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-01-04T20:12:42Z"</span><span class="w"> 
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -33602,8 +33633,11 @@ Use this information to implement error handling logic according to the followin
       </span><span class="s2">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
       </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ENABLED"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-03T14:52:21Z"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-04T19:05:40Z"</span><span class="w">
+      </span><span class="s2">"subscope"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"columnIds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">7318427511613316</span><span class="p">,</span><span class="w"> </span><span class="mi">7318427511613123</span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-01-03T14:52:21Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-01-04T19:05:40Z"</span><span class="w">
     </span><span class="p">}]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
