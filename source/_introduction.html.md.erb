@@ -324,7 +324,7 @@ If using OAuth for an integration:
 
 ## Dates and Times
 
-The Smartsheet API returns all dates and times in the [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) time zone in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format, that is, YYYY-MM-DDTHH:MM:SSZ.  If a date/time needs to be
+The Smartsheet API returns all dates and times in the [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) time zone in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format, that is, YYYY-MM-DDTHH:MM:SSZ.  If you are specifying a date and time, you should also send that information in ISO-8601 format. If a date/time needs to be
 displayed to an end-user in their local time zone, you must do the conversion using the user's time zone, which you can obtain by [getting the current user](#get-current-user).
 
 You can optionally choose to receive and send dates/times in numeric format, as milliseconds since the UNIX epoch (midnight on January 1, 1970 in UTC time), using the query string parameter **numericDates** with a value of **true**. This query parameter works for any API request. 
