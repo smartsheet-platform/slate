@@ -276,7 +276,13 @@ The **newWebhookStatus** attribute indicates that the webhook is now enabled.
 ```
 
 ```javascript
-// Not yet implemented
+import { createHmac } from "crypto";
+
+// Calculate a HEX digest from the shared secret + Webhook callback request body string
+const hmac = createHmac("sha256", sharedSecret).update(requestBodyStr).digest("hex");
+
+// Compare HMAC to the Smartsheet-Hmac-SHA256 header value
+const isAuthenticated = hmac === hmacSha256Header;
 ```
 
 ```csharp
