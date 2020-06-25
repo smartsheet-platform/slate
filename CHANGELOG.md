@@ -1,7 +1,6 @@
 # CHANGELOG
 
-Documentation update for April 2020.
+Documentation update for June 2020.
 
-* Fixed Search return to indicate we no longer return row numbers in the contextData field
-* Fixed date/time language to indicate that you should send times in ISO-8601 format as well as how to read the return
-* Fixed error code 1046 to reflect current usage
+* When searching and if a Proof is present, a proofUrl is now returned in the SearchResultItem object.
+* Added a Node.js sample for how to authenticate webhook callbacks.
