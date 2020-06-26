@@ -1949,7 +1949,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2020-04-16
+<p>Updated 2020-06-26
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -17085,7 +17085,8 @@ a comma-delimited list of flags that indicate additional attributes to be includ
   </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"contextData"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"Discussion 1"</span><span class="w">
+        </span><span class="s2">"Discussion 1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"proofUrl: https://......."</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1888207043356548</span><span class="p">,</span><span class="w">
     </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"discussion"</span><span class="p">,</span><span class="w">
@@ -17153,6 +17154,11 @@ a comma-delimited list of flags that indicate additional attributes to be includ
 <td><strong>parentObjectType</strong></td>
 <td>string</td>
 <td>Search result parent object type (folder, report, sheet, Sight, template, workspace)</td>
+</tr>
+<tr>
+<td><strong>proofUrl</strong></td>
+<td>string</td>
+<td>The proofUrl string will be present in the contextData if the discussion or attachment belongs to a proof</td>
 </tr>
 <tr>
 <td><strong>text</strong></td>
@@ -32894,7 +32900,13 @@ The <strong>newWebhookStatus</strong> attribute indicates that the webhook is no
 </blockquote>
 
 <pre class="highlight shell tab-shell"><code><span class="c"># See programming language tabs for language-specific examples.</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Not yet implemented</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">createHmac</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"crypto"</span><span class="p">;</span>
+
+<span class="c1">// Calculate a HEX digest from the shared secret + Webhook callback request body string</span>
+<span class="kr">const</span> <span class="nx">hmac</span> <span class="o">=</span> <span class="nx">createHmac</span><span class="p">(</span><span class="s2">"sha256"</span><span class="p">,</span> <span class="nx">sharedSecret</span><span class="p">).</span><span class="nx">update</span><span class="p">(</span><span class="nx">requestBodyStr</span><span class="p">).</span><span class="nx">digest</span><span class="p">(</span><span class="s2">"hex"</span><span class="p">);</span>
+
+<span class="c1">// Compare HMAC to the Smartsheet-Hmac-SHA256 header value</span>
+<span class="kr">const</span> <span class="nx">isAuthenticated</span> <span class="o">=</span> <span class="nx">hmac</span> <span class="o">===</span> <span class="nx">hmacSha256Header</span><span class="p">;</span>
 </code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Not yet implemented</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">HMAC_SHA256_ALGORITHM</span><span class="o">=</span><span class="s">"HmacSHA256"</span><span class="o">;</span>
 <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">HMAC_RADIX</span><span class="o">=</span><span class="mi">16</span><span class="o">;</span>
