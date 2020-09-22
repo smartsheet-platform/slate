@@ -1286,7 +1286,20 @@ A proof is a container that holds at least one attachment or comment. Limited to
 
 ```json
 {
-  "tbd"
+	"id": 0,
+	"originalId": 0,
+	"name": "string",
+	"proofType": "DOCUMENT",
+	"proofRequestUrl": "string",
+	"version": 0,
+	"lastUpdatedAt": "2019-08-24T14:15:22Z",
+	"lastUpdatedBy": {
+		"email": "jane.doe@smartsheet.com",
+		"name": "Jane Doe"
+	},
+	"isCompleted": true,
+	"attachments": [{}],
+	"discussions": [{}]
 }
 ```
 
@@ -1294,12 +1307,20 @@ A proof is a container that holds at least one attachment or comment. Limited to
 -----|-----|-----|
 **id** | number | Proof Id of the latest proof version
 **originalId** | number | Proof Id of the original proof version
+**attachments** | [Attachment](#attachment-object)[] | Array of Attachment objects. Only returned if the include query string parameter
+contains attachments.
+**discussions** | [Discussion](#discussion-object)[] | Array of Discussion objects. Only returned if the include query string parameter
+contains discussions.
+**isCompleted** | Boolean | Indicates whether the proof is completed.
 **lastUpdatedAt** | timestamp | A timestamp when the proof was last updated
 **lastUpdatedBy** | [User](#user-object) | User object containing name and email of the user who last updated the proof
 **name** | string | Proof name. This is the same as primary column value. If the primary column value is empty, name is empty. 
 **proofRequestUrl** | string | URL to review a proofing request
-**proofType** | [ProofType](#prooftype-object) | Proof type (one of NONE, IMAGE, DOCUMENT, VIDEO or MIXED).
+**proofType** | [ProofType](#prooftype-object) | Proof type for the latest proof version (one of DOCUMENT, IMAGE, MIXED, NONE, or VIDEO).
 **version** | number | The version number of the proof
+
+
+
 
 ### ProofingSettings Object
 
