@@ -1319,9 +1319,6 @@ contains discussions.
 **proofType** | [ProofType](#prooftype-object) | Proof type for the latest proof version (one of DOCUMENT, IMAGE, MIXED, NONE, or VIDEO).
 **version** | number | The version number of the proof
 
-
-
-
 ### ProofingSettings Object
 
      |     |     |
@@ -1374,7 +1371,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/proofs \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: application/json" \
 -X POST \
--d '[{"toTop":true, "cells": [ {"columnId": 7960873114331012, "value": true}, {"columnId": 642523719853956, "value": "New status", "strict": false} ] }, {"toTop":true, "cells": [ {"columnId": 7960873114331012, "value": true}, {"columnId": 642523719853956, "value": "New status", "strict": false} ] }]'
+-d '{ "attachmentSubType": "DOCUMENT", "attachmentType": "BOX_COM", "description": "string", "name": "string", "url": "string" }'
 ```
 
 ```javascript
@@ -1401,7 +1398,22 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/proofs \
 
 ```json
 {
-	"tbd"
+	"version": 0,
+	"message": "SUCCESS",
+	"resultCode": 0,
+	"result": {
+		"id": 0,
+		"originalId": 0,
+		"name": "string",
+		"proofType": "DOCUMENT",
+		"proofRequestUrl": "string",
+		"version": 0,
+		"lastUpdatedAt": "2020-09-22T21:52:15Z",
+		"lastUpdatedBy": {},
+		"isCompleted": true,
+		"attachments": [],
+		"discussions": []
+	}
 }
 ```
 
@@ -1414,15 +1426,9 @@ Creates a proof on a row.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %> |
-<%= PARAMETERS %> | <%= PARAMETER_ALLOW_PARTIAL_SUCCESS %><BR><%= PARAMETER_OVERRIDE_VALIDATION %> |
-<%= REQUEST %> | [Row object](#row-object) or an array of Row objects, with the following attributes:<ul><%= partial "snippets/addRowUpdateRow.md.erb" %></ul> |
-<%= RETURNS %> | [Result object](#result-object) containing the newly created rows -- either a single [Row object](#row-object) or array of Row objects, corresponding to what was specified in the request, as well as the new version of the sheet. |
-<%= ERRORS %> | <u>When <b>allowPartialSuccess=false</b> (or not specified):</u><br/><br/>If an error occurs, the [Error object](#error-object) returned contains a **detail** attribute set to an object with the following attribute:<ul><li>**index**: the array index of the row that caused the error (0 if a single Row was passed in)</li></ul>If any error occurs, the entire request fails (no rows are added), and the error response returned describes the first problem that was encountered. For example:<br/>{<br/>&#160;&#160;"errorCode": 1042,<br/>&#160;&#160;"message": "The cell value in column 5504245941200772 did not conform to the strict requirements for type CHECKBOX."<br/>&#160;&#160;"detail": {<br/>&#160;&#160;&#160;&#160;"index": 4<br/>&#160;&#160;}<br/>}<br/><br/><br/><u>When <b>allowPartialSuccess=true</b>:</u><br/><br/><%= PARTIAL_SUCCESS %> |
+<%= REQUEST %> | Request body takes a PDF or IMAGE file. The body varies depending on the type of file being uploaded. Only simple upload is currently supported. See [Post an Attachment](#post-an-attachment) for details. |
+<%= RETURNS %> | [Result object](#result-object) containing the [Proof object](#proof-object) that was created. |
 <%= SCOPE %> | WRITE_SHEETS |
-
-<aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>above</b>, <b>parentId</b>, <b>siblingId</b>, <b>toBottom</b>, or <b>toTop</b> attributes must be the same for all rows in the request).</aside>
-
-<aside class="notice">In a parent row, values of the following fields are auto-calculated based upon values in the child rows (and therefore cannot be updated using the API): Duration, End Date, % Complete, Start Date.</aside>
 
 ## Create a Proof Request
 
