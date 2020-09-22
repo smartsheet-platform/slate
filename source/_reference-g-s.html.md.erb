@@ -1274,6 +1274,149 @@ Imports CSV or XLSX data into a new sheet in the specified workspace.
 
 <aside class="notice">Note the following:<ul><li>Both <b>sheetName</b> and the file name must use ASCII characters.</li><li>The source data must be basic text. To include rich formula data, import and create a sheet first, and then use <a href="#update-rows">Update Rows</a>. To work with images, see <a href="#cell-images">Cell Images</a>.</li><li>XLS is not supported. You must use XLSX.</li><li>Hierarchical relationships between rows in an external file won't import.</li></ul></aside>
 
+# Proofs
+
+A proof is a container that holds at least one attachment or comment. Limited to one proof and its versions per row. A sheet can have multiple proofs. 
+
+## <%= OBJECTS %>
+
+### Proof Object
+
+> Example: Proof object
+
+```json
+{
+  "tbd"
+}
+```
+
+     |     |     |
+-----|-----|-----|
+**id** | number | Proof Id of the latest proof version
+**originalId** | number | Proof Id of the original proof version
+**lastUpdatedAt** | timestamp | A timestamp when the proof was last updated
+**lastUpdatedBy** | [User](#user-object) | User object containing name and email of the user who last updated the proof
+**name** | string | Proof name. This is the same as primary column value. If the primary column value is empty, name is empty. 
+**proofRequestUrl** | string | URL to review a proofing request
+**proofType** | [ProofType](#prooftype-object) | Proof type (one of NONE, IMAGE, DOCUMENT, VIDEO or MIXED).
+**version** | number | The version number of the proof
+
+### ProofingSettings Object
+
+     |     |     |
+-----|-----|-----|
+**proofingEnabled** | Boolean | Indicates whether proofing is to be enabled or disabled
+
+### ProofRequest Object
+
+     |     |     |
+-----|-----|-----|
+**id** | number | Proof Id of the proof version
+**proofId** | number | Proof Id of the original proof version
+**sentBy** | [User](#user-object) | User object containing name and email of the sender
+**sentAt** | timestamp | The date and time for when the proof request was sent to the recipient
+**isDownloadable** | Boolean | Indicates whether the proof is downloadable
+**status** | [Status](#status-object) | Status (one of ACTIVE, CANCELLED, EXPIRED, REQUEST_DELETED or PROOF_DELETED)
+
+### ProofType Object
+
+     |     |     |
+-----|-----|-----|
+**rowIds** | number[] | The Ids of the rows to move or copy from the source sheet
+**to** | [CopyOrMoveRowDestination](#copyormoverowdestination-object) | A CopyOrMoveRowDestination object that identifies the destination sheet 
+
+### ProofVersion Object
+
+     |     |     |
+-----|-----|-----|
+**id** | number | Proof Id of the proof version
+**originalId** | number | Proof Id of the original proof version
+**lastUpdatedAt** | timestamp | A timestamp when the proof was last updated
+**lastUpdatedBy** | [User](#user-object) | User object containing name and email of the user who last updated the proof
+**name** | string | Proof name. This is the same as primary column value. If the primary column value is empty, name is empty. 
+**proofRequestUrl** | string | URL to review a proofing request
+**proofType** | [ProofType](#prooftype-object) | Proof type (one of NONE, IMAGE, DOCUMENT, VIDEO or MIXED).
+
+### Status Object
+
+     |     |     |
+-----|-----|-----|
+**rowIds** | number[] | The Ids of the rows to move or copy from the source sheet
+**to** | [CopyOrMoveRowDestination](#copyormoverowdestination-object) | A CopyOrMoveRowDestination object that identifies the destination sheet 
+
+## Create a Proof
+
+> Example request: create a proof
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/proofs \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X POST \
+-d '[{"toTop":true, "cells": [ {"columnId": 7960873114331012, "value": true}, {"columnId": 642523719853956, "value": "New status", "strict": false} ] }, {"toTop":true, "cells": [ {"columnId": 7960873114331012, "value": true}, {"columnId": 642523719853956, "value": "New status", "strict": false} ] }]'
+```
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
+
+```json
+{
+	"tbd"
+}
+```
+
+`POST /sheets/{sheetId}/rows/{rowId}/proofs`
+
+Creates a proof on a row.
+
+<aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %> |
+<%= PARAMETERS %> | <%= PARAMETER_ALLOW_PARTIAL_SUCCESS %><BR><%= PARAMETER_OVERRIDE_VALIDATION %> |
+<%= REQUEST %> | [Row object](#row-object) or an array of Row objects, with the following attributes:<ul><%= partial "snippets/addRowUpdateRow.md.erb" %></ul> |
+<%= RETURNS %> | [Result object](#result-object) containing the newly created rows -- either a single [Row object](#row-object) or array of Row objects, corresponding to what was specified in the request, as well as the new version of the sheet. |
+<%= ERRORS %> | <u>When <b>allowPartialSuccess=false</b> (or not specified):</u><br/><br/>If an error occurs, the [Error object](#error-object) returned contains a **detail** attribute set to an object with the following attribute:<ul><li>**index**: the array index of the row that caused the error (0 if a single Row was passed in)</li></ul>If any error occurs, the entire request fails (no rows are added), and the error response returned describes the first problem that was encountered. For example:<br/>{<br/>&#160;&#160;"errorCode": 1042,<br/>&#160;&#160;"message": "The cell value in column 5504245941200772 did not conform to the strict requirements for type CHECKBOX."<br/>&#160;&#160;"detail": {<br/>&#160;&#160;&#160;&#160;"index": 4<br/>&#160;&#160;}<br/>}<br/><br/><br/><u>When <b>allowPartialSuccess=true</b>:</u><br/><br/><%= PARTIAL_SUCCESS %> |
+<%= SCOPE %> | WRITE_SHEETS |
+
+<aside class="notice">If multiple rows are specified in the request, all rows must be inserted at the same location (for example, the <b>above</b>, <b>parentId</b>, <b>siblingId</b>, <b>toBottom</b>, or <b>toTop</b> attributes must be the same for all rows in the request).</aside>
+
+<aside class="notice">In a parent row, values of the following fields are auto-calculated based upon values in the child rows (and therefore cannot be updated using the API): Duration, End Date, % Complete, Start Date.</aside>
+
+## Create a Proof Request
+
+## Create a Proof Version
+
+## Delete a Proof
+
+## Delete a Proof Request
+
+## Delete a Proof Version
+
+## Enable or Disable Proofing Settings
+
+## Get Actions on a Proof Request
+
 # Reports
 
 A report is a filtered view of the data from one or more sheets. Like a sheet, a report is comprised of columns, rows, and cells, and may optionally contain attachments and discussions.
@@ -5281,6 +5424,7 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 **owner** | string | Email address of the sheet owner
 **permalink** | string | URL that represents a direct link to the sheet in Smartsheet
 **projectSettings** | [ProjectSettings](#projectsettings-object) | Sheet's project settings containing the working days, non-working days, and length of day for a project sheet
+**proofs** | [Proof](#proof-object)[] | Array of Proof objects.<br/>Only returned if the [**include**](#get-sheet) query string parameter contains **proofs**.
 **readOnly** | Boolean | Returned only if the sheet belongs to an expired trial (value = **true**)
 **resourceManagementEnabled** | Boolean | Indicates that resource management is enabled
 **rows** | [Row](#row-object)[] | Array of Row objects
@@ -6688,7 +6832,7 @@ Gets the sheet specified in the URL. Returns the sheet, including rows, and opti
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ganttConfig**: includes Gantt chart details</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which report, sheet, Sight (aka dashboard), or template the sheet was created from, if any.
+<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ganttConfig**: includes Gantt chart details</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li><li>**proofs**: includes metadata for proofs at the row level</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which report, sheet, Sight (aka dashboard), or template the sheet was created from, if any.
   | **exclude** (optional): a comma-separated list of elements to not include in the response.<br/><ul><li>**filteredOutRows**: excludes filtered out rows from response payload if a sheet filter is applied; includes total number of filtered rows</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**nonexistentCells**: excludes cells that have never contained any data</li></ul>
   | **columnIds** (optional): a comma-separated list of column Ids. The response contains only the specified columns in the "columns" array, and individual rows' "cells" array only contains cells in the specified columns.
   | **filterId** (optional): overrides the existing include={filters} parameter if both are supplied. Applies the given filter (if accessible by the calling user) and marks the affected rows as "filteredOut": true. Format is **filterId={filterId}**
