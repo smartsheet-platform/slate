@@ -1459,6 +1459,65 @@ Creates a proof on a row.
 
 ## Get Proof
 
+> Example request: get proof
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId} \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+```
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
+
+```json
+{
+	"id": 0,
+	"originalId": 0,
+	"name": "string",
+	"proofType": "DOCUMENT",
+	"proofRequestUrl": "string",
+	"version": 0,
+	"lastUpdatedAt": "2020-09-22T21:52:15Z",
+	"lastUpdatedBy": {
+		"email": "jane.doe@smartsheet.com",
+		"name": "Jane Doe"
+	},
+	"isCompleted": true,
+	"attachments": [{}],
+	"discussions": [{}]
+}
+```
+
+`GET /sheets/{sheetId}/proofs/{proofId}`
+
+Gets the proof specified in the URL. Returns the proof, which is optionally populated with discussion and attachment objects.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/><ul><li>**attachments**: includes the metadata for proof attachments</li><li>**discussions**: includes proof discussions</li></ul>
+<%= RETURNS %> | [Proof object](#proof-object), populated according to the specified parameters
+<%= SCOPE %> | READ_SHEETS
+
 ## Update Proof Status
 
 ## Delete Proof
