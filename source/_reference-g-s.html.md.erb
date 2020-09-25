@@ -1520,6 +1520,68 @@ Gets the proof specified in the URL. Returns the proof, which is optionally popu
 
 ## Update Proof Status
 
+> Example request: update proof status
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId} \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X PUT \
+-d '{"isCompleted": true}'
+```
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
+
+```json
+{
+	"id": 0,
+	"originalId": 0,
+	"name": "string",
+	"proofType": "DOCUMENT",
+	"proofRequestUrl": "string",
+	"version": 0,
+	"lastUpdatedAt": "2020-09-22T21:53:04Z",
+	"lastUpdatedBy": {
+		"email": "jane.doe@smartsheet.com",
+		"name": "Jane Doe"
+	},
+	"isCompleted": true,
+	"attachments": [{}],
+	"discussions": [{}]
+}
+```
+
+`PUT /sheets/{sheetId}/proofs/{proofId}`
+
+Sets the proof status as either complete or incomplete.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
+<%= PARAMETERS %> | **isCompleted** (required): Boolean to indicate whether the proof is complete or incomplete. 
+<%= RETURNS %> | [Result object](#result-object) containing a [SheetPublish object](#sheetpublish-object)
+<%= SCOPE %> | WRITE_SHEETS
+
 ## Delete Proof
 
 > Example request: delete proof
