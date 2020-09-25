@@ -1339,6 +1339,56 @@ contains discussions.
 
 ## List Proofs
 
+> Example request: list proofs
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs 
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+```
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
+
+```json
+{
+	"pageNumber": 1,
+	"pageSize": 50,
+	"totalPages": 25,
+	"totalCount": 136,
+	"data": [{}]
+}
+```
+
+`GET /sheets/{sheetId}/proofs`
+
+Gets a list of all proofs for a given sheet.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Proof objects](#proof-object)
+<%= SCOPE %> | READ_SHEETS
+
 ## Create Proof
 
 > Example request: create a proof
