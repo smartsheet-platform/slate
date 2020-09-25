@@ -1319,50 +1319,25 @@ contains discussions.
 **proofType** | [ProofType](#prooftype-object) | Proof type for the latest proof version (one of DOCUMENT, IMAGE, MIXED, NONE, or VIDEO).
 **version** | number | The version number of the proof
 
-### ProofingSettings Object
-
-     |     |     |
------|-----|-----|
-**proofingEnabled** | Boolean | Indicates whether proofing is to be enabled or disabled
-
 ### ProofRequest Object
 
      |     |     |
 -----|-----|-----|
-**id** | number | Proof Id of the proof version
-**proofId** | number | Proof Id of the original proof version
+**id** | number | Proof request Id
+**proofId** | number | Proof Id of the original proof
 **sentBy** | [User](#user-object) | User object containing name and email of the sender
 **sentAt** | timestamp | The date and time for when the proof request was sent to the recipient
-**isDownloadable** | Boolean | Indicates whether the proof is downloadable
-**status** | [Status](#status-object) | Status (one of ACTIVE, CANCELLED, EXPIRED, REQUEST_DELETED or PROOF_DELETED)
+**isDownloadable** | Boolean | Indicates whether the description is downloadable
+**status** | [Status](#status-object) | Status (one of ACTIVE, EXPIRED, or PROOF_DELETED)
 
-### ProofType Object
-
-     |     |     |
------|-----|-----|
-**rowIds** | number[] | The Ids of the rows to move or copy from the source sheet
-**to** | [CopyOrMoveRowDestination](#copyormoverowdestination-object) | A CopyOrMoveRowDestination object that identifies the destination sheet 
-
-### ProofVersion Object
+### ProofRequestAction Object
 
      |     |     |
 -----|-----|-----|
-**id** | number | Proof Id of the proof version
-**originalId** | number | Proof Id of the original proof version
-**lastUpdatedAt** | timestamp | A timestamp when the proof was last updated
-**lastUpdatedBy** | [User](#user-object) | User object containing name and email of the user who last updated the proof
-**name** | string | Proof name. This is the same as primary column value. If the primary column value is empty, name is empty. 
-**proofRequestUrl** | string | URL to review a proofing request
-**proofType** | [ProofType](#prooftype-object) | Proof type (one of NONE, IMAGE, DOCUMENT, VIDEO or MIXED).
+**actionStatus** | [Status](#status-object) | Proof request action status (one of APPROVED, PENDING, or REJECTED)
+**user** | [User](#user-object) | User object containing name and email of the user performing the action
 
-### Status Object
-
-     |     |     |
------|-----|-----|
-**rowIds** | number[] | The Ids of the rows to move or copy from the source sheet
-**to** | [CopyOrMoveRowDestination](#copyormoverowdestination-object) | A CopyOrMoveRowDestination object that identifies the destination sheet 
-
-## Create a Proof
+## Create Proof
 
 > Example request: create a proof
 
@@ -1430,15 +1405,62 @@ Creates a proof on a row.
 <%= RETURNS %> | [Result object](#result-object) containing the [Proof object](#proof-object) that was created. |
 <%= SCOPE %> | WRITE_SHEETS |
 
-## Create a Proof Request
+## Create Proof Request
 
-## Create a Proof Version
+## Create Proof Version
 
-## Delete a Proof
+## Delete Proof
 
-## Delete a Proof Request
+> Example request: delete proof
 
-## Delete a Proof Version
+```shell
+curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}' \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-X DELETE
+```
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
+
+```json
+{
+  "message": "SUCCESS",    
+  "resultCode": 0
+}
+```
+
+`DELETE /sheets/{sheetId}/proofs/{proofId}`
+
+Deletes the proof including all versions. The proofId must be for the original version.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | WRITE_SHEETS
+
+## Delete Proof Request
+
+## Delete Proof Version
 
 ## Enable or Disable Proofing Settings
 
