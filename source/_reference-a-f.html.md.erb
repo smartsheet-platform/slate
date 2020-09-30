@@ -3152,6 +3152,7 @@ A column is a component of a sheet or report.
   "version": 2,
   "index": 4,
   "title": "Interesting Choices",
+  "formula": "=data@row",
 	"type": "MULTI_PICKLIST",
   "options": [
     "1",
@@ -3172,6 +3173,7 @@ A column is a component of a sheet or report.
 **contactOptions** | [ContactOption](#contactoption-object)[] | Array of ContactOption objects to specify a pre-defined list of values for the column. Column **type** must be **CONTACT_LIST** 
 **description** | string | Column description. 
 **format** | string | The format descriptor (see [Formatting](#formatting))<br/>Only returned if the **include** query string parameter contains **format** and this column has a non-default format applied to it.
+**formula** | string | The  formula for a column, if set, for instance **=data@row**.
 **hidden** | Boolean | Indicates whether the column is hidden
 **index** | number | Column index or position. This number is zero-based. 
 **locked** | Boolean | Indicates whether the column is locked. In a response, a value of **true** indicates that the column has been locked by the sheet owner or the admin.
@@ -3203,7 +3205,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/columns \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: application/json" \
 -X POST \
--d '[{"title": "New Multi-Picklist Column 1", "type": "MULTI_PICKLIST", "options": ["First", "Second", "Third"], "index": 4} , {"title":"New Date Column", "type":"DATE", "validation":"true", "index":4},]'
+-d '[{"title": "New Multi-Picklist Column 1", "type": "MULTI_PICKLIST", "options": ["First", "Second", "Third"], "index": 4} , {"title":"New Date Column", "type":"DATE", "formula": "=data@row", "validation":"true", "index":4},]'
 -d '[{"index": 6, "title": "Dropdown Multi Select", "type": "MULTI_PICKLIST", "options": ["Template", "Blog",	"Newsletter",	"Email", "Press Release", "Advertisement"],	"validation": false, "width": 150}]'
 ```
 
@@ -3223,6 +3225,7 @@ var column = [
   {
     "title": "New Date Column",
     "type": "DATE",
+    "formula": "=data@row",
     "validation": true,
     "index": 4
   }
@@ -3258,6 +3261,7 @@ Column columnA = new Column
 Column columnB = new Column
 {
   Title = "New Date Column",
+  Formula = "=data@row",
   Index = 4,
   Type = ColumnType.DATE
 };
@@ -3280,6 +3284,7 @@ Column column1 = new Column()
 Column column2 = new Column()
   .setTitle("New Date Column")
   .setType(ColumnType.DATE)
+  .setFormula("=data@row")
   .setValidation(true)
   .setIndex(4);
 
@@ -3306,6 +3311,7 @@ column1 = smartsheet.models.Column({
 column2 = smartsheet.models.Column({
   'title': 'New Date Column',
   'type': 'DATE',
+  'formula': '=data@row',
   'validation': 'True',
   'index': 4
 })
@@ -3331,6 +3337,7 @@ body = {
 {
   title: "New Date Column",
   type: 'DATE',
+  formula: 'data@row',
   validation: true,
   index: 4
 }
@@ -3366,6 +3373,7 @@ new_columns = smartsheet.sheets.columns.add(
       "id": 4503594425063547,
       "index": 4,
       "title": "New Date Column",
+      "formula": "=data@row",
       "type": "DATE",
       "validation": true,
       "width": 150
@@ -3381,7 +3389,7 @@ Inserts one or more columns into the sheet specified in the URL. <%= SUPPORTS_MU
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Column object](#column-object) or an array of Column objects, with the following attributes:<ul><li>**title**</li><li>**type**</li><li>**index** (zero-based)</li><li>**autoNumberFormat** (optional)</li><li>**description** (optional)</li><li>**locked** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**validation** (optional)</li><li>**width** (optional)</li></ul>
+<%= REQUEST %> | [Column object](#column-object) or an array of Column objects, with the following attributes:<ul><li>**title**</li><li>**type**</li><li>**formula** (optional)</li><li>**index** (zero-based)</li><li>**autoNumberFormat** (optional)</li><li>**description** (optional)</li><li>**locked** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**validation** (optional)</li><li>**width** (optional)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the newly created columns -- either a single [Column object](#column-object) or an array of Column objects, corresponding to what was specified in the request.
 <%= SCOPE %> | ADMIN_SHEETS
 
@@ -3800,7 +3808,7 @@ Updates properties of the column, moves the column, and/or renames the column.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | A [Column object](#column-object) that contains the following attributes:<ul><li>**index**</li><li>**autoNumberFormat** (optional)</li><li>**contactOptions** (optional) -- must have set column type to **CONTACT_LIST**</li><li>**description** (optional)</li><li>**format** (optional)</li><li>**hidden** (optional)</li><li>**locked** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**title** (optional)</li><li>**type** (optional)</li><li>**validation** (optional)</li><li>**width** (optional)</li></ul>
+<%= REQUEST %> | A [Column object](#column-object) that contains the following attributes:<ul><li>**index**</li><li>**autoNumberFormat** (optional)</li><li>**contactOptions** (optional) -- must have set column type to **CONTACT_LIST**</li><li>**description** (optional)</li><li>**format** (optional)</li><li>**formula** (optional)</li><li>**hidden** (optional)</li><li>**locked** (optional)</li><li>**options** (optional)</li><li>**symbol** (optional)</li><li>**systemColumnType** (optional)</li><li>**title** (optional)</li><li>**type** (optional)</li><li>**validation** (optional)</li><li>**width** (optional)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the [Column object](#column-object) that was modified
 <%= SCOPE %> | ADMIN_SHEETS
 
@@ -4752,7 +4760,7 @@ xref.SourceSheetId = 154378742065028;
 xref.StartRowId = 4089096300717956;
 xref.EndRowId = 2681721417164676;
 xref.StartColumnId = 824812248557444;
-xref.EndRowId = 824812248557444;
+xref.EndColumnId = 824812248557444;
 CrossSheetReference newXRef = smartsheet.SheetResources.CrossSheetReferenceResources.CreateCrossSheetReference(
     1755440242550660,   //sheetId
     xref
@@ -4766,7 +4774,7 @@ xref.setSourceSheetId(154378742065028L);
 xref.setStartRowId(4089096300717956L);
 xref.setEndRowId(2681721417164676L);
 xref.setStartColumnId(824812248557444L);
-xref.setEndRowId(824812248557444L);
+xref.setEndColumnId(824812248557444L);
 
 CrossSheetReference newXRef = smartsheet.sheetResources().crossSheetReferenceResources().createCrossSheetReference(
     1755440242550660,   //sheetId
