@@ -1949,7 +1949,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2020-06-26
+<p>Updated 2020-10-01
 <h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
@@ -1992,7 +1992,7 @@
 <li>Developer Newsletter (subscribe while at the Developer Portal using the &quot;Get Developer Updates&quot; form)</li>
 <li><a href="https://stackoverflow.com/questions/tagged/smartsheet-api">StackOverflow</a> using the &quot;smartsheet-api&quot; tag</li>
 <li>Contact us at <a href="mailto:api@smartsheet.com">api@smartsheet.com</a></li>
-<li><a href="https://www.10000ft.com/integrations/technical-details/api-documentation">10000ft API documentation</a></li>
+<li><a href="https://help.smartsheet.com/articles/2480876-api-documentation">10000ft API documentation</a></li>
 <li><a href="https://get.converse.ai/">Bridge by Smartsheet documentation</a></li>
 <li>Review the <a href="https://www.smartsheet.com/legal/developer-program-agreement">Developer Program Agreement</a></li>
 </ul>
@@ -7432,6 +7432,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
   </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
   </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Interesting Choices"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"formula"</span><span class="p">:</span><span class="w"> </span><span class="s2">"=data@row"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MULTI_PICKLIST"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
@@ -7483,6 +7484,11 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <td><strong>format</strong></td>
 <td>string</td>
 <td>The format descriptor (see <a href="#formatting">Formatting</a>)<br/>Only returned if the <strong>include</strong> query string parameter contains <strong>format</strong> and this column has a non-default format applied to it.</td>
+</tr>
+<tr>
+<td><strong>formula</strong></td>
+<td>string</td>
+<td>The  formula for a column, if set, for instance <strong>=data@row</strong>.</td>
 </tr>
 <tr>
 <td><strong>hidden</strong></td>
@@ -7576,7 +7582,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span> <span class="se">\</span>
 -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
 -X POST <span class="se">\</span>
--d <span class="s1">'[{"title": "New Multi-Picklist Column 1", "type": "MULTI_PICKLIST", "options": ["First", "Second", "Third"], "index": 4} , {"title":"New Date Column", "type":"DATE", "validation":"true", "index":4},]'</span>
+-d <span class="s1">'[{"title": "New Multi-Picklist Column 1", "type": "MULTI_PICKLIST", "options": ["First", "Second", "Third"], "index": 4} , {"title":"New Date Column", "type":"DATE", "formula": "=data@row", "validation":"true", "index":4},]'</span>
 -d <span class="s1">'[{"index": 6, "title": "Dropdown Multi Select", "type": "MULTI_PICKLIST", "options": ["Template", "Blog",   "Newsletter",   "Email", "Press Release", "Advertisement"], "validation": false, "width": 150}]'</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Specify new columns</span>
 <span class="kd">var</span> <span class="nx">column</span> <span class="o">=</span> <span class="p">[</span>
@@ -7593,6 +7599,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
   <span class="p">{</span>
     <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"New Date Column"</span><span class="p">,</span>
     <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"DATE"</span><span class="p">,</span>
+    <span class="s2">"formula"</span><span class="p">:</span> <span class="s2">"=data@row"</span><span class="p">,</span>
     <span class="s2">"validation"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
     <span class="s2">"index"</span><span class="p">:</span> <span class="mi">4</span>
   <span class="p">}</span>
@@ -7625,6 +7632,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <span class="n">Column</span> <span class="n">columnB</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Column</span>
 <span class="p">{</span>
   <span class="n">Title</span> <span class="p">=</span> <span class="s">"New Date Column"</span><span class="p">,</span>
+  <span class="n">Formula</span> <span class="p">=</span> <span class="s">"=data@row"</span><span class="p">,</span>
   <span class="n">Index</span> <span class="p">=</span> <span class="m">4</span><span class="p">,</span>
   <span class="n">Type</span> <span class="p">=</span> <span class="n">ColumnType</span><span class="p">.</span><span class="n">DATE</span>
 <span class="p">};</span>
@@ -7644,6 +7652,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <span class="n">Column</span> <span class="n">column2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Column</span><span class="o">()</span>
   <span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="s">"New Date Column"</span><span class="o">)</span>
   <span class="o">.</span><span class="na">setType</span><span class="o">(</span><span class="n">ColumnType</span><span class="o">.</span><span class="na">DATE</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">setFormula</span><span class="o">(</span><span class="s">"=data@row"</span><span class="o">)</span>
   <span class="o">.</span><span class="na">setValidation</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
   <span class="o">.</span><span class="na">setIndex</span><span class="o">(</span><span class="mi">4</span><span class="o">);</span>
 
@@ -7667,6 +7676,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <span class="n">column2</span> <span class="o">=</span> <span class="n">smartsheet</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Column</span><span class="p">({</span>
   <span class="s">'title'</span><span class="p">:</span> <span class="s">'New Date Column'</span><span class="p">,</span>
   <span class="s">'type'</span><span class="p">:</span> <span class="s">'DATE'</span><span class="p">,</span>
+  <span class="s">'formula'</span><span class="p">:</span> <span class="s">'=data@row'</span><span class="p">,</span>
   <span class="s">'validation'</span><span class="p">:</span> <span class="s">'True'</span><span class="p">,</span>
   <span class="s">'index'</span><span class="p">:</span> <span class="mi">4</span>
 <span class="p">})</span>
@@ -7689,6 +7699,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 <span class="p">{</span>
   <span class="ss">title: </span><span class="s2">"New Date Column"</span><span class="p">,</span>
   <span class="ss">type: </span><span class="s1">'DATE'</span><span class="p">,</span>
+  <span class="ss">formula: </span><span class="s1">'data@row'</span><span class="p">,</span>
   <span class="ss">validation: </span><span class="kp">true</span><span class="p">,</span>
   <span class="ss">index: </span><span class="mi">4</span>
 <span class="p">}</span>
@@ -7725,6 +7736,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4503594425063547</span><span class="p">,</span><span class="w">
       </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Date Column"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"formula"</span><span class="p">:</span><span class="w"> </span><span class="s2">"=data@row"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DATE"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"validation"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
       </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="w">
@@ -7749,7 +7761,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 </tr>
 <tr>
 <td>Request Body</td>
-<td><a href="#column-object">Column object</a> or an array of Column objects, with the following attributes:<ul><li><strong>title</strong></li><li><strong>type</strong></li><li><strong>index</strong> (zero-based)</li><li><strong>autoNumberFormat</strong> (optional)</li><li><strong>description</strong> (optional)</li><li><strong>locked</strong> (optional)</li><li><strong>options</strong> (optional)</li><li><strong>symbol</strong> (optional)</li><li><strong>systemColumnType</strong> (optional)</li><li><strong>validation</strong> (optional)</li><li><strong>width</strong> (optional)</li></ul></td>
+<td><a href="#column-object">Column object</a> or an array of Column objects, with the following attributes:<ul><li><strong>title</strong></li><li><strong>type</strong></li><li><strong>formula</strong> (optional)</li><li><strong>index</strong> (zero-based)</li><li><strong>autoNumberFormat</strong> (optional)</li><li><strong>description</strong> (optional)</li><li><strong>locked</strong> (optional)</li><li><strong>options</strong> (optional)</li><li><strong>symbol</strong> (optional)</li><li><strong>systemColumnType</strong> (optional)</li><li><strong>validation</strong> (optional)</li><li><strong>width</strong> (optional)</li></ul></td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -8185,7 +8197,7 @@ curl -o <span class="s2">"stanley_hotel.png"</span> <span class="s2">"https://aw
 </tr>
 <tr>
 <td>Request Body</td>
-<td>A <a href="#column-object">Column object</a> that contains the following attributes:<ul><li><strong>index</strong></li><li><strong>autoNumberFormat</strong> (optional)</li><li><strong>contactOptions</strong> (optional) -- must have set column type to <strong>CONTACT_LIST</strong></li><li><strong>description</strong> (optional)</li><li><strong>format</strong> (optional)</li><li><strong>hidden</strong> (optional)</li><li><strong>locked</strong> (optional)</li><li><strong>options</strong> (optional)</li><li><strong>symbol</strong> (optional)</li><li><strong>systemColumnType</strong> (optional)</li><li><strong>title</strong> (optional)</li><li><strong>type</strong> (optional)</li><li><strong>validation</strong> (optional)</li><li><strong>width</strong> (optional)</li></ul></td>
+<td>A <a href="#column-object">Column object</a> that contains the following attributes:<ul><li><strong>index</strong></li><li><strong>autoNumberFormat</strong> (optional)</li><li><strong>contactOptions</strong> (optional) -- must have set column type to <strong>CONTACT_LIST</strong></li><li><strong>description</strong> (optional)</li><li><strong>format</strong> (optional)</li><li><strong>formula</strong> (optional)</li><li><strong>hidden</strong> (optional)</li><li><strong>locked</strong> (optional)</li><li><strong>options</strong> (optional)</li><li><strong>symbol</strong> (optional)</li><li><strong>systemColumnType</strong> (optional)</li><li><strong>title</strong> (optional)</li><li><strong>type</strong> (optional)</li><li><strong>validation</strong> (optional)</li><li><strong>width</strong> (optional)</li></ul></td>
 </tr>
 <tr>
 <td>Returns</td>
@@ -9394,7 +9406,7 @@ filled in by Smartsheet and whose values cannot be changed by the user. These co
 <span class="n">xref</span><span class="p">.</span><span class="n">StartRowId</span> <span class="p">=</span> <span class="m">4089096300717956</span><span class="p">;</span>
 <span class="n">xref</span><span class="p">.</span><span class="n">EndRowId</span> <span class="p">=</span> <span class="m">2681721417164676</span><span class="p">;</span>
 <span class="n">xref</span><span class="p">.</span><span class="n">StartColumnId</span> <span class="p">=</span> <span class="m">824812248557444</span><span class="p">;</span>
-<span class="n">xref</span><span class="p">.</span><span class="n">EndRowId</span> <span class="p">=</span> <span class="m">824812248557444</span><span class="p">;</span>
+<span class="n">xref</span><span class="p">.</span><span class="n">EndColumnId</span> <span class="p">=</span> <span class="m">824812248557444</span><span class="p">;</span>
 <span class="n">CrossSheetReference</span> <span class="n">newXRef</span> <span class="p">=</span> <span class="n">smartsheet</span><span class="p">.</span><span class="n">SheetResources</span><span class="p">.</span><span class="n">CrossSheetReferenceResources</span><span class="p">.</span><span class="nf">CreateCrossSheetReference</span><span class="p">(</span>
     <span class="m">1755440242550660</span><span class="p">,</span>   <span class="c1">//sheetId</span>
     <span class="n">xref</span>
@@ -9405,7 +9417,7 @@ filled in by Smartsheet and whose values cannot be changed by the user. These co
 <span class="n">xref</span><span class="o">.</span><span class="na">setStartRowId</span><span class="o">(</span><span class="mi">4089096300717956L</span><span class="o">);</span>
 <span class="n">xref</span><span class="o">.</span><span class="na">setEndRowId</span><span class="o">(</span><span class="mi">2681721417164676L</span><span class="o">);</span>
 <span class="n">xref</span><span class="o">.</span><span class="na">setStartColumnId</span><span class="o">(</span><span class="mi">824812248557444L</span><span class="o">);</span>
-<span class="n">xref</span><span class="o">.</span><span class="na">setEndRowId</span><span class="o">(</span><span class="mi">824812248557444L</span><span class="o">);</span>
+<span class="n">xref</span><span class="o">.</span><span class="na">setEndColumnId</span><span class="o">(</span><span class="mi">824812248557444L</span><span class="o">);</span>
 
 <span class="n">CrossSheetReference</span> <span class="n">newXRef</span> <span class="o">=</span> <span class="n">smartsheet</span><span class="o">.</span><span class="na">sheetResources</span><span class="o">().</span><span class="na">crossSheetReferenceResources</span><span class="o">().</span><span class="na">createCrossSheetReference</span><span class="o">(</span>
     <span class="mi">1755440242550660</span><span class="o">,</span>   <span class="c1">//sheetId</span>
@@ -21711,7 +21723,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- comma-separated list of elements to copy from the template or sheet:<ul><li><strong>attachments</strong></li><li><strong>cellLinks</strong></li><li><strong>data</strong></li><li><strong>discussions</strong></li><li><strong>forms</strong></li></ul></td>
+<td><strong>include</strong> (optional) -- comma-separated list of elements to copy from the template or sheet:<ul><li><strong>attachments</strong></li><li><strong>cellLinks</strong></li><li><strong>data</strong></li><li><strong>discussions</strong></li><li><strong>forms</strong></li><li><strong>rules</strong></li><li><strong>ruleRecipients</strong></li></ul></td>
 </tr>
 <tr>
 <td>Request Body</td>
@@ -21849,7 +21861,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- comma-separated list of elements to copy from the template or sheet:<ul><li><strong>attachments</strong></li><li><strong>cellLinks</strong></li><li><strong>data</strong></li><li><strong>discussions</strong></li><li><strong>forms</strong></li></ul></td>
+<td><strong>include</strong> (optional) -- comma-separated list of elements to copy from the template or sheet:<ul><li><strong>attachments</strong></li><li><strong>cellLinks</strong></li><li><strong>data</strong></li><li><strong>discussions</strong></li><li><strong>forms</strong></li><li><strong>rules</strong></li><li><strong>ruleRecipients</strong></li></ul></td>
 </tr>
 <tr>
 <td>Request Body</td>
@@ -21987,7 +21999,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 </tr>
 <tr>
 <td>Parameters</td>
-<td><strong>include</strong> (optional) -- comma-separated list of elements to copy from the template or sheet:<ul><li><strong>attachments</strong></li><li><strong>cellLinks</strong></li><li><strong>data</strong></li><li><strong>discussions</strong></li><li><strong>forms</strong></li></ul></td>
+<td><strong>include</strong> (optional) -- comma-separated list of elements to copy from the template or sheet:<ul><li><strong>attachments</strong></li><li><strong>cellLinks</strong></li><li><strong>data</strong></li><li><strong>discussions</strong></li><li><strong>forms</strong></li><li><strong>rules</strong></li><li><strong>ruleRecipients</strong></li></ul></td>
 </tr>
 <tr>
 <td>Request Body</td>
@@ -22771,7 +22783,7 @@ Either <strong>email</strong> and <strong>groupId</strong> may be set, but not b
 -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
 -d <span class="s1">'{ 
   "destinationType": "folder", 
-  "destinationId": 7960873114331012, 
+  "destinationId": 7960873114331012 
 }'</span> <span class="se">\</span>
 -X POST
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set destination information</span>
@@ -31274,12 +31286,12 @@ curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
 <tr>
 <td>400</td>
 <td>1213</td>
-<td>A(n) {0} could not be saved to column &quot;{1}&quot; since column validation is enabled as type &quot;{2}&quot;.</td>
+<td>Deprecated.</td>
 </tr>
 <tr>
 <td>400</td>
 <td>1214</td>
-<td>Dropdown and Contact List columns with data validation must have at least one option value.</td>
+<td>Invalid notification level &#39;{0}&#39;.</td>
 </tr>
 <tr>
 <td>400</td>
@@ -31309,7 +31321,7 @@ curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
 <tr>
 <td>400</td>
 <td>1219</td>
-<td>Some recipients cannot be notified. They are not shared to the sheet, or your settings prohibit notification of non-shared users.</td>
+<td>The attributes {0} and {1} are mutually exclusive. Only one may be set.</td>
 </tr>
 <tr>
 <td>400</td>
@@ -31650,6 +31662,36 @@ curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
 <td>400</td>
 <td>1289</td>
 <td>Proofing cannot disable with proofs.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>1301</td>
+<td>No permissions for column formulas.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1302</td>
+<td>Cannot edit column formula cells.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1303</td>
+<td>Unsupported column type for column formulas.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1305</td>
+<td>Cannot set column formula on project column.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1310</td>
+<td>Column formula syntax not supported.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1314</td>
+<td>Plan type cannot use column formulas.</td>
 </tr>
 <tr>
 <td>429</td>
@@ -32049,7 +32091,7 @@ curl https://api.smartsheet.com/2.0/token <span class="se">\</span>
 <p>Should you encounter issues with the Smartsheet API while building an integration using a particular programming language (ex: Java, C#, PHP, Python, etc.), keep the following troubleshooting techniques in mind.</p>
 
 <ol>
-<li>Try executing the same API Request using a tool like <a href="https://curl.haxx.se/">cURL</a> or <a href="https://www.getpostman.com/">Postman</a>. By taking your code out of the equation, you can isolate troubleshooting to the raw Request / Response.
+<li>Try executing the same API Request using a tool like <a href="https://curl.haxx.se/">cURL</a> or <a href="https://www.postman.com/">Postman</a>. By taking your code out of the equation, you can isolate troubleshooting to the raw Request / Response.
 
 <ul>
 <li>If you receive a similar error when you execute the Request using cURL or Postman, this suggests an issue with the Request format or contents. Once you have the Request working in cURL or Postman, update your code accordingly.</li>
