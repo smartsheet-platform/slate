@@ -2058,6 +2058,23 @@ Gets a summarized list of all request actions associated with the specified proo
 
 ## Create Proof Request
 
+> Example request: create proof request
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/requests \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X POST \
+-d '{
+	"isDownloadable": true,
+	"ccMe": true,
+	"message": "string",
+	"sendTo": [{
+		"email": "john.doe@smartsheet.com"
+	}],
+	"subject": "string"
+}' 
+```
 
 ```javascript
 // To be implemented
@@ -2080,6 +2097,41 @@ Gets a summarized list of all request actions associated with the specified proo
 ```
 
 > Example response
+
+```json
+{
+	"message": "SUCCESS",
+	"resultCode": 0,
+	"result": {
+		"id": 0,
+		"proofId": 0,
+		"sentBy": {
+			"email": "jane.doe@smartsheet.com",
+			"name": "Jane Doe"
+		},
+		"sentAt": "2020-10-13T22:23:53Z",
+		"isDownloadable": true,
+		"status": "ACTIVE",
+		"ccMe": true,
+		"message": "string",
+		"sendTo": [{
+			"email": "john.doe@smartsheet.com"
+		}],
+		"subject": "string"
+	}
+}
+```
+
+`POST /sheets/{sheetId}/proofs/{proofId}/requests`
+
+Create a proof request.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
+<%= REQUEST %> | [ProofRequest object](#proofrequest-object).
+<%= RETURNS %> | [Result object](#result-object) containing the newly created [ProofRequest object](#proofrequest-object).
+<%= SCOPE %> | WRITE_SHEETS
 
 ## Delete Proof Requests
 
