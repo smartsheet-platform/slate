@@ -1631,23 +1631,338 @@ Deletes the proof including all versions. The proofId must be for the original v
 
 ## Attach File to Proof
 
+> Example request: attach file to proof
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/attachments \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/msword" \
+-H 'Content-Disposition: attachment; filename="ProgressReport.docx"' \
+-H "Content-Length: FILE_SIZE" \
+-X POST \
+--data-binary @ProgressReport.docx
+```
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
+
+```json
+{
+	"version": 0,
+	"message": "SUCCESS",
+	"resultCode": 0,
+	"result": {
+		"id": 0,
+		"parentId": 0,
+		"attachmentType": "BOX_COM",
+		"attachmentSubType": "DOCUMENT",
+		"mimeType": "PNG",
+		"parentType": "COMMENT",
+		"createdAt": "2020-10-13T22:23:53Z",
+		"createdBy": {
+			"email": "jane.doe@smartsheet.com",
+			"name": "Jane Doe"
+		},
+		"name": "string",
+		"sizeInKb": 0,
+		"url": "string",
+		"urlExpiresInMillis": 0
+	}
+}
+```
+`POST /sheets/{sheetId}/proofs/{proofId}/attachments`
+
+Attaches a file to the proof. <%= SUPPORTS_MULTIPART %>
+
+<%= NEW_ATTACHMENT %>
+
+<%= partial "snippets/attachFile_table.md.erb" %>
+
 ## List Proof Attachments
+
+> Example request: list proof attachments
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/attachments \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+```
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
+
+```json
+{
+	"pageNumber": 1,
+	"pageSize": 50,
+	"totalPages": 25,
+	"totalCount": 136,
+	"data": [{
+		"id": 0,
+		"parentId": 0,
+		"attachmentType": "BOX_COM",
+		"attachmentSubType": "DOCUMENT",
+		"mimeType": "PNG",
+		"parentType": "COMMENT",
+		"createdAt": "2020-10-13T22:23:53Z",
+		"createdBy": {
+			"email": "jane.doe@smartsheet.com",
+			"name": "Jane Doe"
+		},
+		"name": "string",
+		"sizeInKb": 0,
+		"url": "string",
+		"urlExpiresInMillis": 0
+	}]
+}
+```
+
+`GET /sheets/{sheetId}/proofs/attachments`
+
+Gets a list of all attachments that are in the proof, excluding discussion-level attachments in the proof.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Attachment objects](#attachment-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## Create Proof Discussion
 
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
+
 ## List Proof Discussions
+
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
 
 ## List Proof Request Actions
 
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
+
 ## Create Proof Request
+
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
 
 ## Delete Proof Requests
 
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
+
 ## Create Proof Version
+
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
 
 ## List Proof Versions
 
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
+
 ## Delete Proof Version
+
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example response
 
 # Reports
 
