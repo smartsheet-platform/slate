@@ -2135,6 +2135,13 @@ Create a proof request.
 
 ## Delete Proof Requests
 
+> Example request: delete proof request
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/requests \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-X DELETE
+```
 
 ```javascript
 // To be implemented
@@ -2157,6 +2164,23 @@ Create a proof request.
 ```
 
 > Example response
+
+```json
+{
+  "message": "SUCCESS",
+  "resultCode": 0
+}
+```
+
+`DELETE /sheets/{sheetId}/proofs/{proofId}/requests`
+
+Deletes all proof requests in a proof.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | WRITE_SHEETS
 
 ## Create Proof Version
 
