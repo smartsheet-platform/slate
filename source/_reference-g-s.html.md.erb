@@ -2184,6 +2184,17 @@ Deletes all proof requests in a proof.
 
 ## Create Proof Version
 
+> Example request: create proof version
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/versions \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/msword" \
+-H 'Content-Disposition: attachment; filename="ProgressReport.docx"' \
+-H "Content-Length: FILE_SIZE" \
+-X POST \
+--data-binary @ProgressReport.docx
+```
 
 ```javascript
 // To be implemented
@@ -2206,6 +2217,131 @@ Deletes all proof requests in a proof.
 ```
 
 > Example response
+
+```json
+{
+  "version": 0,
+  "message": "SUCCESS",
+  "resultCode": 0,
+  "result": {
+    "id": 0,
+    "originalId": 0,
+    "name": "string",
+    "proofType": "DOCUMENT",
+    "proofRequestUrl": "string",
+    "version": 0,
+    "lastUpdatedAt": "2020-10-13T22:23:53Z",
+    "lastUpdatedBy": {
+      "email": "jane.doe@smartsheet.com",
+      "name": "Jane Doe"
+    },
+    "isCompleted": true,
+    "attachments": [
+      {
+        "id": 0,
+        "parentId": 0,
+        "attachmentType": "BOX_COM",
+        "attachmentSubType": "DOCUMENT",
+        "mimeType": "PNG",
+        "parentType": "COMMENT",
+        "createdAt": "2020-10-13T22:23:53Z",
+        "createdBy": {
+          "email": "jane.doe@smartsheet.com",
+          "name": "Jane Doe"
+        },
+        "name": "string",
+        "sizeInKb": 0,
+        "url": "string",
+        "urlExpiresInMillis": 0
+      }
+    ],
+    "discussions": [
+      {
+        "accessLevel": "ADMIN",
+        "id": 0,
+        "comments": [
+          {
+            "attachments": [
+              {
+                "id": 0,
+                "parentId": 0,
+                "attachmentType": "BOX_COM",
+                "attachmentSubType": "DOCUMENT",
+                "mimeType": "PNG",
+                "parentType": "COMMENT",
+                "createdAt": "2020-10-13T22:23:53Z",
+                "createdBy": {
+                  "email": "jane.doe@smartsheet.com",
+                  "name": "Jane Doe"
+                },
+                "name": "string",
+                "sizeInKb": 0,
+                "url": "string",
+                "urlExpiresInMillis": 0
+              }
+            ],
+            "createdAt": "2020-10-13T22:23:53Z",
+            "createdBy": {
+              "email": "jane.doe@smartsheet.com",
+              "name": "Jane Doe"
+            },
+            "discussionId": 0,
+            "id": 0,
+            "modifiedAt": "2020-10-13T22:23:53Z",
+            "text": "string"
+          }
+        ],
+        "commentAttachments": [
+          {
+            "id": 0,
+            "parentId": 0,
+            "attachmentType": "BOX_COM",
+            "attachmentSubType": "DOCUMENT",
+            "mimeType": "PNG",
+            "parentType": "COMMENT",
+            "createdAt": "2020-10-13T22:23:53Z",
+            "createdBy": {
+              "email": "jane.doe@smartsheet.com",
+              "name": "Jane Doe"
+            },
+            "name": "string",
+            "sizeInKb": 0,
+            "url": "string",
+            "urlExpiresInMillis": 0
+          }
+        ],
+        "commentCount": 0,
+        "createdBy": {
+          "email": "jane.doe@smartsheet.com",
+          "name": "Jane Doe"
+        },
+        "lastCommentedAt": "2020-10-13T22:23:53Z",
+        "lastCommentedUser": {
+          "email": "jane.doe@smartsheet.com",
+          "name": "Jane Doe"
+        },
+        "parentId": 0,
+        "parentType": "ROW",
+        "readOnly": true,
+        "title": "string"
+      }
+    ]
+  }
+}
+```
+
+`POST /sheets/{sheetId}/proofs/{proofId}/versions`
+
+Creates a proof version. Proof Id must be for the original proof.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | Required headers vary depending on the type of upload being performed (simple upload or multipart upload). See [Post an Attachment](#post-an-attachment) for details.
+<%= REQUEST %> | Request body varies depending on the type of upload being performed (simple upload or multipart upload). See [Post an Attachment](#post-an-attachment) for details.
+<%= RETURNS %> | [Result object](#result-object) containing a [Proof object](#proof-object) for the newly created proof version.
+<%= SCOPE %> | WRITE_SHEETS
+
+<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
 
 ## List Proof Versions
 
