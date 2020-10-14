@@ -342,14 +342,14 @@ HTTP status code | Smartsheet errorCode | Smartsheet message
 400 | 1210 | Column validation is not supported for column type '{0}'.
 400 | 1211 | Not authorized.
 403 | 1212 | You must be a sheet admin to override validation.
-400 | 1213 | A(n) {0} could not be saved to column "{1}" since column validation is enabled as type "{2}".
-400 | 1214 | Dropdown and Contact List columns with data validation must have at least one option value.
+400 | 1213 | Deprecated.
+400 | 1214 | Invalid notification level '{0}'.
 400 | 1215 | Notification not supported by level.
 400 | 1216 | Notification rule not found.
 400 | 1217 | Exceeds allowed max date.
 400 | 1218 | The attributes recipientColumnIds, recipients and notifyAllSharedUsers are mutually exclusive. Only one may be set, not all.
 400 | 1218 | The attributes includeAllColumnIds and includedColumnIds are mutually exclusive. Only one may be set not all.
-400 | 1219 | Some recipients cannot be notified. They are not shared to the sheet, or your settings prohibit notification of non-shared users.
+400 | 1219 | The attributes {0} and {1} are mutually exclusive. Only one may be set.
 400 | 1220 | Automation action type cannot be changed.
 400 | 1221 | The value {0} is not valid for the attribute action.recipientColumnIds. Only Contact List columns may be used.
 400 | 1222 | Invalid attribute for operation.
@@ -418,6 +418,12 @@ HTTP status code | Smartsheet errorCode | Smartsheet message
 403 | 1287 | Publish disabled by sheet sys admin.
 403 | 1288 | Sheet disabled by admin. 
 400 | 1289 | Proofing cannot disable with proofs.
+403 | 1301 | No permissions for column formulas.
+400 | 1302 | Cannot edit column formula cells.
+400 | 1303 | Unsupported column type for column formulas.
+400 | 1305 | Cannot set column formula on project column.
+400 | 1310 | Column formula syntax not supported.
+400 | 1314 | Plan type cannot use column formulas.
 429 | 4003 | Rate limit exceeded.
 410 | 4005 | API version retired.
 400 | 5xxx | Errors in the 5xxx range represent conditions that a developer cannot reasonably prevent or handle, most typically related to account status. These error messages are localized and can be displayed to the end-user to inform them of the condition that caused the error to occur.
@@ -586,7 +592,7 @@ If you want to change the formatting of cells that already have content, for ins
 
 Should you encounter issues with the Smartsheet API while building an integration using a particular programming language (ex: Java, C#, PHP, Python, etc.), keep the following troubleshooting techniques in mind.
 
-1. Try executing the same API Request using a tool like [cURL](https://curl.haxx.se/) or [Postman](https://www.getpostman.com/). By taking your code out of the equation, you can isolate troubleshooting to the raw Request / Response.
+1. Try executing the same API Request using a tool like [cURL](https://curl.haxx.se/) or [Postman](https://www.postman.com/). By taking your code out of the equation, you can isolate troubleshooting to the raw Request / Response.
   * If you receive a similar error when you execute the Request using cURL or Postman, this suggests an issue with the Request format or contents. Once you have the Request working in cURL or Postman, update your code accordingly.
   * If you can execute the Request successfully using cURL or Postman, but not via your code, this suggests that the Request your code is sending is somehow different than what you intend. Compare the (successful) Request from cURL or Postman with the (unsuccessful) Request that your code generates. (See step #2 below.)
 2. Examine the Request that your code is sending (including the HTTP verb, URI, headers, and Request body) and the Response that it's receiving back from Smartsheet (including the HTTP status code, headers, and response body).
