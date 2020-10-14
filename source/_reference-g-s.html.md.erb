@@ -2345,6 +2345,12 @@ Creates a proof version. Proof Id must be for the original proof.
 
 ## List Proof Versions
 
+> Example request: list proof versions
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/versions \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+```
 
 ```javascript
 // To be implemented
@@ -2367,9 +2373,142 @@ Creates a proof version. Proof Id must be for the original proof.
 ```
 
 > Example response
+
+```json
+{
+  "pageNumber": 1,
+  "pageSize": 50,
+  "totalPages": 25,
+  "totalCount": 136,
+  "data": [
+    {
+      "id": 0,
+      "originalId": 0,
+      "name": "string",
+      "proofType": "DOCUMENT",
+      "proofRequestUrl": "string",
+      "version": 0,
+      "lastUpdatedAt": "2020-10-13T22:23:53Z",
+      "lastUpdatedBy": {
+        "email": "jane.doe@smartsheet.com",
+        "name": "Jane Doe"
+      },
+      "isCompleted": true,
+      "attachments": [
+        {
+          "id": 0,
+          "parentId": 0,
+          "attachmentType": "BOX_COM",
+          "attachmentSubType": "DOCUMENT",
+          "mimeType": "PNG",
+          "parentType": "COMMENT",
+          "createdAt": "2020-10-13T22:23:53Z",
+          "createdBy": {
+            "email": "jane.doe@smartsheet.com",
+            "name": "Jane Doe"
+          },
+          "name": "string",
+          "sizeInKb": 0,
+          "url": "string",
+          "urlExpiresInMillis": 0
+        }
+      ],
+      "discussions": [
+        {
+          "accessLevel": "ADMIN",
+          "id": 0,
+          "comments": [
+            {
+              "attachments": [
+                {
+                  "id": 0,
+                  "parentId": 0,
+                  "attachmentType": "BOX_COM",
+                  "attachmentSubType": "DOCUMENT",
+                  "mimeType": "PNG",
+                  "parentType": "COMMENT",
+                  "createdAt": "2020-10-13T22:23:53Z",
+                  "createdBy": {
+                    "email": "jane.doe@smartsheet.com",
+                    "name": "Jane Doe"
+                  },
+                  "name": "string",
+                  "sizeInKb": 0,
+                  "url": "string",
+                  "urlExpiresInMillis": 0
+                }
+              ],
+              "createdAt": "2020-10-13T22:23:53Z",
+              "createdBy": {
+                "email": "jane.doe@smartsheet.com",
+                "name": "Jane Doe"
+              },
+              "discussionId": 0,
+              "id": 0,
+              "modifiedAt": "2020-10-13T22:23:53Z",
+              "text": "string"
+            }
+          ],
+          "commentAttachments": [
+            {
+              "id": 0,
+              "parentId": 0,
+              "attachmentType": "BOX_COM",
+              "attachmentSubType": "DOCUMENT",
+              "mimeType": "PNG",
+              "parentType": "COMMENT",
+              "createdAt": "2020-10-13T22:23:53Z",
+              "createdBy": {
+                "email": "jane.doe@smartsheet.com",
+                "name": "Jane Doe"
+              },
+              "name": "string",
+              "sizeInKb": 0,
+              "url": "string",
+              "urlExpiresInMillis": 0
+            }
+          ],
+          "commentCount": 0,
+          "createdBy": {
+            "email": "jane.doe@smartsheet.com",
+            "name": "Jane Doe"
+          },
+          "lastCommentedAt": "2020-10-13T22:23:53Z",
+          "lastCommentedUser": {
+            "email": "jane.doe@smartsheet.com",
+            "name": "Jane Doe"
+          },
+          "parentId": 0,
+          "parentType": "ROW",
+          "readOnly": true,
+          "title": "string"
+        }
+      ]
+    }
+  ]
+}
+```
+
+`GET /sheets/{sheetId}/proofs/{proofId}/versions`
+
+Gets a list of all versions of the given proofId in order from newest to oldest.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Proof objects](#proof-object)
+<%= SCOPE %> | READ_SHEETS
 
 ## Delete Proof Version
 
+> Example request: delete proof version
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/versions \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-X DELETE
+```
 
 ```javascript
 // To be implemented
@@ -2392,6 +2531,23 @@ Creates a proof version. Proof Id must be for the original proof.
 ```
 
 > Example response
+
+```json
+{
+  "message": "SUCCESS",
+  "resultCode": 0
+}
+```
+
+`DELETE /sheets/{sheetId}/proofs/{proofId}/versions`
+
+Deletes a proof version. Proof Id must be a current version proof Id.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | WRITE_SHEETS
 
 # Reports
 
