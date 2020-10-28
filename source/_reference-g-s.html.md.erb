@@ -1340,7 +1340,7 @@ A proof is a container that holds at least one attachment or comment. Limited to
 > Example request: list proofs
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs 
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs?include=discussions,attachments 
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
 ```
 
@@ -1394,9 +1394,11 @@ Gets a list of all proofs for a given sheet.
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/proofs \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/json" \
+-H "Content-Disposition: attachment; filename="giphy.gif"" \
+-H "Content-Type: image/gif" \
+-H "Content-Length: 269876" \
+--data-binary @giphy.gif
 -X POST \
--d '{ "attachmentSubType": "DOCUMENT", "attachmentType": "BOX_COM", "description": "string", "name": "string", "url": "string" }'
 ```
 
 ```javascript
@@ -1523,9 +1525,8 @@ Gets the proof specified in the URL. Returns the proof, which is optionally popu
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId} \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/json" \
--X PUT \
--d '{"isCompleted": true}'
+-H "Content-Disposition: attachment; filename="abc.bmp""
+-X PUT
 ```
 
 ```javascript
@@ -1587,6 +1588,10 @@ Sets the proof status as either complete or incomplete.
 ```shell
 curl 'https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}' \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Disposition: attachment; filename="ProgressReport.png"" \
+-H "Content-Length: 8272" \
+-H "Content-Type: image/png" \
+--data-binary "@/home/Pictures/Screenshot from 2019-07-31 11-18-54.png" \
 -X DELETE
 ```
 
@@ -1636,11 +1641,10 @@ Deletes the proof including all versions. The proofId must be for the original v
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/attachments \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/msword" \
--H 'Content-Disposition: attachment; filename="ProgressReport.docx"' \
--H "Content-Length: FILE_SIZE" \
+-H "Content-Type: image/gif" \
+-H "Content-Disposition: attachment; filename="giphy.gif"" \
 -X POST \
---data-binary @ProgressReport.docx
+--data-binary "@home/giphy.gif"
 ```
 
 ```javascript
@@ -1774,7 +1778,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/discussion
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: application/json" \
 -X POST \
--d '{"comment": {"text":"This text is the body of the first comment"}}'
+--data-binary "@/home/Downloads/test_b (4).pdf"
 ```
 
 ```javascript
@@ -2000,10 +2004,10 @@ Gets a list of all discussions that are in the proof.
 
 ## List Proof Request Actions
 
-> Example request: list update requests
+> Example request: list proof request actions
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/updaterequests \
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/requestactions \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
 ```
 
@@ -2066,13 +2070,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/requests \
 -H "Content-Type: application/json" \
 -X POST \
 -d '{
-	"isDownloadable": true,
-	"ccMe": true,
-	"message": "string",
 	"sendTo": [{
 		"email": "john.doe@smartsheet.com"
 	}],
-	"subject": "string"
+	"subject": "This is a test."
 }' 
 ```
 
@@ -2100,25 +2101,25 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/requests \
 
 ```json
 {
-	"message": "SUCCESS",
-	"resultCode": 0,
-	"result": {
-		"id": 0,
-		"proofId": 0,
-		"sentBy": {
-			"email": "jane.doe@smartsheet.com",
-			"name": "Jane Doe"
-		},
-		"sentAt": "2020-10-13T22:23:53Z",
-		"isDownloadable": true,
-		"status": "ACTIVE",
-		"ccMe": true,
-		"message": "string",
-		"sendTo": [{
-			"email": "john.doe@smartsheet.com"
-		}],
-		"subject": "string"
-	}
+  "message": "SUCCESS",
+  "resultCode": 0,
+  "result": {
+    "sendTo": [
+      {
+        "email": "john.doe@smartsheet.com"
+      }
+    ],
+    "subject": "This is a test.",
+    "id": 4632722525464388,
+    "proofId": 3944019510419972,
+    "sentBy": {
+      "name": "Jane Roe",
+      "email": "jane.roe@smartsheet.com"
+    },
+    "sentAt": "2020-10-28T00:01:34Z",
+    "isDownloadable": false,
+    "status": "ACTIVE"
+  }
 }
 ```
 
@@ -2188,12 +2189,11 @@ Deletes all proof requests in a proof.
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/versions \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/msword" \
--H 'Content-Disposition: attachment; filename="ProgressReport.docx"' \
--H "Content-Length: FILE_SIZE" \
+-H "Content-Disposition: attachment; filename="error.gif"" \
+-H "Content-Length: 269876" \
+-H "Content-Type: image/gif" \
 -X POST \
---data-binary @ProgressReport.docx
+--data-binary "@/home/Downloads/giphy.gif"
 ```
 
 ```javascript
@@ -2220,113 +2220,23 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/versions \
 
 ```json
 {
-  "version": 0,
   "message": "SUCCESS",
   "resultCode": 0,
   "result": {
-    "id": 0,
-    "originalId": 0,
-    "name": "string",
-    "proofType": "DOCUMENT",
-    "proofRequestUrl": "string",
-    "version": 0,
-    "lastUpdatedAt": "2020-10-13T22:23:53Z",
-    "lastUpdatedBy": {
-      "email": "jane.doe@smartsheet.com",
-      "name": "Jane Doe"
-    },
-    "isCompleted": true,
-    "attachments": [
-      {
-        "id": 0,
-        "parentId": 0,
-        "attachmentType": "BOX_COM",
-        "attachmentSubType": "DOCUMENT",
-        "mimeType": "PNG",
-        "parentType": "COMMENT",
-        "createdAt": "2020-10-13T22:23:53Z",
-        "createdBy": {
-          "email": "jane.doe@smartsheet.com",
-          "name": "Jane Doe"
-        },
-        "name": "string",
-        "sizeInKb": 0,
-        "url": "string",
-        "urlExpiresInMillis": 0
-      }
-    ],
-    "discussions": [
-      {
-        "accessLevel": "ADMIN",
-        "id": 0,
-        "comments": [
-          {
-            "attachments": [
-              {
-                "id": 0,
-                "parentId": 0,
-                "attachmentType": "BOX_COM",
-                "attachmentSubType": "DOCUMENT",
-                "mimeType": "PNG",
-                "parentType": "COMMENT",
-                "createdAt": "2020-10-13T22:23:53Z",
-                "createdBy": {
-                  "email": "jane.doe@smartsheet.com",
-                  "name": "Jane Doe"
-                },
-                "name": "string",
-                "sizeInKb": 0,
-                "url": "string",
-                "urlExpiresInMillis": 0
-              }
-            ],
-            "createdAt": "2020-10-13T22:23:53Z",
-            "createdBy": {
-              "email": "jane.doe@smartsheet.com",
-              "name": "Jane Doe"
-            },
-            "discussionId": 0,
-            "id": 0,
-            "modifiedAt": "2020-10-13T22:23:53Z",
-            "text": "string"
-          }
-        ],
-        "commentAttachments": [
-          {
-            "id": 0,
-            "parentId": 0,
-            "attachmentType": "BOX_COM",
-            "attachmentSubType": "DOCUMENT",
-            "mimeType": "PNG",
-            "parentType": "COMMENT",
-            "createdAt": "2020-10-13T22:23:53Z",
-            "createdBy": {
-              "email": "jane.doe@smartsheet.com",
-              "name": "Jane Doe"
-            },
-            "name": "string",
-            "sizeInKb": 0,
-            "url": "string",
-            "urlExpiresInMillis": 0
-          }
-        ],
-        "commentCount": 0,
-        "createdBy": {
-          "email": "jane.doe@smartsheet.com",
-          "name": "Jane Doe"
-        },
-        "lastCommentedAt": "2020-10-13T22:23:53Z",
-        "lastCommentedUser": {
-          "email": "jane.doe@smartsheet.com",
-          "name": "Jane Doe"
-        },
-        "parentId": 0,
-        "parentType": "ROW",
-        "readOnly": true,
-        "title": "string"
-      }
-    ]
-  }
+      "id": 288851999955012,
+      "originalId": 3944111900419972,
+      "name": "faf",
+      "type": "IMAGE",
+      "proofRequestUrl": "string",
+      "version": 2,
+      "lastUpdatedAt": "2020-10-28T00:17:07Z",
+      "lastUpdatedBy": {
+          "name": "Jane Roe",
+          "email": "jane.roe@smartsheet.com"
+      },
+      "isCompleted": false
+  },
+  "version": 6
 }
 ```
 
@@ -2348,7 +2258,7 @@ Creates a proof version. Proof Id must be for the original proof.
 > Example request: list proof versions
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/versions \
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/versions?include=attachments,discussions \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
 ```
 
@@ -2377,113 +2287,37 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/versions \
 ```json
 {
   "pageNumber": 1,
-  "pageSize": 50,
-  "totalPages": 25,
-  "totalCount": 136,
+  "pageSize": 100,
+  "totalPages": 1,
+  "totalCount": 2,
   "data": [
     {
-      "id": 0,
-      "originalId": 0,
-      "name": "string",
-      "proofType": "DOCUMENT",
+      "id": 288851999955012,
+      "originalId": 3944111900419972,
+      "name": "faf",
+      "type": "IMAGE",
       "proofRequestUrl": "string",
-      "version": 0,
-      "lastUpdatedAt": "2020-10-13T22:23:53Z",
+      "version": 2,
+      "lastUpdatedAt": "2020-10-28T00:17:07Z",
       "lastUpdatedBy": {
-        "email": "jane.doe@smartsheet.com",
-        "name": "Jane Doe"
+          "name": "Jane Roe",
+          "email": "jane.roe@smartsheet.com"
       },
-      "isCompleted": true,
-      "attachments": [
-        {
-          "id": 0,
-          "parentId": 0,
-          "attachmentType": "BOX_COM",
-          "attachmentSubType": "DOCUMENT",
-          "mimeType": "PNG",
-          "parentType": "COMMENT",
-          "createdAt": "2020-10-13T22:23:53Z",
-          "createdBy": {
-            "email": "jane.doe@smartsheet.com",
-            "name": "Jane Doe"
-          },
-          "name": "string",
-          "sizeInKb": 0,
-          "url": "string",
-          "urlExpiresInMillis": 0
-        }
-      ],
-      "discussions": [
-        {
-          "accessLevel": "ADMIN",
-          "id": 0,
-          "comments": [
-            {
-              "attachments": [
-                {
-                  "id": 0,
-                  "parentId": 0,
-                  "attachmentType": "BOX_COM",
-                  "attachmentSubType": "DOCUMENT",
-                  "mimeType": "PNG",
-                  "parentType": "COMMENT",
-                  "createdAt": "2020-10-13T22:23:53Z",
-                  "createdBy": {
-                    "email": "jane.doe@smartsheet.com",
-                    "name": "Jane Doe"
-                  },
-                  "name": "string",
-                  "sizeInKb": 0,
-                  "url": "string",
-                  "urlExpiresInMillis": 0
-                }
-              ],
-              "createdAt": "2020-10-13T22:23:53Z",
-              "createdBy": {
-                "email": "jane.doe@smartsheet.com",
-                "name": "Jane Doe"
-              },
-              "discussionId": 0,
-              "id": 0,
-              "modifiedAt": "2020-10-13T22:23:53Z",
-              "text": "string"
-            }
-          ],
-          "commentAttachments": [
-            {
-              "id": 0,
-              "parentId": 0,
-              "attachmentType": "BOX_COM",
-              "attachmentSubType": "DOCUMENT",
-              "mimeType": "PNG",
-              "parentType": "COMMENT",
-              "createdAt": "2020-10-13T22:23:53Z",
-              "createdBy": {
-                "email": "jane.doe@smartsheet.com",
-                "name": "Jane Doe"
-              },
-              "name": "string",
-              "sizeInKb": 0,
-              "url": "string",
-              "urlExpiresInMillis": 0
-            }
-          ],
-          "commentCount": 0,
-          "createdBy": {
-            "email": "jane.doe@smartsheet.com",
-            "name": "Jane Doe"
-          },
-          "lastCommentedAt": "2020-10-13T22:23:53Z",
-          "lastCommentedUser": {
-            "email": "jane.doe@smartsheet.com",
-            "name": "Jane Doe"
-          },
-          "parentId": 0,
-          "parentType": "ROW",
-          "readOnly": true,
-          "title": "string"
-        }
-      ]
+      "isCompleted": false
+    },
+    {
+      "id": 3944047777719972,
+      "originalId": 3944111900419972,
+      "name": "faf",
+      "type": "IMAGE",
+      "proofRequestUrl": "string",
+      "version": 1,
+      "lastUpdatedAt": "2020-10-27T23:54:05Z",
+      "lastUpdatedBy": {
+          "name": "John Doe",
+          "email": "john.doe@smartsheet.com"
+      },
+      "isCompleted": false
     }
   ]
 }
