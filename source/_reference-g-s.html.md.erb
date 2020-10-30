@@ -2185,7 +2185,6 @@ Deletes all proof requests in a proof.
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/versions \
 -H "Content-Disposition: attachment; filename="error.gif"" \
--H "Content-Length: 269876" \
 -H "Content-Type: image/gif" \
 -X POST \
 --data-binary "@/home/Downloads/giphy.gif"
@@ -2253,7 +2252,7 @@ Creates a proof version. Proof Id must be for the original proof.
 > Example request: list proof versions
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/versions?include=attachments,discussions \
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/versions \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
 ```
 
