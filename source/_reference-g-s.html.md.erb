@@ -739,7 +739,7 @@ Removes a member from a group.
 
 # Home
 
-In the Smartsheet UI, the "Home" tab shows all objects a user has access to, including folders, reports, sheets, Sights, templates, and workspaces.
+In the Smartsheet UI, the "Home" tab shows all objects a user has access to, including dashboards (also called Sights in the API), folders, reports, sheets, templates, and workspaces.
 
 ## <%= OBJECTS %>
 
@@ -858,12 +858,12 @@ contents = smartsheet.home.list
 
 `GET /home`
 
-Gets a nested list of all Home objects, including folders, reports, sheets, Sights, templates, and workspaces, as shown on the "Home" tab.
+Gets a nested list of all Home objects, including dashboards, folders, reports, sheets, templates, and workspaces, as shown on the "Home" tab.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any sheet that was created from another dashboard, report, sheet, or template, if any</li></ul>
   | **exclude** (optional) -- a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**permalinks** - excludes the permalink from each data object</li></ul> 
 <%= RETURNS %> | [Home object](#home-object), populated according to the **include** parameter
 <%= SCOPE %> | READ_SHEETS
@@ -3223,9 +3223,9 @@ Search a specific sheet or search across all sheets that a user can access.
 **objectId** | number | Search result object Id
 **parentObjectId** | number | Search result parent object Id
 **contextData** | array | Additional info on search result context
-**objectType** | string | Search result object type (attachment, discussion, folder, report, row, sheet, Sight, summaryField, template, workspace)
+**objectType** | string | Search result object type (attachment, dashboard (also called Sight in the API), discussion, folder, report, row, sheet, summaryField, template, workspace)
 **parentObjectName** | string | Search result parent object name
-**parentObjectType** | string | Search result parent object type (folder, report, sheet, Sight, template, workspace)
+**parentObjectType** | string | Search result parent object type (dashboard, folder, report, sheet, template, workspace)
 **proofUrl** | string | The proofUrl string will be present in the contextData if the discussion or attachment belongs to a proof
 **text** | string | Search result text excerpt
 
@@ -3325,7 +3325,7 @@ Searches all sheets that the user can access, for the specified text.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **query** (required): text with which to perform the search. Enclose in double-quotes for an exact search.
- | **include** (optional): when specified with a value of **favoriteFlag**, response indicates which returned items are favorites:<ul><li>**favorite** -- folders, reports, sheets, Sights, templates, and workspaces will have the property **favorite: true**</li><li>**parentObjectFavorite** -- attachments, discussions, summary fields, and rows will have the property **parentObjectFavorite: true**</li></ul>
+ | **include** (optional): when specified with a value of **favoriteFlag**, response indicates which returned items are favorites:<ul><li>**favorite** -- dashboards, folders, reports, sheets, templates, and workspaces will have the property **favorite: true**</li><li>**parentObjectFavorite** -- attachments, discussions, summary fields, and rows will have the property **parentObjectFavorite: true**</li></ul>
  | **location** (optional): when specified with a value of **personalWorkspace**, limits the response to only those items in the user's workspaces.
  | <%= PARAMETER_MODIFIEDSINCE %>
  | **scopes** (optional): If search fails, try using an array for each type of this comma-separated list of search filters:<ul><li><b>attachments</b></li><li><b>cellData</b></li><li><b>comments</b></li><li><b>folderNames</b></li><li><b>reportNames</b></li><li><b>sheetNames</b></li><li><b>sightNames</b></li><li><b>summaryFields</b></li><li><b>templateNames</b></li><li><b>workspaceNames</b></li></ul>
@@ -3528,7 +3528,7 @@ Gets application constants.
 
 # Sharing
 
-Use the *Sharing* operations to control sharing of reports, sheets, Sights, and workspaces.
+Use the *Sharing* operations to control sharing of dashboards, reports, sheets, and workspaces.
 
 ## <%= OBJECTS %>
 
@@ -3717,7 +3717,7 @@ var options = {
   sightId: 6327127650920324
 }
 
-// List Sight shares
+// List dashboard shares
 smartsheet.sights.listShares(options)
   .then(function(shareList) {
     console.log(shareList);
@@ -5285,7 +5285,7 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 **resourceManagementEnabled** | Boolean | Indicates that resource management is enabled
 **rows** | [Row](#row-object)[] | Array of Row objects
 **showParentRowsForFilters** | Boolean | Returned only if there are column filters on the sheet.  Value = **true** if "show parent rows" is enabled for the filters.
-**source** | [Source](#source-object) | A Source object indicating the report, sheet, Sight (aka dashboard), or template from which this sheet was created, if any
+**source** | [Source](#source-object) | A Source object indicating the dashboard, report, sheet, or template from which this sheet was created, if any
 **summary** | [SheetSummary](#sheetsummary-object) | A SheetSummary object containing a list of defined fields and values for the sheet.
 **totalRowCount** | number | The total number of rows in the sheet
 **userPermissions** | [SheetUserPermissions](#sheetuserpermissions-object) | A SheetUserPermissions object indicating what summary operations are possible for the current user
@@ -5414,7 +5414,7 @@ Represents individual user settings for a specific sheet.  User settings may be 
 
      |     |     |
 -----|-----|-----|
-**id** | number | Id of the report, sheet, Sight (aka dashboard), or template from which the enclosing report, sheet, Sight, or template was created
+**id** | number | Id of the dashboard (also called Sight in the API), report, sheet, or template from which the enclosing dashboard, report, sheet, or template was created
 **type** | string | **report**, **sheet**, **sight**, or **template**
 
 ### SummaryField Object
@@ -6688,7 +6688,7 @@ Gets the sheet specified in the URL. Returns the sheet, including rows, and opti
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ganttConfig**: includes Gantt chart details</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which report, sheet, Sight (aka dashboard), or template the sheet was created from, if any.
+<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ganttConfig**: includes Gantt chart details</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which dashboard, report, sheet, or template the sheet was created from, if any.
   | **exclude** (optional): a comma-separated list of elements to not include in the response.<br/><ul><li>**filteredOutRows**: excludes filtered out rows from response payload if a sheet filter is applied; includes total number of filtered rows</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**nonexistentCells**: excludes cells that have never contained any data</li></ul>
   | **columnIds** (optional): a comma-separated list of column Ids. The response contains only the specified columns in the "columns" array, and individual rows' "cells" array only contains cells in the specified columns.
   | **filterId** (optional): overrides the existing include={filters} parameter if both are supplied. Applies the given filter (if accessible by the calling user) and marks the affected rows as "filteredOut": true. Format is **filterId={filterId}**
@@ -7086,7 +7086,7 @@ Gets a list of all sheets that the user has access to in alphabetical order by n
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any report, sheet, Sight (aka dashboard), or template that was created from another report, sheet, Sight, or template, if any</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any dashboard, report, sheet, or template that was created from another dashboard, report, sheet, or template, if any</li></ul>
  | <%= PARAMETER_MODIFIEDSINCE %>
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Sheet objects](#sheet-object) limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**createdAt**</li><li>**modifiedAt**</li><li>**name**</li><li>**permalink**</li><li>**source** (included only if **source** is specified with the **include** parameter)</li></ul>
@@ -8425,4 +8425,4 @@ For details about working with a sheet's rows, see [Rows](#rows).
 
 # Sights
 
-Dashboards and Sights(TM) are two terms for one thing. While Dashboard is the feature name, note the endpoint paths still use Sights. For more information, see the [Dashboards](#dashboards) section.
+Dashboards and Sights(TM) are two terms for one thing. While Dashboard is the feature name, note the endpoint paths, object names, and scopes still use Sights. For more information, see the [Dashboards](#dashboards) section.
