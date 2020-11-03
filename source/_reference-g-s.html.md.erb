@@ -1701,7 +1701,7 @@ Attaches a file to the proof. <%= SUPPORTS_MULTIPART %>
 > Example request: list proof attachments
 
 ```shell
-curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/attachments \
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/attachments \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
 ```
 
@@ -1753,7 +1753,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/attachments \
 }
 ```
 
-`GET /sheets/{sheetId}/proofs/attachments`
+`GET /sheets/{sheetId}/proofs/{proofId}/attachments`
 
 Gets a list of all attachments that are in the proof, excluding discussion-level attachments in the proof.
 
