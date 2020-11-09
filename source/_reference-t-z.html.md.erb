@@ -1513,7 +1513,7 @@ smartsheet.users.remove(
 
 `DELETE /users/{userId}`
 
-Removes a user from an organization account. User is transitioned to a free collaborator with read-only access to owned reports, sheets, Sights, workspaces, and any shared templates (unless those are optionally transferred to another user). 
+Removes a user from an organization account. User is transitioned to a free collaborator with read-only access to owned dashboards, reports, sheets, workspaces, and any shared templates (unless those are optionally transferred to another user). 
 
 <aside class="notice">This operation is only available to system administrators.</aside>
 
@@ -1888,7 +1888,7 @@ Creates a copy of the specified workspace.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>**attachments**</li><li>**cellLinks**</li><li>**data** -- includes formatting</li><li>**discussions** -- includes comments</li><li>**filters**</li><li>**forms**</li><li>**ruleRecipients** -- includes notification recipients, must also include **rules** when using this attribute</li><li>**rules** -- includes notifications and workflow rules</li><li>**shares**</li><li>**all** - deprecated</li></ul><b>NOTE:</b> Cell history is not copied, regardless of which **include** parameter values are specified.
- | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created workspace:<ul><li>**cellLinks**</li><li>**reports**</li><li>**sheetHyperlinks**</li><li>**sights**</li></ul>By default, all cell links, reports, sheet hyperlinks, and Sights that reference objects in the source workspace are re-mapped to reference corresponding objects in the newly created workspace. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If **cellLinks** is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created workspace continue to point to the original source sheets.</li><li>If **reports** is specified in the <b>skipRemap</b> parameter value, the reports within the newly created workspace continue to point to the original source sheets.</li><li>If **sheetHyperlinks** is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created workspace continue to point to the original source sheets.</li><li>If **sights** is specified in the <b>skipRemap</b> parameter value, the widgets within Sights in the newly created workspace continue to point to the original source sheets / reports.</li></ul>
+ | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created workspace:<ul><li>**cellLinks**</li><li>**reports**</li><li>**sheetHyperlinks**</li><li>**sights**</li></ul>By default, all cell links, dashboards, reports, and sheet hyperlinks that reference objects in the source workspace are re-mapped to reference corresponding objects in the newly created workspace. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If **cellLinks** is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created workspace continue to point to the original source sheets.</li><li>If **reports** is specified in the <b>skipRemap</b> parameter value, the reports within the newly created workspace continue to point to the original source sheets.</li><li>If **sheetHyperlinks** is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created workspace continue to point to the original source sheets.</li><li>If **sights** is specified in the <b>skipRemap</b> parameter value, the widgets within each dashboard in the newly created workspace continue to point to the original source sheets / reports.</li></ul>
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following attribute:<ul><li>**newName** (string) - required</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Workspace object](#workspace-object) for the newly created workspace
 <%= SCOPE %> | ADMIN_WORKSPACES
@@ -2153,13 +2153,13 @@ Gets the specified workspace (and lists its contents).
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **loadAll** (optional) -- **true** or **false** (defaults to **false**)
-	| **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li><li>**sheetVersion** - current version number of each sheet</li></ul>
+	| **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another dashboard, report, sheet, or template, if any</li><li>**sheetVersion** - current version number of each sheet</li></ul>
 <%= RETURNS %> | [Workspace object](#workspace-object), populated according to the **include** parameter
 <%= SCOPE %> | READ_SHEETS
 
 <aside class="notice">By default, this operation only returns the top-level items in the workspace. To load all of the contents, including nested folders, include the <b>loadAll</b> query string parameter with a value of <b>true</b>.</aside>
 
-<aside class="notice">If no folders, reports, sheets, Sights, or templates are present in the workspace, the corresponding attribute (for example, <b>folders</b>, <b>sheets</b>) is not present in the response.</aside>
+<aside class="notice">If no dashboards, folders, reports, sheets, or templates are present in the workspace, the corresponding attribute (for example, <b>folders</b>, <b>sheets</b>) is not present in the response.</aside>
 
 ## List Workspaces
 

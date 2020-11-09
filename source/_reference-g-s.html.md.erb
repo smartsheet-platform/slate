@@ -739,7 +739,7 @@ Removes a member from a group.
 
 # Home
 
-In the Smartsheet UI, the "Home" tab shows all objects a user has access to, including folders, reports, sheets, Sights, templates, and workspaces.
+In the Smartsheet UI, the "Home" tab shows all objects a user has access to, including dashboards (also called Sights in the API), folders, reports, sheets, templates, and workspaces.
 
 ## <%= OBJECTS %>
 
@@ -858,12 +858,12 @@ contents = smartsheet.home.list
 
 `GET /home`
 
-Gets a nested list of all Home objects, including folders, reports, sheets, Sights, templates, and workspaces, as shown on the "Home" tab.
+Gets a nested list of all Home objects, including dashboards, folders, reports, sheets, templates, and workspaces, as shown on the "Home" tab.
 
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any sheet that was created from another dashboard, report, sheet, or template, if any</li></ul>
   | **exclude** (optional) -- a comma-separated list of optional elements to <i>not include</i> in the response.<br/><ul><li>**permalinks** - excludes the permalink from each data object</li></ul> 
 <%= RETURNS %> | [Home object](#home-object), populated according to the **include** parameter
 <%= SCOPE %> | READ_SHEETS
@@ -3223,9 +3223,9 @@ Search a specific sheet or search across all sheets that a user can access.
 **objectId** | number | Search result object Id
 **parentObjectId** | number | Search result parent object Id
 **contextData** | array | Additional info on search result context
-**objectType** | string | Search result object type (attachment, discussion, folder, report, row, sheet, Sight, summaryField, template, workspace)
+**objectType** | string | Search result object type (attachment, dashboard (also called Sight in the API), discussion, folder, report, row, sheet, summaryField, template, workspace)
 **parentObjectName** | string | Search result parent object name
-**parentObjectType** | string | Search result parent object type (folder, report, sheet, Sight, template, workspace)
+**parentObjectType** | string | Search result parent object type (dashboard, folder, report, sheet, template, workspace)
 **proofUrl** | string | The proofUrl string will be present in the contextData if the discussion or attachment belongs to a proof
 **text** | string | Search result text excerpt
 
@@ -3325,7 +3325,7 @@ Searches all sheets that the user can access, for the specified text.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **query** (required): text with which to perform the search. Enclose in double-quotes for an exact search.
- | **include** (optional): when specified with a value of **favoriteFlag**, response indicates which returned items are favorites:<ul><li>**favorite** -- folders, reports, sheets, Sights, templates, and workspaces will have the property **favorite: true**</li><li>**parentObjectFavorite** -- attachments, discussions, summary fields, and rows will have the property **parentObjectFavorite: true**</li></ul>
+ | **include** (optional): when specified with a value of **favoriteFlag**, response indicates which returned items are favorites:<ul><li>**favorite** -- dashboards, folders, reports, sheets, templates, and workspaces will have the property **favorite: true**</li><li>**parentObjectFavorite** -- attachments, discussions, summary fields, and rows will have the property **parentObjectFavorite: true**</li></ul>
  | **location** (optional): when specified with a value of **personalWorkspace**, limits the response to only those items in the user's workspaces.
  | <%= PARAMETER_MODIFIEDSINCE %>
  | **scopes** (optional): If search fails, try using an array for each type of this comma-separated list of search filters:<ul><li><b>attachments</b></li><li><b>cellData</b></li><li><b>comments</b></li><li><b>folderNames</b></li><li><b>reportNames</b></li><li><b>sheetNames</b></li><li><b>sightNames</b></li><li><b>summaryFields</b></li><li><b>templateNames</b></li><li><b>workspaceNames</b></li></ul>
@@ -3528,7 +3528,7 @@ Gets application constants.
 
 # Sharing
 
-Use the *Sharing* operations to control sharing of reports, sheets, Sights, and workspaces.
+Use the *Sharing* operations to control sharing of dashboards, reports, sheets, and workspaces.
 
 ## <%= OBJECTS %>
 
@@ -3564,6 +3564,440 @@ Use the *Sharing* operations to control sharing of reports, sheets, Sights, and 
 **name** | string | If a user share and user is also a contact, the user's full name.  If a group share, the group's name.
 **scope** | string | The scope of this share. One of the following values: <ul><li>**ITEM**: an item-level share (that is, the specific object to which the share applies is shared with the user or group)</li><li>**WORKSPACE**: a workspace-level share (that is, the workspace that contains the object to which the share applies is shared with the user or group)</li></ul>
 **subject**	| string | The subject of the email that is optionally sent to notify the recipient. <%= REQUEST_ONLY_ATTRIBUTE %>
+
+## Dashboard Sharing
+
+### Delete Dashboard Share
+
+> Example request: delete dashboard share
+
+```shell
+curl https://api.smartsheet.com/2.0/sights/{sightId}/shares/{shareId} \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-X DELETE
+```
+
+```javascript
+// Set options
+var options = {
+  sightId: 6327127650920324,
+  shareId: "AAABbMomFOeE"
+}
+
+// Delete dashboard share
+smartsheet.sights.deleteShare(options)
+  .then(function(results) {
+    console.log(results);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+smartsheet.SightResources.ShareResources.DeleteShare(
+  6327127650920324,     // sightId
+  "AAABbMomFOeE"        // string shareId
+);
+```
+
+```java
+smartsheet.sightResources().shareResources().deleteShare(
+  6327127650920324L,           // long sightId
+  "AAABbMomFOeE"               // string shareId
+);
+```
+
+```python
+smartsheet_client.Sights.delete_share(
+  6327127650920324,       # sight_id
+  'AAACOqOmFOeE')         # share_id
+```
+
+```ruby
+smartsheet.sights.share.delete(
+  sight_id: 6327127650920324,
+  share_id: 'AAABbMomFOeE'
+)
+```
+
+> Example response
+
+<%= partial "snippets/deleteShare_response.md.erb" %>
+
+`DELETE /sights/{sightId}/shares/{shareId}`
+
+Deletes the share specified in the URL. 
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | SHARE_SIGHTS
+
+### Get Dashboard Share
+
+> Example request: get dashboard share
+
+```shell
+curl https://api.smartsheet.com/2.0/sights/{sightId}/shares/{shareId}
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" 
+```
+
+```javascript
+// Set options
+var options = {
+  sightId: 6327127650920324,
+  shareId: "AAABbMomFOeE"
+}
+
+// Get dashboard share
+smartsheet.sights.getShare(options)
+  .then(function(share) {
+    console.log(share);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+Share share = smartsheet.SightResources.ShareResources.GetShare(
+  6327127650920324,           // long sightId
+  "AAABbMomFOeE"              // string shareId
+);
+```
+
+```java
+Share share = smartsheet.sightResources().shareResources().getShare(
+  6327127650920324L,           // long sightId
+  "AAABbMomFOeE"              // string shareId
+);
+```
+
+```python
+share = smartsheet_client.Sights.get_share(
+  6327127650920324,       # sight_id
+  'AAACOqOmFOeE')         # share_id
+```
+
+```ruby
+share = smartsheet.sights.share.get(
+  sight_id: 6327127650920324,
+  share_id: 'AAABbMomFOeE'
+)
+```
+
+> Example response
+
+<%= partial "snippets/getShare_response.md.erb" %>
+
+`GET /sights/{sightId}/shares/{shareId}`
+
+Gets the share specified in the URL. 
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= RETURNS %> | [Share object](#share-object)
+<%= SCOPE %> | READ_SIGHTS
+
+### List Dashboard Shares
+
+> Example request: list dashboard shares
+
+```shell
+curl https://api.smartsheet.com/2.0/sights/{sightId}/shares
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" 
+```
+
+```javascript
+// Set options
+var options = {
+  sightId: 6327127650920324
+}
+
+// List dashboard shares
+smartsheet.sights.listShares(options)
+  .then(function(shareList) {
+    console.log(shareList);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+PaginatedResult<Share> shares = smartsheet.SightResources.ShareResources.ListShares(
+  6327127650920324,       // sightId
+  null,                   // Pagination parameters
+  ShareScope.Item         // ShareScope shareScope
+);
+```
+
+```java
+//Sample 1: List all
+smartsheet.sightResources().shareResources().listShares(
+  6327127650920324L,    // long sightId
+  null,    // PaginationParameters
+  true    // includeWorkspaceShares
+);
+
+//Sample 2: Paginate the list
+PaginationParameters paginationParameters = new PaginationParameters(
+  false,  // includeAll
+  100,    // pageSize
+  1   // page
+);
+smartsheet.sightResources().shareResources().listShares(
+  6327127650920324L,    // long sightId
+  paginationParameters,
+  true    // includeWorkspaceShares
+);
+```
+
+```python
+# Sample 1: List all
+response = smartsheet_client.Sights.list_shares(
+  6327127650920324,       # sight_id
+  include_all=True)
+shares = response.data
+
+# Sample 2: Paginate the list
+response = smartsheet_client.Sights.list_shares(
+  6327127650920324,       # sight_id
+  page_size=10,
+  page=1)
+pages = response.total_pages
+shares = response.data
+```
+
+```ruby
+response = smartsheet.sights.share.list(
+  sight_id: 6327127650920324
+)
+shares = response[:data]
+```
+
+> Example response
+
+<%= partial "snippets/listShares_response.md.erb" %>
+
+`GET /sights/{sightId}/shares`
+
+Gets a list of all users and groups to whom the specified dashboard is shared, and their access level. 
+
+<aside class="notice"><%= LIST_SHARES_RESPONSE_DESC %></aside>
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **include** (optional): when specified with a value of **workspaceShares**, response contains both item-level [shares](#share-object) (**scope=ITEM**) and workspace-level shares (**scope=WORKSPACE**).<br/><br/><%= PAGING_PARAMETERS %>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Share objects](#share-object)<br/><br/>**NOTE:** If the response contains an item-level share (**scope=ITEM**) and a workspace-level share (**scope=WORKSPACE**) for the same user or group, the **id** of those two [Share objects](#share-object) is identical, but the **scope** attribute value can be used to disambiguate the two.
+<%= SCOPE %> | READ_SIGHTS
+
+### Share Dashboard
+
+> Example request: share dashboard
+
+```shell
+curl 'https://api.smartsheet.com/2.0/sights/{sightId}/shares?sendEmail=true'
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+-H "Content-Type: application/json"
+-X POST
+-d '[{"email": "jane.doe@smartsheet.com", "accessLevel": "VIEWER"}]'
+```
+
+```javascript
+// Specify share (to one user as Viewer)
+var share = [
+  {
+    "email": "jane.doe@smartsheet.com",
+    "accessLevel": "VIEWER"
+  }
+];
+
+// Set options
+var options = {
+  sightId: 6327127650920324,
+  body: share
+};
+
+// Share dashboard
+smartsheet.sights.share(options)
+  .then(function(addressList) {
+    console.log(addressList);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+Share share = new Share {
+  Type = ShareType.USER,
+  AccessLevel = AccessLevel.EDITOR,
+  Email = "jane.doe@smartsheet.com"
+}
+List<Share> sightShares = smartsheet.SightResources.ShareResources.ShareTo(
+  6327127650920324,             // sightId
+  new Share[] { share },        // IEnumerable<Share> shares
+  true                          // bool sendEmail
+);
+```
+
+```java
+// Specify share (to one user as Viewer)
+Share shareSpecification = new Share()
+  .setEmail("jane.doe@smartsheet.com")
+  .setAccessLevel(AccessLevel.VIEWER);
+
+// Share dashboard
+List<Share> addressList = smartsheet.sightResources().shareResources().shareTo(
+  4583614634583940L,                    // long sightId
+  (Arrays.asList(shareSpecification)),
+  true                                  // Boolean sendEmail
+);
+```
+
+```python
+response = smartsheet_client.Sights.share_sight(
+  6327127650920324,       # sight_id
+  smartsheet.models.Share({
+    'access_level': 'VIEWER',
+    'email': 'jane.doe@smartsheet.com'
+  }),
+  True                    # sendEmail
+)
+```
+
+```ruby
+body = {
+  email: 'jane.doe@smartsheet.com',
+  access_level: 'VIEWER',
+  subject: 'This dashboard has been shared with you!',
+  message: 'This Smartsheet dashboard is ready for your inspection.'
+}
+
+response = smartsheet.sights.share.create(
+  sight_id: 6327127650920324,
+  body: body
+)
+```
+
+> Example response
+
+<%= partial "snippets/share_response.md.erb" %>
+
+`POST /sights/{sightId}/shares`
+
+Shares a dashboard with the specified users and groups.
+
+<aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
+
+<%= SHARING_ERRORS %>
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
+<%= PARAMETERS %> | **sendEmail** (optional): Either **true** or **false** to indicate whether to notify the user by email. Default is **false**.
+<%= REQUEST %> | [Share object](#share-object) or an array of Share objects, with the following attributes:<ul><li>**accessLevel** (required)</li><li>**ccMe** (optional): Boolean flag to indicate whether to CC the user sharing the sheet.</li><li>**email** (optional): the individual share recipient's email address</li><li>**groupId** (optional): the group share recipient's group Id</li><li>**message** (optional): The message in the body of the email that is optionally sent to the recipient.</li><li>**subject** (optional): The subject of the email that is optionally sent to notify the recipient.</li></ul>**NOTE:** One of **email** or **groupId** must be specified, but not both.
+<%= RETURNS %> | [Result object](#result-object) containing either a single [Share object](#share-object) or an array of Share objects, corresponding to what was specified in the request. All [shares](#share-object) have **scope=ITEM**.
+<%= ERRORS %>  | If an error occurs because the request specified one or more [alternate email addresses](#alternate-email-addresses), please retry using the primary email address.
+<%= SCOPE %> | SHARE_SIGHTS
+
+### Update Dashboard Share
+
+> Example request: update dashboard share
+
+```shell
+curl https://api.smartsheet.com/2.0/sights/{sightId}/shares/{shareId} \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X PUT \
+-d '{"accessLevel": "VIEWER"}'
+```
+
+```javascript
+// Set access level to Viewer
+var shareSpecification = {"accessLevel": "VIEWER"};
+
+// Set options
+var options = {
+  sightId: 6327127650920324,
+  shareId: "AAALRqomFOeE",
+  body: shareSpecification
+};
+
+// Update dashboard share
+smartsheet.sights.updateShare(options)
+  .then(function(updatedShare) {
+    console.log(updatedShare);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+Share updatedShare = smartsheet.SightResources.ShareResources.UpdateShare(
+  6327127650920324,          // sightId
+  new Share {                // Share share
+    Id = "AAALRqomFOeE",     // string shareId
+    AccessLevel = AccessLevel.VIEWER  // AccessLevel accessLevel
+  }
+);
+```
+
+```java
+// Set the access level to Viewer
+Share shareSpecification = new Share();
+shareSpecification.setAccessLevel(AccessLevel.VIEWER)
+  .setId("AAAFeF82FOeE");   // string shareId
+
+// Update dashboard share
+Share updatedShare = smartsheet.sightResources().shareResources().updateShare(
+  6327127650920324L,       // long sightId
+  shareSpecification
+);
+```
+
+```python
+updated_share = smartsheet_client.Sights.update_share(
+  6327127650920324,       # sight_id
+  'AAALRqomFOeE',         # share_id
+  smartsheet.models.Share({
+    'access_level': 'VIEWER'
+  })
+)
+```
+
+```ruby
+body = {
+  access_level: 'VIEWER'
+}
+
+response = smartsheet.sights.share.update(
+  sight_id: 6327127650920324,
+  share_id: 'AAABbMomFOeE',
+  body: body
+)
+```
+
+> Example response
+
+<%= partial "snippets/updateShare_response.md.erb" %>
+
+`PUT /sights/{sightId}/shares/{shareId}`
+
+Updates the access level of a user or group for the specified dashboard.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
+<%= REQUEST %> | [Share object](#share-object) limited to the following attribute:<ul><li>**accessLevel** (string)</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing the modified [Share object](#share-object)
+<%= SCOPE %> | SHARE_SIGHTS
 
 ## Report Sharing
 
@@ -4374,440 +4808,6 @@ Updates the access level of a user or group for the specified sheet.
 
 <%= partial "snippets/updateShare_table.md.erb" %>
 
-## Sight Sharing
-
-### Delete Sight Share
-
-> Example request: delete Sight share
-
-```shell
-curl https://api.smartsheet.com/2.0/sights/{sightId}/shares/{shareId} \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--X DELETE
-```
-
-```javascript
-// Set options
-var options = {
-  sightId: 6327127650920324,
-  shareId: "AAABbMomFOeE"
-}
-
-// Delete Sight share
-smartsheet.sights.deleteShare(options)
-  .then(function(results) {
-    console.log(results);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-```
-
-```csharp
-smartsheet.SightResources.ShareResources.DeleteShare(
-  6327127650920324,     // sightId
-  "AAABbMomFOeE"        // string shareId
-);
-```
-
-```java
-smartsheet.sightResources().shareResources().deleteShare(
-  6327127650920324L,           // long sightId
-  "AAABbMomFOeE"               // string shareId
-);
-```
-
-```python
-smartsheet_client.Sights.delete_share(
-  6327127650920324,       # sight_id
-  'AAACOqOmFOeE')         # share_id
-```
-
-```ruby
-smartsheet.sights.share.delete(
-  sight_id: 6327127650920324,
-  share_id: 'AAABbMomFOeE'
-)
-```
-
-> Example response
-
-<%= partial "snippets/deleteShare_response.md.erb" %>
-
-`DELETE /sights/{sightId}/shares/{shareId}`
-
-Deletes the share specified in the URL. 
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result object](#result-object)
-<%= SCOPE %> | SHARE_SIGHTS
-
-### Get Sight Share
-
-> Example request: get Sight share
-
-```shell
-curl https://api.smartsheet.com/2.0/sights/{sightId}/shares/{shareId}
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" 
-```
-
-```javascript
-// Set options
-var options = {
-  sightId: 6327127650920324,
-  shareId: "AAABbMomFOeE"
-}
-
-// Get Sight share
-smartsheet.sights.getShare(options)
-  .then(function(share) {
-    console.log(share);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-```
-
-```csharp
-Share share = smartsheet.SightResources.ShareResources.GetShare(
-  6327127650920324,           // long sightId
-  "AAABbMomFOeE"              // string shareId
-);
-```
-
-```java
-Share share = smartsheet.sightResources().shareResources().getShare(
-  6327127650920324L,           // long sightId
-  "AAABbMomFOeE"              // string shareId
-);
-```
-
-```python
-share = smartsheet_client.Sights.get_share(
-  6327127650920324,       # sight_id
-  'AAACOqOmFOeE')         # share_id
-```
-
-```ruby
-share = smartsheet.sights.share.get(
-  sight_id: 6327127650920324,
-  share_id: 'AAABbMomFOeE'
-)
-```
-
-> Example response
-
-<%= partial "snippets/getShare_response.md.erb" %>
-
-`GET /sights/{sightId}/shares/{shareId}`
-
-Gets the share specified in the URL. 
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Share object](#share-object)
-<%= SCOPE %> | READ_SIGHTS
-
-### List Sight Shares
-
-> Example request: list Sight shares
-
-```shell
-curl https://api.smartsheet.com/2.0/sights/{sightId}/shares
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" 
-```
-
-```javascript
-// Set options
-var options = {
-  sightId: 6327127650920324
-}
-
-// List Sight shares
-smartsheet.sights.listShares(options)
-  .then(function(shareList) {
-    console.log(shareList);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-```
-
-```csharp
-PaginatedResult<Share> shares = smartsheet.SightResources.ShareResources.ListShares(
-  6327127650920324,       // sightId
-  null,                   // Pagination parameters
-  ShareScope.Item         // ShareScope shareScope
-);
-```
-
-```java
-//Sample 1: List all
-smartsheet.sightResources().shareResources().listShares(
-  6327127650920324L,    // long sightId
-  null,    // PaginationParameters
-  true    // includeWorkspaceShares
-);
-
-//Sample 2: Paginate the list
-PaginationParameters paginationParameters = new PaginationParameters(
-  false,  // includeAll
-  100,    // pageSize
-  1   // page
-);
-smartsheet.sightResources().shareResources().listShares(
-  6327127650920324L,    // long sightId
-  paginationParameters,
-  true    // includeWorkspaceShares
-);
-```
-
-```python
-# Sample 1: List all
-response = smartsheet_client.Sights.list_shares(
-  6327127650920324,       # sight_id
-  include_all=True)
-shares = response.data
-
-# Sample 2: Paginate the list
-response = smartsheet_client.Sights.list_shares(
-  6327127650920324,       # sight_id
-  page_size=10,
-  page=1)
-pages = response.total_pages
-shares = response.data
-```
-
-```ruby
-response = smartsheet.sights.share.list(
-  sight_id: 6327127650920324
-)
-shares = response[:data]
-```
-
-> Example response
-
-<%= partial "snippets/listShares_response.md.erb" %>
-
-`GET /sights/{sightId}/shares`
-
-Gets a list of all users and groups to whom the specified Sight is shared, and their access level. 
-
-<aside class="notice"><%= LIST_SHARES_RESPONSE_DESC %></aside>
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional): when specified with a value of **workspaceShares**, response contains both item-level [shares](#share-object) (**scope=ITEM**) and workspace-level shares (**scope=WORKSPACE**).<br/><br/><%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Share objects](#share-object)<br/><br/>**NOTE:** If the response contains an item-level share (**scope=ITEM**) and a workspace-level share (**scope=WORKSPACE**) for the same user or group, the **id** of those two [Share objects](#share-object) is identical, but the **scope** attribute value can be used to disambiguate the two.
-<%= SCOPE %> | READ_SIGHTS
-
-### Share Sight
-
-> Example request: share Sight
-
-```shell
-curl 'https://api.smartsheet.com/2.0/sights/{sightId}/shares?sendEmail=true'
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
--H "Content-Type: application/json"
--X POST
--d '[{"email": "jane.doe@smartsheet.com", "accessLevel": "VIEWER"}]'
-```
-
-```javascript
-// Specify share (to one user as Viewer)
-var share = [
-  {
-    "email": "jane.doe@smartsheet.com",
-    "accessLevel": "VIEWER"
-  }
-];
-
-// Set options
-var options = {
-  sightId: 6327127650920324,
-  body: share
-};
-
-// Share Sight
-smartsheet.sights.share(options)
-  .then(function(addressList) {
-    console.log(addressList);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-```
-
-```csharp
-Share share = new Share {
-  Type = ShareType.USER,
-  AccessLevel = AccessLevel.EDITOR,
-  Email = "jane.doe@smartsheet.com"
-}
-List<Share> sightShares = smartsheet.SightResources.ShareResources.ShareTo(
-  6327127650920324,             // sightId
-  new Share[] { share },        // IEnumerable<Share> shares
-  true                          // bool sendEmail
-);
-```
-
-```java
-// Specify share (to one user as Viewer)
-Share shareSpecification = new Share()
-  .setEmail("jane.doe@smartsheet.com")
-  .setAccessLevel(AccessLevel.VIEWER);
-
-// Share Sight
-List<Share> addressList = smartsheet.sightResources().shareResources().shareTo(
-  4583614634583940L,                    // long sightId
-  (Arrays.asList(shareSpecification)),
-  true                                  // Boolean sendEmail
-);
-```
-
-```python
-response = smartsheet_client.Sights.share_sight(
-  6327127650920324,       # sight_id
-  smartsheet.models.Share({
-    'access_level': 'VIEWER',
-    'email': 'jane.doe@smartsheet.com'
-  }),
-  True                    # sendEmail
-)
-```
-
-```ruby
-body = {
-  email: 'jane.doe@smartsheet.com',
-  access_level: 'VIEWER',
-  subject: 'This Sight has been shared with you!',
-  message: 'This Smartsheet Sight is ready for your inspection.'
-}
-
-response = smartsheet.sights.share.create(
-  sight_id: 6327127650920324,
-  body: body
-)
-```
-
-> Example response
-
-<%= partial "snippets/share_response.md.erb" %>
-
-`POST /sights/{sightId}/shares`
-
-Shares a Sight with the specified users and groups.
-
-<aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
-
-<%= SHARING_ERRORS %>
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= PARAMETERS %> | **sendEmail** (optional): Either **true** or **false** to indicate whether to notify the user by email. Default is **false**.
-<%= REQUEST %> | [Share object](#share-object) or an array of Share objects, with the following attributes:<ul><li>**accessLevel** (required)</li><li>**ccMe** (optional): Boolean flag to indicate whether to CC the user sharing the sheet.</li><li>**email** (optional): the individual share recipient's email address</li><li>**groupId** (optional): the group share recipient's group Id</li><li>**message** (optional): The message in the body of the email that is optionally sent to the recipient.</li><li>**subject** (optional): The subject of the email that is optionally sent to notify the recipient.</li></ul>**NOTE:** One of **email** or **groupId** must be specified, but not both.
-<%= RETURNS %> | [Result object](#result-object) containing either a single [Share object](#share-object) or an array of Share objects, corresponding to what was specified in the request. All [shares](#share-object) have **scope=ITEM**.
-<%= ERRORS %>  | If an error occurs because the request specified one or more [alternate email addresses](#alternate-email-addresses), please retry using the primary email address.
-<%= SCOPE %> | SHARE_SIGHTS
-
-### Update Sight Share
-
-> Example request: update Sight share
-
-```shell
-curl https://api.smartsheet.com/2.0/sights/{sightId}/shares/{shareId} \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/json" \
--X PUT \
--d '{"accessLevel": "VIEWER"}'
-```
-
-```javascript
-// Set access level to Viewer
-var shareSpecification = {"accessLevel": "VIEWER"};
-
-// Set options
-var options = {
-  sightId: 6327127650920324,
-  shareId: "AAALRqomFOeE",
-  body: shareSpecification
-};
-
-// Update Sight share
-smartsheet.sights.updateShare(options)
-  .then(function(updatedShare) {
-    console.log(updatedShare);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-```
-
-```csharp
-Share updatedShare = smartsheet.SightResources.ShareResources.UpdateShare(
-  6327127650920324,          // sightId
-  new Share {                // Share share
-    Id = "AAALRqomFOeE",     // string shareId
-    AccessLevel = AccessLevel.VIEWER  // AccessLevel accessLevel
-  }
-);
-```
-
-```java
-// Set the access level to Viewer
-Share shareSpecification = new Share();
-shareSpecification.setAccessLevel(AccessLevel.VIEWER)
-  .setId("AAAFeF82FOeE");   // string shareId
-
-// Update Sight share
-Share updatedShare = smartsheet.sightResources().shareResources().updateShare(
-  6327127650920324L,       // long sightId
-  shareSpecification
-);
-```
-
-```python
-updated_share = smartsheet_client.Sights.update_share(
-  6327127650920324,       # sight_id
-  'AAALRqomFOeE',         # share_id
-  smartsheet.models.Share({
-    'access_level': 'VIEWER'
-  })
-)
-```
-
-```ruby
-body = {
-  access_level: 'VIEWER'
-}
-
-response = smartsheet.sights.share.update(
-  sight_id: 6327127650920324,
-  share_id: 'AAABbMomFOeE',
-  body: body
-)
-```
-
-> Example response
-
-<%= partial "snippets/updateShare_response.md.erb" %>
-
-`PUT /sights/{sightId}/shares/{shareId}`
-
-Updates the access level of a user or group for the specified Sight.
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Share object](#share-object) limited to the following attribute:<ul><li>**accessLevel** (string)</li></ul>
-<%= RETURNS %> | [Result object](#result-object) containing the modified [Share object](#share-object)
-<%= SCOPE %> | SHARE_SIGHTS
-
 ## Workspace Sharing
 
 ### Delete Workspace Share
@@ -5285,7 +5285,7 @@ A sheet can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](#
 **resourceManagementEnabled** | Boolean | Indicates that resource management is enabled
 **rows** | [Row](#row-object)[] | Array of Row objects
 **showParentRowsForFilters** | Boolean | Returned only if there are column filters on the sheet.  Value = **true** if "show parent rows" is enabled for the filters.
-**source** | [Source](#source-object) | A Source object indicating the report, sheet, Sight (aka dashboard), or template from which this sheet was created, if any
+**source** | [Source](#source-object) | A Source object indicating the dashboard, report, sheet, or template from which this sheet was created, if any
 **summary** | [SheetSummary](#sheetsummary-object) | A SheetSummary object containing a list of defined fields and values for the sheet.
 **totalRowCount** | number | The total number of rows in the sheet
 **userPermissions** | [SheetUserPermissions](#sheetuserpermissions-object) | A SheetUserPermissions object indicating what summary operations are possible for the current user
@@ -5414,7 +5414,7 @@ Represents individual user settings for a specific sheet.  User settings may be 
 
      |     |     |
 -----|-----|-----|
-**id** | number | Id of the report, sheet, Sight (aka dashboard), or template from which the enclosing report, sheet, Sight, or template was created
+**id** | number | Id of the dashboard (also called Sight in the API), report, sheet, or template from which the enclosing dashboard, report, sheet, or template was created
 **type** | string | **report**, **sheet**, **sight**, or **template**
 
 ### SummaryField Object
@@ -6688,7 +6688,7 @@ Gets the sheet specified in the URL. Returns the sheet, including rows, and opti
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ganttConfig**: includes Gantt chart details</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which report, sheet, Sight (aka dashboard), or template the sheet was created from, if any.
+<%= PARAMETERS %> | **include** (optional): a comma-separated list of elements to include in the response.<br/>Supports all [Row Include Flags](#row-include-flags) with the following differences:<ul><li>**attachments**: includes the metadata for sheet-level and row-level attachments</li><li>**crossSheetReferences**: includes the cross-sheet references</li><li>**discussions**: includes sheet-level and row-level discussions</li><li>**filters**: includes [row.filteredOut](#row-object) attribute</li><li>**filterDefinitions**: includes type of filter, operators used, and criteria</li><li>**format**: includes column, row, and cell formatting</li><li>**ganttConfig**: includes Gantt chart details</li><li>**objectValue** -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data</li><li>**ownerInfo**: includes the workspace and the owner's email address and user Id</li></ul>Also supports the **source** include flag, which adds the [Source object](#source-object) indicating which dashboard, report, sheet, or template the sheet was created from, if any.
   | **exclude** (optional): a comma-separated list of elements to not include in the response.<br/><ul><li>**filteredOutRows**: excludes filtered out rows from response payload if a sheet filter is applied; includes total number of filtered rows</li><li>**include=format&exclude=nonexistentCells**: excludes cells that have never contained data yet returns those cells if they have formatting or conditional formatting</li><li>**linkInFromCellDetails**: excludes the following attributes from the **cell.linkInFromCell** object:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**linksOutToCellsDetails**: excludes the following attributes from the **cell.linksOutToCells** array elements:<ul><li>**columnId**</li><li>**rowId**</li><li>**status**</li></ul></li><li>**nonexistentCells**: excludes cells that have never contained any data</li></ul>
   | **columnIds** (optional): a comma-separated list of column Ids. The response contains only the specified columns in the "columns" array, and individual rows' "cells" array only contains cells in the specified columns.
   | **filterId** (optional): overrides the existing include={filters} parameter if both are supplied. Applies the given filter (if accessible by the calling user) and marks the affected rows as "filteredOut": true. Format is **filterId={filterId}**
@@ -7086,7 +7086,7 @@ Gets a list of all sheets that the user has access to in alphabetical order by n
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any report, sheet, Sight (aka dashboard), or template that was created from another report, sheet, Sight, or template, if any</li></ul>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any dashboard, report, sheet, or template that was created from another dashboard, report, sheet, or template, if any</li></ul>
  | <%= PARAMETER_MODIFIEDSINCE %>
  | <%= PAGING_PARAMETERS %>
 <%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Sheet objects](#sheet-object) limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**createdAt**</li><li>**modifiedAt**</li><li>**name**</li><li>**permalink**</li><li>**source** (included only if **source** is specified with the **include** parameter)</li></ul>
@@ -8425,1004 +8425,4 @@ For details about working with a sheet's rows, see [Rows](#rows).
 
 # Sights
 
-Smartsheet Sights(TM) are a collection of widgets that can contain data from a variety of different data sources (for example, sheets, reports, or custom data). Sights are now called dashboards in the UI. 
-
-## <%= OBJECTS %>
-
-### Sight Object
-
-> Example: Sight object
-
-```json
-{
-  "id": 2591554075418573,
-  "name": "Test",
-  "accessLevel": "OWNER",
-  "columnCount": 6,
-  "widgets": []
-}
-```
-
-     |     |     |
------|-----|-----|
-**id** | number | Sight Id
-**accessLevel** | string | User's permissions on the Sight. Valid values: <ul><li>**ADMIN**</li><li>**OWNER**</li><li>**VIEWER**</li></ul>
-**backgroundColor** | hex | The hex color, for instance #E6F5FE
-**columnCount** | number | Number of columns that the Sight contains
-**createdAt** | timestamp | Time of creation
-**favorite** | Boolean | Indicates whether the user has marked the Sight as a favorite
-**modifiedAt** | timestamp | Time of last modification
-**name** | string | Sight name 
-**permalink** | string | URL that represents a direct link to the Sight in Smartsheet
-**source** | [source](#source-object) | A Source object indicating the Sight (aka dashboard) from which this Sight was created, if any
-**widgets** | [widget](#widget-object)[] | Array of Widget objects
-**workspace** | [Workspace](#workspace-object) | A Workspace object, limited to only 2 attributes: <ul><li>**id**</li> <li>**name**</li></ul> NOTE: this attribute is only present if the Sight resides within a workspace.
-
-### SightPublish Object
-
-     |     |     |
------|-----|-----|
-**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published Sight:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the Sight owner's Smartsheet organization account.</li></ul>Only returned in a response if **readOnlyFullEnabled = true**.
-**readOnlyFullEnabled** | Boolean | If **true**, a rich version of the Sight is published with the ability to use shortcuts and widget interactions.
-**readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published Sight.<br/>Only returned in a response if **readOnlyFullEnabled = true**.
-
-### Widget Object
-
-> Example: Widget object
-
-```json
-{
-  "id": 3056651398234562,
-  "type": "RICHTEXT",
-  "contents": {
-    "htmlContent": "<p>This is a test</p>"
-  },
-  "xPosition": 2,
-  "yPosition": 0,
-  "width": 2,
-  "height": 4,
-  "showTitleIcon": false,
-  "titleFormat": ",,1,,,,,,,3,,,,,,",
-  "version": 1
-}
-```
-
-     |     |     |
------|-----|-----|
-**id** | number | Widget Id
-**type** | string | Type of widget. See table below to see how UI widget names map to type.
-**contents** | WidgetContent object | Data that specifies the contents of the widget. <b>NOTE:</b> The type of WidgetContent object (and attributes within) depends on the value of **widget.type**.
-**height** | number | Number of rows that the widget occupies on the Sight
-**showTitle** | Boolean | **True** indicates that the client should display the widget title.  <b>NOTE:</b> This is independent of the **title** string which may be null or empty.
-**showTitleIcon** | Boolean | **True** indicates that the client should display the sheet icon in the widget title
-**title** | string | Title of the widget
-**titleFormat** | string | [FormatDescriptor](#formatting)
-**version** | int | Widget version number
-**viewMode** | int | **1** indicates content is centered. **2** indicates content is left aligned. Must use a query parameter of **level=2** to see this information.
-**width** | number | Number of columns that the widget occupies on the Sight
-**xPosition** | number | X-coordinate of widget's position on the Sight
-**yPosition** | number | Y-coordinate of widget's position on the Sight
-
-UI widget name | type string | Object |
------|-----|-----|
-Chart | **CHART** | [ChartWidgetContent](#chartwidgetcontent-object) 
-Image | **IMAGE** | [ImageWidgetContent](#imagewidgetcontent-object)
-Metric | **SHEETSUMMARY** or **METRIC** | [CellLinkWidgetContent](#celllinkwidgetcontent-object)
-Report | **GRIDGANTT** | [ReportWidgetContent](#reportwidgetcontent-object)
-Rich Text | **RICHTEXT** | [RichTextWidgetContent](#richtextwidgetcontent-object)
-Shortcut | **SHORTCUTICON**, **SHORTCUTLIST**, or **SHORTCUT** | [ShortcutWidgetContent](#shortcutwidgetcontent-object)
-Title | **TITLE** | [TitleWidgetContent](#titlewidgetcontent-object)
-Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetcontent-object)
-
-### CellLinkWidgetContent Object
-
-     |     |     |
------|-----|-----|
-**sheetId** | number | The Id of the sheet from which the cell data originates
-**cellData** | [CellDataItem](#celldataitem-object)[] | Array of CellDataItem objects
-**columns** | [Column](#column-object)[] | Array of Column objects
-**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
-
-### CellDataItem Object
-
-     |     |     |
------|-----|-----|
-**columnId** | number | Column Id for each item
-**rowId** | number | Row Id for each item
-**sheetId** | number | Sheet Id for each item
-**objectValue** | A string, number, or a Boolean value | The type of data returned depends on the cell type and the data in the cell
-**cell** | [Cell](#cell-object) | Cell object
-**dataSource** | string | **CELL**
-**label** | string | Label for the data point. This is either the column name or a user-provided string
-**labelFormat** | string | [formatDescriptor](#formatting)
-**order** | integer | The display order for the CellDataItem
-**profileField** | [SummaryField](#summaryfield-object) | SummaryField object
-**valueFormat** | string | [formatDescriptor](#formatting)
-
-### ChartWidgetContent Object
-
-     |     |     |
------|-----|-----|
-**reportId** | number | Report Id denoting container source, if applicable
-**sheetId** | number | Sheet Id denoting container source, if applicable
-**axes** | Axes[] | Array of Axes objects
-**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
-**includedColumnIds** |  includedColumnIds[]] | Array of columnIds if the range was selected through the UI
-**legend** | string | The location in the widget where Smartsheet renders the legend, for example, **RIGHT**
-**selectionRanges** | [SelectionRange](#selectionrange-object)[] | If the source is a sheet
-**series** | Series[] | Array of Series objects
-
-### ImageWidgetContent Object
-
-     |     |     |
------|-----|-----|
-**privateId** | string | The image private Id
-**fileName** | string | Name of the image file
-**format** | string | [formatDescriptor](#formatting)
-**height** | integer | Original height of the image in pixels
-**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
-**width** | integer | Original width of the image in pixels
-
-### ReportWidgetContent Object
-
-     |     |     |
------|-----|-----|
-**reportId** | number | Report Id denoting container source
-**htmlContent** | string | HTML snippet to render report
-**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
-
-### RichTextWidgetContent Object
-
-     |     |     |
------|-----|-----|
-**html** | string | The widget content as HTML </br> </br> The Rich Text widget supports the following subset of HTML tags and CSS Styles: </br></br> <b>HTML</b><ul><li>**a** - defines a hyperlink</li> <li>**br** - inserts a single line break</li><li>**li** - defines a list item</li> <li>**ol** - defines an ordered list</li> <li>**p** - defines a paragraph</li> <li>**ul** - defines an unordered list</li> <li>**span** - defines a section in a document</li></ul> <b>CSS</b><ul><li>**color**</li> <li>**font-family**</li> <li>**font-size**</li> <li>**font-style**</li> <li>**font-weight**</li> <li>**text-align**</li> <li>**text-decoration**</li></ul>
-
-### SelectionRange Object
-
-     |     |     |
------|-----|-----|
-**sourceColumnId1** | number | Defines beginning edge of range when specifying one or more columns.
-**sourceColumnId2** | number | Defines ending edge of range when specifying one or more columns.
-**sourceRowId1** | number | Defines beginning edge of range when specifying one or more rows.
-**sourceRowId2** | number | Defines ending edge of range when specifying one or more rows.
-
-### ShortcutWidgetContent Object
-
-     |     |     |
------|-----|-----|
-**shortcutData** | [ShortcutDataItem](#shortcutdataitem-object)[] | Array of ShortcutDataItem objects
-
-### ShortcutDataItem Object
-
-     |     |     |
------|-----|-----|
-**attachmentType** | string | Attachment type (one of **BOX_COM**, **DROPBOX**, **EGNYTE**, **EVERNOTE**, **FILE**, **GOOGLE_DRIVE**, **LINK**, **ONEDRIVE**, or **SMARTSHEET**)
-**hyperlink** | [Hyperlink](#hyperlink-object) | Hyperlink object
-**label** | string | Label for the data point
-**labelFormat** | string | [formatDescriptor](#formatting)
-**mimeType** | string | MIME type if available for attachment type
-**order** | integer | The display order for the ShortcutWidgetItem object
-
-### TitleWidgetContent Object
-
-     |     |     |
------|-----|-----|
-**backgroundColor** | hex | The hex color, for instance #E6F5FE
-**htmlContent** | string | HTML snippet to render title
-
-### WebcontentWidgetContent Object
-
-     |     |     |
------|-----|-----|
-**url** | string | The URL
-
-### WidgetHyperlink Object
-
-     |     |     |
------|-----|-----|
-**interactionType** | string | Specifies what happens when a user clicks the widget. Valid values: <ul><li>**DISTI_COPY** -- a distribution link, only available if org has distribution links enabled</li><li>**NONE** -- do nothing, no other attribute required</li><li>**SMARTSHEET_ITEM** -- open a Smartsheet item that is not the SOURCE_SHEET, must also have one of the following:</li><ul><li>**folderId**</li><li>**reportId**</li><li>**sheetId**</li><li>**sightId**</li><li>**workspaceId**</li></ul><li>**SOURCE_SHEET** -- open the container where the widget data comes from, no other attribute required</li><li>**WEB** -- launch the URL, must also have **url** attribute</li></ul>
-**folderId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the folder to open
-**reportId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the report to open
-**sheetId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the sheet to open
-**sightId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the Sight (aka dashboard) to open
-**url** | string | If **interactionType** = **WEB** this is the URL to launch
-**workspaceId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the workspace to open
-
-## Copy Sight
-
-> Example request: copy Sight
-
-```shell
-curl https://api.smartsheet.com/2.0/sights/{sightId}/copy \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/json"
--d '{ 
-  "destinationType": "workspace", 
-  "destinationId": 7960873114331012, 
-  "newName": "newSightName" 
-}' \
--X POST
-```
-
-```javascript
-// Specify new Sight properties
-var body = {
-  destinationType: "home",
-  newName: "newSightName"
-};
-
-// Set options
-var options = {
-  sightId: 6327127650920324,
-  body: body
-};
-
-// Copy Sight
-smartsheet.sights.copySight(options)
-  .then(function(copiedSight) {
-    console.log(copiedSight);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-```
-
-```csharp
-// Specify destination
-ContainerDestination destination = new ContainerDestination
-{
-  DestinationId = 3791509922310020,               // long destinationFolderId
-  DestinationType = DestinationType.FOLDER,
-  NewName = "newSightName"
-};
-
-// Copy Sight
-Sight sight = smartsheet.SightResources.CopySight(
-  6327127650920324,                               // long sightId
-  destination
-);
-```
-
-```java
-// Specify destination
-ContainerDestination destination = new ContainerDestination()
-  .setDestinationType(DestinationType.FOLDER)
-  .setDestinationId(3791509922310020L)
-  .setNewName("newSightName");
-
-// Copy Sight
-Sight sight = smartsheet.sightResources().copySight(
-  6327127650920324L,                          // long sightId
-  destination
-);
-```
-
-```python
-new_sight = smartsheet_client.Sights.copy_sight(
-  6327127650920324,                           # sight_id
-  smartsheet.models.ContainerDestination({
-    'destination_type': 'folder',           # folder, workspace, or home
-    'destination_id': 3791509922310020,     # folder_id
-    'new_name': 'newSightName'
-  })
-)
-```
-
-```ruby
-# Specify destination
-body = {
-  destination_type: 'folder',
-  destination_id: 3791509922310020,
-  new_name: 'newSightName'
-}
-
-# Copy Sight
-new_sight = smartsheet.sights.copy(
-  sight_id: 6327127650920324,
-  body: body
-)
-```
-
-> Example response
-
-```json
-{
-  "message": "SUCCESS",    
-  "resultCode": 0,
-  "result": {
-    "id": 4583173393803140,
-    "name": "newSightName",
-    "accessLevel": "OWNER",
-    "permalink": "https://app.smartsheet.com/b/home?lx=lB0JaOh6AX1wGwqxsQIMaA"
-  }
-}
-```
-
-`POST /sights/{sightId}/copy`
-
-Creates a copy of the specified Sight.
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [ContainerDestination object](#containerdestination-object)
-<%= RETURNS %> | [Result object](#result-object) containing a [Sight](#sight-object) for the newly created Sight, limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**name**</li><li>**permalink**</li></ul>
-<%= SCOPE %> | CREATE_SIGHTS
-
-## Delete Sight
-
-> Example request: delete Sight
-
-```shell
-curl https://api.smartsheet.com/2.0/sights/{sightId} \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
-```
-
-```javascript
-// Set options
-var options = {
-  sightId: 5363568917931908
-};
-
-// Delete Sight
-smartsheet.sights.deleteSight(options)
-  .then(function(results) {
-    console.log(results);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-```
-
-```csharp
-smartsheet.SightResources.DeleteSight(
-  5077532685952900            // sightId
-);
-```
-
-```java
-smartsheet.sightResources().deleteSight(
-  3100061023397764L       // long sightId
-);
-```
-
-```python
-smartsheet_client.Sights.delete_sight(3404239197235076)     # sight_id
-```
-
-```ruby
-smartsheet.sights.delete(
-  sight_id: 6327127650920324
-)
-```
-
-> Example response
-
-```json
-{
-  "message": "SUCCESS",    
-  "resultCode": 0
-}
-```
-
-`DELETE /sights/{sightId}`
-
-Deletes the Sight specified in the URL.
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [Result object](#result-object)
-<%= SCOPE %> | DELETE_SIGHTS
-
-## Get Sight
-
-> Example request: get Sight
-
-```shell
-curl https://api.smartsheet.com/2.0/sights/{sightId}?level=4 \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
-```
-
-```javascript
-// Set options
-var options = {
-  sightId: 6327127650920324
-};
-
-// Get Sight
-smartsheet.sights.getSight(options)
-  .then(function(sight) {
-    console.log(sight);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-```
-
-```csharp
-Sight sight = smartsheet.SightResources.GetSight(
-  6327127650920324        // long sightId
-);
-```
-
-```java
-Sight sight = smartsheet.sightResources().getSight(
-  6327127650920324L       // long sightId
-);
-```
-
-```python
-sight = smartsheet_client.Sights.get_sight(
-  6327127650920324)     # sightId
-```
-
-```ruby
-sight = smartsheet.sights.get(
-  sight_id: 6327127650920324
-)
-```
-
-> Example response
-
-```json
-{
-  "id": 2591554075418573,
-  "name": "Test",
-  "accessLevel": "OWNER",
-  "columnCount": 6,
-  "widgets": [
-    {
-      "id": 3056651398234562,
-      "type": "RICHTEXT",
-      "contents": {
-        "htmlContent": "<p>This is a test</p>"
-      },
-      "xPosition": 2,
-      "yPosition": 0,
-      "width": 2,
-      "height": 4,
-      "showTitleIcon": false,
-      "titleFormat": ",,1,,,,,,,3,,,,,,",
-      "version": 1
-    },
-    {
-      "id": 9996257304487812,
-      "type": "METRIC",
-      "contents": {
-        "type": "METRIC",
-        "cellData": [
-          {
-            "label": "test summary here",
-            "labelFormat": ",2,,,,,,,1,,,,,,,1,",
-            "valueFormat": ",2,1,,,,1,,1,3,,,,,,1,",
-            "order": 0,
-            "profileField": {
-              "id": 9992738687018884,
-              "index": 0,
-              "title": "test summary here",
-              "type": "TEXT_NUMBER",
-              "locked": false,
-              "lockedForUser": false,
-              "objectValue": "summary content",
-              "displayValue": "summary content",
-              "createdAt": "2019-10-31T22:01:19Z",
-              "modifiedAt": "2019-10-31T22:01:19Z"
-            },
-            "dataSource": "SUMMARY_FIELD",
-            "objectValue": "summary content"
-          }
-        ],
-        "sheetId": 663216503187332,
-        "viewMode": 2
-      },
-      "xPosition": 0,
-      "yPosition": 0,
-      "width": 15,
-      "height": 7,
-      "title": "test sheet for charts",
-      "showTitleIcon": true,
-      "showTitle": true,
-      "titleFormat": ",,1,,,,,,,3,,,,,,1,",
-      "version": 1
-    }
-  ]
-}
-```
-
-`GET /sights/{sightId}`
-
-Gets the specified Sight.
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any Sight that was created from another Sight, if any</li></ul>  
-  | **level** (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (**level=0**, default), multi-contact data (**level=2**), multi-picklist data (**level=3**), or Metric widget with sheet summary (**level=4**). 
-  | **objectValue** (optional) -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data.
-<%= RETURNS %> | [Sight object](#sight-object)
-<%= SCOPE %> | READ_SIGHTS
-
-## List Sights
-
-> Example request: list Sights
-
-```shell
-curl https://api.smartsheet.com/2.0/sights \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
-```
-
-```javascript
-smartsheet.sights.listSights()
-  .then(function(sights) {
-    console.log(sights.data);
-  })
-  .catch(function(error) {
-    console.log(error);
-  })
-```
-
-```csharp
-PaginatedResult<Sight> sights = smartsheet.SightResources.ListSights(
-  null,       // PaginationParameters
-  null        // Nullable<DateTime> modifiedSince
-);
-```
-
-```java
-PagedResult<Sight> sights = smartsheet.sightResources().listSights(
-  null,       // PaginationParameters
-  null        // Date modifiedSince
-);
-```
-
-```python
-response = smartsheet_client.Sights.list_sights(include_all=True)
-sights = response.data
-```
-
-```ruby
-response = smartsheet.sights.list
-sights = response[:data]
-```
-
-> Example response
-
-```json
-{
-  "pageNumber": 1,
-  "pageSize": 100,
-  "totalPages": 1,
-  "totalCount": 2,
-	"data": [
-    {
-      "id": 2331373580117892,
-      "name": "Sales Sight",
-      "accessLevel": "OWNER",
-      "permalink": "https://app.smartsheet.com/b/home?lx=xUefSOIYmn07iJJesvSHCQ",
-      "createdAt": "2016-01-28T00:24:41Z",
-      "modifiedAt": "2016-01-28T20:32:33Z"
-    },
-    {
-      "id": 7397923160909700,
-      "name": "Sight #2",
-      "accessLevel": "OWNER",
-      "permalink": "https://app.smartsheet.com/b/home?lx=xUefSOIYmn07iJJrthEFTG",
-      "createdAt": "2016-01-28T01:17:51Z",
-      "modifiedAt": "2016-01-28T20:32:27Z"
-    }
-	]
-}
-```
-
-`GET /sights`
-
-Gets a list of all Sights that the user has access to.
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | <%= PARAMETER_MODIFIEDSINCE %>
- | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Sight objects](#sight-object) limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**createdAt**</li><li>**modifiedAt**</li><li>**name**</li><li>**permalink**</li></ul>
-<%= SCOPE %> | READ_SIGHTS
-
-<aside class="notice"><%= SUPPORTS_NUMERICDATES %></aside>
-
-## Move Sight
-
-> Example request: move Sight
-
-```shell
-curl https://api.smartsheet.com/2.0/sights/{sightId}/move \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/json"
--d '{ 
-  "destinationType": "folder", 
-  "destinationId": workspace_or_folder_id 
-}' \
--X POST
-```
-
-```javascript
-// Set destination
-var body = {
-  destinationType: "folder",
-  destinationId: 8460057768683396
-};
-
-// Set options
-var options = {
-  sightId: 5077532685952900,
-  body: body
-};
-
-// Move Sight
-smartsheet.sights.moveSight(options)
-  .then(function(movedSight) {
-    console.log(movedSight);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-```
-
-```csharp
-// Specify destination
-ContainerDestination destination = new ContainerDestination
-{
-  DestinationId = 8460057768683396,               // long destinationFolderId
-  DestinationType = DestinationType.FOLDER
-};
-
-// Move Sight
-Sight sight = smartsheet.SightResources.MoveSight(
-  5077532685952900,                               // long sightId
-  destination
-);
-```
-
-```java
-// Specify destination
-ContainerDestination destination = new ContainerDestination()
-  .setDestinationType(DestinationType.FOLDER)
-  .setDestinationId(7960873114331012L);
-
-// Move Sight
-Sight sight = smartsheet.sightResources().moveSight(
-  4583173393803140L,                          // long sightId
-  destination
-);
-```
-
-```python
-response = smartsheet_client.Sights.move_sight(
-  5363568917931908,                           # sight_id
-  smartsheet.models.ContainerDestination({
-    'destination_type': 'folder',           # folder, workspace, or home
-    'destination_id': 8460057768683396      # destination folder_id
-  })
-)
-```
-
-```ruby
-# Specify destination
-body = {
-  destination_type: 'folder',
-  destination_id: 8460057768683396
-}
-
-# Move Sight
-response = smartsheet.sights.move(
-  sight_id: 5363568917931908,
-  body: body
-)
-moved_sight = response[:result]
-```
-
-> Example response
-
-```json
-{
-  "message": "SUCCESS",    
-  "resultCode": 0,
-  "result": {
-    "id": 4583173393803140,
-    "name": "moved_Sight_name",
-    "accessLevel": "OWNER",
-    "permalink": "https://app.smartsheet.com/b/home?lx=lB0JaOh6AX1wGwqxsQIMaA"
-  }
-}
-```
-
-`POST /sights/{sightId}/move`
-
-Moves the specified Sight to a new location.
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following required attributes:<ul><li>**destinationId**</li><li>**destinationType**</li></ul>
-<%= RETURNS %> | [Result object](#result-object) containing a [Sight object](#sight-object) for the moved Sight, limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**name**</li><li>**permalink**</li></ul>
-<%= SCOPE %> | CREATE_SIGHTS
-
-<aside class="notice">When a Sight that is shared to one or more users and/or groups is moved into or out of a workspace, those <i>Sight-level</i> shares are preserved.</aside>
-
-## Publish Sight
-
-### Get Sight Publish Status
-
-> Example request: get Sight publish status
-
-```shell
-curl https://api.smartsheet.com/2.0/sights/{sightId}/publish \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
-```
-
-```javascript
-// Set options
-var options = {
-  sightId: 5363568917931908
-};
-
-// Get Sight publish status
-smartsheet.sights.getSightPublishStatus(options)
-  .then(function(status) {
-    console.log(status);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-```
-
-```csharp
-SightPublish publish = smartsheet.SightResources.GetPublishStatus(
-    5363568917931908    // sightId
-  );
-```
-
-```java
-SightPublish publish = smartsheet.sightResources().getPublishStatus(
-      5363568917931908L    // long sightId
-  );
-```
-
-```python
-status = smartsheet_client.Sights.get_publish_status(
-  5363568917931908)       # sight_id
-```
-
-```ruby
-status = smartsheet.sights.get_publish_status(
-  sight_id: 5363568917931908
-)
-```
-
-> Example response
-
-```json
-{
-  "readOnlyFullEnabled": true,
-  "readOnlyFullAccessibleBy": "ALL",
-  "readOnlyFullUrl": "https://publish.smartsheet.com/6d35fa6c99334d4892f9591cf6065"
-}
-```
-
-`GET /sights/{sightId}/publish`
-
-Gets the Sight 'publish' settings.
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %>
-<%= RETURNS %> | [SightPublish object](#sightpublish-object)
-<%= SCOPE %> | READ_SIGHTS
-
-### Set Sight Publish Status
-
-> Example request: set Sight publish status
-
-```shell
-curl https://api.smartsheet.com/2.0/sights/{sightId}/publish \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
--H "Content-Type: application/json"
--X PUT
--d '{ 
-  "readOnlyFullEnabled": true, 
-  "readOnlyFullAccessibleBy": "ALL" 
-}' \
-```
-
-```javascript
-// Specify property to change
-var body = {
-  readOnlyFullEnabled: false
-};
-
-// Set options
-var options = {
-  sightId: 5363568917931908,
-  body: body
-};
-
-// Set Sight publish status
-smartsheet.sights.setSightPublishStatus(options)
-  .then(function(newStatus) {
-    console.log(newStatus);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-```
-
-```csharp
-SightPublish publish = new SightPublish();
-publish.ReadOnlyFullEnabled = true;
-smartsheet.SightResources.SetPublishStatus(
-  5363568917931908,    // sightId
-  publish
-);
-```
-
-```java
-SightPublish publish = new SightPublish();
-publish.setReadOnlyFullEnabled(true);
-smartsheet.sightResources().setPublishStatus(
-  5363568917931908L,    // long sightId
-  publish
-);
-```
-
-```python
-response = smartsheet_client.Sights.set_publish_status(
-  5363568917931908,       # sight_id
-  smartsheet.models.SightPublish({
-    'read_only_full_enabled': True
-  })
-)
-```
-
-```ruby
-# Set options
-body = {
-  read_only_full_enabled: true,
-  read_only_full_accessible_by: 'ALL'
-}
-
-# Set Sight publish status
-response = smartsheet.sights.set_publish_status(
-  sight_id: 5363568917931908,
-  body: body
-)
-status = response[:result]
-```
-
-> Example response
-
-```json
-{
-  "message": "SUCCESS",
-  "resultCode": 0,
-  "result": {
-    "readOnlyFullEnabled": true,
-    "readOnlyFullAccessibleBy": "ORG",
-    "readOnlyFullUrl": "http://publish.smartsheet.com/9862638d9c444014b5d7a114d436e99d"
-  }
-}
-```
-
-`PUT /sights/{sightId}/publish`
-
-Publishes or unpublishes a Sight.
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [SightPublish object](#sightpublish-object) limited to the following attributes:<ul><li>**readOnlyFullEnabled** (required)</li><li>**readOnlyFullAccessibleBy** (optional) - set to either **ALL** or **ORG**, when **readOnlyFullEnabled=true**.</li></ul>To publish the Sight, set **readOnlyFullEnabled** to **true**. To unpublish the Sight, set **readOnlyFullEnabled** to **false**.
-<%= RETURNS %> | [Result object](#result-object) containing a [SightPublish object](#sightpublish-object)
-<%= SCOPE %> | ADMIN_SIGHTS
-
-<aside class="notice">If <b>readOnlyFullEnabled</b> is set to <b>true</b> in the request, but <b>readOnlyFullAccessibleBy</b> is not specified, the value of <b>readOnlyFullAccessibleBy</b> defaults to the organization-level 'Sight Publishing' setting (if the Sight owner belongs to an organization account) or to <b>ALL</b> (if the Sight owner does not belong to an organization account).</aside>
-
-## Share Sight
-
-For details about Sight sharing, see [Sight Sharing](#sight-sharing).
-
-## Update Sight
-
-> Example request: update Sight
-
-```shell
-curl https://api.smartsheet.com/2.0/sights/{sightId} \
--H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Type: application/json" \
--X PUT \
--d '{"name": "New Sight Name"}'
-```
-
-```javascript
-// Set property to change
-var body = {
-  name: "New Sight Name"
-};
-
-// Set options
-var options = {
-  sightId: 5363568917931908,
-  body: body
-};
-
-// Update Sight
-smartsheet.sights.updateSight(options)
-  .then(function(updatedSight) {
-    console.log(updatedSight);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-```
-
-```csharp
-Sight sight = smartsheet.SightResources.UpdateSight(
-  new Sight {
-    Id = 5363568917931908,    // sightId
-    Name = "New Sight Name"
-  }
-);
-```
-
-```java
-Sight sight = new Sight();
-sight.setId(5363568917931908L);    // long sightId
-sight.setName("New Sight Name");
-Sight updatedSight = smartsheet.sightResources().updateSight(sight);
-```
-
-```python
-updated_sight = smartsheet_client.Sights.update_sight(
-  5363568917931908,           # sight_id
-  smartsheet.models.Sight({
-    'name': 'New Sight Name'
-  })
-)
-```
-
-```ruby
-# Specify property to change
-body = {
-  name: 'New Sight Name'
-}
-
-# Update Sight
-response = smartsheet.sights.update(
-  sight_id: 5363568917931908,
-  body: body
-)
-updated_sight = response[:result]
-```
-
-> Example response
-
-```json
-{
-  "message": "SUCCESS",
-  "resultCode": 0,
-  "result": {
-    "id": 5363568917931908,
-    "name": "New Sight Name",
-    "accessLevel": "OWNER",
-    "permalink": "https://app.smartsheet.com/b/home?lx=rBU8QqUVPCJ3geRgl7L8yQ"
-  }
-}
-```
-
-`PUT /sights/{sightId}`
-
-Updates (renames) the specified Sight. 
-
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [Sight object](#sight-object) limited to the following attribute:<ul><li>**name** (string)</li></ul>
-<%= RETURNS %> | [Result object](#result-object) containing the updated [Sight object](#sight-object)
-<%= SCOPE %> | ADMIN_SIGHTS
+Dashboards and Sights(TM) are two terms for one thing. While Dashboard is the feature name, note the endpoint paths, object names, and scopes still use Sights. For more information, see the [Dashboards](#dashboards) section.
