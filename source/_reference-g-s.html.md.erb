@@ -1314,26 +1314,26 @@ A proof is a container that holds attachments and comments. Limited to one proof
 **lastUpdatedBy** | [User](#user-object) | User object containing name and email of the user who last updated the proof. |
 **name** | string | Proof name. This is the same as primary column value. If the primary column value is empty, name is empty. | 
 **proofRequestUrl** | string | URL to review a proofing request. |
-**proofType** | [ProofType](#prooftype-object) | Proof type for the proof version (one of DOCUMENT, IMAGE, MIXED, NONE, or VIDEO). |
+**proofType** | [ProofType](#prooftype-object) | File type for the proof version (one of DOCUMENT, IMAGE, MIXED, NONE, or VIDEO). |
 **version** | number | The version number of the proof. |
 
 ### ProofRequest Object
 
      |     |     |
 -----|-----|-----|
-**id** | number | Proof request Id
-**proofId** | number | Proof Id of the original proof
-**sentBy** | [User](#user-object) | User object containing name and email of the sender
-**sentAt** | timestamp | The date and time for when the proof request was sent to the recipient
-**isDownloadable** | Boolean | Indicates whether the description is downloadable
-**status** | [Status](#status-object) | Status (one of ACTIVE, EXPIRED, or PROOF_DELETED)
+**id** | number | Proof request Id.
+**proofId** | number | Proof Id of the original proof.
+**sentBy** | [User](#user-object) | User object containing name and email of the sender.
+**sentAt** | timestamp | The date and time for when the proof request was sent to the recipient.
+**isDownloadable** | Boolean | Indicates whether the description is downloadable.
+**status** | [Status](#status-object) | Proof request status (one of ACTIVE, EXPIRED, or PROOF_DELETED).
 
 ### ProofRequestAction Object
 
      |     |     |
 -----|-----|-----|
-**actionStatus** | [Status](#status-object) | Proof request action status (one of APPROVED, PENDING, or REJECTED)
-**user** | [User](#user-object) | User object containing name and email of the user performing the action
+**actionStatus** | [Status](#status-object) | Proof request action status (one of APPROVED, PENDING, or REJECTED).
+**user** | [User](#user-object) | User object containing name and email of the user performing the action.
 
 ## List Proofs
 
@@ -2120,7 +2120,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/requests \
 
 `POST /sheets/{sheetId}/proofs/{proofId}/requests`
 
-Create a proof request.
+Creates a proof request.
 
      |     |
 -----|-----|
