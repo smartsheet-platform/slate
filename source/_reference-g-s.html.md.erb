@@ -1323,6 +1323,7 @@ A proof is a container that holds attachments and comments. Limited to one proof
 -----|-----|-----|
 **id** | number | Proof request Id.
 **proofId** | number | Proof Id of the original proof.
+**sendTo**  | [Recipient](#recipient-object)[]  | Array of Recipient objects.
 **sentBy** | [User](#user-object) | User object containing name and email of the sender.
 **sentAt** | timestamp | The date and time for when the proof request was sent to the recipient.
 **isDownloadable** | Boolean | Indicates whether the description is downloadable.
@@ -1447,12 +1448,10 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/rows/{rowId}/proofs \
 
 Creates a proof on a row.
 
-<aside class="notice"><%= SUPPORTS_OPTIONAL_BULK %></aside>
-
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %> |
-<%= REQUEST %> | Request body takes a PDF or IMAGE file. The body varies depending on the type of file being uploaded. Only simple upload is currently supported. See [Post an Attachment](#post-an-attachment) for details. |
+<%= REQUEST %> | Request body takes a file. The body varies depending on the type of file being uploaded. Only simple upload is currently supported. See [Post an Attachment](#post-an-attachment) for details. |
 <%= RETURNS %> | [Result object](#result-object) containing the [Proof object](#proof-object) that was created. |
 <%= SCOPE %> | WRITE_SHEETS |
 
@@ -1524,8 +1523,10 @@ Gets the proof specified in the URL. Returns the proof, which is optionally popu
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId} \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
--H "Content-Disposition: attachment; filename="abc.bmp""
--X PUT
+-X PUT \
+-d '{
+  "isCompleted": true
+}'
 ```
 
 ```javascript
@@ -1576,8 +1577,8 @@ Sets the proof status as either complete or incomplete.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= PARAMETERS %> | **isCompleted** (required): Boolean to indicate whether the proof is complete or incomplete. 
-<%= RETURNS %> | [Result object](#result-object) containing a [SheetPublish object](#sheetpublish-object)
+<%= REQUEST %> | **isCompleted** (required): Boolean to indicate whether the proof is complete or incomplete. 
+<%= RETURNS %> | [Result object](#result-object) containing a [Proof object](#proof-object)
 <%= SCOPE %> | WRITE_SHEETS
 
 ## Delete Proof
@@ -1690,11 +1691,20 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/attachment
 ```
 `POST /sheets/{sheetId}/proofs/{proofId}/attachments`
 
-Attaches a file to the proof. <%= SUPPORTS_MULTIPART %>
+Attaches a file to the proof.
 
 <%= NEW_ATTACHMENT %>
 
-<%= partial "snippets/attachFile_table.md.erb" %>
+<aside class="notice">This is a resource-intensive operation and incurs 10 additional requests against the rate limit.</aside>
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %> |
+<%= REQUEST %> | Request body takes a file. The body varies depending on the type of file being uploaded. Only simple upload is currently supported. See [Post an Attachment](#post-an-attachment) for details. |
+<%= RETURNS %> | [Result object](#result-object) containing an [Attachment object](#attachment-object) for the newly created attachment
+<%= SCOPE %> | WRITE_SHEETS
+
+<aside class="notice">Smartsheetgov.com accounts are restricted to the following attachment types: BOX_COM, FILE, GOOGLE_DRIVE, LINK, or ONEDRIVE.</aside>
 
 ## List Proof Attachments
 
@@ -1766,14 +1776,45 @@ Gets a list of all attachments that are in the proof, excluding discussion-level
 
 ## Create Proof Discussion
 
-> Example request: create proof discussion
+> Example request: create proof discussion (without attachment)
+
+```shell
+curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/discussions \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X POST \
+-d '{"comment": {"text":"This text is the body of the first comment"}}'
+```
+
+```javascript
+// To be implemented
+```
+
+```csharp
+// To be implemented
+```
+
+```java
+// To be implemented
+```
+
+```python
+# To be implemented
+```
+
+```ruby
+# To be implemented
+```
+
+> Example request: create proof discussion (with attachment)
 
 ```shell
 curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/discussions \
 -H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
 -H "Content-Type: multipart/form-data \
 -X POST \
---data-binary "@/home/Downloads/test_b (4).pdf"
+-F 'discussion={ "comment": { "text": "This text is the body of the first comment" } };type=application/json' \
+-F "file=@/home/Downloads/test_b (4).pdf;type=application/octet-stream"
 ```
 
 ```javascript
@@ -2052,7 +2093,7 @@ Gets a summarized list of all request actions associated with the specified proo
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | <%= PAGING_PARAMETERS %>
-<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [ProofRequestAction objects](#proofrequestaction-object)
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [ProofRequestAction objects](#proofrequestaction-object). Note: the [User object](#user-object) within the ProofRequestAction object only contains name and email of the user performing the action.
 <%= SCOPE %> | READ_SHEETS
 
 ## Create Proof Request
@@ -2125,7 +2166,7 @@ Creates a proof request.
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [ProofRequest object](#proofrequest-object).
+<%= REQUEST %> | [ProofRequest object](#proofrequest-object).<br/><br/>The ProofRequest object in the request body must specify the following attributes:<ul><li><b>sendTo</b>: [Recipient](#recipient-object)[]</li><li><b>subject</b></li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing the newly created [ProofRequest object](#proofrequest-object).
 <%= SCOPE %> | WRITE_SHEETS
 
@@ -2240,8 +2281,8 @@ Creates a proof version. Proof Id must be for the original proof.
 
      |     |
 -----|-----|
-<%= HEADERS %> | Required headers vary depending on the type of upload being performed (simple upload or multipart upload). See [Post an Attachment](#post-an-attachment) for details.
-<%= REQUEST %> | Request body varies depending on the type of upload being performed (simple upload or multipart upload). See [Post an Attachment](#post-an-attachment) for details.
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %> |
+<%= REQUEST %> | Request body takes a file. The body varies depending on the type of file being uploaded. Only simple upload is currently supported. See [Post an Attachment](#post-an-attachment) for details. |
 <%= RETURNS %> | [Result object](#result-object) containing a [Proof object](#proof-object) for the newly created proof version.
 <%= SCOPE %> | WRITE_SHEETS
 
