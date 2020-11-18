@@ -899,7 +899,7 @@ Makes the specified alternate email address to become the primary email address 
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= RETURNS %> | [Result object](#result-object) containing the [AlternateEmail object](#alternateemail-object) that is now the primary email address
-<%= ERRORS %> | If an error occurs because the special permission is not granted to change primary email address, contact Smartsheet (<a href="mailto:api@smartsheet.com">api@smartsheet.com</a>) for assistance to enable this feature.<br/><br/>If an error occurs because the specified user has a personal email address as the primary email address (that is. the email address domain cannot be [validated](<%= USER_AUTO_PROVISIONING_URL %>), the specified user needs to manually change the primary email address in the [Personal Settings](<%= PERSONAL_SETTINGS_MANAGE_EMAIL_URL %>).
+<%= ERRORS %> | If an error occurs because the special permission is not granted to change primary email address, contact Smartsheet (<a href="help.smartsheet.com/contact">https://help.smartsheet.com/contact</a>) for assistance to enable this feature.<br/><br/>If an error occurs because the specified user has a personal email address as the primary email address (that is. the email address domain cannot be [validated](<%= USER_AUTO_PROVISIONING_URL %>), the specified user needs to manually change the primary email address in the [Personal Settings](<%= PERSONAL_SETTINGS_MANAGE_EMAIL_URL %>).
 <%= SCOPE %> | ADMIN_USERS
 
 <aside class="notice">The alternate email address can only be made primary if both conditions are met:<ul><li>The primary email address <a href="<%= USER_AUTO_PROVISIONING_URL %>">domain is validated</a></li><li>The alternate email address is confirmed or the alternate email address <a href="<%= USER_AUTO_PROVISIONING_URL %>">domain is validated</a></li></ul></aside>
@@ -1513,7 +1513,7 @@ smartsheet.users.remove(
 
 `DELETE /users/{userId}`
 
-Removes a user from an organization account. User is transitioned to a free collaborator with read-only access to owned reports, sheets, Sights, workspaces, and any shared templates (unless those are optionally transferred to another user). 
+Removes a user from an organization account. User is transitioned to a free collaborator with read-only access to owned dashboards, reports, sheets, workspaces, and any shared templates (unless those are optionally transferred to another user). 
 
 <aside class="notice">This operation is only available to system administrators.</aside>
 
@@ -1642,9 +1642,9 @@ Updates the user specified in the URL.
 <%= RETURNS %> | [Result object](#result-object) containing the [User object](#user-object) for the updated user
 <%= SCOPE %> | ADMIN_USERS
 
-## Update User Profile Image
+## Upload User Profile Image
 
-> Example request: update user profile image
+> Example request: upload user profile image
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/users/{userId}/profileimage' \
@@ -1656,7 +1656,18 @@ curl 'https://api.smartsheet.com/2.0/users/{userId}/profileimage' \
 ```
 
 ```javascript
-// Not yet implemented
+var options = {
+  userId: 3173821341106052,
+  path: '../path/to/mrgoodlookin.jpg',
+  fileName: 'mrgoodlookin.jpg'
+};
+
+smartsheet.users.addProfileImage(options)
+  .then(function(result) {
+    console.log(result);
+  }).catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ```csharp
@@ -1688,7 +1699,11 @@ action = smartsheet_client.Users.add_profile_image(
 ```
 
 ```ruby
-# Not yet implemented
+action = smartsheet_client.users.add_profile_image_from_path(
+  user_id: me[:id],
+  path: '../path/to/mrgoodlookin.jpg',
+  content_type: 'image/jpeg'
+  )
 ```
 
 > Example response
@@ -1888,7 +1903,7 @@ Creates a copy of the specified workspace.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>**attachments**</li><li>**cellLinks**</li><li>**data** -- includes formatting</li><li>**discussions** -- includes comments</li><li>**filters**</li><li>**forms**</li><li>**ruleRecipients** -- includes notification recipients, must also include **rules** when using this attribute</li><li>**rules** -- includes notifications and workflow rules</li><li>**shares**</li><li>**all** - deprecated</li></ul><b>NOTE:</b> Cell history is not copied, regardless of which **include** parameter values are specified.
- | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created workspace:<ul><li>**cellLinks**</li><li>**reports**</li><li>**sheetHyperlinks**</li><li>**sights**</li></ul>By default, all cell links, reports, sheet hyperlinks, and Sights that reference objects in the source workspace are re-mapped to reference corresponding objects in the newly created workspace. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If **cellLinks** is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created workspace continue to point to the original source sheets.</li><li>If **reports** is specified in the <b>skipRemap</b> parameter value, the reports within the newly created workspace continue to point to the original source sheets.</li><li>If **sheetHyperlinks** is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created workspace continue to point to the original source sheets.</li><li>If **sights** is specified in the <b>skipRemap</b> parameter value, the widgets within Sights in the newly created workspace continue to point to the original source sheets / reports.</li></ul>
+ | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created workspace:<ul><li>**cellLinks**</li><li>**reports**</li><li>**sheetHyperlinks**</li><li>**sights**</li></ul>By default, all cell links, dashboards, reports, and sheet hyperlinks that reference objects in the source workspace are re-mapped to reference corresponding objects in the newly created workspace. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If **cellLinks** is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created workspace continue to point to the original source sheets.</li><li>If **reports** is specified in the <b>skipRemap</b> parameter value, the reports within the newly created workspace continue to point to the original source sheets.</li><li>If **sheetHyperlinks** is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created workspace continue to point to the original source sheets.</li><li>If **sights** is specified in the <b>skipRemap</b> parameter value, the widgets within each dashboard in the newly created workspace continue to point to the original source sheets / reports.</li></ul>
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following attribute:<ul><li>**newName** (string) - required</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Workspace object](#workspace-object) for the newly created workspace
 <%= SCOPE %> | ADMIN_WORKSPACES
@@ -2153,13 +2168,13 @@ Gets the specified workspace (and lists its contents).
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
 <%= PARAMETERS %> | **loadAll** (optional) -- **true** or **false** (defaults to **false**)
-	| **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li><li>**sheetVersion** - current version number of each sheet</li></ul>
+	| **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another dashboard, report, sheet, or template, if any</li><li>**sheetVersion** - current version number of each sheet</li></ul>
 <%= RETURNS %> | [Workspace object](#workspace-object), populated according to the **include** parameter
 <%= SCOPE %> | READ_SHEETS
 
 <aside class="notice">By default, this operation only returns the top-level items in the workspace. To load all of the contents, including nested folders, include the <b>loadAll</b> query string parameter with a value of <b>true</b>.</aside>
 
-<aside class="notice">If no folders, reports, sheets, Sights, or templates are present in the workspace, the corresponding attribute (for example, <b>folders</b>, <b>sheets</b>) is not present in the response.</aside>
+<aside class="notice">If no dashboards, folders, reports, sheets, or templates are present in the workspace, the corresponding attribute (for example, <b>folders</b>, <b>sheets</b>) is not present in the response.</aside>
 
 ## List Workspaces
 
