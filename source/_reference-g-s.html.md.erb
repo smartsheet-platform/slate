@@ -1691,7 +1691,7 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/attachment
 ```
 `POST /sheets/{sheetId}/proofs/{proofId}/attachments`
 
-Attaches a file to the proof.
+Attaches a file to the proof. Currently only supported for multi-image proofs. 
 
 <%= NEW_ATTACHMENT %>
 
@@ -1912,11 +1912,11 @@ curl https://api.smartsheet.com/2.0/sheets/{sheetId}/proofs/{proofId}/discussion
 
 `POST /sheets/{sheetId}/proofs/{proofId}/discussions`
 
-Creates a discussion on a proof.
+Creates a discussion on a proof. <%= SUPPORTS_MULTIPART %>
 
      |     |
 -----|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
+<%= HEADERS %> | Required headers vary depending on the type of upload being performed (simple upload or multipart upload). See [Post an Attachment](#post-an-attachment) for details.
 <%= REQUEST %> | [Discussion object](#discussion-object) with the following attribute:<ul><li>**comment** ([Comment object](#comment-object))</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing [Discussion object](#discussion-object) for the newly created discussion
 <%= SCOPE %> | WRITE_SHEETS
