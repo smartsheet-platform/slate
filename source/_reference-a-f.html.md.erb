@@ -2176,16 +2176,16 @@ In a project sheet, represents a value in a duration cell, or a lag value of a p
 
 ### Hyperlink Object
 
-Represents a hyperlink to a URL, a sheet, a report, or a Sight.
+Represents a hyperlink to a dashboard, report, sheet, or URL.
 
      |     |     |
 -----|-----|-----|
 **reportId** | number | If non-null, this hyperlink is a link to the report with this Id.
 **sheetId** | number | If non-null, this hyperlink is a link to the sheet with this Id.
-**sightId** | number | If non-null, this hyperlink is a link to the Sight with this Id.
-**url** | string | When the hyperlink is a URL link, this property contains the URL value.<br/><br/>When the hyperlink is a sheet/report/Sight link (that is, **sheetId**, **reportId**, or **sightId** is non-null), this property contains the permalink to the sheet, report, or Sight.
+**sightId** | number | If non-null, this hyperlink is a link to the dashboard with this Id.
+**url** | string | When the hyperlink is a URL link, this property contains the URL value.<br/><br/>When the hyperlink is a dashboard/report/sheet link (that is, **sightId**, **reportId**, or **sheetId** is non-null), this property contains the permalink to the dashboard, report, or sheet.
 
-<aside class="notice">If the sheet, report, or Sight that is linked to was deleted, this object may be empty (that is, all values null).</aside>
+<aside class="notice">If the dashboard, report, or sheet that is linked to was deleted, this object may be empty (that is, all values null).</aside>
 
 ### ObjectValue Object
 
@@ -2486,8 +2486,8 @@ CHECKBOX | Boolean: **true** if the checkbox is checked, **false** if unchecked,
 CONTACT_LIST | string: an email address representing a contact, or a free-form text value. | Yes: same as **value** for free-form strings; for contacts, the contact's name if any, else their email address.
 DATE | string: a date in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format, or a free-form text value.<br/>number: see [Dates and Times](#dates-and-times) for how to request dates to be returned as numbers. | No.
 DURATION | string: a duration value such as "4d 6h 30m" in the user's locale, or a free-form text value.<br/>See the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>) for more information on durations. | Yes: same as **value**
-MULTI_CONTACT_LIST | string: only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying, otherwise the column type is TEXT_NUMBER. | Yes: same as **value**; to see actual email addresses, see below.
-MULTI_PICKLIST | string: only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying, otherwise the column type is TEXT_NUMBER. | Yes: same as **value**; to see objectValue, see below.
+MULTI_CONTACT_LIST | string: only visible when using a query parameter of **level** and the value appropriate to the dashboard, report, or sheet that you are querying, otherwise the column type is TEXT_NUMBER. | Yes: same as **value**; to see actual email addresses, see below.
+MULTI_PICKLIST | string: only visible when using a query parameter of **level** and the value appropriate to the dashboard, report, or sheet that you are querying, otherwise the column type is TEXT_NUMBER. | Yes: same as **value**; to see objectValue, see below.
 PICKLIST | string: one of the picklist's column options, or a free-form text value.<br/>number: numeric values | Yes: same as **value** for strings; for number values, the number with formatting applied.
 PREDECESSOR	| string: a comma-delimited predecessor list such as "12FS +3d 4h, 14SS", or a free-form text value.<br/>See the [Help Center](<%= PROJECT_COLUMN_HELP_URL %>) for more information on predecessors. | Yes: same as **value**
 TEXT_NUMBER	| string: free-form text values<br/>number: numeric values | Yes: same as **value** for strings; for number values, the number with formatting applied.
@@ -2608,7 +2608,7 @@ When creating or updating a hyperlink, **cell.value** may be set to a string val
 If null, the cell's value is derived from the hyperlink: 
 
 * If the hyperlink is a URL link, the cell's value is set to the URL itself.
-* If the hyperlink is a sheet, report, or Sight link, the cell's value is set to the sheet, report, or Sight name.
+* If the hyperlink is a dashboard, report, or sheet link, the cell's value is set to the dashboard, report, or sheet name.
 
 ### Images in Cells
 
@@ -3938,12 +3938,12 @@ Column Type | Column.type Value | Notes |
 ------------|--------------------------|-------|
 Checkbox 		| **CHECKBOX**		| Checkbox, star, and flag types
 Contact List	| **CONTACT_LIST**	| List containing contacts or roles for a project. **NOTE:** You can use the [contactOptions](#contactoption-object) property to specify a pre-defined list of values for the column, which can also become lanes in card view. 
-Contact List | **MULTI_CONTACT_LIST** | List where single cells can contain more than one contact. Only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying. To see email addresses behind the display names, combine an **include=objectValue** query parameter with a **level** query parameter. 
+Contact List | **MULTI_CONTACT_LIST** | List where single cells can contain more than one contact. Only visible when using a query parameter of **level** and the value appropriate to the dashboard, report, or sheet that you are querying. To see email addresses behind the display names, combine an **include=objectValue** query parameter with a **level** query parameter. 
 Date			| **DATE** |
 Date/Time 		| **ABSTRACT_DATETIME** | Represents a project sheet's start and end dates.<br/>**Only for dependency-enabled project sheets**<br/>The API does not support setting a column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.) Additionally, the API does not support updating data in the "End Date" column under any circumstance, and does not support updating data in the "Start Date" column if "Predecessor" is set for that row.
 Date/Time		| **DATETIME**	| Used only by the following system-generated columns: <ul><li>Created (Date) (**Column.systemColumnType** = **CREATED_DATE**)</li><li>Modified (Date) (**Column.systemColumnType** = **MODIFIED_DATE**)</li></ul>
 Dropdown List	| **PICKLIST**	| Custom, RYG, Harvey ball, priority types, etc.
-Dropdown List	| **MULTI_PICKLIST**	| List where single cells can contain more than one dropdown item. Only visible when using a query parameter of **level** and the value appropriate to the report, sheet, or Sight (aka dashboard) that you are querying. To see multi-picklist values behind the display names, combine an **include=objectValue** query parameter with a **level** query parameter. 
+Dropdown List	| **MULTI_PICKLIST**	| List where single cells can contain more than one dropdown item. Only visible when using a query parameter of **level** and the value appropriate to the dashboard, report, or sheet that you are querying. To see multi-picklist values behind the display names, combine an **include=objectValue** query parameter with a **level** query parameter. 
 Duration		| **DURATION**		| **Only for dependency-enabled project sheets**<br/>The API does not support setting a column to this type. (This can only be done through the Smartsheet Web app when configuring a project sheet.)
 Predecessor		| **PREDECESSOR**	| Defines what must happen first in a project flow. For more information, see the [Predecessor object](#predecessor-object). **Only for dependency-enabled project sheets** 
 Text/Number		| **TEXT_NUMBER**	|
@@ -5024,7 +5024,1007 @@ Lists all cross-sheet references for the sheet.
 
 # Dashboards
 
-Dashboards and Sights(TM) are two terms for one thing. Dashboard information is managed using the Sights endpoints and properties. For more information, see the [Sights](#sights) section.
+Smartsheet Dashboards are a collection of widgets that can contain data from a variety of different data sources (for example, sheets, reports, or custom data). Dashboards were once called Sights(TM) and this name is still present in object names, endpoint paths, and other places. 
+
+## <%= OBJECTS %>
+
+### Dashboard Object
+
+> Example: Dashboard object
+
+```json
+{
+  "id": 2591554075418573,
+  "name": "Test",
+  "accessLevel": "OWNER",
+  "columnCount": 6,
+  "widgets": []
+}
+```
+
+     |     |     |
+-----|-----|-----|
+**id** | number | Dashboard Id
+**accessLevel** | string | User's permissions on the dashboard. Valid values: <ul><li>**ADMIN**</li><li>**OWNER**</li><li>**VIEWER**</li></ul>
+**backgroundColor** | hex | The hex color, for instance #E6F5FE
+**columnCount** | number | Number of columns that the dashboard contains
+**createdAt** | timestamp | Time of creation
+**favorite** | Boolean | Indicates whether the user has marked the dashboard as a favorite
+**modifiedAt** | timestamp | Time of last modification
+**name** | string | Dashboard name 
+**permalink** | string | URL that represents a direct link to the dashboard in Smartsheet
+**source** | [source](#source-object) | A Source object indicating the dashboard from which this dashboard was created, if any
+**widgets** | [widget](#widget-object)[] | Array of Widget objects
+**workspace** | [Workspace](#workspace-object) | A Workspace object, limited to only 2 attributes: <ul><li>**id**</li> <li>**name**</li></ul> NOTE: this attribute is only present if the dashboard resides within a workspace.
+
+### SightPublish Object
+
+     |     |     |
+-----|-----|-----|
+**readOnlyFullAccessibleBy** | string | Indicates who can access the 'Read-Only Full' view of the published dashboard:<ul><li>**ALL** -- available to anyone who has the link.</li><li>**ORG** -- available only to members of the dashboard owner's Smartsheet organization account.</li></ul>Only returned in a response if **readOnlyFullEnabled = true**.
+**readOnlyFullEnabled** | Boolean | If **true**, a rich version of the dashboard is published with the ability to use shortcuts and widget interactions.
+**readOnlyFullUrl** | string | URL for 'Read-Only Full' view of the published dashboard.<br/>Only returned in a response if **readOnlyFullEnabled = true**.
+
+### Widget Object
+
+> Example: Widget object
+
+```json
+{
+  "id": 3056651398234562,
+  "type": "RICHTEXT",
+  "contents": {
+    "htmlContent": "<p>This is a test</p>"
+  },
+  "xPosition": 2,
+  "yPosition": 0,
+  "width": 2,
+  "height": 4,
+  "showTitleIcon": false,
+  "titleFormat": ",,1,,,,,,,3,,,,,,",
+  "version": 1
+}
+```
+
+     |     |     |
+-----|-----|-----|
+**id** | number | Widget Id
+**type** | string | Type of widget. See table below to see how UI widget names map to type.
+**contents** | WidgetContent object | Data that specifies the contents of the widget. <b>NOTE:</b> The type of WidgetContent object (and attributes within) depends on the value of **widget.type**.
+**height** | number | Number of rows that the widget occupies on the dashboard
+**showTitle** | Boolean | **True** indicates that the client should display the widget title.  <b>NOTE:</b> This is independent of the **title** string which may be null or empty.
+**showTitleIcon** | Boolean | **True** indicates that the client should display the sheet icon in the widget title
+**title** | string | Title of the widget
+**titleFormat** | string | [FormatDescriptor](#formatting)
+**version** | int | Widget version number
+**viewMode** | int | **1** indicates content is centered. **2** indicates content is left aligned. Must use a query parameter of **level=2** to see this information.
+**width** | number | Number of columns that the widget occupies on the dashboard
+**xPosition** | number | X-coordinate of widget's position on the dashboard
+**yPosition** | number | Y-coordinate of widget's position on the dashboard
+
+UI widget name | type string | Object |
+-----|-----|-----|
+Chart | **CHART** | [ChartWidgetContent](#chartwidgetcontent-object) 
+Image | **IMAGE** | [ImageWidgetContent](#imagewidgetcontent-object)
+Metric | **SHEETSUMMARY** or **METRIC** | [CellLinkWidgetContent](#celllinkwidgetcontent-object)
+Report | **GRIDGANTT** | [ReportWidgetContent](#reportwidgetcontent-object)
+Rich Text | **RICHTEXT** | [RichTextWidgetContent](#richtextwidgetcontent-object)
+Shortcut | **SHORTCUTICON**, **SHORTCUTLIST**, or **SHORTCUT** | [ShortcutWidgetContent](#shortcutwidgetcontent-object)
+Title | **TITLE** | [TitleWidgetContent](#titlewidgetcontent-object)
+Web Content | **WEBCONTENT** | [WebContentWidgetContent](#webcontentwidgetcontent-object)
+
+### CellLinkWidgetContent Object
+
+     |     |     |
+-----|-----|-----|
+**sheetId** | number | The Id of the sheet from which the cell data originates
+**cellData** | [CellDataItem](#celldataitem-object)[] | Array of CellDataItem objects
+**columns** | [Column](#column-object)[] | Array of Column objects
+**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
+
+### CellDataItem Object
+
+     |     |     |
+-----|-----|-----|
+**columnId** | number | Column Id for each item
+**rowId** | number | Row Id for each item
+**sheetId** | number | Sheet Id for each item
+**objectValue** | A string, number, or a Boolean value | The type of data returned depends on the cell type and the data in the cell
+**cell** | [Cell](#cell-object) | Cell object
+**dataSource** | string | **CELL**
+**label** | string | Label for the data point. This is either the column name or a user-provided string
+**labelFormat** | string | [formatDescriptor](#formatting)
+**order** | integer | The display order for the CellDataItem
+**profileField** | [SummaryField](#summaryfield-object) | SummaryField object
+**valueFormat** | string | [formatDescriptor](#formatting)
+
+### ChartWidgetContent Object
+
+     |     |     |
+-----|-----|-----|
+**reportId** | number | Report Id denoting container source, if applicable
+**sheetId** | number | Sheet Id denoting container source, if applicable
+**axes** | Axes[] | Array of Axes objects
+**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null)
+**includedColumnIds** |  includedColumnIds[]] | Array of columnIds if the range was selected through the UI
+**legend** | string | The location in the widget where Smartsheet renders the legend, for example, **RIGHT**
+**selectionRanges** | [SelectionRange](#selectionrange-object)[] | If the source is a sheet
+**series** | Series[] | Array of Series objects
+
+### ImageWidgetContent Object
+
+     |     |     |
+-----|-----|-----|
+**privateId** | string | The image private Id
+**fileName** | string | Name of the image file
+**format** | string | [formatDescriptor](#formatting)
+**height** | integer | Original height of the image in pixels
+**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
+**width** | integer | Original width of the image in pixels
+
+### ReportWidgetContent Object
+
+     |     |     |
+-----|-----|-----|
+**reportId** | number | Report Id denoting container source
+**htmlContent** | string | HTML snippet to render report
+**hyperlink** | [WidgetHyperlink](#widgethyperlink-object) | The widget has **when clicked** attribute set to that hyperlink (if present and non-null). Hyperlinks will have **interactionType**.
+
+### RichTextWidgetContent Object
+
+     |     |     |
+-----|-----|-----|
+**html** | string | The widget content as HTML </br> </br> The Rich Text widget supports the following subset of HTML tags and CSS Styles: </br></br> <b>HTML</b><ul><li>**a** - defines a hyperlink</li> <li>**br** - inserts a single line break</li><li>**li** - defines a list item</li> <li>**ol** - defines an ordered list</li> <li>**p** - defines a paragraph</li> <li>**ul** - defines an unordered list</li> <li>**span** - defines a section in a document</li></ul> <b>CSS</b><ul><li>**color**</li> <li>**font-family**</li> <li>**font-size**</li> <li>**font-style**</li> <li>**font-weight**</li> <li>**text-align**</li> <li>**text-decoration**</li></ul>
+
+### SelectionRange Object
+
+     |     |     |
+-----|-----|-----|
+**sourceColumnId1** | number | Defines beginning edge of range when specifying one or more columns.
+**sourceColumnId2** | number | Defines ending edge of range when specifying one or more columns.
+**sourceRowId1** | number | Defines beginning edge of range when specifying one or more rows.
+**sourceRowId2** | number | Defines ending edge of range when specifying one or more rows.
+
+### ShortcutWidgetContent Object
+
+     |     |     |
+-----|-----|-----|
+**shortcutData** | [ShortcutDataItem](#shortcutdataitem-object)[] | Array of ShortcutDataItem objects
+
+### ShortcutDataItem Object
+
+     |     |     |
+-----|-----|-----|
+**attachmentType** | string | Attachment type (one of **BOX_COM**, **DROPBOX**, **EGNYTE**, **EVERNOTE**, **FILE**, **GOOGLE_DRIVE**, **LINK**, **ONEDRIVE**, or **SMARTSHEET**)
+**hyperlink** | [Hyperlink](#hyperlink-object) | Hyperlink object
+**label** | string | Label for the data point
+**labelFormat** | string | [formatDescriptor](#formatting)
+**mimeType** | string | MIME type if available for attachment type
+**order** | integer | The display order for the ShortcutWidgetItem object
+
+### TitleWidgetContent Object
+
+     |     |     |
+-----|-----|-----|
+**backgroundColor** | hex | The hex color, for instance #E6F5FE
+**htmlContent** | string | HTML snippet to render title
+
+### WebcontentWidgetContent Object
+
+     |     |     |
+-----|-----|-----|
+**url** | string | The URL
+
+### WidgetHyperlink Object
+
+     |     |     |
+-----|-----|-----|
+**interactionType** | string | Specifies what happens when a user clicks the widget. Valid values: <ul><li>**DISTI_COPY** -- a distribution link, only available if org has distribution links enabled</li><li>**NONE** -- do nothing, no other attribute required</li><li>**SMARTSHEET_ITEM** -- open a Smartsheet item that is not the SOURCE_SHEET, must also have one of the following:</li><ul><li>**folderId**</li><li>**reportId**</li><li>**sheetId**</li><li>**sightId**</li><li>**workspaceId**</li></ul><li>**SOURCE_SHEET** -- open the container where the widget data comes from, no other attribute required</li><li>**WEB** -- launch the URL, must also have **url** attribute</li></ul>
+**folderId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the folder to open
+**reportId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the report to open
+**sheetId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the sheet to open
+**sightId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the dashboard to open
+**url** | string | If **interactionType** = **WEB** this is the URL to launch
+**workspaceId** | number | If **interactionType** = **SMARTSHEET_ITEM** this is the workspace to open
+
+## Copy Dashboard
+
+> Example request: copy dashboard
+
+```shell
+curl https://api.smartsheet.com/2.0/sights/{sightId}/copy \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json"
+-d '{ 
+  "destinationType": "workspace", 
+  "destinationId": 7960873114331012, 
+  "newName": "newDashboardName" 
+}' \
+-X POST
+```
+
+```javascript
+// Specify new dashboard properties
+var body = {
+  destinationType: "home",
+  newName: "newDashboardName"
+};
+
+// Set options
+var options = {
+  sightId: 6327127650920324,
+  body: body
+};
+
+// Copy Dashboard
+smartsheet.sights.copySight(options)
+  .then(function(copiedSight) {
+    console.log(copiedSight);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+// Specify destination
+ContainerDestination destination = new ContainerDestination
+{
+  DestinationId = 3791509922310020,               // long destinationFolderId
+  DestinationType = DestinationType.FOLDER,
+  NewName = "newDashboardName"
+};
+
+// Copy Dashboard
+Sight sight = smartsheet.SightResources.CopySight(
+  6327127650920324,                               // long sightId
+  destination
+);
+```
+
+```java
+// Specify destination
+ContainerDestination destination = new ContainerDestination()
+  .setDestinationType(DestinationType.FOLDER)
+  .setDestinationId(3791509922310020L)
+  .setNewName("newDashboardName");
+
+// Copy Dashboard
+Sight sight = smartsheet.sightResources().copySight(
+  6327127650920324L,                          // long sightId
+  destination
+);
+```
+
+```python
+new_sight = smartsheet_client.Sights.copy_sight(
+  6327127650920324,                           # sight_id
+  smartsheet.models.ContainerDestination({
+    'destination_type': 'folder',           # folder, workspace, or home
+    'destination_id': 3791509922310020,     # folder_id
+    'new_name': 'newDashboardName'
+  })
+)
+```
+
+```ruby
+# Specify destination
+body = {
+  destination_type: 'folder',
+  destination_id: 3791509922310020,
+  new_name: 'newDashboardName'
+}
+
+# Copy Dashboard
+new_sight = smartsheet.sights.copy(
+  sight_id: 6327127650920324,
+  body: body
+)
+```
+
+> Example response
+
+```json
+{
+  "message": "SUCCESS",    
+  "resultCode": 0,
+  "result": {
+    "id": 4583173393803140,
+    "name": "newDashboardName",
+    "accessLevel": "OWNER",
+    "permalink": "https://app.smartsheet.com/b/home?lx=lB0JaOh6AX1wGwqxsQIMaA"
+  }
+}
+```
+
+`POST /sights/{sightId}/copy`
+
+Creates a copy of the specified dashboard.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
+<%= REQUEST %> | [ContainerDestination object](#containerdestination-object)
+<%= RETURNS %> | [Result object](#result-object) containing a [Dashboard object](#dashboard-object) for the newly created dashboard, limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**name**</li><li>**permalink**</li></ul>
+<%= SCOPE %> | CREATE_SIGHTS
+
+## Delete Dashboard
+
+> Example request: delete dashboard
+
+```shell
+curl https://api.smartsheet.com/2.0/sights/{sightId} \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+```
+
+```javascript
+// Set options
+var options = {
+  sightId: 5363568917931908
+};
+
+// Delete Dashboard
+smartsheet.sights.deleteSight(options)
+  .then(function(results) {
+    console.log(results);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+smartsheet.SightResources.DeleteSight(
+  5077532685952900            // sightId
+);
+```
+
+```java
+smartsheet.sightResources().deleteSight(
+  3100061023397764L       // long sightId
+);
+```
+
+```python
+smartsheet_client.Sights.delete_sight(3404239197235076)     # sight_id
+```
+
+```ruby
+smartsheet.sights.delete(
+  sight_id: 6327127650920324
+)
+```
+
+> Example response
+
+```json
+{
+  "message": "SUCCESS",    
+  "resultCode": 0
+}
+```
+
+`DELETE /sights/{sightId}`
+
+Deletes the dashboard specified in the URL.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= RETURNS %> | [Result object](#result-object)
+<%= SCOPE %> | DELETE_SIGHTS
+
+## Get Dashboard
+
+> Example request: get dashboard
+
+```shell
+curl https://api.smartsheet.com/2.0/sights/{sightId}?level=4 \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+```
+
+```javascript
+// Set options
+var options = {
+  sightId: 6327127650920324
+};
+
+// Get dashboard
+smartsheet.sights.getSight(options)
+  .then(function(sight) {
+    console.log(sight);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+Sight sight = smartsheet.SightResources.GetSight(
+  6327127650920324        // long sightId
+);
+```
+
+```java
+Sight sight = smartsheet.sightResources().getSight(
+  6327127650920324L       // long sightId
+);
+```
+
+```python
+sight = smartsheet_client.Sights.get_sight(
+  6327127650920324)     # sightId
+```
+
+```ruby
+sight = smartsheet.sights.get(
+  sight_id: 6327127650920324
+)
+```
+
+> Example response
+
+```json
+{
+  "id": 2591554075418573,
+  "name": "Test",
+  "accessLevel": "OWNER",
+  "columnCount": 6,
+  "widgets": [
+    {
+      "id": 3056651398234562,
+      "type": "RICHTEXT",
+      "contents": {
+        "htmlContent": "<p>This is a test</p>"
+      },
+      "xPosition": 2,
+      "yPosition": 0,
+      "width": 2,
+      "height": 4,
+      "showTitleIcon": false,
+      "titleFormat": ",,1,,,,,,,3,,,,,,",
+      "version": 1
+    },
+    {
+      "id": 9996257304487812,
+      "type": "METRIC",
+      "contents": {
+        "type": "METRIC",
+        "cellData": [
+          {
+            "label": "test summary here",
+            "labelFormat": ",2,,,,,,,1,,,,,,,1,",
+            "valueFormat": ",2,1,,,,1,,1,3,,,,,,1,",
+            "order": 0,
+            "profileField": {
+              "id": 9992738687018884,
+              "index": 0,
+              "title": "test summary here",
+              "type": "TEXT_NUMBER",
+              "locked": false,
+              "lockedForUser": false,
+              "objectValue": "summary content",
+              "displayValue": "summary content",
+              "createdAt": "2019-10-31T22:01:19Z",
+              "modifiedAt": "2019-10-31T22:01:19Z"
+            },
+            "dataSource": "SUMMARY_FIELD",
+            "objectValue": "summary content"
+          }
+        ],
+        "sheetId": 663216503187332,
+        "viewMode": 2
+      },
+      "xPosition": 0,
+      "yPosition": 0,
+      "width": 15,
+      "height": 7,
+      "title": "test sheet for charts",
+      "showTitleIcon": true,
+      "showTitle": true,
+      "titleFormat": ",,1,,,,,,,3,,,,,,1,",
+      "version": 1
+    }
+  ]
+}
+```
+
+`GET /sights/{sightId}`
+
+Gets the specified dashboard.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**source** - the [Source object](#source-object) for any dashboard that was created from another dashboard, if any</li></ul>  
+  | **level** (optional): specifies whether new functionality, such as multi-contact data is returned in a backwards-compatible, text format (**level=0**, default), multi-contact data (**level=2**), multi-picklist data (**level=3**), or Metric widget with sheet summary (**level=4**). 
+  | **objectValue** (optional) -- when used in combination with a **level** query parameter, includes the email addresses for multi-contact data.
+<%= RETURNS %> | [Dashboard object](#dashboard-object)
+<%= SCOPE %> | READ_SIGHTS
+
+## List Dashboards
+
+> Example request: list dashboards
+
+```shell
+curl https://api.smartsheet.com/2.0/sights \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+```
+
+```javascript
+smartsheet.sights.listSights()
+  .then(function(sights) {
+    console.log(sights.data);
+  })
+  .catch(function(error) {
+    console.log(error);
+  })
+```
+
+```csharp
+PaginatedResult<Sight> sights = smartsheet.SightResources.ListSights(
+  null,       // PaginationParameters
+  null        // Nullable<DateTime> modifiedSince
+);
+```
+
+```java
+PagedResult<Sight> sights = smartsheet.sightResources().listSights(
+  null,       // PaginationParameters
+  null        // Date modifiedSince
+);
+```
+
+```python
+response = smartsheet_client.Sights.list_sights(include_all=True)
+sights = response.data
+```
+
+```ruby
+response = smartsheet.sights.list
+sights = response[:data]
+```
+
+> Example response
+
+```json
+{
+  "pageNumber": 1,
+  "pageSize": 100,
+  "totalPages": 1,
+  "totalCount": 2,
+	"data": [
+    {
+      "id": 2331373580117892,
+      "name": "Sales Dashboard",
+      "accessLevel": "OWNER",
+      "permalink": "https://app.smartsheet.com/b/home?lx=xUefSOIYmn07iJJesvSHCQ",
+      "createdAt": "2016-01-28T00:24:41Z",
+      "modifiedAt": "2016-01-28T20:32:33Z"
+    },
+    {
+      "id": 7397923160909700,
+      "name": "Dashboard #2",
+      "accessLevel": "OWNER",
+      "permalink": "https://app.smartsheet.com/b/home?lx=xUefSOIYmn07iJJrthEFTG",
+      "createdAt": "2016-01-28T01:17:51Z",
+      "modifiedAt": "2016-01-28T20:32:27Z"
+    }
+	]
+}
+```
+
+`GET /sights`
+
+Gets a list of all dashboards that the user has access to.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= PARAMETERS %> | <%= PARAMETER_MODIFIEDSINCE %>
+ | <%= PAGING_PARAMETERS %>
+<%= RETURNS %> | [IndexResult object](#indexresult-object) containing an array of [Dashboard objects](#dashboard-object) limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**createdAt**</li><li>**modifiedAt**</li><li>**name**</li><li>**permalink**</li></ul>
+<%= SCOPE %> | READ_SIGHTS
+
+<aside class="notice"><%= SUPPORTS_NUMERICDATES %></aside>
+
+## Move Dashboard
+
+> Example request: move dashboard
+
+```shell
+curl https://api.smartsheet.com/2.0/sights/{sightId}/move \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json"
+-d '{ 
+  "destinationType": "folder", 
+  "destinationId": workspace_or_folder_id 
+}' \
+-X POST
+```
+
+```javascript
+// Set destination
+var body = {
+  destinationType: "folder",
+  destinationId: 8460057768683396
+};
+
+// Set options
+var options = {
+  sightId: 5077532685952900,
+  body: body
+};
+
+// Move Dashboard
+smartsheet.sights.moveSight(options)
+  .then(function(movedSight) {
+    console.log(movedSight);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+// Specify destination
+ContainerDestination destination = new ContainerDestination
+{
+  DestinationId = 8460057768683396,               // long destinationFolderId
+  DestinationType = DestinationType.FOLDER
+};
+
+// Move Dashboard
+Sight sight = smartsheet.SightResources.MoveSight(
+  5077532685952900,                               // long sightId
+  destination
+);
+```
+
+```java
+// Specify destination
+ContainerDestination destination = new ContainerDestination()
+  .setDestinationType(DestinationType.FOLDER)
+  .setDestinationId(7960873114331012L);
+
+// Move Dashboard
+Sight sight = smartsheet.sightResources().moveSight(
+  4583173393803140L,                          // long sightId
+  destination
+);
+```
+
+```python
+response = smartsheet_client.Sights.move_sight(
+  5363568917931908,                           # sight_id
+  smartsheet.models.ContainerDestination({
+    'destination_type': 'folder',           # folder, workspace, or home
+    'destination_id': 8460057768683396      # destination folder_id
+  })
+)
+```
+
+```ruby
+# Specify destination
+body = {
+  destination_type: 'folder',
+  destination_id: 8460057768683396
+}
+
+# Move Dashboard
+response = smartsheet.sights.move(
+  sight_id: 5363568917931908,
+  body: body
+)
+moved_sight = response[:result]
+```
+
+> Example response
+
+```json
+{
+  "message": "SUCCESS",    
+  "resultCode": 0,
+  "result": {
+    "id": 4583173393803140,
+    "name": "moved_dashboard_name",
+    "accessLevel": "OWNER",
+    "permalink": "https://app.smartsheet.com/b/home?lx=lB0JaOh6AX1wGwqxsQIMaA"
+  }
+}
+```
+
+`POST /sights/{sightId}/move`
+
+Moves the specified dashboard to a new location.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
+<%= REQUEST %> | [ContainerDestination object](#containerdestination-object), limited to the following required attributes:<ul><li>**destinationId**</li><li>**destinationType**</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing a [Dashboard object](#dashboard-object) for the moved dashboard, limited to the following attributes:<ul><li>**id**</li><li>**accessLevel**</li><li>**name**</li><li>**permalink**</li></ul>
+<%= SCOPE %> | CREATE_SIGHTS
+
+<aside class="notice">When a dashboard that is shared to one or more users and/or groups is moved into or out of a workspace, those <i>dashboard-level</i> shares are preserved.</aside>
+
+## Publish Dashboard
+
+### Get Dashboard Publish Status
+
+> Example request: get dashboard publish status
+
+```shell
+curl https://api.smartsheet.com/2.0/sights/{sightId}/publish \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+```
+
+```javascript
+// Set options
+var options = {
+  sightId: 5363568917931908
+};
+
+// Get dashboard publish status
+smartsheet.sights.getSightPublishStatus(options)
+  .then(function(status) {
+    console.log(status);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+SightPublish publish = smartsheet.SightResources.GetPublishStatus(
+    5363568917931908    // sightId
+  );
+```
+
+```java
+SightPublish publish = smartsheet.sightResources().getPublishStatus(
+      5363568917931908L    // long sightId
+  );
+```
+
+```python
+status = smartsheet_client.Sights.get_publish_status(
+  5363568917931908)       # sight_id
+```
+
+```ruby
+status = smartsheet.sights.get_publish_status(
+  sight_id: 5363568917931908
+)
+```
+
+> Example response
+
+```json
+{
+  "readOnlyFullEnabled": true,
+  "readOnlyFullAccessibleBy": "ALL",
+  "readOnlyFullUrl": "https://publish.smartsheet.com/6d35fa6c99334d4892f9591cf6065"
+}
+```
+
+`GET /sights/{sightId}/publish`
+
+Gets the dashboard 'publish' settings.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %>
+<%= RETURNS %> | [SightPublish object](#sightpublish-object)
+<%= SCOPE %> | READ_SIGHTS
+
+### Set Dashboard Publish Status
+
+> Example request: set dashboard publish status
+
+```shell
+curl https://api.smartsheet.com/2.0/sights/{sightId}/publish \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05"
+-H "Content-Type: application/json"
+-X PUT
+-d '{ 
+  "readOnlyFullEnabled": true, 
+  "readOnlyFullAccessibleBy": "ALL" 
+}' \
+```
+
+```javascript
+// Specify property to change
+var body = {
+  readOnlyFullEnabled: false
+};
+
+// Set options
+var options = {
+  sightId: 5363568917931908,
+  body: body
+};
+
+// Set dashboard publish status
+smartsheet.sights.setSightPublishStatus(options)
+  .then(function(newStatus) {
+    console.log(newStatus);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+SightPublish publish = new SightPublish();
+publish.ReadOnlyFullEnabled = true;
+smartsheet.SightResources.SetPublishStatus(
+  5363568917931908,    // sightId
+  publish
+);
+```
+
+```java
+SightPublish publish = new SightPublish();
+publish.setReadOnlyFullEnabled(true);
+smartsheet.sightResources().setPublishStatus(
+  5363568917931908L,    // long sightId
+  publish
+);
+```
+
+```python
+response = smartsheet_client.Sights.set_publish_status(
+  5363568917931908,       # sight_id
+  smartsheet.models.SightPublish({
+    'read_only_full_enabled': True
+  })
+)
+```
+
+```ruby
+# Set options
+body = {
+  read_only_full_enabled: true,
+  read_only_full_accessible_by: 'ALL'
+}
+
+# Set dashboard publish status
+response = smartsheet.sights.set_publish_status(
+  sight_id: 5363568917931908,
+  body: body
+)
+status = response[:result]
+```
+
+> Example response
+
+```json
+{
+  "message": "SUCCESS",
+  "resultCode": 0,
+  "result": {
+    "readOnlyFullEnabled": true,
+    "readOnlyFullAccessibleBy": "ORG",
+    "readOnlyFullUrl": "http://publish.smartsheet.com/9862638d9c444014b5d7a114d436e99d"
+  }
+}
+```
+
+`PUT /sights/{sightId}/publish`
+
+Publishes or unpublishes a dashboard.
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
+<%= REQUEST %> | [SightPublish object](#sightpublish-object) limited to the following attributes:<ul><li>**readOnlyFullEnabled** (required)</li><li>**readOnlyFullAccessibleBy** (optional) - set to either **ALL** or **ORG**, when **readOnlyFullEnabled=true**.</li></ul>To publish the dashboard, set **readOnlyFullEnabled** to **true**. To unpublish the dashboard, set **readOnlyFullEnabled** to **false**.
+<%= RETURNS %> | [Result object](#result-object) containing a [SightPublish object](#sightpublish-object)
+<%= SCOPE %> | ADMIN_SIGHTS
+
+<aside class="notice">If <b>readOnlyFullEnabled</b> is set to <b>true</b> in the request, but <b>readOnlyFullAccessibleBy</b> is not specified, the value of <b>readOnlyFullAccessibleBy</b> defaults to the organization-level 'Dashboard Publishing' setting (if the dashboard owner belongs to an organization account) or to <b>ALL</b> (if the dashboard owner does not belong to an organization account).</aside>
+
+## Share Dashboard
+
+For details about dashboard sharing, see [Dashboard Sharing](#dashboard-sharing).
+
+## Update Dashboard
+
+> Example request: update dashboard
+
+```shell
+curl https://api.smartsheet.com/2.0/sights/{sightId} \
+-H "Authorization: Bearer ll352u9jujauoqz4gstvsae05" \
+-H "Content-Type: application/json" \
+-X PUT \
+-d '{"name": "New Dashboard Name"}'
+```
+
+```javascript
+// Set property to change
+var body = {
+  name: "New Dashboard Name"
+};
+
+// Set options
+var options = {
+  sightId: 5363568917931908,
+  body: body
+};
+
+// Update Dashboard
+smartsheet.sights.updateSight(options)
+  .then(function(updatedSight) {
+    console.log(updatedSight);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+```
+
+```csharp
+Sight sight = smartsheet.SightResources.UpdateSight(
+  new Sight {
+    Id = 5363568917931908,    // sightId
+    Name = "New Dashboard Name"
+  }
+);
+```
+
+```java
+Sight sight = new Sight();
+sight.setId(5363568917931908L);    // long sightId
+sight.setName("New Dashboard Name");
+Sight updatedSight = smartsheet.sightResources().updateSight(sight);
+```
+
+```python
+updated_sight = smartsheet_client.Sights.update_sight(
+  5363568917931908,           # sight_id
+  smartsheet.models.Sight({
+    'name': 'New Dashboard Name'
+  })
+)
+```
+
+```ruby
+# Specify property to change
+body = {
+  name: 'New Dashboard Name'
+}
+
+# Update Dashboard
+response = smartsheet.sights.update(
+  sight_id: 5363568917931908,
+  body: body
+)
+updated_sight = response[:result]
+```
+
+> Example response
+
+```json
+{
+  "message": "SUCCESS",
+  "resultCode": 0,
+  "result": {
+    "id": 5363568917931908,
+    "name": "New Dashboard Name",
+    "accessLevel": "OWNER",
+    "permalink": "https://app.smartsheet.com/b/home?lx=rBU8QqUVPCJ3geRgl7L8yQ"
+  }
+}
+```
+
+`PUT /sights/{sightId}`
+
+Updates (renames) the specified dashboard. 
+
+     |     |
+-----|-----|
+<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
+<%= REQUEST %> | [Dashboard object](#dashboard-object) limited to the following attribute:<ul><li>**name** (string)</li></ul>
+<%= RETURNS %> | [Result object](#result-object) containing the updated [Dashboard object](#dashboard-object)
+<%= SCOPE %> | ADMIN_SIGHTS
 
 # Discussions
 
@@ -5835,7 +6835,7 @@ For details about working with a discussion's comments, see [Comments](#comments
 
 # Favorites
 
-Smartsheet allows users to "star" folders, reports, sheets, Sights, workspaces, and other objects on their Home tab to mark them as favorites. 
+Smartsheet allows users to "star" dashboards, folders, reports, sheets, workspaces, and other objects on their Home tab to mark them as favorites. 
 These API operations allow you to access the user's favorite API-supported objects, as well as create and delete favorites.
 
 ## <%= OBJECTS %>
@@ -6231,9 +7231,9 @@ Removes a single sheet from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorite_table.md.erb" %>
 
-### Remove Favorite Sight
+### Remove Favorite Dashboard
 
-> Example request: remove favorite sight
+> Example request: remove favorite dashboard
 
 ```shell
 curl https://api.smartsheet.com/2.0/favorites/sight/{sightId} \
@@ -6247,7 +7247,7 @@ var options = {
   objectId: 6327127650920324
 };
 
-// Remove Sight from list of favorites
+// Remove dashboard from list of favorites
 smartsheet.favorites.removeSightFromFavorites(options)
   .then(function(results) {
     console.log(results);
@@ -6295,7 +7295,7 @@ smartsheet.favorites.remove_sight(
 
 `DELETE /favorites/sights/{sightId}`
 
-Removes a single Sight from the user's list of favorite items.
+Removes a single dashboard from the user's list of favorite items.
 
      |     |
 -----|-----|
@@ -6626,9 +7626,9 @@ Removes multiple sheets from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorites_table.md.erb" %>
 
-### Remove Multiple Favorite Sights
+### Remove Multiple Favorite Dashboards
 
-> Example request: remove multiple favorite Sights
+> Example request: remove multiple favorite dashboards
 
 ```shell
 curl 'https://api.smartsheet.com/2.0/favorites/sight?objectIds=sightId1,sightId2' \
@@ -6644,7 +7644,7 @@ var options = {
   }
 };
 
-// Remove Sights from list of favorites
+// Remove dashboard from list of favorites
 smartsheet.favorites.removeSightsFromFavorites(options)
   .then(function(results) {
     console.log(results);
@@ -6687,7 +7687,7 @@ smartsheet.favorites.remove_sights(
 
 `DELETE /favorites/sights`
 
-Removes multiple Sights from the user's list of favorite items.
+Removes multiple dashboards from the user's list of favorite items.
 
 <%= partial "snippets/removeFavorites_table.md.erb" %>
 
@@ -6849,7 +7849,7 @@ A folder can exist in a user's **Sheets** folder ([Home](#home)), in a [folder](
 **permalink** | string | URL that represents a direct link to the folder in Smartsheet
 **reports** | [Report](#report-object)[] | Array of Report objects
 **sheets** | [Sheet](#sheet-object)[] | Array of Sheet objects
-**sights** | [Sight](#sight-object)[] | Array of Sight objects
+**sights** | [Dashboard](#dashboard-object)[] | Array of Dashboard objects
 **templates** | [Template](#template-object)[] | Array of Template objects
 
 ## Copy Folder
@@ -6998,7 +7998,7 @@ Creates a copy of the specified folder.
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
 <%= PARAMETERS %> | **include** (optional) -- comma-separated list of elements to copy:<ul><li>**attachments**</li><li>**cellLinks**</li><li>**data** -- includes formatting</li><li>**discussions** -- includes comments</li><li>**filters**</li><li>**forms**</li><li>**ruleRecipients** -- includes notification recipients, must also include **rules** when using this attribute</li><li>**rules** -- includes notifications and workflow rules</li><li>**shares**</li><li>**all** - deprecated</li></ul><i>NOTE</i>: Cell history is not copied, regardless of which **include** parameter values are specified.
- | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created folder:<ul><li>**cellLinks**</li><li>**reports**</li><li>**sheetHyperlinks**</li><li>**sights**</li></ul>By default, all cell links, reports, sheet hyperlinks, and Sights that reference objects in the source folder are re-mapped to reference corresponding objects in the newly created folder. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If **cellLinks** is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created folder continue to point to the original source sheets.</li><li>If **reports** is specified in the <b>skipRemap</b> parameter value, the reports within the newly created folder continue to point to the original source sheets.</li><li>If **sheetHyperlinks** is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created folder continue to point to the original source sheets.</li><li>If **sights** is specified in the <b>skipRemap</b> parameter value, the widgets within Sights in the newly created folder continue to point to the original source sheets / reports.</li></ul>
+ | **skipRemap** (optional) -- comma-separated list of references to NOT re-map for the newly created folder:<ul><li>**cellLinks**</li><li>**reports**</li><li>**sheetHyperlinks**</li><li>**sights**</li></ul>By default, all cell links, dashboards, reports, and sheet hyperlinks that reference objects in the source folder are re-mapped to reference corresponding objects in the newly created folder. The **skipRemap** parameter can be specified to change that default behavior:<ul><li>If **cellLinks** is specified in the <b>skipRemap</b> parameter value, the cell links within the newly created folder continue to point to the original source sheets.</li><li>If **reports** is specified in the <b>skipRemap</b> parameter value, the reports within the newly created folder continue to point to the original source sheets.</li><li>If **sheetHyperlinks** is specified in the <b>skipRemap</b> parameter value, the sheet hyperlinks within the newly created folder continue to point to the original source sheets.</li><li>If **sights** is specified in the <b>skipRemap</b> parameter value, the widgets within each dashboard in the newly created folder continue to point to the original source sheets / reports.</li></ul>
 <%= REQUEST %> | [ContainerDestination object](#containerdestination-object)</li></ul>
 <%= RETURNS %> | [Result object](#result-object) containing a [Folder object](#folder-object) for the newly created folder
 <%= SCOPE %> | ADMIN_WORKSPACES
@@ -7425,8 +8425,8 @@ Gets the specified folder (and lists its contents).
      |     |
 -----|-----|
 <%= HEADERS %> | <%= HEADER_AUTH %>
-<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another report, sheet, Sight (aka dashboard), or template, if any</li></ul>
-<%= RETURNS %> | [Folder object](#folder-object), populated according to the **include** parameter<br/><br/>NOTE: If no folders, reports, sheets, Sights, or templates are present in the folder, the corresponding attribute (for example, **folders**, **sheets**) is not present in the response.
+<%= PARAMETERS %> | **include** (optional) -- a comma-separated list of optional elements to include in the response:<ul><li>**ownerInfo** - owner's email address and user Id for each sheet</li><li>**sheetVersion** - current version number of each sheet, should not be combined with pagination</li><li>**source** - the [Source object](#source-object) for any sheet that was created from another dashboard, report, sheet, or template, if any</li></ul>
+<%= RETURNS %> | [Folder object](#folder-object), populated according to the **include** parameter<br/><br/>NOTE: If no dashboards, folders, reports, sheets, or templates are present in the folder, the corresponding attribute (for example, **folders**, **sheets**) is not present in the response.
 <%= SCOPE %> | READ_SHEETS
 
 ## List Folders
