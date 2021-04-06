@@ -2013,11 +2013,19 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='smartsheet-api-2-0'><span class="customTOCSectionHeading">Smartsheet API 2.0</span></h1>
-<p>Updated 2020-11-18
-<h1 id='overview'>Overview</h1><h2 id='introduction'>Introduction</h2>
+<p>Updated 2021-04-06
+<h1 id='overview'>Overview</h1>
+<aside class="warning">This documentation has been deprecated. While Smartsheet will no longer update this documentation set, it will remain available for a short time while users transition to the new documentation.</aside></p>
+
+<p>To see Smartsheet’s current developer documentation, go to and bookmark 
+<a href="http://smartsheet.redoc.ly/">Smartsheet API Reference</a>, which now uses OpenAPI for API definitions and object modeling. For feedback, use <a href="https://community.smartsheet.com/categories/api-developers">Smartsheet Community for API Developers</a>.</p>
+
+<h2 id='introduction'>Introduction</h2>
+
 <blockquote>
 <p>Click the corresponding tab above to see sample code in the language of your choice. For more detail, see <a href="#sdks-and-sample-code">SDKs and Sample Code</a>)</p>
 </blockquote>
+
 <pre class="highlight shell tab-shell"><code><span class="c"># The cURL code samples included in this API documentation demonstrate</span>
 <span class="c"># how to execute operations using the command line data transfer</span>
 <span class="c"># tool cURL: https://curl.haxx.se/.</span>
@@ -2037,7 +2045,7 @@
 <span class="c1"># how to execute operations using the Smartsheet</span>
 <span class="c1"># Ruby SDK: https://github.com/smartsheet-platform/smartsheet-ruby-sdk.</span>
 </code></pre>
-<p><a href="https://www.smartsheet.com/">Smartsheet</a> API 2.0 allows you to programmatically access and manage your organization&#39;s Smartsheet data and account information. The API allows you to do the following:</p></p>
+<p><a href="https://www.smartsheet.com/">Smartsheet</a> API 2.0 allows you to programmatically access and manage your organization&#39;s Smartsheet data and account information. The API allows you to do the following:</p>
 
 <ul>
 <li>Read and update sheets</li>
@@ -2046,9 +2054,7 @@
 </ul>
 
 <p>You can view code examples in the programming language of your choice by clicking the corresponding tab in the dark-blue area in the rightmost pane. Each tab corresponds to a Software Development Kit (SDK) that Smartsheet provides to make working in that programming language easier. See <a href="#sdks-and-sample-code">SDKs and Sample Code</a>.</p>
-
 <h2 id='how-do-i-start'>How Do I Start?</h2>
-
 <p>This documentation provides two <a href="#getting-started">Getting Started</a> tutorials that walk you through making your first API call and interpreting the response to a <code>GET /sheet</code> request. You may also want to bookmark or note the following resources:</p>
 
 <ul>
@@ -2059,7 +2065,6 @@
 <li><a href="https://help.smartsheet.com/articles/2480876-api-documentation">10000ft API documentation</a></li>
 <li>Review the <a href="https://www.smartsheet.com/legal/developer-program-agreement">Developer Program Agreement</a></li>
 </ul>
-
 <h2 id='http-and-rest'>HTTP and REST</h2><h3 id='restful-architecture'>RESTful Architecture</h3>
 <p>The REST URL structure follows typical resource-oriented conventions.</p>
 
@@ -2126,7 +2131,9 @@
 <p>Some errors may contain a <strong>detail</strong> attribute set to an object with additional error details that may be useful in programmatically handling the error.  If so, it is noted in the specific API operation for which the error may occur.</p>
 
 <aside class="notice">Smartsheet has custom error codes to help you troubleshoot issues. See the <a href="#complete-error-code-list">Complete Error Code List.</a></aside>
+
 <h3 id='http-headers'>HTTP Headers</h3>
+
 <p>Unless otherwise specified, all API endpoints expect request body data to be in <a href="https://en.wikipedia.org/wiki/JSON">JSON</a>, and the response body data is returned as JSON.</p>
 
 <p>The following HTTP request headers may be required, depending on the operation and endpoint being invoked:</p>
@@ -2154,10 +2161,13 @@
 <td>jane.doe%40smartsheet.com</td>
 </tr>
 </tbody></table>
+
 <h3 id='query-strings'>Query Strings</h3>
+
 <blockquote>
 <p>Example request: list sheets with query strings</p>
 </blockquote>
+
 <pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/sheets?include<span class="o">=</span>attachments,source&amp;includeAll<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
 -H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set options</span>
@@ -2248,11 +2258,9 @@
 
 <aside class="notice">Query strings are case sensitive. If you do not see the expected response, confirm that your query is formatted correctly.</aside>
 <h2 id='authentication-and-access-tokens'>Authentication and Access Tokens</h2>
-
 <blockquote>
 <p>Example request: authentication and access tokens</p>
 </blockquote>
-
 <pre class="highlight shell tab-shell"><code>curl https://api.smartsheet.com/2.0/users/me <span class="se">\</span>
 <span class="sb">`</span>-H <span class="s2">"Authorization: Bearer ll352u9jujauoqz4gstvsae05"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set the access token</span>
