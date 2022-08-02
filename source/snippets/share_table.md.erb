@@ -1,8 +1,0 @@
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= PARAMETERS %> | **sendEmail** (optional): Either **true** or **false** to indicate whether to notify the user by email. Default is **false**.
-<%= REQUEST %> | [Share object](#share-object) or an array of Share objects, with the following attributes:<ul><li>**accessLevel** (required)</li><li>**ccMe** (optional): Boolean flag to indicate whether or not to CC the user sharing the sheet.</li><li>**email** (optional): the individual share recipient's email address</li><li>**groupId** (optional): the group share recipient's group Id</li><li>**message** (optional): The message in the body of the email that is optionally sent to the recipient.</li><li>**subject** (optional): The subject of the email that is optionally sent to notify the recipient.</li></ul>**NOTE:** One of **email** or **groupId** must be specified, but not both.
-<%= RETURNS %> | [Result object](#result-object) containing either a single [Share object](#share-object) or an array of Share objects, corresponding to what was specified in the request. All [shares](#share-object) have <b>scope="ITEM"</b>.
-<%= ERRORS %>  | If an error occurs because the request specified one or more [alternate email addresses](#alternate-email-addresses), please retry using the primary email address.
-<%= SCOPE %> | SHARE_SHEETS

@@ -1,7 +1,0 @@
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [UpdateRequest object](#updaterequest-object).<br/><br/>The UpdateRequest object in the request body must specify one or more of the following attributes:<ul><li><b>rowIds</b>: number[]</li><li><b>sendTo</b>: [Recipient](#recipient-object)[]</li><li>One or more of the followings:<ul><li><b>columnIds</b>: number[]</li><li><b>includeAttachments</b>: true</li><li><b>includeDiscussions</b>: true</li></ul></ul>The following attributes have the following values when not specified:<ul><li><b>ccMe</b>: false</li><li><b>message</b>: Please update the following rows in my online sheet.</li><li><b>subject</b>: Update Request: {Sheet Name}</li></ul>When the Schedule object is not specified, the request is sent to the recipients immediately.
-<%= RETURNS %> | [Result object](#result-object) containing the newly created [UpdateRequest object](#updaterequest-object).
-<%= ERRORS %>  | If an error occurs because the request specified one or more [alternate email addresses](#alternate-email-addresses), please retry using the primary email address.
-<%= SCOPE %> | WRITE_SHEETS

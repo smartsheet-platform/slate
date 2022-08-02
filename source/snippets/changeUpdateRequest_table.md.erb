@@ -1,7 +1,0 @@
-     |     |
------|-----|
-<%= HEADERS %> | <%= HEADER_AUTH %><br/><%= HEADER_CT_JSON %>
-<%= REQUEST %> | [UpdateRequest object](#updaterequest-object).<br/><br/>The UpdateRequest object in the request body must specify one or more of the following attributes:<ul><li><b>ccMe</b>: Boolean</li><li><b>columnIds</b>: number[]</li><li><b>includeAttachments</b>: Boolean</li><li><b>includeDiscussions</b>: Boolean</li><li><b>message</b>: string</li><li><b>schedule</b>: [Schedule object](#schedule-object)</li><li><b>sendTo</b>: [Recipient](#recipient-object)[]</li><li><b>subject</b>: string</li></ul>
-<%= RETURNS %> | [Result object](#result-object) containing the modified [UpdateRequest object](#updaterequest-object).
-<%= ERRORS %>  | If an error occurs because the request specified one or more [alternate email addresses](#alternate-email-addresses), please retry using the primary email address.
-<%= SCOPE %> | WRITE_SHEETS
